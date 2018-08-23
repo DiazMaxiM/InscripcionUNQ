@@ -21,9 +21,9 @@ public class CareerDaoImp implements CareerDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public long save(Career book) {
-		sessionFactory.getCurrentSession().save(book);
-		return book.getId();
+	public long save(Career career) {
+		sessionFactory.getCurrentSession().save(career);
+		return career.getId();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class CareerDaoImp implements CareerDao {
 		Session session = sessionFactory.getCurrentSession();
 		Career career2 = session.byId(Career.class).load(id);
 		career2.setCode(career.getCode());
-		career2.setDescriptcion(career.getDescription());
+		career2.setDescription(career.getDescription());
 		session.flush();
 	}
 
