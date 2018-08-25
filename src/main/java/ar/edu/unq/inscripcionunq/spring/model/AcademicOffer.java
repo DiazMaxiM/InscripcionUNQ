@@ -33,6 +33,9 @@ public class AcademicOffer {
 		this.career = career;
 	}
 
+	public AcademicOffer() {
+	}
+
 	public void addCommission(Commission commission) {
 		this.commissions.add(commission);
 	}

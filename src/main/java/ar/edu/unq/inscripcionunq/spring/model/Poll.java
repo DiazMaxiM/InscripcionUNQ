@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,9 +25,32 @@ public class Poll {
 	private LocalDateTime endDate;
 	@ManyToMany
 	private List<AcademicOffer> academicsOffer = new ArrayList<AcademicOffer>();
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Student> students = new ArrayList<Student>();
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
+
+	public Poll(String name, LocalDateTime startDate, LocalDateTime endDate) {
+		this.name = name;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+	public void addAcademicOffer(AcademicOffer academicOffer) {
+		this.academicsOffer.add(academicOffer);
+	}
+
+	public void disabled() {
+		this.status = TypeStatus.DISABLED;
+	}
+
+	public long getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+
+	public void addStudent(Student student) {
+		students.add(student);
+	}
 
 }
