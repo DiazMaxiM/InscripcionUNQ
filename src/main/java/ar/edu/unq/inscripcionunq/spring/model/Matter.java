@@ -40,6 +40,10 @@ public class Matter {
 		setHours(hours);
 	}
 
+	public Matter() {
+
+	}
+
 	public void addCareer(Career career) {
 		careers.add(career);
 	}

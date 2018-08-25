@@ -12,51 +12,47 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unq.inscripcionunq.spring.model.Career;
+import ar.edu.unq.inscripcionunq.spring.model.Interval;
 
 @Repository
-public class CareerDaoImp implements CareerDao {
+public class IntervalDaoImp implements IntervalDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public long save(Career career) {
-		sessionFactory.getCurrentSession().save(career);
-		return career.getId();
+	public long save(Interval interval) {
+		sessionFactory.getCurrentSession().save(interval);
+		return interval.getId();
 	}
 
 	@Override
-	public Career get(long id) {
-		return sessionFactory.getCurrentSession().get(Career.class, id);
+	public Interval get(long id) {
+		return sessionFactory.getCurrentSession().get(Interval.class, id);
 	}
 
 	@Override
-	public List<Career> list() {
+	public List<Interval> list() {
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<Career> cq = cb.createQuery(Career.class);
-		Root<Career> root = cq.from(Career.class);
+		CriteriaQuery<Interval> cq = cb.createQuery(Interval.class);
+		Root<Interval> root = cq.from(Interval.class);
 		cq.select(root);
-		Query<Career> query = session.createQuery(cq);
+		Query<Interval> query = session.createQuery(cq);
 		return query.getResultList();
 	}
 
 	@Override
-	public void update(long id, Career career) {
+	public void update(long id, Interval interval) {
 		Session session = sessionFactory.getCurrentSession();
-		Career career2 = session.byId(Career.class).load(id);
-		career2.setCode(career.getCode());
-		career2.setDescription(career.getDescription());
+		Interval interval2 = session.byId(Interval.class).load(id);
 		session.flush();
 	}
 
 	@Override
 	public void delete(long id) {
-		Session session = sessionFactory.getCurrentSession();
-		Career career = session.byId(Career.class).load(id);
-		career.disabled();
-		update(id, career);
+		// TODO Auto-generated method stub
+
 	}
 
 }

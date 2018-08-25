@@ -12,51 +12,50 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unq.inscripcionunq.spring.model.Career;
+import ar.edu.unq.inscripcionunq.spring.model.Commission;
 
 @Repository
-public class CareerDaoImp implements CareerDao {
+public class CommissionDaoImp implements CommissionDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public long save(Career career) {
-		sessionFactory.getCurrentSession().save(career);
-		return career.getId();
+	public long save(Commission commission) {
+		sessionFactory.getCurrentSession().save(commission);
+		return commission.getId();
 	}
 
 	@Override
-	public Career get(long id) {
-		return sessionFactory.getCurrentSession().get(Career.class, id);
+	public Commission get(long id) {
+		return sessionFactory.getCurrentSession().get(Commission.class, id);
 	}
 
 	@Override
-	public List<Career> list() {
+	public List<Commission> list() {
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<Career> cq = cb.createQuery(Career.class);
-		Root<Career> root = cq.from(Career.class);
+		CriteriaQuery<Commission> cq = cb.createQuery(Commission.class);
+		Root<Commission> root = cq.from(Commission.class);
 		cq.select(root);
-		Query<Career> query = session.createQuery(cq);
+		Query<Commission> query = session.createQuery(cq);
 		return query.getResultList();
 	}
 
 	@Override
-	public void update(long id, Career career) {
+	public void update(long id, Commission commission) {
 		Session session = sessionFactory.getCurrentSession();
-		Career career2 = session.byId(Career.class).load(id);
-		career2.setCode(career.getCode());
-		career2.setDescription(career.getDescription());
+		Commission commission2 = session.byId(Commission.class).load(id);
+
 		session.flush();
 	}
 
 	@Override
 	public void delete(long id) {
 		Session session = sessionFactory.getCurrentSession();
-		Career career = session.byId(Career.class).load(id);
-		career.disabled();
-		update(id, career);
+		Commission commission = session.byId(Commission.class).load(id);
+		commission.disabled();
+		update(id, commission);
 	}
 
 }

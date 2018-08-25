@@ -12,51 +12,52 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unq.inscripcionunq.spring.model.Career;
+import ar.edu.unq.inscripcionunq.spring.model.Matter;
 
 @Repository
-public class CareerDaoImp implements CareerDao {
+public class MatterDaoImp implements MatterDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public long save(Career career) {
-		sessionFactory.getCurrentSession().save(career);
-		return career.getId();
+	public long save(Matter matter) {
+		sessionFactory.getCurrentSession().save(matter);
+		return matter.getId();
 	}
 
 	@Override
-	public Career get(long id) {
-		return sessionFactory.getCurrentSession().get(Career.class, id);
+	public Matter get(long id) {
+		return sessionFactory.getCurrentSession().get(Matter.class, id);
 	}
 
 	@Override
-	public List<Career> list() {
+	public List<Matter> list() {
 		Session session = sessionFactory.getCurrentSession();
 		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<Career> cq = cb.createQuery(Career.class);
-		Root<Career> root = cq.from(Career.class);
+		CriteriaQuery<Matter> cq = cb.createQuery(Matter.class);
+		Root<Matter> root = cq.from(Matter.class);
 		cq.select(root);
-		Query<Career> query = session.createQuery(cq);
+		Query<Matter> query = session.createQuery(cq);
 		return query.getResultList();
 	}
 
 	@Override
-	public void update(long id, Career career) {
+	public void update(long id, Matter matter) {
 		Session session = sessionFactory.getCurrentSession();
-		Career career2 = session.byId(Career.class).load(id);
-		career2.setCode(career.getCode());
-		career2.setDescription(career.getDescription());
+		Matter matter2 = session.byId(Matter.class).load(id);
+		matter2.setCode(matter.getCode());
+		matter2.setHours(matter.getHours());
+		matter2.setName(matter.getName());
 		session.flush();
 	}
 
 	@Override
 	public void delete(long id) {
 		Session session = sessionFactory.getCurrentSession();
-		Career career = session.byId(Career.class).load(id);
-		career.disabled();
-		update(id, career);
+		Matter matter = session.byId(Matter.class).load(id);
+		matter.disabled();
+		update(id, matter);
 	}
 
 }
