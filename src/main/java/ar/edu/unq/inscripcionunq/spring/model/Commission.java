@@ -9,17 +9,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name = "Commission")
-public class Commission {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Commission extends BaseEntity {
+
 	private String name;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Interval> intervals = new ArrayList<Interval>();
@@ -44,10 +39,6 @@ public class Commission {
 	}
 
 	public Commission() {
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public void disabled() {

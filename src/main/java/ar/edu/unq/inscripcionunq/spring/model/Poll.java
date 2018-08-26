@@ -8,18 +8,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity(name = "Poll")
 
-public class Poll {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Poll extends BaseEntity {
+
 	private String name;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
@@ -42,11 +37,6 @@ public class Poll {
 
 	public void disabled() {
 		this.status = TypeStatus.DISABLED;
-	}
-
-	public long getId() {
-		// TODO Auto-generated method stub
-		return id;
 	}
 
 	public void addStudent(Student student) {

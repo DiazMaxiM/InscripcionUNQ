@@ -5,15 +5,10 @@ import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity(name = "Intervalo")
-public class Interval {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class Interval extends BaseEntity {
+
 	@Enumerated(EnumType.STRING)
 	private TypeDay day;
 	private LocalTime start;
@@ -27,10 +22,6 @@ public class Interval {
 
 	public Interval() {
 
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public TypeDay getDay() {
