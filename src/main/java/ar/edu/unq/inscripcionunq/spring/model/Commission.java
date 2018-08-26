@@ -20,13 +20,13 @@ public class Commission extends BaseEntity {
 	private List<Interval> intervals = new ArrayList<Interval>();
 	private Integer quota;
 	@ManyToOne
-	private Matter matter;
+	private Subject subject;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
 
-	public Commission(String name, Matter matter, Integer quota) {
+	public Commission(String name, Subject subject, Integer quota) {
 		this.name = name;
-		this.matter = matter;
+		this.subject = subject;
 		this.quota = quota;
 	}
 

@@ -3,10 +3,10 @@ package ar.edu.unq.inscripcionunq.spring.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.inscripcionunq.spring.model.Matter;
+import ar.edu.unq.inscripcionunq.spring.model.Subject;
 
 @Service
 @Transactional
-public class MatterServiceImp extends GenericServiceImp<Matter> implements GenericService<Matter> {
+public class SubjectServiceImp extends GenericServiceImp<Subject> implements GenericService<Subject> {
 
 }

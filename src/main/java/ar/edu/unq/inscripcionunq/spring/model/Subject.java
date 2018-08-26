@@ -9,8 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 
-@Entity(name = "Matter")
-public class Matter extends BaseEntity {
+@Entity(name = "Subject")
+public class Subject extends BaseEntity {
 
 	private String code;
 	private String name;
@@ -20,20 +20,20 @@ public class Matter extends BaseEntity {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Career> careers = new ArrayList<Career>();
 
-	public Matter(String code, String name, Integer hours, List<Career> listCareers) {
+	public Subject(String code, String name, Integer hours, List<Career> listCareers) {
 		setCode(code);
 		setName(name);
 		setHours(hours);
 		this.careers = listCareers;
 	}
 
-	public Matter(String code, String name, Integer hours) {
+	public Subject(String code, String name, Integer hours) {
 		setCode(code);
 		setName(name);
 		setHours(hours);
 	}
 
-	public Matter() {
+	public Subject() {
 
 	}
 

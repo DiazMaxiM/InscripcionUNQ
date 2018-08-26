@@ -20,7 +20,7 @@ public class Student extends BaseEntity {
 	@ManyToMany
 	private List<Career> careersInscription = new ArrayList<Career>();
 	@ManyToMany
-	private List<Matter> mattersApproved = new ArrayList<Matter>();
+	private List<Subject> mattersApproved = new ArrayList<Subject>();
 	@ManyToMany
 	private List<Commission> commissionsRegistration = new ArrayList<Commission>();
 
@@ -34,7 +34,7 @@ public class Student extends BaseEntity {
 		this.dni = dni;
 	}
 
-	public void addMatterAprroved(Matter matter) {
+	public void addMatterAprroved(Subject matter) {
 		mattersApproved.add(matter);
 	}
 
