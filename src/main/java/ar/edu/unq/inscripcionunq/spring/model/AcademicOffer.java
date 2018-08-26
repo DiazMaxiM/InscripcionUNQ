@@ -6,23 +6,32 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity(name = "AcademicOffer")
-public class AcademicOffer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class AcademicOffer extends BaseEntity {
+
 	private String name;
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
-	@OneToMany
+	@ManyToMany
 	private List<Commission> commissions = new ArrayList<Commission>();
 	@ManyToOne
 	private Career career;
+
+	public AcademicOffer(String name, String description, Career career) {
+		this.name = name;
+		this.description = description;
+		this.career = career;
+	}
+
+	public AcademicOffer() {
+	}
+
+	public void addCommission(Commission commission) {
+		this.commissions.add(commission);
+	}
+
 }

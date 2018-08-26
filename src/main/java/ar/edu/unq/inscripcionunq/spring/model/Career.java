@@ -3,16 +3,10 @@ package ar.edu.unq.inscripcionunq.spring.model;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity(name = "Career")
-public class Career {
+public class Career extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private String code;
 	private String description;
 	@Enumerated(EnumType.STRING)
@@ -25,14 +19,6 @@ public class Career {
 	public Career(String code, String description) {
 		setCode(code);
 		setDescription(description);
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public TypeStatus getStatus() {

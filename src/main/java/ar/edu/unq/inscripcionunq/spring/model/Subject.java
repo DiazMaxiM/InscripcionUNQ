@@ -7,17 +7,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity(name = "Matter")
-public class Matter {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+@Entity(name = "Subject")
+public class Subject extends BaseEntity {
 
 	private String code;
 	private String name;
@@ -27,17 +20,21 @@ public class Matter {
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Career> careers = new ArrayList<Career>();
 
-	public Matter(String code, String name, Integer hours, List<Career> listCareers) {
+	public Subject(String code, String name, Integer hours, List<Career> listCareers) {
 		setCode(code);
 		setName(name);
 		setHours(hours);
 		this.careers = listCareers;
 	}
 
-	public Matter(String code, String name, Integer hours) {
+	public Subject(String code, String name, Integer hours) {
 		setCode(code);
 		setName(name);
 		setHours(hours);
+	}
+
+	public Subject() {
+
 	}
 
 	public void addCareer(Career career) {
@@ -66,14 +63,6 @@ public class Matter {
 
 	public TypeStatus getStatus() {
 		return status;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public void setCode(String code) {
