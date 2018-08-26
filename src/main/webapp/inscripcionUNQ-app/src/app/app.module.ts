@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
@@ -10,6 +11,8 @@ import {MaterialModule} from './material.module';
 import 'hammerjs';
 
 import { SigninScreenComponent } from './auth/signin-screen.component';
+
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -21,9 +24,10 @@ import { SigninScreenComponent } from './auth/signin-screen.component';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { User } from './user.model';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-signin-screen',
@@ -8,10 +8,14 @@ import { User } from './user.model';
 })
 export class SigninScreenComponent {
 
+  constructor(private authService: AuthService) {}
+
   dniFormControl = new FormControl('', [
       Validators.required
     ]);
   onSubmit() {
-    console.log(this.dniFormControl.value);
-  }
+    if (this.dniFormControl.valid) {
+      this.authService.login(this.dniFormControl.value).subscribe(data => {console.log(data)},
+          err => {console.log('error')});
+    }}
 }
