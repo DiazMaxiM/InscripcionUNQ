@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.inscripcionunq.spring.dao.GenericDao;
 
 public abstract class GenericServiceImp<T> implements GenericService<T> {
+
 	@Autowired
 	protected GenericDao<T> genericDao;
 

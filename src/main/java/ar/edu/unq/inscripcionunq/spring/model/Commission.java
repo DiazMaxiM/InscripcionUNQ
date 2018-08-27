@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -16,10 +17,10 @@ import javax.persistence.OneToMany;
 public class Commission extends BaseEntity {
 
 	private String name;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Interval> intervals = new ArrayList<Interval>();
 	private Integer quota;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Subject subject;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;

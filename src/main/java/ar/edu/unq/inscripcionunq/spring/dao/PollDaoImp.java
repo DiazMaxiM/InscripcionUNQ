@@ -1,11 +1,16 @@
 package ar.edu.unq.inscripcionunq.spring.dao;
 
+import java.util.List;
+
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
 
 @Repository
-public class PollDaoImp extends GenericDaoImp<Poll> implements GenericDao<Poll> {
+@Transactional
+public class PollDaoImp extends GenericDaoImp<Poll> implements PollDao {
 
 	@Override
 	protected Class<Poll> getDomainClass() {
@@ -13,4 +18,8 @@ public class PollDaoImp extends GenericDaoImp<Poll> implements GenericDao<Poll> 
 		return Poll.class;
 	}
 
+	public List<Poll> getAllPollsActiveForDni(String dni) {
+		Session session = this.sessionFactory.openSession();
+		return session.createQuery("from Poll").getResultList();
+	}
 }

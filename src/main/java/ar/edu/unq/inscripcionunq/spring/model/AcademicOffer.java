@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -16,9 +17,9 @@ public class AcademicOffer extends BaseEntity {
 	private String description;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Commission> commissions = new ArrayList<Commission>();
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Career career;
 
 	public AcademicOffer(String name, String description, Career career) {

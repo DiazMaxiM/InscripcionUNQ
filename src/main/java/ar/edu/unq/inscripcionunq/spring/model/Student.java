@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
 @Entity(name = "Student")
@@ -17,11 +18,11 @@ public class Student extends BaseEntity {
 	private Boolean regularity = true;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Career> careersInscription = new ArrayList<Career>();
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Subject> mattersApproved = new ArrayList<Subject>();
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Commission> commissionsRegistration = new ArrayList<Commission>();
 
 	public Student() {
