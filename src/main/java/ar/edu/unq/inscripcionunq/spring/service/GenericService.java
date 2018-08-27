@@ -10,7 +10,7 @@ public interface GenericService<T> {
 
 	List<T> list();
 
-	void update(Long id, T c);
+	void update(T c);
 
 	void delete(Long id);
 }

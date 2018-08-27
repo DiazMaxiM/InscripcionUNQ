@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.inscripcionunq.spring.model.AcademicOffer;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
-import ar.edu.unq.inscripcionunq.spring.model.Subject;
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
+import ar.edu.unq.inscripcionunq.spring.model.Subject;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
 
@@ -182,7 +182,7 @@ public class LoadInitialDataController {
 		poll.addAcademicOffer((AcademicOffer) academicOfferServiceImp.get(idAcamicOffer1));
 		poll.addAcademicOffer((AcademicOffer) academicOfferServiceImp.get(idAcamicOffer2));
 
-		Student maxi = new Student("Maximiliano Martin", "Diaz", "33810763");
+		Student maxi = new Student("Maximiliano Martin", "Diaz", "33810763", "diazmaxi@gmail.com");
 		maxi.addcareerInscription(tpi);
 		maxi.addcareerInscription(lds);
 		poll.addStudent(maxi);

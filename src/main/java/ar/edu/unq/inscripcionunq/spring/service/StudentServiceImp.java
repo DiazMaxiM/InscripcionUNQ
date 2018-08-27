@@ -7,6 +7,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Student;
 
 @Service
 @Transactional
-public class StudentServiceImp extends GenericServiceImp<Student> implements GenericService<Student> {
+public class StudentServiceImp extends GenericServiceImp<Student> implements StudentService {
 
 }

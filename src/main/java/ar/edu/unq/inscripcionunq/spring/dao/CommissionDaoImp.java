@@ -7,7 +7,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Commission;
 
 @Repository
 @Transactional
-
 public class CommissionDaoImp extends GenericDaoImp<Commission> implements GenericDao<Commission> {
 
 	@Override
