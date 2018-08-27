@@ -8,7 +8,7 @@ export class AuthService {
   constructor(private http: Http) {}
 
   login(dni: String) {
-    return this.http.get('/api/user' + dni)
+    return this.http.get('/api/user/' + dni)
     .pipe(
         map((res: Response) => res.json())
     );
