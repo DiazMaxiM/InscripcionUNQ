@@ -25,6 +25,10 @@ public abstract class GenericDaoImp<T> implements GenericDao<T> {
 		return (Long) ((BaseEntity) object).getId();
 	}
 
+	public void update(T object) {
+		sessionFactory.getCurrentSession().update(object);
+	}
+
 	protected abstract Class<T> getDomainClass();
 
 	public T get(Long id) {

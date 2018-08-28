@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
 @Entity(name = "Subject")
@@ -17,7 +18,7 @@ public class Subject extends BaseEntity {
 	private Integer hours;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Career> careers = new ArrayList<Career>();
 
 	public Subject(String code, String name, Integer hours, List<Career> listCareers) {

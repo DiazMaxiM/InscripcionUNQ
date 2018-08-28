@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -18,12 +19,15 @@ public class Poll extends BaseEntity {
 	private String name;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	private List<AcademicOffer> academicsOffer = new ArrayList<AcademicOffer>();
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Student> students = new ArrayList<Student>();
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
+
+	public Poll() {
+	}
 
 	public Poll(String name, LocalDateTime startDate, LocalDateTime endDate) {
 		this.name = name;
@@ -41,6 +45,21 @@ public class Poll extends BaseEntity {
 
 	public void addStudent(Student student) {
 		students.add(student);
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
+	public LocalDateTime getStartDate() {
+		// TODO Auto-generated method stub
+		return startDate;
+	}
+
+	public LocalDateTime endDate() {
+		// TODO Auto-generated method stub
+		return endDate;
 	}
 
 }
