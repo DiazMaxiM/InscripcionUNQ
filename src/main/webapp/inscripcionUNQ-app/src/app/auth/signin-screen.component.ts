@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { PollService } from '../student-poll/poll.service';
 import {Router} from '@angular/router';
-import {Poll} from '../student-poll/poll.model';
+import {StudentPollInfo} from '../student-poll/student-poll-info.model';
 
 @Component({
   selector: 'app-signin-screen',
@@ -22,9 +22,12 @@ export class SigninScreenComponent {
     ]);
   onSubmit() {
     if (this.dniFormControl.valid) {
+      const dni = this.dniFormControl.value;
       this.authService.login(this.dniFormControl.value).subscribe(polls => {
-      console.log(polls);
-      this.pollService.sendPolls(polls);
+      const studentPollInfo = new StudentPollInfo();
+      studentPollInfo.idStudent = dni;
+      studentPollInfo.polls = polls;
+      this.pollService.sendSetudentPollInfo(studentPollInfo);
       },
           err => {console.log('error')});
     }

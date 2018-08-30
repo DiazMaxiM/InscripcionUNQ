@@ -1,12 +1,12 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import {Poll} from './poll.model';
+import {StudentPollInfo} from './student-poll-info.model';
 
 @Injectable()
 export class PollService {
 
-  @Output() change: EventEmitter<Poll[]> = new EventEmitter();
+  @Output() change: EventEmitter<StudentPollInfo> = new EventEmitter();
 
-  sendPolls(polls: any) {
-    this.change.emit(polls);
+  sendSetudentPollInfo(studentPollInfo: StudentPollInfo) {
+    this.change.emit(studentPollInfo);
   }
 }
