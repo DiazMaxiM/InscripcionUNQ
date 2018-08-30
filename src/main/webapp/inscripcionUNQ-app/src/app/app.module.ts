@@ -11,13 +11,20 @@ import {MaterialModule} from './material.module';
 import 'hammerjs';
 
 import { SigninScreenComponent } from './auth/signin-screen.component';
+import {PollScreenComponent} from './student-poll/poll-screen.component';
 
 import { AuthService } from './auth/auth.service';
+import {PollService} from "./student-poll/poll.service";
+
+import {Routing} from './app.routing';
+import { MomentModule } from 'ngx-moment';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    SigninScreenComponent
+    SigninScreenComponent,
+    PollScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -25,9 +32,11 @@ import { AuthService } from './auth/auth.service';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    Routing,
+    MomentModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,PollService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
