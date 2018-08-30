@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Http, Response } from '@angular/http';
-import {Poll} from '../student-poll/poll.model';
 
 @Injectable()
 export class AuthService {

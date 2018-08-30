@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { PollService } from './poll.service';
 import {Router} from '@angular/router';
-import {Poll} from './poll.model';
+import {StudentPollInfo} from './student-poll-info.model';
 
 @Component({
   selector: 'app-poll-screen',
@@ -13,13 +13,21 @@ export class PollScreenComponent implements OnInit {
   private pollService: PollService,
   private router: Router
 ) { }
-
+  studentPollInfo : StudentPollInfo;
   polls: any;
 
   ngOnInit() {
-    this.pollService.change.subscribe(polls => {
-      console.log(polls);
-      this.polls = polls;
+    this.pollService.change.subscribe((studentPollInfo :StudentPollInfo) => {
+      this.studentPollInfo = studentPollInfo;
+      this.polls = studentPollInfo.polls;
     });
+  }
+
+  editPoll(idPoll:number){
+    const studentPollInfo = new StudentPollInfo();
+    studentPollInfo.idStudent = this.studentPollInfo.idStudent;
+    studentPollInfo.polls = this.studentPollInfo.polls;
+    studentPollInfo.currentIdPoll = idPoll;
+    console.log(studentPollInfo);
   }
 }

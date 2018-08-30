@@ -3,17 +3,14 @@
 </div>
 
 <div class="row">
-  <div class="col">
+  <div class="col-3">
     Nombre
   </div>
-  <div class="col">
+  <div class="col-3">
      Fecha de incio
   </div>
-  <div class="col">
+  <div class="col-3">
     Fecha de Fin
-  </div>
-  <div class="col">
-    Acciones
   </div>
 </div>
 <div class="row" *ngFor="let poll of polls">
@@ -21,11 +18,12 @@
     {{ poll.name }}
   </div>
   <div class="col">
-
+    {{ poll.startDate.dayOfMonth}}/{{ poll.startDate.monthValue}}/{{ poll.startDate.year}}
   </div>
   <div class="col">
+    {{ poll.endDate.dayOfMonth}}/{{ poll.endDate.monthValue}}/{{ poll.endDate.year}}
   </div>
   <div class="col">
-
+    <i class="material-icons" (click)="editPoll(poll.id)">edit</i>
   </div>
 </div>
