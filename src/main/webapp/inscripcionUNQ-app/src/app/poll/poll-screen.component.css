@@ -1,7 +1,12 @@
-.pull-title{
-  text-align: center;
+.header{
+	font-weight: bold;
 }
-
-table {
-  width: 100%;
+.table-poll{
+	margin-top: 5%;
+}
+.edit-icon:hover{
+	color: #B3291C;
+}
+.edit-icon:hover{
+	cursor: pointer;
 }

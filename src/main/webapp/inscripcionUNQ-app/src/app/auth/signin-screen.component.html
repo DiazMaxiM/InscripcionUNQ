@@ -1,4 +1,5 @@
-<form class=" col-12" (ngSubmit)="onSubmit()">
+<form class="col-12" (ngSubmit)="onSubmit()">
+	<div class="e">
   <mat-form-field>
     <input matInput type="number" placeholder="DNI" [formControl]="dniFormControl">
     <mat-error *ngIf="dniFormControl.hasError('required')">
@@ -8,4 +9,5 @@
   <div class="col-12">
     <button type="submit" mat-fab color="primary">Ingresar</button>
   </div>
+</div>
 </form>
