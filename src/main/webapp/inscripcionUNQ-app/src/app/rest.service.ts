@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Http, Response } from '@angular/http';
 
 @Injectable()
-export class AuthService {
+export class RestService {
   constructor(private http: Http) {}
 
   login(dni: String) {

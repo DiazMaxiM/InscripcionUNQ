@@ -13,7 +13,7 @@ import 'hammerjs';
 import { SigninScreenComponent } from './auth/signin-screen.component';
 import {PollScreenComponent} from './poll/poll-screen.component';
 
-import { AuthService } from './auth/auth.service';
+import { RestService } from './rest.service';
 import { PollService } from "./poll/poll.service";
 
 import { Routing} from './app.routing';
@@ -36,7 +36,7 @@ import { MomentModule } from 'ngx-moment';
     Routing,
     MomentModule
   ],
-  providers: [AuthService, PollService],
+  providers: [RestService, PollService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
