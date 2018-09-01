@@ -11,8 +11,8 @@ import { MaterialModule } from './material.module';
 import 'hammerjs';
 
 import { SigninScreenComponent } from './auth/signin-screen.component';
-import {PollScreenComponent} from './poll/poll-screen.component';
-
+import { PollScreenComponent } from './poll/poll-screen.component';
+import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
 import { RestService } from './rest.service';
 import { PollService } from "./poll/poll.service";
 
@@ -24,7 +24,8 @@ import { MomentModule } from 'ngx-moment';
   declarations: [
     AppComponent,
     SigninScreenComponent,
-    PollScreenComponent
+    PollScreenComponent,
+    DataVerificationComponent
   ],
   imports: [
     BrowserModule,
