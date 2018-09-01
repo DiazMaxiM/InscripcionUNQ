@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity(name = "Student")
 public class Student extends BaseEntity {
@@ -19,11 +21,14 @@ public class Student extends BaseEntity {
 	private Boolean regularity = true;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus status = TypeStatus.ENABLED;
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Career> careersInscription = new ArrayList<Career>();
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Subject> mattersApproved = new ArrayList<Subject>();
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.TRUE)
+	private List<Subject> subjectsApproved = new ArrayList<Subject>();
+	@ManyToMany
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Commission> commissionsRegistration = new ArrayList<Commission>();
 
 	public Student() {
@@ -38,7 +43,7 @@ public class Student extends BaseEntity {
 	}
 
 	public void addMatterAprroved(Subject matter) {
-		mattersApproved.add(matter);
+		subjectsApproved.add(matter);
 	}
 
 	public void addcareerInscription(Career career) {
@@ -76,7 +81,21 @@ public class Student extends BaseEntity {
 		this.mail = student.mail;
 		this.lastName = student.lastName;
 		this.name = student.name;
-
 	}
 
+	public List<Career> getCareersInscription() {
+		return careersInscription;
+	}
+
+	public Boolean isApproved(Subject subject) {
+		return subjectsApproved.contains(subject);
+	}
+
+	public List<Subject> getSubjectsApproved() {
+		return subjectsApproved;
+	}
+
+	public void setSubjectsApproved(List<Subject> newSubjectsApproved) {
+		this.subjectsApproved = newSubjectsApproved;
+	}
 }

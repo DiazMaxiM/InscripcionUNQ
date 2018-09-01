@@ -7,6 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Commission;
 
 @Service
 @Transactional
+
 public class CommissionServiceImp extends GenericServiceImp<Commission> implements GenericService<Commission> {
 
 }
