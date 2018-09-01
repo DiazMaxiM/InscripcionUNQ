@@ -1,1 +1,20 @@
+mat-toolbar{
+	background-color: #B3291C !important;
+	color: #FFF;
+	height: 100px;
+}
+
+.title{
+	width: 100%;
+	text-align: center;
+}
+
+.jumbotron{
+	width: 80% !important;
+	margin: auto;
+}
+
+h2{
+	text-align: center;
+}
 
