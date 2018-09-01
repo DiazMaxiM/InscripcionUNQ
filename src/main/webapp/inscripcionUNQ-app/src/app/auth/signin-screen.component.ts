@@ -1,9 +1,9 @@
 import { Component} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
-import { PollService } from '../student-poll/poll.service';
-import {Router} from '@angular/router';
-import {StudentPollInfo} from '../student-poll/student-poll-info.model';
+import { PollService } from '../poll/poll.service';
+import { Router } from '@angular/router';
+import { PollInfo } from '../poll/poll-info.model';
 
 @Component({
   selector: 'app-signin-screen',
@@ -24,9 +24,7 @@ export class SigninScreenComponent {
     if (this.dniFormControl.valid) {
       const dni = this.dniFormControl.value;
       this.authService.login(this.dniFormControl.value).subscribe(polls => {
-      const studentPollInfo = new StudentPollInfo();
-      studentPollInfo.idStudent = dni;
-      studentPollInfo.polls = polls;
+      const studentPollInfo = new PollInfo(dni,polls);
       this.pollService.sendSetudentPollInfo(studentPollInfo);
       },
           err => {console.log('error')});
