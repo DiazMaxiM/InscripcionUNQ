@@ -1,29 +1,27 @@
-<div class=" col-12 pull-title">
-  Encuesta de pre-inscripcion UNQ
-</div>
-
+<div class="table-poll">
 <div class="row">
-  <div class="col-3">
-    Nombre
+  <div class="col-3 offset-2">
+    <p class="header">Nombre</p>
   </div>
   <div class="col-3">
-     Fecha de incio
+     <p class="header">Fecha de inicio</p>
   </div>
   <div class="col-3">
-    Fecha de Fin
+    <p class="header"> Fecha de fin </p>
   </div>
 </div>
-<div class="row" *ngFor="let poll of polls">
-  <div class="col">
+<div class="row justify-content-center" *ngFor="let poll of polls">
+  <div class="col-3 offset-2">
     {{ poll.name }}
   </div>
-  <div class="col">
+  <div class="col-3">
     {{ poll.startDate.dayOfMonth}}/{{ poll.startDate.monthValue}}/{{ poll.startDate.year}}
   </div>
-  <div class="col">
+  <div class="col-3">
     {{ poll.endDate.dayOfMonth}}/{{ poll.endDate.monthValue}}/{{ poll.endDate.year}}
   </div>
-  <div class="col">
-    <i class="material-icons" (click)="editPoll(poll.id)">edit</i>
+  <div class="col-1">
+    <i class="material-icons edit-icon" (click)="editPoll(poll.id)">edit</i>
   </div>
+</div>
 </div>

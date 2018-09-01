@@ -7,7 +7,8 @@ import { PollInfo } from '../poll/poll-info.model';
 
 @Component({
   selector: 'app-signin-screen',
-  templateUrl: './signin-screen.component.html'
+  templateUrl: './signin-screen.component.html',
+  styleUrls: ['./signin-screen.component.css']
 })
 export class SigninScreenComponent {
 
