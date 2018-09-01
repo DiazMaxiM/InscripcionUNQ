@@ -7,16 +7,16 @@ import { AppComponent } from './app.component';
 
 // Material angular
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from './material.module';
+import { MaterialModule } from './material.module';
 import 'hammerjs';
 
 import { SigninScreenComponent } from './auth/signin-screen.component';
-import {PollScreenComponent} from './student-poll/poll-screen.component';
+import {PollScreenComponent} from './poll/poll-screen.component';
 
 import { AuthService } from './auth/auth.service';
-import {PollService} from "./student-poll/poll.service";
+import { PollService } from "./poll/poll.service";
 
-import {Routing} from './app.routing';
+import { Routing} from './app.routing';
 import { MomentModule } from 'ngx-moment';
 
 
@@ -36,7 +36,7 @@ import { MomentModule } from 'ngx-moment';
     Routing,
     MomentModule
   ],
-  providers: [AuthService,PollService],
+  providers: [AuthService, PollService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
