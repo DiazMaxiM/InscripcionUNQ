@@ -59,7 +59,7 @@ public class LoadInitialDataController {
 		matt = new Subject("01033", "Matemática I", 8);
 		matt.addCareer(tpi);
 		matt.addCareer(lds);
-		subjectServiceImp.save(matt);
+		long mate1 = subjectServiceImp.save(matt);
 
 		matt = new Subject("01034", "Programación con Objetos I", 6);
 		matt.addCareer(tpi);
@@ -185,6 +185,8 @@ public class LoadInitialDataController {
 		Student maxi = new Student("Maximiliano Martin", "Diaz", "33810763", "diazmaxi@gmail.com");
 		maxi.addcareerInscription(tpi);
 		maxi.addcareerInscription(lds);
+		maxi.addMatterAprroved(subjectServiceImp.get(intro));
+		maxi.addMatterAprroved(subjectServiceImp.get(mate1));
 		poll.addStudent(maxi);
 
 		pollServiceImp.save(poll);
