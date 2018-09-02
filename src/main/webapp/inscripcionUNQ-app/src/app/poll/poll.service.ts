@@ -8,7 +8,7 @@ export class PollService {
   currentPollInfo = this.pollInfoSource.asObservable();
   constructor() { }
 
-  sendSetudentPollInfo(pollInfo:PollInfo) {
+  sendStudentPollInfo(pollInfo:PollInfo) {
     this.pollInfoSource.next(pollInfo);
  }
 }
