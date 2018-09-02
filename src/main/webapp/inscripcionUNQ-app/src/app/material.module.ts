@@ -12,7 +12,7 @@ const modules = [
   MatToolbarModule,
   MatTableModule,
   MatDialogModule,
-  MatCardModule
+  MatCardModule,
   MatCheckboxModule,
   MatOptionModule,
   MatSelectModule
