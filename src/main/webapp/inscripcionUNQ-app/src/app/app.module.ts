@@ -30,7 +30,7 @@ import { SubjectScreenComponent} from './subject/subject-screen.component';
     PollScreenComponent,
     DataVerificationComponent,
     CustomDialogComponent,
-    SubjectScreenComponent
+    SubjectScreenComponent,
     SelectSubjectsComponent
   ],
   imports: [

@@ -10,8 +10,8 @@ const APP_ROUTES: Routes = [
   { path: 'encuestas', component: PollScreenComponent },
   { path: 'materias-aprobadas', component: SubjectScreenComponent },
   { path: 'verificacion-de-datos', component: DataVerificationComponent },
-  { path: '**', redirectTo: '' }
   { path: 'seleccionar-materias', component: SelectSubjectsComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 export const Routing = RouterModule.forRoot(APP_ROUTES);
