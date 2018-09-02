@@ -6,6 +6,7 @@ import { Student } from './data-verification/student.model';
 
 @Injectable()
 export class RestService {
+
   constructor(private http: Http) {}
 
   login(idStudent: number) {
@@ -15,4 +16,14 @@ export class RestService {
         map((response: Response) => response.json())
     );
   }
+
+  getStudentData(idStudent: number, idPoll: number) {
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.get('/api/poll/userData/' + idStudent + '/' + idPoll, { headers })
+  .pipe(
+      map((response: Response) => response.json())
+  );
+}
+
+
 }

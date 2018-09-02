@@ -1,0 +1,34 @@
+<form [formGroup]="dataVerificationForm" (ngSubmit)="onSubmit()" class="form-student-verification-data">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      type="text"
+      placeholder="Nombres"
+      formControlName="name"
+      id="name" required>
+      <mat-error *ngIf="dataVerificationForm.get('name').hasError('required')">
+        Campo obligatorio
+      </mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      placeholder="Apellidos"
+      formControlName="lastName"
+      id="lastName" required>
+      <mat-error *ngIf="dataVerificationForm.get('lastName').hasError('required')">
+        Campo obligatorio
+      </mat-error>
+  </mat-form-field>
+  <mat-form-field class="full-width" required>
+    <input
+      matInput
+      placeholder="Correo electrónico"
+      formControlName="email"
+      id="email">
+      <mat-error *ngIf="dataVerificationForm.get('email').hasError('required')">
+        Campo obligatorio
+      </mat-error>
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="accent">Confirmar</button>
+</form>

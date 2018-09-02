@@ -26,7 +26,7 @@ export class SigninScreenComponent {
       const dni = this.dniFormControl.value;
       this.restService.login(this.dniFormControl.value).subscribe(polls => {
       const pollInfo = new PollInfo(dni,polls);
-      this.pollService.sendSetudentPollInfo(pollInfo);
+      this.pollService.sendStudentPollInfo(pollInfo);
       },
           err => {console.log('error')});
     }
