@@ -19,13 +19,15 @@ import { PollService } from "./poll/poll.service";
 import { Routing} from './app.routing';
 import { MomentModule } from 'ngx-moment';
 
+import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninScreenComponent,
     PollScreenComponent,
-    DataVerificationComponent
+    DataVerificationComponent,
+    CustomDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,7 @@ import { MomentModule } from 'ngx-moment';
     MomentModule
   ],
   providers: [RestService, PollService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomDialogComponent]
 })
 export class AppModule { }
