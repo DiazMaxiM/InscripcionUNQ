@@ -164,7 +164,7 @@ public class LoadInitialDataController {
 		commissionServiceImp.save(comm1);
 
 		Commission comm2 = new Commission("Intro2", subjectServiceImp.get(intro), 30);
-		comm1.addHours(TypeDay.MONDAY, LocalTime.of(14, 00), 2);
+		comm2.addHours(TypeDay.MONDAY, LocalTime.of(14, 00), 2);
 		commissionServiceImp.save(comm2);
 
 		AcademicOffer acc1 = new AcademicOffer("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi);

@@ -46,4 +46,7 @@ public class Commission extends BaseEntity {
 		this.status = TypeStatus.DISABLED;
 	}
 
+	public List<Interval> getIntervals() {
+		return intervals;
+	}
 }
