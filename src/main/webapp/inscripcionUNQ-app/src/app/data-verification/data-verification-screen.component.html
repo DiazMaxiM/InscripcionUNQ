@@ -1,3 +1,4 @@
+<span class="header">Verifación de datos personales</span>
 <form [formGroup]="dataVerificationForm" (ngSubmit)="onSubmit()" class="form-student-verification-data">
   <mat-form-field class="full-width">
     <input
@@ -25,9 +26,12 @@
       matInput
       placeholder="Correo electrónico"
       formControlName="email"
-      id="email">
+      id="email" required>
       <mat-error *ngIf="dataVerificationForm.get('email').hasError('required')">
         Campo obligatorio
+      </mat-error>
+      <mat-error *ngIf="dataVerificationForm.get('email').hasError('email')">
+        La dirección ingresada no corresponde a un correo electrónico válido
       </mat-error>
   </mat-form-field>
   <button type="submit" mat-raised-button color="accent">Confirmar</button>
