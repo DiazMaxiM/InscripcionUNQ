@@ -33,5 +33,9 @@ export class SubjectScreenComponent implements OnInit{
     );
     }
 
+    confirmar(){
+      this.router.navigate(['seleccionar-materias']);
+    }
+
 
 }
