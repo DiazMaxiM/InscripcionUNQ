@@ -12,6 +12,7 @@ mat-toolbar{
 .jumbotron{
 	width: 80% !important;
 	margin: auto;
+	margin-bottom: 3%;
 }
 
 h2{

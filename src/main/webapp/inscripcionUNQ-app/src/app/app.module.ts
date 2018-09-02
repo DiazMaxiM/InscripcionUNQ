@@ -13,6 +13,7 @@ import 'hammerjs';
 import { SigninScreenComponent } from './auth/signin-screen.component';
 import { PollScreenComponent } from './poll/poll-screen.component';
 import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
+import { SelectSubjectsComponent } from './select-subjects/selectsubjects-screen.component';
 import { RestService } from './rest.service';
 import { PollService } from './poll/poll.service';
 
@@ -30,6 +31,7 @@ import { SubjectScreenComponent} from './subject/subject-screen.component';
     DataVerificationComponent,
     CustomDialogComponent,
     SubjectScreenComponent
+    SelectSubjectsComponent
   ],
   imports: [
     BrowserModule,
