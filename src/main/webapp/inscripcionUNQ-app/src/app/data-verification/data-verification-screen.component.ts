@@ -29,6 +29,7 @@ export class DataVerificationComponent implements OnInit {
 
 ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
+      console.log(pollInfo);
       this.pollInfo = pollInfo;
       this.getStudentData();
     });
@@ -44,7 +45,7 @@ createDataStudentFormGroup() {
   }
 
 getStudentData() {
-    this.restService.getStudentData(this.pollInfo.idStudent,this.pollInfo.idCurrentPoll)
+    this.restService.getStudentData(this.pollInfo.dniStudent,this.pollInfo.idCurrentPoll)
     .subscribe(data =>
       this.setStudenDataOnForm(data)
     );
@@ -79,9 +80,14 @@ openDialog(msg: String) {
       dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-        // this.router.navigate(['']);
+        this.updatePollInfo();
+        this.router.navigate(['materias-aprobadas']);
       });
+}
 
+updatePollInfo(){
+  this.pollInfo.idStudent =  this.idCurrentStudent;
+  this.pollService.sendStudentPollInfo(this.pollInfo);
 }
 
 }

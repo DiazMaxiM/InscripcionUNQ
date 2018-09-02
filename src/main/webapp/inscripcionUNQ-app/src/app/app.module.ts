@@ -14,12 +14,13 @@ import { SigninScreenComponent } from './auth/signin-screen.component';
 import { PollScreenComponent } from './poll/poll-screen.component';
 import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
 import { RestService } from './rest.service';
-import { PollService } from "./poll/poll.service";
+import { PollService } from './poll/poll.service';
 
 import { Routing} from './app.routing';
 import { MomentModule } from 'ngx-moment';
 
 import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
+import { SubjectScreenComponent} from './subject/subject-screen.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
     SigninScreenComponent,
     PollScreenComponent,
     DataVerificationComponent,
-    CustomDialogComponent
+    CustomDialogComponent,
+    SubjectScreenComponent
   ],
   imports: [
     BrowserModule,
