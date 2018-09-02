@@ -7,6 +7,7 @@ const APP_ROUTES: Routes = [
   { path: '', component: SigninScreenComponent, pathMatch: 'full' },
   { path: 'encuestas', component: PollScreenComponent },
   { path: 'verificacion-de-datos', component: DataVerificationComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 export const Routing = RouterModule.forRoot(APP_ROUTES);

@@ -22,6 +22,7 @@ export class DataVerificationComponent implements OnInit {
 
   pollInfo: PollInfo;
   dataVerificationForm: FormGroup;
+  idCurrentStudent: number;
 
 ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
@@ -47,11 +48,21 @@ getStudentData() {
   }
 
 setStudenDataOnForm(student: Student) {
-
+  this.idCurrentStudent = student.id;
   this.dataVerificationForm.setValue({
     'name': student.name,
     'lastName': student.lastName,
     'email': student.mail
   });
 }
+
+onSubmit() {
+  if (this.dataVerificationForm.valid) {
+    const { name, lastName, email} = this.dataVerificationForm.value;
+    const studentData = new Student(this.pollInfo.idStudent, name,lastName, email, this.idCurrentStudent);
+    this.restService.updateStudentData(studentData)
+      .subscribe(res => console.log(res));
+  }
+}
+
 }

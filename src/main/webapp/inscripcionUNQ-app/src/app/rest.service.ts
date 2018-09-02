@@ -25,5 +25,11 @@ export class RestService {
   );
 }
 
+updateStudentData(studentData: Student) {
+  console.log(studentData);
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.post('/api/poll/userData', studentData, { headers })
+}
+
 
 }
