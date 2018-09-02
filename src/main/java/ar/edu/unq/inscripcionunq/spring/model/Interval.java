@@ -16,8 +16,8 @@ public class Interval extends BaseEntity {
 
 	public Interval(TypeDay day, LocalTime startHour, Integer countHours) {
 		this.day = day;
-		this.start = startHour;
-		this.countHours = countHours;
+		this.setStart(startHour);
+		this.setCountHours(countHours);
 	}
 
 	public Interval() {
@@ -26,6 +26,22 @@ public class Interval extends BaseEntity {
 
 	public TypeDay getDay() {
 		return day;
+	}
+
+	public LocalTime getStart() {
+		return start;
+	}
+
+	private void setStart(LocalTime start) {
+		this.start = start;
+	}
+
+	public Integer getCountHours() {
+		return countHours;
+	}
+
+	private void setCountHours(Integer countHours) {
+		this.countHours = countHours;
 	}
 
 }
