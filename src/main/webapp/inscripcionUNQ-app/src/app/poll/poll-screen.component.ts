@@ -23,9 +23,9 @@ export class PollScreenComponent implements OnInit {
     });
   }
 
-  editPoll(idPoll:number){
-    const pollInfo = new PollInfo(this.pollInfo.dniStudent,this.pollInfo.polls,idPoll);
-    this.pollService.sendStudentPollInfo(pollInfo);
+  editPoll(idPoll:number) {
+    this.pollInfo.idCurrentPoll = idPoll;
+    this.pollService.sendStudentPollInfo(this.pollInfo);
     this.router.navigate(['verificacion-de-datos']);
   }
 }
