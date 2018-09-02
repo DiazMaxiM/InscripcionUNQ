@@ -20,7 +20,7 @@ export class DataVerificationComponent implements OnInit {
   pollInfo: PollInfo;
 
   ngOnInit() {
-    this.pollService.change.subscribe((pollInfo:PollInfo) => {
+    this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
       this.pollInfo = pollInfo;
     });
   }

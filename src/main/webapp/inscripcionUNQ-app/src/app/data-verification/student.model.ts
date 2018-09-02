@@ -1,22 +1,21 @@
 export class Student {
 
-  email: string;
-  firstName?: string;
-  lastName?: string;
-  id?: string;
+  mail: string;
+  name: string;
+  lastName: string;
+  dni: number;
+  id: number;
   constructor(
-    email: string,
-    firstName?: string,
-    lastName?: string,
-    id?: string
+    dni: number,
+    name: string,
+    lastName: string,
+    mail: string,
+    id: number
   ) {
-    this.id = id;
-    this.firstName = firstName;
+    this.dni = dni;
+    this.name = name;
     this.lastName = lastName;
-    this.email = email;
-  }
-
-  fullName() {
-    return `${this.firstName} ${this.lastName}`;
+    this.mail = mail;
+    this.id = id;
   }
 }

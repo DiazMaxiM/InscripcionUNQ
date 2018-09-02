@@ -17,7 +17,7 @@ export class PollScreenComponent implements OnInit {
   polls: any;
 
   ngOnInit() {
-    this.pollService.change.subscribe((pollInfo:PollInfo) => {
+    this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
       this.pollInfo = pollInfo;
       this.polls = pollInfo.polls;
     });

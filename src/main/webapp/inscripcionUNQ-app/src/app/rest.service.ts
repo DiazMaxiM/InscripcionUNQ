@@ -1,16 +1,18 @@
-
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Student } from './data-verification/student.model';
 
 @Injectable()
 export class RestService {
   constructor(private http: Http) {}
 
-  login(dni: String) {
-    return this.http.get('/api/poll/user/' + dni)
+  login(idStudent: number) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.get('/api/poll/user/' + idStudent, { headers })
     .pipe(
-        map((res: Response) => res.json())
+        map((response: Response) => response.json())
     );
   }
 }
