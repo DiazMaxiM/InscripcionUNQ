@@ -1,27 +1,27 @@
 <div class="table-poll">
-<div class="row">
-  <div class="col-3 offset-2">
-    <p class="header">Nombre</p>
+  <div class="row">
+    <div class="col-3 offset-2">
+      <p class="header">Prueba</p>
+    </div>
+    <div class="col-3">
+       <p class="header">Fecha de inicio</p>
+    </div>
+    <div class="col-3">
+      <p class="header"> Fecha de fin </p>
+    </div>
   </div>
-  <div class="col-3">
-     <p class="header">Fecha de inicio</p>
+  <div class="row justify-content-center" *ngFor="let poll of polls">
+    <div class="col-3 offset-2">
+      {{ poll.name }}
+    </div>
+    <div class="col-3">
+      {{ poll.startDate.dayOfMonth}}/{{ poll.startDate.monthValue}}/{{ poll.startDate.year}}
+    </div>
+    <div class="col-3">
+      {{ poll.endDate.dayOfMonth}}/{{ poll.endDate.monthValue}}/{{ poll.endDate.year}}
+    </div>
+    <div class="col-1">
+      <i class="material-icons edit-icon" (click)="editPoll(poll.id)">edit</i>
+    </div>
   </div>
-  <div class="col-3">
-    <p class="header"> Fecha de fin </p>
-  </div>
-</div>
-<div class="row justify-content-center" *ngFor="let poll of polls">
-  <div class="col-3 offset-2">
-    {{ poll.name }}
-  </div>
-  <div class="col-3">
-    {{ poll.startDate.dayOfMonth}}/{{ poll.startDate.monthValue}}/{{ poll.startDate.year}}
-  </div>
-  <div class="col-3">
-    {{ poll.endDate.dayOfMonth}}/{{ poll.endDate.monthValue}}/{{ poll.endDate.year}}
-  </div>
-  <div class="col-1">
-    <i class="material-icons edit-icon" (click)="editPoll(poll.id)">edit</i>
-  </div>
-</div>
 </div>
