@@ -17,9 +17,9 @@ export class RestService {
     );
   }
 
-  getStudentData(idStudent: number, idPoll: number) {
+  getStudentData(dniStudent: number, idPoll: number) {
   const headers = new Headers({ 'Content-Type': 'application/json' });
-  return this.http.get('/api/poll/userData/' + idStudent + '/' + idPoll, { headers })
+  return this.http.get('/api/poll/userData/' + dniStudent + '/' + idPoll, { headers })
   .pipe(
       map((response: Response) => response.json())
   );
@@ -29,6 +29,14 @@ updateStudentData(studentData: Student) {
   console.log(studentData);
   const headers = new Headers({ 'Content-Type': 'application/json' });
   return this.http.post('/api/poll/userData', studentData, { headers })
+}
+
+getSubjets(idStudent: number) {
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.get('/api/poll/userApprovedSubjects/' + idStudent, { headers })
+  .pipe(
+      map((response: Response) => response.json())
+  );
 }
 
 
