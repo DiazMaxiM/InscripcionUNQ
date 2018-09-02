@@ -1,12 +1,14 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import {PollInfo} from './poll-info.model';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class PollService {
-
-  @Output() change: EventEmitter<PollInfo> = new EventEmitter();
+  private pollInfoSource = new BehaviorSubject<PollInfo>(new PollInfo());
+  currentPollInfo = this.pollInfoSource.asObservable();
+  constructor() { }
 
   sendSetudentPollInfo(pollInfo:PollInfo) {
-    this.change.emit(pollInfo);
-  }
+    this.pollInfoSource.next(pollInfo);
+ }
 }

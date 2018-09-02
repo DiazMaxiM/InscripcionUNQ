@@ -1,10 +1,10 @@
 export class PollInfo {
-  idStudent: number;
+  idStudent?: number;
   polls?: any;
   idCurrentPoll?: number;
 
   constructor(
-    idStudent: number,
+    idStudent?: number,
     polls?: any,
     idCurrentPoll?: number
   ) {
