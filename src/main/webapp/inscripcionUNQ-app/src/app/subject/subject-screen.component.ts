@@ -3,6 +3,7 @@ import { RestService } from '../rest.service';
 import { PollService } from '../poll/poll.service';
 import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
+import { element } from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-subject-screen',
@@ -42,5 +43,20 @@ export class SubjectScreenComponent implements OnInit{
       this.router.navigate(['seleccionar-materias']);
     }
 
-
+    update(id){
+      let result = []
+      for (const i in this.subjects) {
+        if (this.subjects[i].id == id){
+          result.push({
+            'id': this.subjects[i].id,
+            'code': this.subjects[i].code,
+            'name':this.subjects[i].name,
+            'approved': !this.subjects[i].approved
+          })
+        }else{
+          result.push(this.subjects[i])  
+        }
+      }
+      this.subjects = result;
+    }
 }
