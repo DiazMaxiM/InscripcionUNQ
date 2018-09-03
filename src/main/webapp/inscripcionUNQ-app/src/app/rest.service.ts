@@ -9,7 +9,7 @@ export class RestService {
 
   constructor(private http: Http) {}
 
-  login(idStudent: number) {
+  getPolls(idStudent: number) {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     return this.http.get('/api/poll/user/' + idStudent, { headers })
     .pipe(
@@ -26,9 +26,11 @@ export class RestService {
 }
 
 updateStudentData(studentData: Student) {
-  console.log(studentData);
   const headers = new Headers({ 'Content-Type': 'application/json' });
   return this.http.post('/api/poll/userData', studentData, { headers })
+  .pipe(
+      map((response: Response) => response['status'])
+    );
 }
 
 getSubjets(idStudent: number) {
@@ -39,5 +41,12 @@ getSubjets(idStudent: number) {
   );
 }
 
+updateStubjets(idStudent: number, subjects) {
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  return this.http.post('/api/poll/userApprovedSubjects/' + idStudent, subjects, { headers })
+  .pipe(
+      map((response: Response) => response['status'])
+    );
+}
 
 }

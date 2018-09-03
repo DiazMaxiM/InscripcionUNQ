@@ -6,7 +6,8 @@ import { PollInfo } from '../poll/poll-info.model';
 
 @Component({
   selector: 'app-subject-screen',
-  templateUrl: './subject-screen.component.html'
+  templateUrl: './subject-screen.component.html',
+  styleUrls: ['./subject-screen.component.css']
 })
 export class SubjectScreenComponent implements OnInit{
 
@@ -28,12 +29,16 @@ export class SubjectScreenComponent implements OnInit{
 
   getSubjets() {
     this.restService.getSubjets(this.pollInfo.idStudent)
-    .subscribe(subjects =>
-      this.subjects = subjects
-    );
-    }
+    .subscribe(subjects => {
+      this.subjects = subjects;
+    });
+  }
 
-    confirmar(){
+    confirmar() {
+      this.restService.updateStubjets(this.pollInfo.idStudent, this.subjects)
+      .subscribe(res => {
+        console.log(res);
+      });
       this.router.navigate(['seleccionar-materias']);
     }
 

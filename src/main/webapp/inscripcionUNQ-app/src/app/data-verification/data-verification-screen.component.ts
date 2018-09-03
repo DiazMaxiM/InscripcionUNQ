@@ -63,7 +63,7 @@ setStudenDataOnForm(student: Student) {
 onSubmit() {
   if (this.dataVerificationForm.valid) {
     const { name, lastName, email} = this.dataVerificationForm.value;
-    const studentData = new Student(this.pollInfo.idStudent, name,lastName, email, this.idCurrentStudent);
+    const studentData = new Student(this.pollInfo.dniStudent, name,lastName, email, this.idCurrentStudent);
     this.restService.updateStudentData(studentData)
       .subscribe(res => this.openDialog('Los datos fueron actualizados con exito'));
   }

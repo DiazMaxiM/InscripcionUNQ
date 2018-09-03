@@ -1,5 +1,5 @@
-<span class="header">Verifación de datos personales</span>
-<form [formGroup]="dataVerificationForm" (ngSubmit)="onSubmit()" class="form-student-verification-data">
+<span class="col-12 header">Verifación de datos personales</span>
+<form [formGroup]="dataVerificationForm" (ngSubmit)="onSubmit()" class="form-student-verification-data col-12">
   <mat-form-field class="full-width">
     <input
       matInput
@@ -34,5 +34,7 @@
         La dirección ingresada no corresponde a un correo electrónico válido
       </mat-error>
   </mat-form-field>
-  <button type="submit" mat-raised-button color="accent">Confirmar</button>
+  <div>
+    <button class="btn btn-danger" type="submit" mat-fab color="primary">Confirmar</button>
+  </div>
 </form>
