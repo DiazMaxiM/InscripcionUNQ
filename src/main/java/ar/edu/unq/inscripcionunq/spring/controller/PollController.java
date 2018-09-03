@@ -36,4 +36,5 @@ public class PollController {
 		StudentJson studentJson = new StudentJson(student);
 		return ResponseEntity.ok().body(studentJson);
 	}
+
 }

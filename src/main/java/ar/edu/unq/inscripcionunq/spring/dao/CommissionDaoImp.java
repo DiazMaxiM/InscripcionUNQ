@@ -28,4 +28,13 @@ public class CommissionDaoImp extends GenericDaoImp<Commission> implements Commi
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Commission> getAllCommissionsSubjectInPoll(Long idPoll) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Query<Commission> query = session.createQuery("select distinct c from Poll p join p.academicsOffer o "
+				+ "join o.commissions c join c.subject s where p.id=:idPoll");
+		query.setParameter("idPoll", idPoll);
+		return query.getResultList();
+	}
+
 }

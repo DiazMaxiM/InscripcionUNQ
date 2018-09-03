@@ -11,4 +11,6 @@ public interface StudentService extends GenericService<Student> {
 
 	void updateUserApprovedSubjects(String idUser, List<SubjectJson> studentsJson);
 
+	List<SubjectJson> userDisapprovedSubjectsWithCommissionAvailable(String idUser);
+
 }

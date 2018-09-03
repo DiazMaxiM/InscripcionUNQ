@@ -31,6 +31,10 @@ public class Commission extends BaseEntity {
 		this.quota = quota;
 	}
 
+	public Subject getSubject() {
+		return subject;
+	}
+
 	public void addHours(TypeDay day, LocalTime startHour, Integer countHours) {
 		List<Interval> intervalsResults = intervals.stream().filter(d -> d.getDay().equals(day))
 				.collect(Collectors.toList());

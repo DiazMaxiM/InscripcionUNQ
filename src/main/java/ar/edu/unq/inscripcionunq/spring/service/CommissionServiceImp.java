@@ -26,4 +26,10 @@ public class CommissionServiceImp extends GenericServiceImp<Commission> implemen
 		return commissions.stream().map(commission -> new CommissionJson(commission)).collect(Collectors.toList());
 	}
 
+	@Override
+	public List<Commission> getAllCommissionsSubjectInPoll(String idPoll) {
+
+		return commissionDaoImp.getAllCommissionsSubjectInPoll(new Long(idPoll));
+	}
+
 }

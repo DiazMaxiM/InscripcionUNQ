@@ -8,4 +8,6 @@ public interface CommissionDao extends GenericDao<Commission> {
 
 	List<Commission> getCommissionForSubjectInPoll(Long idSubject, Long idPoll);
 
+	List<Commission> getAllCommissionsSubjectInPoll(Long idPoll);
+
 }

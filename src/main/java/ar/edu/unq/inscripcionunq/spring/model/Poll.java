@@ -45,6 +45,7 @@ public class Poll extends BaseEntity {
 
 	public void addStudent(Student student) {
 		students.add(student);
+		student.setPoll(this);
 	}
 
 	public String getName() {
