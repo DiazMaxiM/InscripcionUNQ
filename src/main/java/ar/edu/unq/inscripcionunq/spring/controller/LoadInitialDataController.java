@@ -185,7 +185,7 @@ public class LoadInitialDataController {
 		Student maxi = new Student("Maximiliano Martin", "Diaz", "33810763", "diazmaxi@gmail.com");
 		maxi.addcareerInscription(tpi);
 		maxi.addcareerInscription(lds);
-		maxi.addMatterAprroved(subjectServiceImp.get(intro));
+		// maxi.addMatterAprroved(subjectServiceImp.get(intro));
 		maxi.addMatterAprroved(subjectServiceImp.get(mate1));
 		poll.addStudent(maxi);
 

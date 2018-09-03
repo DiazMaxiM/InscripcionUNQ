@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -30,6 +31,9 @@ public class Student extends BaseEntity {
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Commission> commissionsRegistration = new ArrayList<Commission>();
+	@ManyToOne
+	@LazyCollection(LazyCollectionOption.TRUE)
+	private Poll poll;
 
 	public Student() {
 
@@ -97,5 +101,13 @@ public class Student extends BaseEntity {
 
 	public void setSubjectsApproved(List<Subject> newSubjectsApproved) {
 		this.subjectsApproved = newSubjectsApproved;
+	}
+
+	public void setPoll(Poll poll) {
+		this.poll = poll;
+	}
+
+	public Poll getPoll() {
+		return poll;
 	}
 }

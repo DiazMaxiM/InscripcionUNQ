@@ -9,4 +9,6 @@ public interface CommissionService extends GenericService<Commission> {
 
 	List<CommissionJson> getCommissionForSubjectInPoll(String idSubject, String idPoll);
 
+	List<Commission> getAllCommissionsSubjectInPoll(String idPoll);
+
 }

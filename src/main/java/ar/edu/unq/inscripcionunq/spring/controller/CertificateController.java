@@ -22,6 +22,7 @@ public class CertificateController {
 	public ResponseEntity<byte[]> prueba() {
 		Certificate certificate = new Certificate();
 		byte[] pdfBytes;
+
 		try {
 			pdfBytes = certificate.getBinaryPDF();
 			HttpHeaders headers = new HttpHeaders();
@@ -29,7 +30,7 @@ public class CertificateController {
 			String filename = "output.pdf";
 			headers.setContentDispositionFormData(filename, filename);
 			headers.setCacheControl("must-revalidate, post-check=0,pre-check=0");
-			ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+			return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

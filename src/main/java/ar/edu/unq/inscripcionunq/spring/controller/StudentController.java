@@ -47,4 +47,11 @@ public class StudentController {
 		StudentServiceImp.updateUserApprovedSubjects(idUser, subjectsJson);
 		return ResponseEntity.ok().body(null);
 	}
+
+	@GetMapping("/poll/userDisapprovedSubjectsWithCommissionAvailable/{idUser}")
+	public ResponseEntity<List<SubjectJson>> userDisapprovedSubjectsWithCommissionAvailable(
+			@PathVariable String idUser) {
+		List<SubjectJson> a = StudentServiceImp.userDisapprovedSubjectsWithCommissionAvailable(idUser);
+		return ResponseEntity.ok().body(a);
+	}
 }
