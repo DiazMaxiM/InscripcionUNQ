@@ -1,11 +1,11 @@
 <div class="subjects-list">
   <div class="row">
-    <div class="col">
+    <div class="col offset-2">
       <h2 class="h6"> Materias disponibles </h2>
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-8 offset-2">
       <div class="row">
         <div class="col-8">
           <p class="font-weight-bold">Nombre</p>
@@ -17,96 +17,20 @@
           <p class="font-weight-bold"> Cursaré </p>
         </div>
       </div>
-      
-      <div class="row">
-        <div class="col-8">
-           P.Funcional 
-        </div>
-        <div class="col-2">
-           P - W 
-        </div>
-        <div class="col-2">
-          <mat-checkbox color="warn"></mat-checkbox>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8">
-           P.Funcional 
-        </div>
-        <div class="col-2">
-           P - W 
-        </div>
-        <div class="col-2">
-          <mat-checkbox color="warn"></mat-checkbox>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8">
-           P.Funcional 
-        </div>
-        <div class="col-2">
-           P - W 
-        </div>
-        <div class="col-2">
-          <mat-checkbox color="warn"></mat-checkbox>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8">
-           P.Funcional 
-        </div>
-        <div class="col-2">
-           P - W 
-        </div>
-        <div class="col-2">
-          <mat-checkbox color="warn"></mat-checkbox>
-        </div>
-      </div>
 
-    </div>
-    <div class="col-4 ml-auto border rounded border-secondary selected-subject">
       <div class="row">
-        <div class="col">
-          <p>P. Funcional</p>
+        <div class="col-8">
+           P.Funcional
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <p class="font-weight-bold">Comisión</p>
+        <div class="col-2">
+           P - W
         </div>
-        <div class="col">
-          <mat-form-field color="warn">
-            <mat-select placeholder="Elegir comisión">
-              <mat-option>
-      
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <p class="font-weight-bold">Horario</p>
-        </div>
-      </div>
-      <div class="row">
-        
-      </div>
-      <div class="row">
-        <div class="col">
-          <p class="font-weight-bold">Profesor</p>
-        </div>
-      </div>
-      <div class="row">
-        
-      </div>
-      <div class="row">
-        <div class="col">
-          <button class="btn btn-danger" type="submit" mat-fab color="primary">Aceptar</button>
+        <div class="col-2">
+          <mat-checkbox [(ngModel)]="checked" (ngModelChange)="aceptar()" color="warn"></mat-checkbox>
         </div>
       </div>
     </div>
-  </div>
+</div>
 </div>
 <div class="col-12">
     <button class="btn btn-danger" type="submit" mat-fab color="primary">Finalizar</button>
