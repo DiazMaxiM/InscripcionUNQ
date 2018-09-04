@@ -23,6 +23,8 @@ import { MomentModule } from 'ngx-moment';
 import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
 import { SubjectScreenComponent} from './subject/subject-screen.component';
 
+import { CustomDialogSubjectComponent } from './custom-dialog-subject/custom-dialog-subject.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,8 @@ import { SubjectScreenComponent} from './subject/subject-screen.component';
     DataVerificationComponent,
     CustomDialogComponent,
     SubjectScreenComponent,
-    SelectSubjectsComponent
+    SelectSubjectsComponent,
+    CustomDialogSubjectComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,6 @@ import { SubjectScreenComponent} from './subject/subject-screen.component';
   ],
   providers: [RestService, PollService],
   bootstrap: [AppComponent],
-  entryComponents: [CustomDialogComponent]
+  entryComponents: [CustomDialogComponent, CustomDialogSubjectComponent]
 })
 export class AppModule { }
