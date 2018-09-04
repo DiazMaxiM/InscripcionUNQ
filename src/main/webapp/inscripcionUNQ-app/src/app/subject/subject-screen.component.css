@@ -2,3 +2,7 @@
 	font-weight: bold;
   padding-bottom: 10px;
 }
+
+.nextBtn{
+	flex: 1 1 auto;
+}

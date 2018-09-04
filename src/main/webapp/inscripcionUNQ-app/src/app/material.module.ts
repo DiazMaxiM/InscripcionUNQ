@@ -6,6 +6,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule, MatOptionModule, MatSelectModule} from '@angular/material';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatListModule} from '@angular/material/list';
 
 const modules = [
   MatInputModule,
@@ -15,7 +17,9 @@ const modules = [
   MatCardModule,
   MatCheckboxModule,
   MatOptionModule,
-  MatSelectModule
+  MatSelectModule,
+  MatPaginatorModule,
+  MatListModule
 ];
 
 @NgModule({

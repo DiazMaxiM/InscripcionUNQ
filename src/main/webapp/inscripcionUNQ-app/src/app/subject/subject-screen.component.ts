@@ -35,7 +35,7 @@ export class SubjectScreenComponent implements OnInit{
     });
   }
 
-    confirmar() {
+    updateStubjets() {
       this.restService.updateStubjets(this.pollInfo.idStudent, this.subjects)
       .subscribe(res => {
         console.log(res);
@@ -43,20 +43,21 @@ export class SubjectScreenComponent implements OnInit{
       this.router.navigate(['seleccionar-materias']);
     }
 
-    update(id){
-      let result = []
+    update(id) {
+      const result = []
       for (const i in this.subjects) {
-        if (this.subjects[i].id == id){
+        if (this.subjects[i].id === id){
           result.push({
             'id': this.subjects[i].id,
             'code': this.subjects[i].code,
             'name':this.subjects[i].name,
             'approved': !this.subjects[i].approved
-          })
-        }else{
-          result.push(this.subjects[i])  
+          });
+        } else {
+          result.push(this.subjects[i]);
         }
       }
       this.subjects = result;
     }
+
 }
