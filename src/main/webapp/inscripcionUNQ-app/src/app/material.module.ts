@@ -8,6 +8,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule, MatOptionModule, MatSelectModule} from '@angular/material';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 const modules = [
   MatInputModule,
@@ -19,7 +20,8 @@ const modules = [
   MatOptionModule,
   MatSelectModule,
   MatPaginatorModule,
-  MatListModule
+  MatListModule,
+  MatGridListModule
 ];
 
 @NgModule({
