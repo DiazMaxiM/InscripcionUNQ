@@ -23,17 +23,16 @@ export class SelectSubjectsComponent implements OnInit{
 
   pollInfo: PollInfo;
   subjectsAvailable: any;
-  checked:boolean;
 
   ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
         this.pollInfo = pollInfo;
         this.getSubjetsAvailable();
       });
-    }
+  }
 
   selectSubject(subject) {
-    if(this.checked) {
+    if(subject.checked) {
       this.openDialog(subject);
     }
   }
@@ -47,9 +46,8 @@ export class SelectSubjectsComponent implements OnInit{
       };
     const dialogRef = this.dialog.open(CustomDialogSubjectComponent,
       dialogConfig);
-}
+  }
 
-    // Modificar y quedarme con las materias no aprobadas
   getSubjetsAvailable() {
     this.restService.getSubjetsAvailable(this.pollInfo.idStudent)
     .subscribe(subjects => {

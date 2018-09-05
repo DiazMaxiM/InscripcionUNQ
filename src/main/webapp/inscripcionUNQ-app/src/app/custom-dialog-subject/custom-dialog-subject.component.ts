@@ -9,7 +9,7 @@ import {DialogData} from './dialog-data.model' ;
  export class CustomDialogSubjectComponent {
     subject: any;
     commissions: any
-    horarioSeleccionados: Date[];
+    selectedTimes: Date[];
     // hacer un mapa con los horarios de las comisiones
     // cuando se cambia de opcion llamar a la funcion que muestran los horarios
     // aceptar guardar el horario seleccionado
