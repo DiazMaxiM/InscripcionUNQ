@@ -54,7 +54,7 @@ public class LoadInitialDataController {
 		matt = new Subject("01032", "Organización de Computadoras", 6);
 		matt.addCareer(tpi);
 		matt.addCareer(lds);
-		subjectServiceImp.save(matt);
+		long orga = subjectServiceImp.save(matt);
 
 		matt = new Subject("01033", "Matemática I", 8);
 		matt.addCareer(tpi);
@@ -119,7 +119,7 @@ public class LoadInitialDataController {
 		matt = new Subject("01045", "Programación Funcional", 4);
 		matt.addCareer(tpi);
 		matt.addCareer(lds);
-		subjectServiceImp.save(matt);
+		long pF = subjectServiceImp.save(matt);
 
 		matt = new Subject("01046", "Desarrollo de Aplicaciones", 6);
 		matt.addCareer(tpi);
@@ -167,11 +167,31 @@ public class LoadInitialDataController {
 		comm2.addHours(TypeDay.MONDAY, LocalTime.of(14, 00), 2);
 		commissionServiceImp.save(comm2);
 
+		Commission comm3 = new Commission("Orga1", subjectServiceImp.get(orga), 30);
+		comm3.addHours(TypeDay.MONDAY, LocalTime.of(10, 00), 5);
+		commissionServiceImp.save(comm3);
+
+		Commission comm4 = new Commission("Orga2", subjectServiceImp.get(orga), 30);
+		comm4.addHours(TypeDay.MONDAY, LocalTime.of(14, 00), 1);
+		commissionServiceImp.save(comm4);
+
+		Commission comm5 = new Commission("Orga2", subjectServiceImp.get(pF), 30);
+		comm5.addHours(TypeDay.MONDAY, LocalTime.of(18, 00), 4);
+		commissionServiceImp.save(comm5);
+
+		Commission comm6 = new Commission("Orga2", subjectServiceImp.get(pF), 30);
+		comm6.addHours(TypeDay.FRIDAY, LocalTime.of(11, 00), 4);
+		commissionServiceImp.save(comm6);
+
 		AcademicOffer acc1 = new AcademicOffer("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi);
 		AcademicOffer acc2 = new AcademicOffer("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds);
 
 		acc1.addCommission(comm1);
 		acc1.addCommission(comm2);
+		acc1.addCommission(comm3);
+		acc1.addCommission(comm4);
+		acc1.addCommission(comm5);
+		acc1.addCommission(comm6);
 
 		acc2.addCommission(comm2);
 		Long idAcamicOffer1 = academicOfferServiceImp.save(acc1);
