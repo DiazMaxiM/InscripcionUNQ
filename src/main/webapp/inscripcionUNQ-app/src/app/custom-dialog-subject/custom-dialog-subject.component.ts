@@ -7,13 +7,18 @@ import {DialogData} from './dialog-data.model' ;
      templateUrl: './custom-dialog-subject.component.html'
  })
  export class CustomDialogSubjectComponent {
-
-    message: string;
-
+    subject: any;
+    commissions: any
+    horarioSeleccionados: Date[];
+    // hacer un mapa con los horarios de las comisiones
+    // cuando se cambia de opcion llamar a la funcion que muestran los horarios
+    // aceptar guardar el horario seleccionado
      constructor(
        public dialogRef: MatDialogRef<CustomDialogSubjectComponent>,
        @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-         this.message = data.message;
+         this.subject = data.subject;
+         this.commissions = this.subject.commissionsJson;
+         console.log(this.commissions);
        }
 
      aceptar() {

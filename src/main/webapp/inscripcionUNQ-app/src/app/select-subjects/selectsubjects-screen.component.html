@@ -11,22 +11,16 @@
           <p class="font-weight-bold">Nombre</p>
         </div>
         <div class="col-2">
-           <p class="font-weight-bold">Carrera</p>
-        </div>
-        <div class="col-2">
           <p class="font-weight-bold"> Cursaré </p>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" *ngFor="let subject of subjectsAvailable">
         <div class="col-8">
-           P.Funcional
+           {{subject.name}}
         </div>
         <div class="col-2">
-           P - W
-        </div>
-        <div class="col-2">
-          <mat-checkbox [(ngModel)]="checked" (ngModelChange)="aceptar()" color="warn"></mat-checkbox>
+          <mat-checkbox [(ngModel)]="checked" (ngModelChange)="selectSubject(subject)" color="warn"></mat-checkbox>
         </div>
       </div>
     </div>

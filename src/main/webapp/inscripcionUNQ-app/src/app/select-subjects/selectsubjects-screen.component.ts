@@ -22,39 +22,38 @@ export class SelectSubjectsComponent implements OnInit{
   ) {}
 
   pollInfo: PollInfo;
-  dataVerificationForm: FormGroup;
-  subjects: any;
+  subjectsAvailable: any;
   checked:boolean;
 
   ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
         this.pollInfo = pollInfo;
-        this.getSubjets();
+        this.getSubjetsAvailable();
       });
     }
 
-  aceptar() {
-    if(this.checked){
-      this.openDialog('');
+  selectSubject(subject) {
+    if(this.checked) {
+      this.openDialog(subject);
     }
   }
 
-  openDialog(msg: String) {
+  openDialog(subject) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-        message: msg
+        subject: subject
       };
     const dialogRef = this.dialog.open(CustomDialogSubjectComponent,
       dialogConfig);
-    }
+}
 
-    //Modificar y quedarme con las materias no aprobadas
-  getSubjets() {
-    this.restService.getSubjets(this.pollInfo.idStudent)
+    // Modificar y quedarme con las materias no aprobadas
+  getSubjetsAvailable() {
+    this.restService.getSubjetsAvailable(this.pollInfo.idStudent)
     .subscribe(subjects => {
-      this.subjects = subjects;
+      this.subjectsAvailable = subjects;
     });
   }
 }

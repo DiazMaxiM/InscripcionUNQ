@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col">
-    <p>P. Funcional</p>
+    <p>{{subject.name}}</p>
   </div>
 </div>
 <div class="row">
@@ -10,8 +10,8 @@
   <div class="col">
     <mat-form-field color="warn">
       <mat-select placeholder="Elegir comisión">
-        <mat-option>
-
+        <mat-option *ngFor="let commission of commissions" [value]="commission.id">
+           {{commission.id}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -24,11 +24,6 @@
 </div>
 <div class="row">
 
-</div>
-<div class="row">
-  <div class="col">
-    <p class="font-weight-bold">Profesor</p>
-  </div>
 </div>
 <div class="row">
 
