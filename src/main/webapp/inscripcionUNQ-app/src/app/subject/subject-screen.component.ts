@@ -1,9 +1,11 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit,ViewChild} from '@angular/core';
 import { RestService } from '../rest.service';
 import { PollService } from '../poll/poll.service';
 import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
 import { element } from '@angular/core/src/render3/instructions';
+import {PageEvent} from '@angular/material';
+
 
 @Component({
   selector: 'app-subject-screen',
@@ -13,7 +15,15 @@ import { element } from '@angular/core/src/render3/instructions';
 export class SubjectScreenComponent implements OnInit{
 
   pollInfo: PollInfo;
-  subjects: any;
+  subjects = [];
+  activePageDataSubjects = []
+  // MatPaginator Inputs
+ length = 0;
+ pageSize = 10;
+ pageSizeOptions: number[] = [5, 10];
+
+ // MatPaginator Output
+ pageEvent: PageEvent;
 
   constructor(
     private restService: RestService,
@@ -32,6 +42,8 @@ export class SubjectScreenComponent implements OnInit{
     this.restService.getSubjets(this.pollInfo.idStudent)
     .subscribe(subjects => {
       this.subjects = subjects;
+      this.length = this.subjects.length;
+      this.activePageDataSubjects = this.subjects.slice(0,this.pageSize);
     });
   }
 
@@ -60,4 +72,14 @@ export class SubjectScreenComponent implements OnInit{
       this.subjects = result;
     }
 
+  onPageChanged(e) {
+    const firstCut = e.pageIndex * e.pageSize;
+    const secondCut = firstCut + e.pageSize;
+    this.activePageDataSubjects = this.subjects.slice(firstCut, secondCut);
+
+
+}
+setPageSizeOptions(setPageSizeOptionsInput: string) {
+  this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+}
 }
