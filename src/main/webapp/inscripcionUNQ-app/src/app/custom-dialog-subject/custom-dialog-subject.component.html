@@ -1,15 +1,17 @@
 <div class="row">
   <div class="col">
-    <p>{{subject.name}}</p>
+    <p mat-dialog-title>{{subject.name}}</p>
   </div>
 </div>
+<mat-dialog-content [formGroup]="form">
 <div class="row">
   <div class="col">
     <p class="font-weight-bold">Comisión</p>
   </div>
+
   <div class="col">
     <mat-form-field color="warn">
-      <mat-select placeholder="Elegir comisión" (selectionChange)="getTimesForCommission($event.value)">
+      <mat-select placeholder="Elegir comisión" (selectionChange)="getTimesForCommission($event.value)" formControlName="commissionCurrent">
         <mat-option *ngFor="let commission of commissions" [value]="commission.id">
            {{commission.id}}
         </mat-option>
@@ -32,8 +34,11 @@
     </div>
   </div>
 </div>
+</mat-dialog-content>
+<mat-dialog-actions>
 <div class="row">
   <div class="col">
     <button class="btn btn-danger" type="submit" mat-fab color="primary" (click)="accept()">Aceptar</button>
   </div>
 </div>
+</mat-dialog-actions>

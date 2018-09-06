@@ -16,11 +16,19 @@ export class Interval{
     let overlap = false;
 
     if(this.day == otherInterval.day){
-        overlap = (this.start.getTime() >= otherInterval.start.getTime() &&
-                   this.start.getTime() <= otherInterval.end.getTime()) ||
-                  (this.end.getTime() >= otherInterval.start.getTime() &&
-                   this.end.getTime() <= otherInterval.end.getTime());
+        overlap = this.checkOverlap(otherInterval);
     }
     return overlap;
+  }
+
+  checkOverlap(otherInterval){
+    return this.timeOverlap(otherInterval) || otherInterval.timeOverlap(this);
+  }
+
+  timeOverlap(otherInterval){
+    return (this.start.getTime() >= otherInterval.start.getTime() &&
+            this.start.getTime() <= otherInterval.end.getTime()) ||
+           (this.end.getTime()   >= otherInterval.start.getTime() &&
+            this.end.getTime()   <= otherInterval.end.getTime());
   }
 }

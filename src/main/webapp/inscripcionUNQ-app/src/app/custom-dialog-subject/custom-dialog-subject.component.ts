@@ -1,27 +1,36 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {DialogData} from './dialog-data.model' ;
-import { RegistrationIntention } from './registration-intention.model'
-import { Interval } from './interval.model'
+import { RegistrationIntention } from './registration-intention.model';
+import { Interval } from './interval.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
  @Component({
      selector: 'app-custom-dialog-subject',
      templateUrl: './custom-dialog-subject.component.html'
  })
- export class CustomDialogSubjectComponent {
+ export class CustomDialogSubjectComponent implements OnInit{
     subject: any;
     commissions: any;
     commissionCurrent: any;
     selectedTimes: any;
     registrationIntention: RegistrationIntention;
+    form: FormGroup;
 
     constructor(
        public dialogRef: MatDialogRef<CustomDialogSubjectComponent>,
+      private fb: FormBuilder,
        @Inject(MAT_DIALOG_DATA) public data: DialogData) {
          this.subject = data.subject;
          this.commissions = this.subject.commissionsJson;
          //this.registrationIntention = new RegistrationIntention(idUsuario);
      }
+
+     ngOnInit() {
+        this.form = this.fb.group({
+            commissionCurrent: this.commissionCurrent
+        });
+    }
 
      getCommission(idCommission){
       let commission = (this.commissions.filter(c => c.id == idCommission))[0];
@@ -32,7 +41,6 @@ import { Interval } from './interval.model'
        //verificar si minutes tiene una sola cifra, si es true agregar un cero a la izq
        this.selectedTimes = this.getCommission(idCommission).intervalJson;
        this.commissionCurrent = idCommission;
-
        return this.selectedTimes;
      }
 
@@ -63,19 +71,23 @@ import { Interval } from './interval.model'
     accept() {
        /*
        if(!this.commissionOverlap(this.commissionCurrent)){
-
         }
          this.registrationIntention.addInterval(intervals);
-         this.registrationIntention.addCommission(commissionCurrent);
+         this.registrationIntention.addCommission(this.commissionCurrent);
        }
        */
+       this.save()
        this.dialogRef.close();
+     }
+
+     save(){
+       this.dialogRef.close(this.form.value);
      }
 
      createDate(time){
        let date = new Date();
        date.setHours(time.hour);
-       date.setMinutes(time.minute);
+       date.setMinutes(time.minutes);
        return date;
      }
 
