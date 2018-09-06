@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +13,7 @@ import javax.persistence.ManyToMany;
 
 @Entity(name = "Subject")
 public class Subject extends BaseEntity {
-
+	@Column(unique = true)
 	private String code;
 	private String name;
 	private Integer hours;

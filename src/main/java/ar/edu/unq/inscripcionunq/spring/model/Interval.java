@@ -12,9 +12,9 @@ public class Interval extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private TypeDay day;
 	private LocalTime start;
-	private Integer countHours;
+	private Float countHours;
 
-	public Interval(TypeDay day, LocalTime startHour, Integer countHours) {
+	public Interval(TypeDay day, LocalTime startHour, Float countHours) {
 		this.day = day;
 		this.setStart(startHour);
 		this.setCountHours(countHours);
@@ -36,11 +36,11 @@ public class Interval extends BaseEntity {
 		this.start = start;
 	}
 
-	public Integer getCountHours() {
+	public Float getCountHours() {
 		return countHours;
 	}
 
-	private void setCountHours(Integer countHours) {
+	private void setCountHours(Float countHours) {
 		this.countHours = countHours;
 	}
 

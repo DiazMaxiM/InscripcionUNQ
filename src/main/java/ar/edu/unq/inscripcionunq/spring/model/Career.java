@@ -1,12 +1,13 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Entity(name = "Career")
 public class Career extends BaseEntity {
-
+	@Column(unique = true)
 	private String code;
 	private String description;
 	@Enumerated(EnumType.STRING)

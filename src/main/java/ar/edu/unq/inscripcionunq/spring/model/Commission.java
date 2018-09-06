@@ -35,7 +35,7 @@ public class Commission extends BaseEntity {
 		return subject;
 	}
 
-	public void addHours(TypeDay day, LocalTime startHour, Integer countHours) {
+	public void addHours(TypeDay day, LocalTime startHour, Float countHours) {
 		List<Interval> intervalsResults = intervals.stream().filter(d -> d.getDay().equals(day))
 				.collect(Collectors.toList());
 		if (intervalsResults.isEmpty()) {
@@ -52,5 +52,10 @@ public class Commission extends BaseEntity {
 
 	public List<Interval> getIntervals() {
 		return intervals;
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
 	}
 }

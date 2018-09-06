@@ -9,6 +9,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Interval;
 public class CommissionJson {
 
 	public Long id;
+	public String name;
 	public List<IntervalJson> intervalJson = new ArrayList<IntervalJson>();
 
 	public CommissionJson() {
@@ -17,6 +18,7 @@ public class CommissionJson {
 
 	public CommissionJson(Commission commission) {
 		this.id = commission.getId();
+		this.name = commission.getName();
 		List<Interval> intervals = commission.getIntervals();
 
 		for (Interval interval : intervals) {

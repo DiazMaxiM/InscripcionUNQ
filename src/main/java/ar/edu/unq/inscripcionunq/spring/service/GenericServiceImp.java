@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.dao.GenericDao;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 
 public abstract class GenericServiceImp<T> implements GenericService<T> {
 
@@ -18,8 +19,12 @@ public abstract class GenericServiceImp<T> implements GenericService<T> {
 	}
 
 	@Transactional
-	public T get(Long id) {
-		return (T) genericDao.get(id);
+	public T get(Long id) throws ObjectNotFoundinDBException {
+		T object = genericDao.get(id);
+		if (object == null) {
+			throw new ObjectNotFoundinDBException();
+		}
+		return object;
 	}
 
 	@Transactional
