@@ -20,16 +20,56 @@ import { Interval } from './interval.model'
        @Inject(MAT_DIALOG_DATA) public data: DialogData) {
          this.subject = data.subject;
          this.commissions = this.subject.commissionsJson;
-     }
-
-     getTimesForCommission(idCommission){
-       this.selectedTimes = this.getCommission(idCommission).intervalJson;
-       this.commissionCurrent = idCommission;
+         //this.registrationIntention = new RegistrationIntention(idUsuario);
      }
 
      getCommission(idCommission){
       let commission = (this.commissions.filter(c => c.id == idCommission))[0];
       return commission;
+     }
+
+     getTimesForCommission(idCommission){
+       //verificar si minutes tiene una sola cifra, si es true agregar un cero a la izq
+       this.selectedTimes = this.getCommission(idCommission).intervalJson;
+       this.commissionCurrent = idCommission;
+
+       return this.selectedTimes;
+     }
+
+     getIntervalsOfCommission(idCommission){
+       var times = this.getCommission(idCommission).intervalJson;
+       var intervals = [];
+
+       for(let time of times) {
+           var interval = this.createInterval(time);
+           intervals.push(interval);
+         }
+         this.registrationIntention.addInterval(intervals);
+     }
+
+    commissionOverlap(idCommission){
+      let registrationCurrent = this.registrationIntention.getIntention();
+      let timesCurrent = this.selectedTimes;
+      let overlap = false;
+
+      for(let r of registrationCurrent){
+        for(let t of timesCurrent){
+          overlap = overlap || t.overlapInterval(r);
+        }
+      }
+      return overlap;
+    }
+
+    accept() {
+       /*
+       if(!this.commissionOverlap(this.commissionCurrent)){
+
+        }
+         this.registrationIntention.addInterval(intervals);
+         this.registrationIntention.addCommission(commissionCurrent);
+       }
+       */
+       this.dialogRef.close();
      }
 
      createDate(time){
@@ -45,31 +85,5 @@ import { Interval } from './interval.model'
 
        let interval = new Interval(time.day, start, end);
        return interval;
-     }
-
-     getIntervalsOfCommission(idCommission){
-       let times = this.getCommission(idCommission).intervalJson;
-       let intervals;
-
-       for (let time of times) {
-         let interval = this.createInterval(time);
-           intervals.push(interval);
-         }
-         this.registrationIntention.addInterval(intervals);
-     }
-
-    commissionOverlap(idCommission){
-
-    }
-
-    accept() {
-       /*
-       if(!this.commissionOverlap(this.commissionCurrent)){
-
-        }
-         this.registrationIntention.addInterval(intervals);
-       }
-       */
-       this.dialogRef.close();
      }
  }

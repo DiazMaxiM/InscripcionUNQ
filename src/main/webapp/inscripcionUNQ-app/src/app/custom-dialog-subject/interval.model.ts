@@ -14,10 +14,12 @@ export class Interval{
 
   overlapInterval(otherInterval){
     let overlap = false;
-    
+
     if(this.day == otherInterval.day){
-        overlap = (this.start >= otherInterval.start && this.start <= otherInterval.end)
-        || (this.end >= otherInterval.start && this.end <= otherInterval.end);
+        overlap = (this.start.getTime() >= otherInterval.start.getTime() &&
+                   this.start.getTime() <= otherInterval.end.getTime()) ||
+                  (this.end.getTime() >= otherInterval.start.getTime() &&
+                   this.end.getTime() <= otherInterval.end.getTime());
     }
     return overlap;
   }
