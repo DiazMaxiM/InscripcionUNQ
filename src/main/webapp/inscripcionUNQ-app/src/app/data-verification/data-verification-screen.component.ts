@@ -29,7 +29,6 @@ export class DataVerificationComponent implements OnInit {
 
 ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
-      console.log(pollInfo);
       this.pollInfo = pollInfo;
       this.getStudentData();
     });
