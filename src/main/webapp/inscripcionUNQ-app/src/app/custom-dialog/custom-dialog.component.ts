@@ -4,7 +4,8 @@ import {DialogData} from './dialog-data.model' ;
 
 @Component({
     selector: 'app-custom-dialog',
-    templateUrl: './custom-dialog.component.html'
+    templateUrl: './custom-dialog.component.html',
+    styleUrls: ['./custom-dialog.component.css']
 })
 export class CustomDialogComponent {
 
