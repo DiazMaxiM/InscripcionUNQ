@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.AcademicOffer;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
@@ -39,7 +40,7 @@ public class LoadInitialDataController {
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void loadData() {
+	public void loadData() throws ObjectNotFoundinDBException {
 		Career tpi = new Career("P", "Tecnicatura Universitaria en Programacion Informatica");
 		Career lds = new Career("W", "Licenciatura en Informatica");
 		long aa = careerServiceImp.save(tpi);

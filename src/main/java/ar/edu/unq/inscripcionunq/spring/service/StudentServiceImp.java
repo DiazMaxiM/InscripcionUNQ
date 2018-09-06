@@ -11,6 +11,9 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CommissionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.SubjectJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CommissionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.SubjectDao;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
@@ -27,8 +30,16 @@ public class StudentServiceImp extends GenericServiceImp<Student> implements Stu
 	private CommissionDao commissionDaoImp;
 
 	@Override
-	public List<SubjectJson> userApprovedSubjects(String idUser) {
-		Student student = genericDao.get(new Long(idUser));
+	public List<SubjectJson> userApprovedSubjects(String idUser)
+			throws IdNumberFormatException, StudentNotExistenException {
+		Student student;
+		try {
+			student = this.get(new Long(idUser));
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} catch (ObjectNotFoundinDBException e) {
+			throw new StudentNotExistenException();
+		}
 		List<Career> careers = student.getCareersInscription();
 		List<Subject> subjects = subjectDaoImp.getSubjectsForCareers(careers);
 		List<SubjectJson> subjectsWithApproved = subjects.stream().map(s -> new SubjectJson(s, student.isApproved(s)))
@@ -37,8 +48,16 @@ public class StudentServiceImp extends GenericServiceImp<Student> implements Stu
 	}
 
 	@Override
-	public void updateUserApprovedSubjects(String idUser, List<SubjectJson> studentsJson) {
-		Student student = genericDao.get(new Long(idUser));
+	public void updateUserApprovedSubjects(String idUser, List<SubjectJson> studentsJson)
+			throws IdNumberFormatException, StudentNotExistenException {
+		Student student;
+		try {
+			student = this.get(new Long(idUser));
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} catch (ObjectNotFoundinDBException e) {
+			throw new StudentNotExistenException();
+		}
 		List<SubjectJson> subjectsApproved = studentsJson.stream().filter(studentJson -> studentJson.approved)
 				.collect(Collectors.toList());
 		if (!((int) subjectsApproved.size() == student.getSubjectsApproved().size()
@@ -53,8 +72,16 @@ public class StudentServiceImp extends GenericServiceImp<Student> implements Stu
 	}
 
 	@Override
-	public List<SubjectJson> userDisapprovedSubjectsWithCommissionAvailable(String idUser) {
-		Student student = genericDao.get(new Long(idUser));
+	public List<SubjectJson> userDisapprovedSubjectsWithCommissionAvailable(String idUser)
+			throws IdNumberFormatException, StudentNotExistenException {
+		Student student;
+		try {
+			student = this.get(new Long(idUser));
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} catch (ObjectNotFoundinDBException e) {
+			throw new StudentNotExistenException();
+		}
 		Long idPoll = student.getPoll().getId();
 		List<Commission> commissions = commissionDaoImp.getAllCommissionsSubjectInPoll(idPoll);
 		List<Subject> subjectsApproved = student.getSubjectsApproved();

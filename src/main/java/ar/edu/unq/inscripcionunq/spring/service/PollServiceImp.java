@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.dao.PollDao;
+import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
 
@@ -23,7 +24,7 @@ public class PollServiceImp extends GenericServiceImp<Poll> implements PollServi
 
 	@Override
 	@Transactional
-	public Student getUserDataForPoll(String dni, Long idPoll) {
+	public Student getUserDataForPoll(String dni, Long idPoll) throws UserInPollNotFoundException {
 		return ((PollDao) genericDao).getUserDataForPoll(dni, idPoll);
 	}
 
