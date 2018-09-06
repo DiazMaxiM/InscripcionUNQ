@@ -18,7 +18,7 @@ export class SelectSubjectsComponent implements OnInit{
     private restService: RestService,
     private pollService: PollService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {}
 
   pollInfo: PollInfo;
@@ -42,10 +42,10 @@ export class SelectSubjectsComponent implements OnInit{
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-        subject: subject
+        subject: subject,
       };
-    const dialogRef = this.dialog.open(CustomDialogSubjectComponent,
-      dialogConfig);
+    const dialogRef = this.dialog.open(CustomDialogSubjectComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(data => data);
   }
 
   getSubjetsAvailable() {
