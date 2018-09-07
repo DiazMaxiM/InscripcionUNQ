@@ -55,7 +55,10 @@ public class Commission extends BaseEntity {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
+	}
+	
+	public TypeStatus getStatus() {
+		return status;
 	}
 }
