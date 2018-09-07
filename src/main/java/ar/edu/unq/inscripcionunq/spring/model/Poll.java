@@ -62,5 +62,17 @@ public class Poll extends BaseEntity {
 		// TODO Auto-generated method stub
 		return endDate;
 	}
+	
+	public TypeStatus getStatus() {
+		return status;
+	}
+	
+	public List<AcademicOffer> getAcademicOffers() {
+		return academicsOffer;
+	}
+	
+	public List<Student> getStudents(){
+		return students;
+	}
 
 }
