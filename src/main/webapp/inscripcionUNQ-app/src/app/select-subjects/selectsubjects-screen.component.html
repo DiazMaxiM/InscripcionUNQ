@@ -22,12 +22,13 @@
         <div class="col-2">
           <mat-checkbox [(ngModel)]="subject.checked" (ngModelChange)="selectSubject(subject)" color="warn"></mat-checkbox>
         </div>
-        <div class="col-2" *ngIf="subject.checked;then content"></div>
-          <ng-template #content>{{<!-- mostrar nombre de comision-->}}</ng-template> 
+        <div class="col-2">
+          {{subject.commissionName}}
+        </div>
       </div>
     </div>
 </div>
-</div>s
+</div>
 <div class="col-12">
     <button class="btn btn-danger" type="submit" mat-fab color="primary">Finalizar</button>
 </div>
