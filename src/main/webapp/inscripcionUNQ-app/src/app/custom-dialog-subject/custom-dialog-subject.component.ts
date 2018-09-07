@@ -16,9 +16,10 @@ import { PollService } from '../poll/poll.service';
     commissions: any;
     commissionCurrent: any;
     selectedTimes: any;
-    intervalSelect:Interval[];
+    intervalSelect: Interval[];
     form: FormGroup;
     pollInfo: PollInfo;
+    commissionOverlapMessage;
 
     constructor(
       private pollService: PollService,
@@ -33,7 +34,7 @@ import { PollService } from '../poll/poll.service';
         this.form = this.fb.group({
             commissionCurrent: this.commissionCurrent
         });
-        this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
+        this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
           this.pollInfo = pollInfo;
           this.intervalSelect = this.pollInfo.intervalSelect  == null ? [] : this.pollInfo.intervalSelect ;
         });
@@ -47,6 +48,7 @@ import { PollService } from '../poll/poll.service';
      getTimesForCommission(idCommission) {
        this.selectedTimes = this.getCommission(idCommission).intervalJson;
        this.commissionCurrent = idCommission;
+       this.commissionOverlapMessage = '';
        return this.selectedTimes;
      }
 
@@ -71,20 +73,19 @@ import { PollService } from '../poll/poll.service';
   }
 
     accept() {
-      console.log("interval select");
-      console.log(this.intervalSelect);
       const intention = this.createRegistrationIntention();
-      console.log("interval intencion");
-      console.log(intention.intervals);
       if (!this.verificarSuperposicion(this.intervalSelect,intention.intervals)) {
         for (const interval of intention.intervals) {
             this.intervalSelect.push(interval);
        }
+       this.updatePollInfo();
        this.save(intention);
      } else {
-       console.log("Horario ocupado");
+       this.commissionOverlapMessage = 'No se pueden cursar materias con horarios superpuestos';
      }
-       // agrego a pullInfo los horarios seleccionados
+     }
+
+     updatePollInfo(){
        this.pollInfo.intervalSelect = this.intervalSelect;
        this.pollService.sendStudentPollInfo(this.pollInfo);
      }
@@ -127,7 +128,7 @@ import { PollService } from '../poll/poll.service';
         }
         return registrationIntention;
      }
-     
+
      createDate(time) {
        const date = new Date();
        date.setHours(time.hour);
@@ -158,15 +159,10 @@ import { PollService } from '../poll/poll.service';
      }
 
      timeOverlap(interval, otherInterval) {
-       console.log("interval");
-       console.log(interval);
-       console.log("otherInterval");
-       console.log(otherInterval);
        return this.dateRangeOverlaps(interval.start, interval.end, otherInterval.start, otherInterval.end);
      }
 
-     dateRangeOverlaps(a_start:Date, a_end:Date, b_start:Date, b_end:Date) {
-       console.log(a_start.getTime);
+     dateRangeOverlaps(a_start: Date, a_end: Date, b_start: Date, b_end: Date) {
        if (a_start <= b_start && b_start <= a_end) {return true;}
        if (a_start <= b_end && b_end <= a_end) {return true;}
        if (b_start < a_start && a_end < b_end) {return true;}

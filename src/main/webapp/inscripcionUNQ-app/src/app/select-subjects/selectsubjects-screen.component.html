@@ -15,12 +15,12 @@
         </div>
       </div>
 
-      <div class="row" *ngFor="let subject of subjectsAvailable">
+      <div class="row" *ngFor="let subject of activesubjectsAvailable">
         <div class="col-6">
            {{subject.name}}
         </div>
         <div class="col-2">
-          <mat-checkbox [(ngModel)]="subject.checked" (ngModelChange)="selectSubject(subject)" color="warn"></mat-checkbox>
+          <mat-checkbox [checked]='subject.checked' (change)="selectSubject(subject,$event)" color="warn"></mat-checkbox>
         </div>
         <div class="col-2">
           {{subject.commissionName}}
@@ -29,6 +29,8 @@
     </div>
 </div>
 </div>
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+</mat-paginator>
 <div class="col-12">
     <button class="btn btn-danger" type="submit" mat-fab color="primary">Finalizar</button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { RestService } from '../rest.service';
 import { PollService } from '../poll/poll.service';
 import { Router } from '@angular/router';
@@ -12,11 +12,12 @@ import {PageEvent} from '@angular/material';
   templateUrl: './subject-screen.component.html',
   styleUrls: ['./subject-screen.component.css']
 })
-export class SubjectScreenComponent implements OnInit{
+export class SubjectScreenComponent implements OnInit {
 
   pollInfo: PollInfo;
   subjects = [];
-  activePageDataSubjects = []
+  activePageDataSubjects = [];
+
   // MatPaginator Inputs
  length = 0;
  pageSize = 10;
@@ -43,7 +44,7 @@ export class SubjectScreenComponent implements OnInit{
     .subscribe(subjects => {
       this.subjects = subjects;
       this.length = this.subjects.length;
-      this.activePageDataSubjects = this.subjects.slice(0,this.pageSize);
+      this.activePageDataSubjects = this.subjects.slice(0, this.pageSize);
     });
   }
 
@@ -56,13 +57,13 @@ export class SubjectScreenComponent implements OnInit{
     }
 
     update(id) {
-      const result = []
+      const result = [];
       for (const i in this.subjects) {
-        if (this.subjects[i].id === id){
+        if (this.subjects[i].id === id) {
           result.push({
             'id': this.subjects[i].id,
             'code': this.subjects[i].code,
-            'name':this.subjects[i].name,
+            'name': this.subjects[i].name,
             'approved': !this.subjects[i].approved
           });
         } else {

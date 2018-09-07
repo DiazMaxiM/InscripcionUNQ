@@ -6,6 +6,9 @@ import { RestService } from '../rest.service';
 import { PollService } from '../poll/poll.service';
 import { PollInfo } from '../poll/poll-info.model';
 import { RegistrationIntention } from '../custom-dialog-subject/registration-intention.model';
+import {PageEvent} from '@angular/material';
+import {Subject} from '../subject/subject.model';
+
 
 @Component({
   selector: 'app-selectsubjects-screen',
@@ -15,6 +18,18 @@ import { RegistrationIntention } from '../custom-dialog-subject/registration-int
 
 export class SelectSubjectsComponent implements OnInit {
 
+    pollInfo: PollInfo;
+    subjectsAvailable: Subject[] = [];
+    registrationIntentions: RegistrationIntention[] = [];
+
+    // MatPaginator Output
+    pageEvent: PageEvent;
+    // MatPaginator Inputs
+   length = 0;
+   pageSize = 10;
+   pageSizeOptions: number[] = [5, 10];
+   activesubjectsAvailable: Subject[] = [];
+
   constructor(
     private restService: RestService,
     private pollService: PollService,
@@ -22,19 +37,17 @@ export class SelectSubjectsComponent implements OnInit {
     private dialog: MatDialog,
   ) {}
 
-  pollInfo: PollInfo;
-  subjectsAvailable: any;
-  registrationIntentions: RegistrationIntention[] = [];
-
   ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
         this.pollInfo = pollInfo;
-        this.getSubjetsAvailable();
+        if(!(this.subjectsAvailable.length > 0)) {
+           this.getSubjetsAvailable();
+        }
       });
   }
 
-  selectSubject(subject) {
-    if (subject.checked) {
+  selectSubject(subject, checkbox) {
+    if (checkbox.checked) {
       this.openDialog(subject);
     }
   }
@@ -47,37 +60,57 @@ export class SelectSubjectsComponent implements OnInit {
         subject: subject,
       };
     const dialogRef = this.dialog.open(CustomDialogSubjectComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(data => {
-        this.registrationIntentions.push(data);
-        console.log(data);
-        this.showCommisionName(subject.id, data.commissionValue);
+    dialogRef.afterClosed().subscribe(intention => {
+       if (intention !== undefined) {
+         this.registrationIntentions.push(intention);
+         this.showCommisionName(subject.id, intention.commissionValue);
+       }
     });
   }
 
   showCommisionName(idSubject, commissionName) {
-      const result = [];
-      for (const i in this.subjectsAvailable) {
-        if (this.subjectsAvailable[i].id === idSubject) {
-          result.push({
-            'id': this.subjectsAvailable[i].id,
-            'code': this.subjectsAvailable[i].code,
-            'name': this.subjectsAvailable[i].name,
-            'approved': !this.subjectsAvailable[i].approved,
-            'checked': true,
-            'commissionName': commissionName
-          });
-        } else {
-          result.push(this.subjectsAvailable[i]);
-        }
-      }
-      this.subjectsAvailable = result;
-      console.log(result);
+     const subject = this.getSubjet(idSubject);
+     const newSubject = this.createNewSubject(subject, commissionName);
+     this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
+     this.activesubjectsAvailable = this.subjectsAvailable;
+      console.log(this.subjectsAvailable);
+      console.log(this.activesubjectsAvailable);
+
   }
 
+  createNewSubject(oldSubject, commissionName) {
+    return {
+      'id': oldSubject.id,
+      'code': oldSubject.code,
+      'name': oldSubject.name,
+      'approved': oldSubject.approved,
+      'checked': true,
+      'commissionName': commissionName
+    };
+  }
+
+  getSubjet(idSubject) {
+    return this.subjectsAvailable.find(function (item) {
+        return item.id == idSubject;
+    });
+}
+
   getSubjetsAvailable() {
+    console.log('hola');
     this.restService.getSubjetsAvailable(this.pollInfo.idStudent)
     .subscribe(subjects => {
       this.subjectsAvailable = subjects;
+      this.length = this.subjectsAvailable.length;
+      this.activesubjectsAvailable = this.subjectsAvailable.slice(0, this.pageSize);
     });
   }
+
+  onPageChanged(e) {
+    const firstCut = e.pageIndex * e.pageSize;
+    const secondCut = firstCut + e.pageSize;
+    this.activesubjectsAvailable = this.subjectsAvailable.slice(firstCut, secondCut);
+}
+setPageSizeOptions(setPageSizeOptionsInput: string) {
+  this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
+}
 }
