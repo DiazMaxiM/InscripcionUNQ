@@ -29,10 +29,10 @@ public class CommissionTest {
 	
 	@Test
 	public void addCommissionTimeAndVerifyIfTheIntervalIsCreated() {
-		commission.addHours(TypeDay.TUESDAY, LocalTime.of(9, 00), 4.0f);
+		commission.addHours(TypeDay.MARTES, LocalTime.of(9, 00), 4.0f);
 
 		assertEquals(1, commission.getIntervals().size());
-		assertEquals(TypeDay.TUESDAY, commission.getIntervals().get(0).getDay());
+		assertEquals(TypeDay.MARTES, commission.getIntervals().get(0).getDay());
 		assertEquals(LocalTime.of(9, 00), commission.getIntervals().get(0).getStart());
 		assertEquals(4.0, commission.getIntervals().get(0).getCountHours(), 0);
 	}
