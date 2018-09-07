@@ -1,28 +1,17 @@
 import { Interval } from './interval.model';
 
 export class RegistrationIntention {
-  idUsuario: number;
-  idCommissions?: number[];
-  intention?: Interval[];
+  idCommissions?: number;
+  intervals = [];
+
   constructor(
-    idUsuario: number,
-    idCommissions?: number[],
-    intention?: any
+    idCommissions?: number,
   ) {
-    this.idUsuario = idUsuario;
+
     this.idCommissions = idCommissions;
-    this.intention = intention;
   }
 
-  getIntention(){
-    return this.intention;
-  }
-
-  addInterval(interval){
-    this.intention.push(interval);
-  }
-
-  addCommission(idCommission){
-    this.idCommissions.push(idCommission);
+  addInterval(interval) {
+    this.intervals.push(interval);
   }
 }

@@ -13,7 +13,7 @@
     <mat-form-field color="warn">
       <mat-select placeholder="Elegir comisión" (selectionChange)="getTimesForCommission($event.value)" formControlName="commissionCurrent">
         <mat-option *ngFor="let commission of commissions" [value]="commission.id">
-           {{commission.id}}
+           {{commission.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
