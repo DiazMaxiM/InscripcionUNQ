@@ -1,5 +1,3 @@
-import { Interval } from './interval.model';
-
 export class RegistrationIntention {
   idCommissions?: number;
   intervals = [];

@@ -45,7 +45,8 @@ export class SelectSubjectsComponent implements OnInit{
         subject: subject,
       };
     const dialogRef = this.dialog.open(CustomDialogSubjectComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(data => data);
+    dialogRef.afterClosed().subscribe(data =>
+      console.log(data));
   }
 
   getSubjetsAvailable() {

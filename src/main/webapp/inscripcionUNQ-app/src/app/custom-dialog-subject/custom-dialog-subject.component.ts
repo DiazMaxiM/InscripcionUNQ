@@ -3,9 +3,11 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {DialogData} from './dialog-data.model' ;
 import { RegistrationIntention } from './registration-intention.model';
 import { Interval } from './interval.model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup} from '@angular/forms';
+import { PollInfo } from '../poll/poll-info.model';
+import { PollService } from '../poll/poll.service';
 
- @Component({
+@Component({
      selector: 'app-custom-dialog-subject',
      templateUrl: './custom-dialog-subject.component.html'
  })
@@ -14,10 +16,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     commissions: any;
     commissionCurrent: any;
     selectedTimes: any;
-    intervalSelect = [];
+    intervalSelect:Interval[];
     form: FormGroup;
+    pollInfo: PollInfo;
 
     constructor(
+      private pollService: PollService,
       public dialogRef: MatDialogRef<CustomDialogSubjectComponent>,
       private fb: FormBuilder,
        @Inject(MAT_DIALOG_DATA) public data: DialogData) {
@@ -28,6 +32,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
      ngOnInit() {
         this.form = this.fb.group({
             commissionCurrent: this.commissionCurrent
+        });
+        this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
+          this.pollInfo = pollInfo;
+          this.intervalSelect = this.pollInfo.intervalSelect  == null ? [] : this.pollInfo.intervalSelect ;
         });
     }
 
@@ -72,10 +80,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         for (const interval of intention.intervals) {
             this.intervalSelect.push(interval);
        }
+       this.save(intention);
      } else {
        console.log("Horario ocupado");
      }
+       // agrego a pullInfo los horarios seleccionados
+       this.pollInfo.intervalSelect = this.intervalSelect;
+       this.pollService.sendStudentPollInfo(this.pollInfo);
      }
+
+     save(intention: RegistrationIntention) {
+       this.dialogRef.close(intention);
+     }
+
+   close() {
+       this.dialogRef.close();
+  }
+
 
      verificarSuperposicion(horariosOcupados, horarioPorOcupar) {
         let overlap = false;
@@ -106,9 +127,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         return registrationIntention;
      }
 
-     save() {
-       this.dialogRef.close(this.form.value);
-     }
 
      createDate(time) {
        const date = new Date();
