@@ -26,6 +26,7 @@ export class SigninScreenComponent {
       Validators.required
     ]);
   onSubmit() {
+      //comprobar dni valido, por ahora solo verifica que no sea vacío
       const dni = this.dniFormControl.value;
 
       this.restService.getPolls(dni).subscribe(polls => {
