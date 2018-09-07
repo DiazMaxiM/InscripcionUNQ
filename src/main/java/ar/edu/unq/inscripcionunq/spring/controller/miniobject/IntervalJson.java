@@ -14,7 +14,7 @@ public class IntervalJson {
 	public IntervalJson(Interval interval) {
 		this.day = interval.getDay();
 		startDate = interval.getStart();
-		endDate = startDate.plusMinutes((long) (interval.getCountHours() * 60));
+		endDate = startDate.plusMinutes((long) (interval.getCountHours() * 60 - 1));
 	}
 
 	public IntervalJson() {
