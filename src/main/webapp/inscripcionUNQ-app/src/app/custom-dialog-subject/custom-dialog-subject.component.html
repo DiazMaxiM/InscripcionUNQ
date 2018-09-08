@@ -27,16 +27,16 @@
     <p class="font-weight-bold">Horario</p>
   </div>
 </div>
-<div class="row">
-  <div class="col" *ngFor="let time of selectedTimes">
-    <div class="row">
-      <p class="col-4">{{time.day}}</p>
-      <p class="col-3">{{time.startDate.hour}} : {{time.startDate.minute}}</p>
+
+  <div class="row" *ngFor="let time of selectedTimes">
+
+      <p class="col">{{time.day}}</p>
+      <p class="col">{{time.startDate.hour}} : {{time.startDate.minute}}</p>
       <p class="col-1"> a </p>
-      <p class="col-3">{{time.endDate.hour}} : {{time.endDate.minute}}</p>
-    </div>
+      <p class="col">{{time.endDate.hour}} : {{time.endDate.minute}}</p>
+
   </div>
-</div>
+
 </mat-dialog-content>
 <mat-dialog-actions>
 <div class="row">
