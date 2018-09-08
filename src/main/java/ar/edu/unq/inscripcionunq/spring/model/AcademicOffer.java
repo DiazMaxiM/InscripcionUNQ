@@ -34,5 +34,9 @@ public class AcademicOffer extends BaseEntity {
 	public void addCommission(Commission commission) {
 		this.commissions.add(commission);
 	}
+	
+	public List<Commission> getCommissions(){
+		return commissions;
+	}
 
 }

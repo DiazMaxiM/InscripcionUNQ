@@ -110,4 +110,12 @@ public class Student extends BaseEntity {
 	public Poll getPoll() {
 		return poll;
 	}
+	
+	public boolean getRegularity() {
+		return regularity;
+	}
+	
+	public List<Commission> getCommissionsRegistration(){
+		return commissionsRegistration;
+	}
 }
