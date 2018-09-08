@@ -24,6 +24,8 @@ import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
 import { SubjectScreenComponent} from './subject/subject-screen.component';
 
 import { CustomDialogSubjectComponent } from './custom-dialog-subject/custom-dialog-subject.component';
+import { MatPaginatorI18n } from './spanish-paginator-intl';
+import { MatPaginatorIntl } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,7 @@ import { CustomDialogSubjectComponent } from './custom-dialog-subject/custom-dia
     Routing,
     MomentModule
   ],
-  providers: [RestService, PollService],
+  providers: [RestService, PollService,, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }],
   bootstrap: [AppComponent],
   entryComponents: [CustomDialogComponent, CustomDialogSubjectComponent]
 })
