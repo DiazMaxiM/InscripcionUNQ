@@ -27,6 +27,7 @@ export class SelectSubjectsComponent implements OnInit {
     // MatPaginator Inputs
    length = 0;
    pageSize = 10;
+   pageIndex = 0;
    pageSizeOptions: number[] = [5, 10];
    activesubjectsAvailable: Subject[] = [];
    currentPage;
@@ -51,7 +52,7 @@ export class SelectSubjectsComponent implements OnInit {
     if (checkbox.checked) {
       this.openDialog(subject);
     } else{
-      this.uncheckSubject(subject.id);
+      this.uncheckSubject(subject);
       const intentionToDelete = this.getIntention(subject.id);
       const intentions = this.registrationIntentions.filter(function(intention) { return intention.idSubject != subject.id; });
       this.registrationIntentions = intentions;
@@ -69,27 +70,26 @@ export class SelectSubjectsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(intention => {
        if (intention !== undefined) {
          this.registrationIntentions.push(intention);
-         this.showCommisionName(subject.id, intention.commissionValue);
+         this.showCommisionName(subject, intention.commissionValue);
        } else {
-         this.uncheckSubject(subject.id);
+         const newSubject = this.createNewSubject(subject, '', false);
+         this.uncheckSubject(subject);
        }
     });
   }
 
- uncheckSubject(idSubject){
-   const subject = this.getSubjet(idSubject);
-   const newSubject = this.createNewSubject(subject,'', false);
+ uncheckSubject(subject){
+  const newSubject = this.createNewSubject(subject, '', false);
    this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
-   this.onPageChanged(this.currentPage);
+   this.updatePagination(this.pageIndex,this.pageSize);
 
  }
 
 
-  showCommisionName(idSubject, commissionName) {
-     const subject = this.getSubjet(idSubject);
+  showCommisionName(subject, commissionName) {
      const newSubject = this.createNewSubject(subject, commissionName,true);
      this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
-     this.onPageChanged(this.currentPage);
+     this.updatePagination(this.pageIndex,this.pageSize);
 
   }
 
@@ -127,11 +127,16 @@ export class SelectSubjectsComponent implements OnInit {
   }
 
   onPageChanged(e) {
-    this.currentPage = e;
-    const firstCut = e.pageIndex * e.pageSize;
-    const secondCut = firstCut + e.pageSize;
-    this.activesubjectsAvailable = this.subjectsAvailable.slice(firstCut, secondCut);
+    this.pageIndex = e.pageIndex;
+    this.pageSize = e.pageSize;
+    this.updatePagination(e.pageIndex, e.pageSize);
 }
+updatePagination(pageIndex, pageSize) {
+  const firstCut = pageIndex * pageSize;
+  const secondCut = firstCut + pageSize;
+  this.activesubjectsAvailable = this.subjectsAvailable.slice(firstCut, secondCut);
+}
+
 setPageSizeOptions(setPageSizeOptionsInput: string) {
   this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
 }
