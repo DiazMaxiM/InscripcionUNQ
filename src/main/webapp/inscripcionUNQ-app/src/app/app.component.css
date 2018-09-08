@@ -1,7 +1,7 @@
 mat-toolbar{
-	background-color: #B3291C !important;
+	background-color: #f2f2f2 !important;
 	color: #FFF;
-	height: 100px;
+	height: 150px;
 }
 
 .title{
@@ -13,9 +13,13 @@ mat-toolbar{
 	width: 80% !important;
 	margin: auto;
 	margin-bottom: 3%;
+	background-color: white !important;
 }
 
 h2{
 	text-align: center;
 }
 
+.logo {
+	width: 20%;
+}
