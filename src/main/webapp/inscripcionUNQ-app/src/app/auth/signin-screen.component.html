@@ -1,6 +1,6 @@
 <form class="col-12" (ngSubmit)="onSubmit()">
-	<div>
-  <mat-form-field>
+	<div class="row justify-content-md-center">
+  <mat-form-field class="col-sm-12 col-lg-2">
     <input matInput type="number" placeholder="DNI" [formControl]="dniFormControl">
     <mat-error *ngIf="dniFormControl.hasError('required')">
       Campo obligatorio
