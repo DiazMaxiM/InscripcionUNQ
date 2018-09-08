@@ -49,6 +49,10 @@ export class SelectSubjectsComponent implements OnInit {
   selectSubject(subject, checkbox) {
     if (checkbox.checked) {
       this.openDialog(subject);
+    } else{
+      this.uncheckSubject(subject.id);
+      const intentions = this.registrationIntentions.filter(function(intention) { return intention.idSubject != subject.id; });
+      this.registrationIntentions = intentions;
     }
   }
 
@@ -64,28 +68,37 @@ export class SelectSubjectsComponent implements OnInit {
        if (intention !== undefined) {
          this.registrationIntentions.push(intention);
          this.showCommisionName(subject.id, intention.commissionValue);
+       } else {
+         this.uncheckSubject(subject.id);
        }
     });
   }
 
+ uncheckSubject(idSubject){
+   const subject = this.getSubjet(idSubject);
+   const newSubject = this.createNewSubject(subject,'', false);
+   this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
+   this.activesubjectsAvailable = this.subjectsAvailable;
+ }
+
+
   showCommisionName(idSubject, commissionName) {
      const subject = this.getSubjet(idSubject);
-     const newSubject = this.createNewSubject(subject, commissionName);
+     const newSubject = this.createNewSubject(subject, commissionName,true);
      this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
      this.activesubjectsAvailable = this.subjectsAvailable;
-      console.log(this.subjectsAvailable);
-      console.log(this.activesubjectsAvailable);
 
   }
 
-  createNewSubject(oldSubject, commissionName) {
+  createNewSubject(oldSubject, commissionName, checked) {
     return {
       'id': oldSubject.id,
       'code': oldSubject.code,
       'name': oldSubject.name,
       'approved': oldSubject.approved,
-      'checked': true,
-      'commissionName': commissionName
+      'checked': checked,
+      'commissionName': commissionName,
+      'commissionsJson': oldSubject.commissionsJson
     };
   }
 
@@ -96,7 +109,6 @@ export class SelectSubjectsComponent implements OnInit {
 }
 
   getSubjetsAvailable() {
-    console.log('hola');
     this.restService.getSubjetsAvailable(this.pollInfo.idStudent)
     .subscribe(subjects => {
       this.subjectsAvailable = subjects;

@@ -48,7 +48,7 @@ import { MatPaginatorIntl } from '@angular/material';
     Routing,
     MomentModule
   ],
-  providers: [RestService, PollService,, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }],
+  providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }],
   bootstrap: [AppComponent],
   entryComponents: [CustomDialogComponent, CustomDialogSubjectComponent]
 })

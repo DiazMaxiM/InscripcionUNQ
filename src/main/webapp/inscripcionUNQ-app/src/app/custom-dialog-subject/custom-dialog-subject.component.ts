@@ -119,7 +119,7 @@ import { PollService } from '../poll/poll.service';
 
      createRegistrationIntention() {
        const commissionName = this.getCommission(this.commissionCurrent).name;
-       const registrationIntention = new RegistrationIntention(this.commissionCurrent, commissionName);
+       const registrationIntention = new RegistrationIntention(this.commissionCurrent, commissionName,this.subject.id);
        for (const interval of this.selectedTimes) {
           const startDate = this.createDate(interval.startDate);
           const endDate = this.createDate(interval.endDate);
