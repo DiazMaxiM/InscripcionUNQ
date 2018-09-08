@@ -1,0 +1,16 @@
+button{
+	margin: auto;
+	display: block;
+}
+
+.subjects-list{
+	margin: 5% 0;
+}
+
+h2{
+	margin-bottom: 3%;
+}
+
+.selected-subject{
+	padding: 1%;
+}

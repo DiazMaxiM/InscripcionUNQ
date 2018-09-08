@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12 ">
+    <p mat-dialog-title>{{subject.name}}</p>
+  </div>
+  <div class="col-12" style="color:red">
+      {{commissionOverlapMessage}}
+  </div>
+</div>
+<mat-dialog-content [formGroup]="form">
+<div class="row">
+  <div class="col">
+    <p class="font-weight-bold">Comisión</p>
+  </div>
+
+  <div class="col">
+    <mat-form-field color="warn">
+      <mat-select placeholder="Elegir comisión" (selectionChange)="getTimesForCommission($event.value)" formControlName="commissionCurrent">
+        <mat-option *ngFor="let commission of commissions" [value]="commission.id">
+           {{commission.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <p class="font-weight-bold">Horario</p>
+  </div>
+</div>
+
+  <div class="row" *ngFor="let time of selectedTimes">
+
+      <p class="col">{{time.day}}</p>
+      <p class="col">{{time.startDate.hour}} : {{time.startDate.minute}}</p>
+      <p class="col-1"> a </p>
+      <p class="col">{{time.endDate.hour}} : {{time.endDate.minute}}</p>
+
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+<div class="row">
+  <div class="col-5">
+    <button class="btn btn-danger" type="submit" mat-fab color="primary" (click)="accept()">Aceptar</button>
+  </div>
+  <div class="col-5">
+    <button class="btn" mat-fab color="primary" (click)="close()">Cancelar</button>
+  </div>
+</div>
+</mat-dialog-actions>

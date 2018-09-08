@@ -1,0 +1,36 @@
+<div class="subjects-list">
+  <div class="row">
+    <div class="col offset-2">
+      <h2 class="h6"> Materias disponibles </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <div class="row">
+        <div class="col-8">
+          <p class="font-weight-bold">Nombre</p>
+        </div>
+        <div class="col-2">
+          <p class="font-weight-bold"> Cursaré </p>
+        </div>
+      </div>
+
+      <div class="row" *ngFor="let subject of activesubjectsAvailable">
+        <div class="col-6">
+           {{subject.name}}
+        </div>
+        <div class="col-2">
+          <mat-checkbox [checked]='subject.checked' (change)="selectSubject(subject,$event)" color="warn"></mat-checkbox>
+        </div>
+        <div class="col-2">
+          {{subject.commissionName}}
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+</mat-paginator>
+<div class="col-12">
+    <button class="btn btn-danger" type="submit" mat-fab color="primary">Finalizar</button>
+</div>

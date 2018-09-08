@@ -1,0 +1,13 @@
+form{
+	width: 20%;
+	margin: auto;
+}
+
+.btn{
+	background-color: #B3291C !important;
+	border-color: #B3291C !important;
+}
+button{
+	margin: auto;
+	display: block;
+}

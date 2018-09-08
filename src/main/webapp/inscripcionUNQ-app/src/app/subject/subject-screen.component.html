@@ -1,0 +1,13 @@
+<mat-list>
+  <h3 mat-subheader>Materias Aprobadas</h3>
+  <mat-list-item *ngFor="let subject of activePageDataSubjects">
+    <h4 mat-line>{{subject.name}}</h4>
+    <mat-checkbox [checked]='subject.approved' color="warn" (change)="update(subject.id)"></mat-checkbox>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+</mat-paginator>
+<div>
+    <button class="btn btn-danger" (click)="updateStubjets()" mat-fab color="primary">Siguiente</button>
+</div>
