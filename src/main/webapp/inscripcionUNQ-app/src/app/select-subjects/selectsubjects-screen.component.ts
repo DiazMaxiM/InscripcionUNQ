@@ -29,6 +29,7 @@ export class SelectSubjectsComponent implements OnInit {
    pageSize = 10;
    pageSizeOptions: number[] = [5, 10];
    activesubjectsAvailable: Subject[] = [];
+   currentPage;
 
   constructor(
     private restService: RestService,
@@ -51,6 +52,7 @@ export class SelectSubjectsComponent implements OnInit {
       this.openDialog(subject);
     } else{
       this.uncheckSubject(subject.id);
+      const intentionToDelete = this.getIntention(subject.id);
       const intentions = this.registrationIntentions.filter(function(intention) { return intention.idSubject != subject.id; });
       this.registrationIntentions = intentions;
     }
@@ -78,7 +80,8 @@ export class SelectSubjectsComponent implements OnInit {
    const subject = this.getSubjet(idSubject);
    const newSubject = this.createNewSubject(subject,'', false);
    this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
-   this.activesubjectsAvailable = this.subjectsAvailable;
+   this.onPageChanged(this.currentPage);
+
  }
 
 
@@ -86,7 +89,7 @@ export class SelectSubjectsComponent implements OnInit {
      const subject = this.getSubjet(idSubject);
      const newSubject = this.createNewSubject(subject, commissionName,true);
      this.subjectsAvailable[this.subjectsAvailable.indexOf(subject)] = newSubject;
-     this.activesubjectsAvailable = this.subjectsAvailable;
+     this.onPageChanged(this.currentPage);
 
   }
 
@@ -101,6 +104,12 @@ export class SelectSubjectsComponent implements OnInit {
       'commissionsJson': oldSubject.commissionsJson
     };
   }
+
+  getIntention(idSubject) {
+    return this.registrationIntentions.find(function (item) {
+        return item.idSubject == idSubject;
+    });
+}
 
   getSubjet(idSubject) {
     return this.subjectsAvailable.find(function (item) {
@@ -118,6 +127,7 @@ export class SelectSubjectsComponent implements OnInit {
   }
 
   onPageChanged(e) {
+    this.currentPage = e;
     const firstCut = e.pageIndex * e.pageSize;
     const secondCut = firstCut + e.pageSize;
     this.activesubjectsAvailable = this.subjectsAvailable.slice(firstCut, secondCut);
