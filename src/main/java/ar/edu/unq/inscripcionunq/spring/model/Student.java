@@ -12,6 +12,11 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.validacion.ValidacionEstudiante;
+
 @Entity(name = "Student")
 public class Student extends BaseEntity {
 
@@ -34,6 +39,7 @@ public class Student extends BaseEntity {
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Poll poll;
+	
 
 	public Student() {
 
@@ -79,12 +85,16 @@ public class Student extends BaseEntity {
 		return student.dni != this.dni || student.name != this.name || student.lastName != this.lastName
 				|| student.mail != this.mail;
 	}
-
-	public void update(Student student) {
-		this.dni = student.dni;
-		this.mail = student.mail;
-		this.lastName = student.lastName;
-		this.name = student.name;
+	
+	public void update(Student estudiante) throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+		ValidacionEstudiante validacion = new ValidacionEstudiante();
+		
+		if(validacion.estudianteValido(estudiante)) {
+			this.dni = estudiante.dni;
+			this.mail = estudiante.mail;
+			this.lastName = estudiante.lastName;
+			this.name = estudiante.name;
+		}
 	}
 
 	public List<Career> getCareersInscription() {

@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
@@ -11,64 +15,74 @@ import ar.edu.unq.inscripcionunq.spring.model.Student;
 import ar.edu.unq.inscripcionunq.spring.model.Subject;
 
 public class StudentTest {
-	private Student student;
+	private Student estudiante;
 
 	@Before
 	public void setUp() throws Exception {
-		student = new Student("Ana", "Martínez", "40111999", "ana.m@gmail.com");
+		estudiante = new Student("Ana", "Martínez", "40111999", "ana.m@gmail.com");
 	}
 
 	@Test
-	public void createStudentAndVerifyNameLastnameDniAndEmail() {
-		assertEquals("Ana", student.getName());
-		assertEquals("Martínez", student.getLastName());
-		assertEquals("40111999", student.getDni());
-		assertEquals("ana.m@gmail.com", student.getMail());
+	public void testCrearEstudianteyVerificarNombreApellidoyEmail() {
+		assertEquals("Ana", estudiante.getName());
+		assertEquals("Martínez", estudiante.getLastName());
+		assertEquals("40111999", estudiante.getDni());
+		assertEquals("ana.m@gmail.com", estudiante.getMail());
 	}
 	
 	@Test
-	public void createStudentAndVerifyRegularity() {
-		assertTrue(student.getRegularity());
+	public void testCrearEstudianteyVerificarRegularidad() {
+		assertTrue(estudiante.getRegularity());
 	}
 	
 	@Test
-	public void addApprovedSubjectAndVerifyIfItWasAddedAndApproval() {
-		Subject subject = Mockito.mock(Subject.class);
-		student.addMatterAprroved(subject);
+	public void testAgregarMateriaAprobadayVerificarSiEstaAprobadaYSiFueAgregada() {
+		Subject materia = Mockito.mock(Subject.class);
+		estudiante.addMatterAprroved(materia);
 		
-		assertTrue(student.isApproved(subject));
-		assertTrue(student.getSubjectsApproved().contains(subject));
+		assertTrue(estudiante.isApproved(materia));
+		assertTrue(estudiante.getSubjectsApproved().contains(materia));
 	}
 	
 	@Test
-	public void addCareerAndVerifyIfItWasAddedInCareers() {
-		Career career = Mockito.mock(Career.class);
-		student.addcareerInscription(career);
+	public void testAgregarCarrerayVerificarSiFueAgregadaACarreras() {
+		Career carrera = Mockito.mock(Career.class);
+		estudiante.addcareerInscription(carrera);
 		
-		assertTrue(student.getCareersInscription().contains(career));
+		assertTrue(estudiante.getCareersInscription().contains(carrera));
+	}
+
+	@Test(expected=NombreInvalidoException.class)
+	public void testActualizarEstudianteConNombreVacioLanzaExcepcion () throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+		Student estudianteConCambios = new Student("", "Martínez", "40111999", "ana.mh@gmail.com");
+		estudiante.update(estudianteConCambios);
+	}
+	
+	@Test(expected=ApellidoInvalidoException.class)
+	public void testActualizarEstudianteConApellidoVacioLanzaExcepcion () throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+		Student estudianteConCambios = new Student("Ana", "", "40111999", "ana.mh@gmail.com");
+		estudiante.update(estudianteConCambios);
+	}
+	
+	@Test(expected=EmailInvalidoException.class)
+	public void testActualizarEstudianteConEmailInvalidoLanzaExcepcion () throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+		Student estudianteConCambios = new Student("Ana", "Martínez", "40111999", "ana.mh@gmail");
+		estudiante.update(estudianteConCambios);
 	}
 	
 	@Test
-	public void updateStudentAndVerifyIfItWasChange() {
-		Student studentCurr = new Student("Ana", "Martínez", "40111999", "ana.mh@gmail.com");
-		assertTrue(student.isChange(studentCurr));
-		student.update(studentCurr);
-		assertFalse(student.isChange(studentCurr));
-	}
-	
-	@Test
-	public void addCommissionRegistrationAndVerifyIfItAdded() {
-		Commission commission = Mockito.mock(Commission.class);
-		student.addCommissionRegistration(commission);
+	public void testAgregarIntencionDeInscripcionAComisionyVerificarSiFueAgregada() {
+		Commission comision = Mockito.mock(Commission.class);
+		estudiante.addCommissionRegistration(comision);
 		
-		assertTrue(student.getCommissionsRegistration().contains(commission));
+		assertTrue(estudiante.getCommissionsRegistration().contains(comision));
 	}
 	
 	@Test
-	public void addPollAndVerifyIfItAdded() {
-		Poll poll = Mockito.mock(Poll.class);
-		student.setPoll(poll);
+	public void testAgregarEncuestaYVerificarSiFueAgregada() {
+		Poll encuesta = Mockito.mock(Poll.class);
+		estudiante.setPoll(encuesta);
 		
-		assertEquals(poll, student.getPoll());
+		assertEquals(encuesta, estudiante.getPoll());
 	}
 }
