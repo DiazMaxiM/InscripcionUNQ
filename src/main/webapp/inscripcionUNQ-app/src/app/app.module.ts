@@ -13,19 +13,19 @@ import 'hammerjs';
 import { SigninScreenComponent } from './auth/signin-screen.component';
 import { PollScreenComponent } from './poll/poll-screen.component';
 import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
-import { SelectSubjectsComponent } from './select-subjects/selectsubjects-screen.component';
+import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
 import { RestService } from './rest.service';
 import { PollService } from './poll/poll.service';
 
 import { Routing} from './app.routing';
 import { MomentModule } from 'ngx-moment';
 
-import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
 import { SubjectScreenComponent} from './subject/subject-screen.component';
 
-import { CustomDialogSubjectComponent } from './custom-dialog-subject/custom-dialog-subject.component';
+import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
 import { MatPaginatorI18n } from './spanish-paginator-intl';
 import { MatPaginatorIntl } from '@angular/material';
+import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 @NgModule({
   declarations: [
@@ -33,10 +33,9 @@ import { MatPaginatorIntl } from '@angular/material';
     SigninScreenComponent,
     PollScreenComponent,
     DataVerificationComponent,
-    CustomDialogComponent,
     SubjectScreenComponent,
-    SelectSubjectsComponent,
-    CustomDialogSubjectComponent
+    SeleccionDeMateriasPorCursarComponent,
+    SeleccionDeComisionDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -48,8 +47,8 @@ import { MatPaginatorIntl } from '@angular/material';
     Routing,
     MomentModule
   ],
-  providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }],
+  providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService],
   bootstrap: [AppComponent],
-  entryComponents: [CustomDialogComponent, CustomDialogSubjectComponent]
+  entryComponents: [CustomDialogComponent, SeleccionDeComisionDialogoComponent]
 })
 export class AppModule { }

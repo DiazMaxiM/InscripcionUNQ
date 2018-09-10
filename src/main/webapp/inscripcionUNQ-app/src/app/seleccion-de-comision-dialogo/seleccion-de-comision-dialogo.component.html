@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{materia.name}}</h2>
+<mat-dialog-content>
+  <mat-radio-group class="example-radio-group">
+    <mat-radio-button color="warn" class="example-radio-button" *ngFor="let comision of comisiones" [value]="comision.id" (change)="comisionSeleccionada(comision.id)">
+       {{comision.name}}
+      <mat-list role="list">
+         <mat-list-item role="listitem" *ngFor="let horario of comision.intervalJson">
+           {{horario.day}} {{horario.startDate.hour  | number:'2.0'}} : {{horario.startDate.minute  | number:'2.0'}} a {{horario.endDate.hour | number:'2.0'}} : {{horario.endDate.minute | number:'2.0'}}
+         </mat-list-item>
+      </mat-list>
+    </mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn" mat-fab color="primary" (click)="close()">Cancelar</button>
+</mat-dialog-actions>

@@ -15,15 +15,15 @@
         </div>
       </div>
 
-      <div class="row" *ngFor="let subject of activesubjectsAvailable">
+      <div class="row" *ngFor="let materia of materiasDisponiblesActivas">
         <div class="col-6">
-           {{subject.name}}
+           {{materia.name}}
         </div>
         <div class="col-2">
-          <mat-checkbox [checked]='subject.checked' (change)="selectSubject(subject,$event)" color="warn"></mat-checkbox>
+          <mat-checkbox [checked]='materia.checked' (change)="materiaSeleccionada(materia,$event)" color="warn"></mat-checkbox>
         </div>
         <div class="col-2">
-          {{subject.commissionName}}
+          {{materia.commissionName}}
         </div>
       </div>
     </div>

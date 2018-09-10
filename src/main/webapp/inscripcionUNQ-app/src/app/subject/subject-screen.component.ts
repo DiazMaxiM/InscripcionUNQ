@@ -52,7 +52,7 @@ export class SubjectScreenComponent implements OnInit {
       this.restService.updateStubjets(this.pollInfo.idStudent, this.subjects)
       .subscribe(res => {
       });
-      this.router.navigate(['seleccionar-materias']);
+      this.router.navigate(['materias-por-cursar']);
     }
 
     update(id) {
