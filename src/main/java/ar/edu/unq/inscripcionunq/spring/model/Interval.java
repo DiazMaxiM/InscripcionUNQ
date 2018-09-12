@@ -1,6 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,6 +23,12 @@ public class Interval extends BaseEntity {
 
 	public Interval() {
 
+	}
+
+	public String toString() {
+		return day.toString() + " " + start.format(DateTimeFormatter.ofPattern("HH:mm")).toString() + " a " + start
+				.plusMinutes((long) (countHours * 60 - 1)).format(DateTimeFormatter.ofPattern("HH:mm")).toString()
+				+ " ";
 	}
 
 	public TypeDay getDay() {

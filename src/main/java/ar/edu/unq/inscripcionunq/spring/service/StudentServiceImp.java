@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.itextpdf.text.DocumentException;
+
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CommissionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.SubjectJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CommissionDao;
@@ -15,6 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
+import ar.edu.unq.inscripcionunq.spring.model.Certificate;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
 import ar.edu.unq.inscripcionunq.spring.model.Subject;
@@ -101,6 +104,21 @@ public class StudentServiceImp extends GenericServiceImp<Student> implements Stu
 				)).collect(Collectors.toList());
 
 		return subjectJson;
+	}
+
+	public Certificate getCertificate(String idStudent)
+			throws StudentNotExistenException, DocumentException, IdNumberFormatException {
+		try {
+			Student student = this.get(new Long(idStudent));
+			Certificate certificate = new Certificate();
+			certificate.setEstudiante(student);
+			certificate.generatePDF();
+			return certificate;
+		} catch (ObjectNotFoundinDBException e) {
+			throw new StudentNotExistenException();
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		}
 	}
 
 }

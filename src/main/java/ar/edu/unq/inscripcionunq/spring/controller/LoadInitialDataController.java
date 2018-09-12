@@ -542,6 +542,9 @@ public class LoadInitialDataController {
 		maxi.addcareerInscription(tpi);
 		maxi.addMatterAprroved(subjectServiceImp.get(intro));
 		maxi.addMatterAprroved(subjectServiceImp.get(mate1));
+		maxi.addCommissionRegistration(commissionServiceImp.get(idcommOrga2));
+		maxi.addCommissionRegistration(commissionServiceImp.get(idcommingles2));
+
 		poll.addStudent(maxi);
 
 		pollServiceImp.save(poll);

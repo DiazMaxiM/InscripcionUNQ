@@ -57,8 +57,16 @@ public class Commission extends BaseEntity {
 	public String getName() {
 		return name;
 	}
-	
+
 	public TypeStatus getStatus() {
 		return status;
+	}
+
+	public String getIntervalosString() {
+		String textoIntervalos = "";
+		for (Interval intervalo : intervals) {
+			textoIntervalos = textoIntervalos.concat(intervalo.toString());
+		}
+		return textoIntervalos;
 	}
 }
