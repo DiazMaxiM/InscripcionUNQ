@@ -24,11 +24,17 @@ export class RegistroDeComisionesSeleccionadasService {
 hayHorariosSuperpuestos(horariosPorOcupar) {
    let haySuperposicion = false;
     for (const horarioPorOcupar of horariosPorOcupar) {
-      for (const horarioOcupado of this.horariosOcupados) {
+      for (const horarioOcupado of this.horariosEnElMismoDia(horarioPorOcupar)) {
          haySuperposicion = haySuperposicion || this. esHorarioSuperpuesto(horarioOcupado, horarioPorOcupar);
       }
+    }
     return haySuperposicion;
+
 }
+
+horariosEnElMismoDia(horarioPorOcupar: Horario) {
+  return this.horariosOcupados.filter(horarioDeLaComision => horarioDeLaComision.dia == horarioPorOcupar.dia);
+
 }
 
 
@@ -66,10 +72,10 @@ crearHorario(horario) {
   return new Horario(horario.day, horaDeInicio, horaDeFin);
 }
 
- esHorarioSuperpuesto(horarioOcupado, horarioDeConsulta) {
+ esHorarioSuperpuesto(horarioOcupado:Horario, horarioDeConsulta:Horario) {
   let haySuperposicion = false;
 
-  if (horarioOcupado.day === horarioDeConsulta.day) {
+  if (horarioOcupado.dia == horarioDeConsulta.dia) {
       haySuperposicion = this.haySuperposicionEntreHorarios(horarioOcupado, horarioDeConsulta);
   }
   return haySuperposicion;
