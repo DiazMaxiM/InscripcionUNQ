@@ -2,11 +2,9 @@ import { Component} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { RestService } from '../rest.service';
 import { PollService } from '../poll/poll.service';
-import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
-import { CustomDialogComponent } from '../custom-dialog/custom-dialog.component';
-import { MatDialog, MatDialogConfig} from '@angular/material';
 import {HttpErrorResponse } from '@angular/common/http';
+import {UtilesService} from '../utiles.service';
 
 @Component({
   selector: 'app-signin-screen',
@@ -17,9 +15,8 @@ export class SigninScreenComponent {
 
   constructor(
     private restService: RestService,
-    private router: Router,
     private pollService: PollService,
-    private dialog: MatDialog
+    private utilesService: UtilesService
   ) {}
 
   dniFormControl = new FormControl('', [
@@ -32,23 +29,12 @@ export class SigninScreenComponent {
       this.restService.getPolls(dni).subscribe(polls => {
         const pollInfo = new PollInfo(dni,polls);
         this.pollService.sendStudentPollInfo(pollInfo);
-        this.router.navigate(['encuestas']);
+       this.utilesService.irA('encuestas');
       },
       (err:HttpErrorResponse) => {
-          this.router.navigate(['home']);
-          //Acá hay que llamar al servicio que me devuelve el mensaje de error
-          this.openDialog('ACÁ VA EL MENSAJE QUE ME VIENE DEL JSON');
-      });
-  }
 
-  openDialog(msg: String) {
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = true;
-      dialogConfig.data = {
-          message: msg
-        };
-      const dialogRef = this.dialog.open(CustomDialogComponent,
-        dialogConfig);
+          //Acá hay que llamar al servicio que me devuelve el mensaje de error
+          this.utilesService.mostrarMensajeYRedireccionar('ACÁ VA EL MENSAJE QUE ME VIENE DEL JSON', 'home');
+      });
   }
 }

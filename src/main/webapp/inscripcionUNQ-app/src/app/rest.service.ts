@@ -49,7 +49,7 @@ updateStubjets(idStudent: number, subjects) {
     );
 }
 
-getSubjetsAvailable(idStudent: number) {
+obtenerMateriasDisponibles(idStudent: number) {
   return this.http.get('/api/poll/userDisapprovedSubjectsWithCommissionAvailable/' + idStudent)
   .pipe(
       map((response: Response) => response.json())

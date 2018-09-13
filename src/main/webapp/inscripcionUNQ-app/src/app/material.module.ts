@@ -9,6 +9,8 @@ import {MatCheckboxModule, MatOptionModule, MatSelectModule} from '@angular/mate
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 const modules = [
   MatInputModule,
@@ -21,7 +23,8 @@ const modules = [
   MatSelectModule,
   MatPaginatorModule,
   MatListModule,
-  MatGridListModule
+  MatGridListModule,
+  MatRadioModule
 ];
 
 @NgModule({
