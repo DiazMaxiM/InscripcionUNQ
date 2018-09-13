@@ -20,6 +20,7 @@ import { PollService } from './poll/poll.service';
 import { Routing} from './app.routing';
 import { MomentModule } from 'ngx-moment';
 
+import { FeedbackUsuarioDialogoComponent } from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
 import { SubjectScreenComponent} from './subject/subject-screen.component';
 
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
@@ -27,12 +28,15 @@ import { MatPaginatorI18n } from './spanish-paginator-intl';
 import { MatPaginatorIntl } from '@angular/material';
 import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
+import { UtilesService } from './utiles.service';
+
 @NgModule({
   declarations: [
     AppComponent,
     SigninScreenComponent,
     PollScreenComponent,
     DataVerificationComponent,
+    FeedbackUsuarioDialogoComponent,
     SubjectScreenComponent,
     SeleccionDeMateriasPorCursarComponent,
     SeleccionDeComisionDialogoComponent
@@ -47,8 +51,8 @@ import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-
     Routing,
     MomentModule
   ],
-  providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService],
+  providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService, UtilesService],
   bootstrap: [AppComponent],
-  entryComponents: [CustomDialogComponent, SeleccionDeComisionDialogoComponent]
+  entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent]
 })
 export class AppModule { }

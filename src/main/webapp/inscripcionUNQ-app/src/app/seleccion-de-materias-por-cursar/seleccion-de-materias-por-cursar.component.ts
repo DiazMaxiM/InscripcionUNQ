@@ -9,7 +9,7 @@ import { ComisionSeleccionada } from '../seleccion-de-comision-dialogo/comision-
 import {PageEvent} from '@angular/material';
 import {Subject} from '../subject/subject.model';
 import {RegistroDeComisionesSeleccionadasService} from './registro-de-comisiones-seleccionadas.service';
-
+import {UtilesService} from '../utiles.service';
 
 @Component({
   selector: 'app-seleccion-de-materias-por-cursar',
@@ -37,7 +37,8 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
     private pollService: PollService,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private registroComisionesService: RegistroDeComisionesSeleccionadasService
+    private registroComisionesService: RegistroDeComisionesSeleccionadasService,
+    private utilesService: UtilesService
   ) {}
 
 ngOnInit() {
@@ -127,24 +128,21 @@ deseleccionarMateria(materia) {
   const materiaActualizada = this.materiaActualizada(materia, '', false);
   this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
   this.updatePagination(this.pageIndex, this.pageSize);
-  console.log(this.materiasDisponibles);
 }
 
 guardarRegistro(materia, registro) {
-  console.log(registro);
   if (registro != null) {
         this.mostrarNombreDelaComisionSeleccionada(materia, registro.nombreDeLaComision);
         this.comisionesSeleccionadas.push(registro);
   } else {
+    this.utilesService.mostrarMensaje('No se pueden cursar materias en horarios que se superponen')
     this.deseleccionarMateria(materia);
   }
-  console.log(this.comisionesSeleccionadas);
 }
 
 eliminarComisionSeleccionada(idMateria) {
-  console.log(idMateria);
   const registro = this.comisionesSeleccionadas.find(function (registroDeComision) {
-           return registroDeComision.idMateria === idMateria;
+           return registroDeComision.idMateria == idMateria;
   });
   const index = this.comisionesSeleccionadas.indexOf(registro);
   this.comisionesSeleccionadas.splice(index, 1);

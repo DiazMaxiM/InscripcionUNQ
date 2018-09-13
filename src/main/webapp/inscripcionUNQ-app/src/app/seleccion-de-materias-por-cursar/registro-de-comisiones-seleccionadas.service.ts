@@ -9,8 +9,8 @@ export class RegistroDeComisionesSeleccionadasService {
 
   constructor() {}
 
-  crearRegistroDeComisionSeleccionada(idMateria,comision){
-    const nuevoRegistro:ComisionSeleccionada = this.nuevoRegistro(idMateria,comision);
+  crearRegistroDeComisionSeleccionada(idMateria, comision) {
+    const nuevoRegistro: ComisionSeleccionada = this.nuevoRegistro(idMateria, comision);
     if (!this.hayHorariosSuperpuestos(nuevoRegistro.horariosSeleccionados)) {
       for (const horario of nuevoRegistro.horariosSeleccionados) {
       this.horariosOcupados.push(horario);
@@ -72,7 +72,7 @@ crearHorario(horario) {
   return new Horario(horario.day, horaDeInicio, horaDeFin);
 }
 
- esHorarioSuperpuesto(horarioOcupado:Horario, horarioDeConsulta:Horario) {
+ esHorarioSuperpuesto(horarioOcupado: Horario, horarioDeConsulta: Horario) {
   let haySuperposicion = false;
 
   if (horarioOcupado.dia == horarioDeConsulta.dia) {
@@ -81,7 +81,7 @@ crearHorario(horario) {
   return haySuperposicion;
 }
 
-haySuperposicionEntreHorarios(horarioOcupado:Horario, horarioDeConsulta:Horario) {
+haySuperposicionEntreHorarios(horarioOcupado: Horario, horarioDeConsulta: Horario) {
   return horarioOcupado.horarioDeComienzo <= horarioDeConsulta.horarioDeFinalizacion &&
   horarioOcupado.horarioDeFinalizacion >= horarioDeConsulta.horarioDeComienzo;
 }

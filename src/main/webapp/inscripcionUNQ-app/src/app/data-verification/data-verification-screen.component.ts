@@ -5,9 +5,7 @@ import { PollService } from '../poll/poll.service';
 import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
 import { Student } from './student.model';
-import { MatDialog, MatDialogConfig} from '@angular/material';
-import {CustomDialogComponent} from '../custom-dialog/custom-dialog.component';
-
+import {UtilesService} from '../utiles.service';
 @Component({
   selector: 'app-data-verification-screen',
   templateUrl: './data-verification-screen.component.html',
@@ -17,10 +15,9 @@ export class DataVerificationComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private router: Router,
     private pollService: PollService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private utilesService: UtilesService
   ) {}
 
   pollInfo: PollInfo;
@@ -62,26 +59,15 @@ setStudenDataOnForm(student: Student) {
 onSubmit() {
   if (this.dataVerificationForm.valid) {
     const { name, lastName, email} = this.dataVerificationForm.value;
-    const studentData = new Student(this.pollInfo.dniStudent, name,lastName, email, this.idCurrentStudent);
+    const studentData = new Student(this.pollInfo.dniStudent, name, lastName, email, this.idCurrentStudent);
     this.restService.updateStudentData(studentData)
-      .subscribe(res => this.openDialog('Los datos fueron actualizados con exito'));
-  }
-}
-
-openDialog(msg: String) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-        message: msg
-      };
-    const dialogRef = this.dialog.open(CustomDialogComponent,
-      dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
+      .subscribe(res => {
         this.updatePollInfo();
-        this.router.navigate(['materias-aprobadas']);
-      });
+        const mensaje = 'Los datos fueron actualizados con exito';
+         this.utilesService.mostrarMensajeYRedireccionar(mensaje, 'materias-aprobadas');
+
+       });
+  }
 }
 
 updatePollInfo(){
