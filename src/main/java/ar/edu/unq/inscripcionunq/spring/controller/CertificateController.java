@@ -6,10 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itextpdf.text.DocumentException;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Certificate;
 import ar.edu.unq.inscripcionunq.spring.service.StudentService;
 
@@ -18,23 +22,22 @@ public class CertificateController {
 	@Autowired
 	private StudentService StudentServiceImp;
 
-	@GetMapping("/pdf")
-	public ResponseEntity<byte[]> prueba() {
-		Certificate certificate = new Certificate();
-		byte[] pdfBytes;
+	@GetMapping("/pdf/{idStudent}")
+	public ResponseEntity prueba(@PathVariable String idStudent) throws DocumentException {
 
+		Certificate certificate = new Certificate();
+
+		byte[] pdfBytes;
 		try {
-			pdfBytes = certificate.getBinaryPDF();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.parseMediaType("application/pdf"));
-			String filename = "output.pdf";
-			headers.setContentDispositionFormData(filename, filename);
-			headers.setCacheControl("must-revalidate, post-check=0,pre-check=0");
-			return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			pdfBytes = StudentServiceImp.getCertificate(idStudent).getBynaryPDF();
+		} catch (StudentNotExistenException | IdNumberFormatException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
-		return null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		String filename = "output.pdf";
+		headers.setContentDispositionFormData(filename, filename);
+		headers.setCacheControl("must-revalidate, post-check=0,pre-check=0");
+		return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 	}
 }
