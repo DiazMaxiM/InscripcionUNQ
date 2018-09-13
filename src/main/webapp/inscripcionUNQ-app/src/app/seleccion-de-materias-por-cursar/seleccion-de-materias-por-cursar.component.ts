@@ -135,7 +135,7 @@ guardarRegistro(materia, registro) {
         this.mostrarNombreDelaComisionSeleccionada(materia, registro.nombreDeLaComision);
         this.comisionesSeleccionadas.push(registro);
   } else {
-    this.utilesService.mostrarMensaje('No se pueden cursar materias en horarios que se superponen')
+    this.utilesService.mostrarMensaje('No se pueden cursar materias en horarios que se superponen');
     this.deseleccionarMateria(materia);
   }
 }
@@ -146,7 +146,6 @@ eliminarComisionSeleccionada(idMateria) {
   });
   const index = this.comisionesSeleccionadas.indexOf(registro);
   this.comisionesSeleccionadas.splice(index, 1);
-  console.log(this.comisionesSeleccionadas);
   this.registroComisionesService.eliminarHorarios(registro.horariosSeleccionados);
 }
 }
