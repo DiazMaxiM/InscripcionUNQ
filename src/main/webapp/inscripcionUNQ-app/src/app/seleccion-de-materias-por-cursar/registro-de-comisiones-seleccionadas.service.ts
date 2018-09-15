@@ -18,7 +18,8 @@ export class RegistroDeComisionesSeleccionadasService {
     }
     return nuevoRegistro;
   }
-  return null;
+  nuevoRegistro.horariosSeleccionados = [];
+  return nuevoRegistro;
 }
 
 hayHorariosSuperpuestos(horariosPorOcupar) {

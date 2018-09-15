@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
@@ -29,6 +28,7 @@ import { MatPaginatorIntl } from '@angular/material';
 import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 import { UtilesService } from './utiles.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -47,9 +47,9 @@ import { UtilesService } from './utiles.service';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     Routing,
-    MomentModule
+    MomentModule,
+    HttpClientModule
   ],
   providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService, UtilesService],
   bootstrap: [AppComponent],

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
 import { element } from '@angular/core/src/render3/instructions';
 import {PageEvent} from '@angular/material';
-
+import { Subject } from './subject.model';
 
 @Component({
   selector: 'app-subject-screen',
@@ -15,7 +15,7 @@ import {PageEvent} from '@angular/material';
 export class SubjectScreenComponent implements OnInit {
 
   pollInfo: PollInfo;
-  subjects = [];
+  subjects: Subject[] = [];
   activePageDataSubjects = [];
 
   // MatPaginator Inputs
@@ -76,8 +76,6 @@ export class SubjectScreenComponent implements OnInit {
     const firstCut = e.pageIndex * e.pageSize;
     const secondCut = firstCut + e.pageSize;
     this.activePageDataSubjects = this.subjects.slice(firstCut, secondCut);
-
-
 }
 setPageSizeOptions(setPageSizeOptionsInput: string) {
   this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);

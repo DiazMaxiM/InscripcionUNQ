@@ -47,7 +47,7 @@ getStudentData() {
     );
   }
 
-setStudenDataOnForm(student: Student) {
+setStudenDataOnForm(student) {
   this.idCurrentStudent = student.id;
   this.dataVerificationForm.setValue({
     'name': student.name,

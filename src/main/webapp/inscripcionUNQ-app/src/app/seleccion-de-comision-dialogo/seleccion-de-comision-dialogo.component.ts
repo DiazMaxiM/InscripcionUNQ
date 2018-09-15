@@ -30,7 +30,7 @@ import {RegistroDeComisionesSeleccionadasService} from '../seleccion-de-materias
        this.dialogRef.close(comisionSeleccionada);
   }
 
-   close() {
+ close() {
        this.dialogRef.close();
   }
 

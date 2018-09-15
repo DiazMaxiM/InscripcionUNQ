@@ -10,6 +10,7 @@ import {PageEvent} from '@angular/material';
 import {Subject} from '../subject/subject.model';
 import {RegistroDeComisionesSeleccionadasService} from './registro-de-comisiones-seleccionadas.service';
 import {UtilesService} from '../utiles.service';
+import {Comision} from './comision.model';
 
 @Component({
   selector: 'app-seleccion-de-materias-por-cursar',
@@ -130,12 +131,14 @@ deseleccionarMateria(materia) {
   this.updatePagination(this.pageIndex, this.pageSize);
 }
 
-guardarRegistro(materia, registro) {
-  if (registro != null) {
+guardarRegistro(materia, registro: ComisionSeleccionada) {
+  if (registro != null && registro.horariosSeleccionados.length > 0) {
         this.mostrarNombreDelaComisionSeleccionada(materia, registro.nombreDeLaComision);
         this.comisionesSeleccionadas.push(registro);
-  } else {
-    this.utilesService.mostrarMensaje('No se pueden cursar materias en horarios que se superponen');
+  } else{
+    if (registro != null && registro.horariosSeleccionados.length == 0){
+      this.utilesService.mostrarMensaje('No se pueden cursar materias en horarios que se superponen');
+    }
     this.deseleccionarMateria(materia);
   }
 }
@@ -148,4 +151,21 @@ eliminarComisionSeleccionada(idMateria) {
   this.comisionesSeleccionadas.splice(index, 1);
   this.registroComisionesService.eliminarHorarios(registro.horariosSeleccionados);
 }
+
+finalizarEncuesta(){
+  if(this.comisionesSeleccionadas.length == 0){
+    this.utilesService.mostrarMensaje('No ha seleccionado ninguna materia')
+  } else {
+     this.enviarComisionesSeleccionadas();
+  }
+}
+
+enviarComisionesSeleccionadas(){
+  const comisiones= [];
+  for (const comision of this.comisionesSeleccionadas){
+    comisiones.push(new Comision(comision.idComision));
+  }
+  this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones);
+}
+
 }
