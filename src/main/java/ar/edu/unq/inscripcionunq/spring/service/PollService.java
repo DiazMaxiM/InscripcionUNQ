@@ -19,4 +19,6 @@ public interface PollService extends GenericService<Poll> {
 
 	public void setComisionesSeleccionadas(String id, List<IdJson> idsJson) throws IdNumberFormatException,
 			StudentNotExistenException, CommissionNotExistenException, VariasComisionesDeUnaMateriaException;
+
+	public Boolean puedeGenerarPDF(String dni, Long id);
 }

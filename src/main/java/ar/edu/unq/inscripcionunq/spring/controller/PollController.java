@@ -31,11 +31,14 @@ public class PollController {
 	private PollService pollServiceImp;
 
 	@GetMapping("/poll/user/{dni}")
-	public ResponseEntity<List<PollJson>> activePollsForAUser(@PathVariable String dni) {
+	public ResponseEntity<List<PollJson>> activePollsForAUser(@PathVariable String dni)
+			throws UserInPollNotFoundException {
 		List<Poll> polls = pollServiceImp.getAllPollsActiveForDni(dni);
-		List<PollJson> minipolls = polls.stream()
-				.map(m -> new PollJson(m.getId(), m.getName(), m.getStartDate(), m.endDate()))
-				.collect(Collectors.toList());
+
+		List<PollJson> minipolls = polls.stream().map(m -> new PollJson(m.getId(), m.getName(), m.getStartDate(),
+				m.endDate(), pollServiceImp.puedeGenerarPDF(dni, m.getId()))
+
+		).collect(Collectors.toList());
 		return ResponseEntity.ok().body(minipolls);
 
 	}

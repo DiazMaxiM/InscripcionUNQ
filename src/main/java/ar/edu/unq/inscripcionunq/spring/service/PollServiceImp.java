@@ -42,6 +42,16 @@ public class PollServiceImp extends GenericServiceImp<Poll> implements PollServi
 	}
 
 	@Override
+	@Transactional
+	public Boolean puedeGenerarPDF(String dni, Long idPoll) {
+		try {
+			return !this.getUserDataForPoll(dni, idPoll).getCommissionsRegistration().isEmpty();
+		} catch (UserInPollNotFoundException e) {
+		}
+		return false;
+	}
+
+	@Override
 	public void setComisionesSeleccionadas(String id, List<IdJson> idsJson) throws IdNumberFormatException,
 			StudentNotExistenException, CommissionNotExistenException, VariasComisionesDeUnaMateriaException {
 		Student estudiante;
