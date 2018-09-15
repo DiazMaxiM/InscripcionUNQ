@@ -8,12 +8,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.PollJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.StudentJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
+import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
 import ar.edu.unq.inscripcionunq.spring.service.PollService;
@@ -43,6 +50,17 @@ public class PollController {
 		}
 		StudentJson studentJson = new StudentJson(student);
 		return ResponseEntity.ok().body(studentJson);
+	}
+
+	@PostMapping("/poll/comisionesSeleccionada/{id}")
+	public ResponseEntity updateUserData(@PathVariable String id, @RequestBody List<IdJson> idsJson) {
+		try {
+			pollServiceImp.setComisionesSeleccionadas(id, idsJson);
+		} catch (IdNumberFormatException | StudentNotExistenException | CommissionNotExistenException
+				| VariasComisionesDeUnaMateriaException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		return ResponseEntity.ok().body(null);
 	}
 
 }

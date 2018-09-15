@@ -92,8 +92,10 @@ public class StudentServiceImp extends GenericServiceImp<Student> implements Stu
 				.filter(commission -> !subjectsApproved.contains(commission.getSubject())).collect(Collectors.toList());
 		List<Subject> subjectsDisapproved = commissionDisapproved.stream().map(c -> c.getSubject()).distinct()
 				.collect(Collectors.toList());
-
-		List<SubjectJson> subjectJson = subjectsDisapproved.stream().map(subject -> new SubjectJson(subject, false))
+		List<Commission> comisionesRegistradas = student.getCommissionsRegistration();
+		List<SubjectJson> subjectJson = subjectsDisapproved.stream()
+				.map(subject -> new SubjectJson(subject, false, comisionesRegistradas.stream()
+						.filter(c -> c.getSubject().getId().equals(subject.getId())).collect(Collectors.toList())))
 				.collect(Collectors.toList());
 
 		subjectJson.stream()

@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
 import ar.edu.unq.inscripcionunq.spring.validacion.ValidacionEstudiante;
 
 @Entity(name = "Student")
@@ -39,7 +41,6 @@ public class Student extends BaseEntity {
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Poll poll;
-	
 
 	public Student() {
 
@@ -60,8 +61,15 @@ public class Student extends BaseEntity {
 		careersInscription.add(career);
 	}
 
-	public void addCommissionRegistration(Commission commission) {
-		commissionsRegistration.add(commission);
+	public void addCommissionRegistration(Commission commission) throws VariasComisionesDeUnaMateriaException {
+		Subject materia = commission.getSubject();
+		List<Commission> comisiones = commissionsRegistration.stream()
+				.filter(c -> c.getSubject().getId().equals(materia.getId())).collect(Collectors.toList());
+		if (comisiones.isEmpty()) {
+			commissionsRegistration.add(commission);
+		} else {
+			throw new VariasComisionesDeUnaMateriaException();
+		}
 	}
 
 	public String getDni() {
@@ -85,11 +93,12 @@ public class Student extends BaseEntity {
 		return student.dni != this.dni || student.name != this.name || student.lastName != this.lastName
 				|| student.mail != this.mail;
 	}
-	
-	public void update(Student estudiante) throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+
+	public void update(Student estudiante)
+			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
 		ValidacionEstudiante validacion = new ValidacionEstudiante();
-		
-		if(validacion.estudianteValido(estudiante)) {
+
+		if (validacion.estudianteValido(estudiante)) {
 			this.dni = estudiante.dni;
 			this.mail = estudiante.mail;
 			this.lastName = estudiante.lastName;
@@ -120,12 +129,16 @@ public class Student extends BaseEntity {
 	public Poll getPoll() {
 		return poll;
 	}
-	
+
 	public boolean getRegularity() {
 		return regularity;
 	}
-	
-	public List<Commission> getCommissionsRegistration(){
+
+	public List<Commission> getCommissionsRegistration() {
 		return commissionsRegistration;
+	}
+
+	public void eliminarTodasLasComisionesInscripto() {
+		this.commissionsRegistration = new ArrayList<Commission>();
 	}
 }
