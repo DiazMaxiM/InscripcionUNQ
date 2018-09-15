@@ -2,6 +2,8 @@ package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
+
 import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.SubjectJson;
@@ -22,5 +24,8 @@ public interface StudentService extends GenericService<Student> {
 
 	Certificate getCertificate(String idStudent)
 			throws StudentNotExistenException, DocumentException, IdNumberFormatException;
+
+	public void sendCertificate(String idStudent)
+			throws StudentNotExistenException, DocumentException, IdNumberFormatException, EmailException;
 
 }

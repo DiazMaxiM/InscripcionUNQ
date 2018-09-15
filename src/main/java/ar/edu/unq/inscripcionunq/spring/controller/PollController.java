@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
@@ -24,11 +27,14 @@ import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaEx
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
 import ar.edu.unq.inscripcionunq.spring.service.PollService;
+import ar.edu.unq.inscripcionunq.spring.service.StudentService;
 
 @RestController
 public class PollController {
 	@Autowired
 	private PollService pollServiceImp;
+	@Autowired
+	private StudentService studentServiceImp;
 
 	@GetMapping("/poll/user/{dni}")
 	public ResponseEntity<List<PollJson>> activePollsForAUser(@PathVariable String dni)
@@ -61,6 +67,14 @@ public class PollController {
 			pollServiceImp.setComisionesSeleccionadas(id, idsJson);
 		} catch (IdNumberFormatException | StudentNotExistenException | CommissionNotExistenException
 				| VariasComisionesDeUnaMateriaException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		try {
+			try {
+				studentServiceImp.sendCertificate(id);
+			} catch (DocumentException | EmailException e) {
+			}
+		} catch (StudentNotExistenException | IdNumberFormatException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().body(null);

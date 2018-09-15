@@ -1,6 +1,8 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
@@ -28,6 +30,15 @@ public class Certificate {
 
 	private Student estudiante;
 	private byte[] binaryPDFGenerate;
+	private String fileName;
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
 	public byte[] getBynaryPDF() {
 		return binaryPDFGenerate;
@@ -36,7 +47,17 @@ public class Certificate {
 	public void generatePDF() throws DocumentException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-		PdfWriter.getInstance(document, byteArrayOutputStream);
+		if (fileName == null) {
+			PdfWriter.getInstance(document, byteArrayOutputStream);
+		} else {
+			try {
+				PdfWriter.getInstance(document, new FileOutputStream(fileName));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 		document.open();
 
 		Image img1 = null;

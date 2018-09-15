@@ -1,8 +1,10 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Certificate;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
+import ar.edu.unq.inscripcionunq.spring.model.Mail;
 import ar.edu.unq.inscripcionunq.spring.model.Student;
 import ar.edu.unq.inscripcionunq.spring.model.Subject;
 
@@ -116,6 +119,27 @@ public class StudentServiceImp extends GenericServiceImp<Student> implements Stu
 			certificate.setEstudiante(student);
 			certificate.generatePDF();
 			return certificate;
+		} catch (ObjectNotFoundinDBException e) {
+			throw new StudentNotExistenException();
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		}
+	}
+
+	public void sendCertificate(String idStudent)
+			throws StudentNotExistenException, DocumentException, IdNumberFormatException, EmailException {
+		try {
+			Student student = this.get(new Long(idStudent));
+			Certificate certificate = new Certificate();
+			certificate.setEstudiante(student);
+			certificate.setFileName(student.getDni() + ".pdf");
+			certificate.generatePDF();
+			Mail mail = new Mail();
+			mail.setFile(student.getDni() + ".pdf");
+			mail.send(student.getMail(), "Certificado de PreInscripcion UNQ",
+					"Estimado. Te enviamos tu certificado de preInscripcion.");
+			File file = new File(student.getDni() + ".pdf");
+			file.delete();
 		} catch (ObjectNotFoundinDBException e) {
 			throw new StudentNotExistenException();
 		} catch (NumberFormatException e) {
