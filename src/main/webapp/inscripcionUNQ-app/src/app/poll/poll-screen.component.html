@@ -1,27 +1,28 @@
 <div class="table-poll">
     <div class="row justify-content-center">
-        <div class="col col-lg-3">
+        <div class="col-3 col-lg">
             <p class="header border-bottom">Nombre</p>
         </div>
-        <div class="col col-lg-3">
+        <div class="col-4 col-lg">
             <p class="header border-bottom">Fecha de inicio</p>
         </div>
-        <div class="col col-lg-3">
+        <div class="col-4 col-lg">
             <p class="header border-bottom"> Fecha de fin </p>
         </div>
+        <div class="col-1"></div>
     </div>
     <div class="row justify-content-center" *ngFor="let poll of polls">
-        <div class="col col-lg-3">
+        <div class="col-3 col-lg">
             {{ poll.name }}
         </div>
-        <div class="col col-lg-3">
+        <div class="col-4 col-lg">
             {{ poll.startDate.dayOfMonth | number:'2.0' }}/{{ poll.startDate.monthValue | number:'2.0' }}/{{ poll.startDate.year}}
         </div>
-        <div class="col col-lg-3">
+        <div class="col-4 col-lg">
             {{ poll.endDate.dayOfMonth | number:'2.0'}}/{{ poll.endDate.monthValue | number:'2.0'}}/{{ poll.endDate.year}}
         </div>
-        <div class="w-100"></div>
-        <div class="col-1 col-lg-1">
+
+        <div class="col-1">
             <i class="material-icons edit-icon" (click)="editPoll(poll.id)">edit</i>
         </div>
     </div>
