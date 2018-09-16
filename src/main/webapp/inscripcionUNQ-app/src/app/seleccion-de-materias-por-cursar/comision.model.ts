@@ -1,9 +1,9 @@
 export class Comision {
 
-  id?: number;
+  id?: string;
 
   constructor(
-    idComision?: number,
+    idComision?: string,
 
   ) {
 

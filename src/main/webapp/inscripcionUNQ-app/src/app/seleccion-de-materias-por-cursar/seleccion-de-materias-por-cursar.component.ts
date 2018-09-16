@@ -165,9 +165,11 @@ finalizarEncuesta(){
 enviarComisionesSeleccionadas(){
   const comisiones= [];
   for (const comision of this.comisionesSeleccionadas){
-    comisiones.push(new Comision(comision.idComision));
+    comisiones.push(new Comision(String(comision.idComision)));
   }
-  this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones);
+  this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones).subscribe(data => {
+    this.utilesService.irA('encuesta-finalizada');
+  });
 }
 
 }

@@ -12,7 +12,7 @@ const APP_ROUTES: Routes = [
   { path: 'materias-aprobadas', component: SubjectScreenComponent },
   { path: 'verificacion-de-datos', component: DataVerificationComponent },
   { path: 'materias-por-cursar', component: SeleccionDeMateriasPorCursarComponent },
-  { path: 'encuesta-finalizada', component: SeleccionDeMateriasPorCursarComponent },
+  { path: 'encuesta-finalizada', component: EncuestaFinalizadaComponent },
   { path: '**', redirectTo: '' }
 ];
 

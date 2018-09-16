@@ -27,4 +27,30 @@ export class EncuestaFinalizadaComponent implements OnInit {
       });
     }
 
+  descargarCertificado(){
+    this.restService.getCertificadoDePreinscripcion(this.pollInfo.idStudent).subscribe(data => {
+      this.descargarArchivo(data);
+    });
+  }
+
+  descargarArchivo(pdf){
+    const nombreDeArchivo = 'certificado-de-Pre-Inscripcion.pdf';
+    if (navigator.msSaveBlob) {
+       // IE 10+
+       navigator.msSaveBlob(pdf, nombreDeArchivo);
+   } else {
+       const link = document.createElement('a');
+       if (link.download !== undefined) {
+           const url = URL.createObjectURL(pdf);
+           link.setAttribute('href', url);
+           link.setAttribute('download', nombreDeArchivo);
+           link.style.visibility = 'hidden';
+           document.body.appendChild(link);
+           link.click();
+           document.body.removeChild(link);
+       } else {
+           // html5 download not supported
+       }
+   }
+  }
 }
