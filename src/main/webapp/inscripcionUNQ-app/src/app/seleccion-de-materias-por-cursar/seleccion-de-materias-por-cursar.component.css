@@ -14,3 +14,8 @@ h2{
 .selected-subject{
 	padding: 1%;
 }
+
+.non-lateral-padding {
+	padding-left: 0;
+	padding-right: 0;
+}

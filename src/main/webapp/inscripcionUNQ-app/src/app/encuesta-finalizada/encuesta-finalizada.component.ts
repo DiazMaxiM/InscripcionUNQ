@@ -53,4 +53,7 @@ export class EncuestaFinalizadaComponent implements OnInit {
        }
    }
   }
+  salir() {
+    this.utilesService.salir();
+  }
 }

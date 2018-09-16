@@ -1,13 +1,22 @@
-<mat-list>
-  <h3 mat-subheader>Materias Aprobadas</h3>
-  <mat-list-item *ngFor="let subject of activePageDataSubjects">
-    <h4 mat-line>{{subject.name}}</h4>
-    <mat-checkbox [checked]='subject.approved' color="warn" (change)="update(subject.id)"></mat-checkbox>
+<h6>Materias Aprobadas</h6>
+<div class="table-responsive">
+ <table class="table table-hover table-borderless">
+   <thead>
+     <tr>
+       <th>Nombre</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor="let materia of activePageDataSubjects">
+       <td>{{materia.name}}</td>
+       <td><mat-checkbox [checked]='materia.approved' color="warn" (change)="update(materia.id)"></mat-checkbox></td>
+     </tr>
     <mat-divider></mat-divider>
-  </mat-list-item>
-</mat-list>
-<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
-</mat-paginator>
+   </tbody>
+ </table>
+     <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+     </mat-paginator>
+</div>
 <div>
     <button class="btn btn-danger" (click)="updateStubjets()" mat-fab color="primary">Siguiente</button>
 </div>

@@ -43,6 +43,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   ) {}
 
 ngOnInit() {
+   this.limpiarInformacionComisionesSeleccionadas();
     this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
         this.pollInfo = pollInfo;
         if (!(this.materiasDisponibles.length > 0)) {
@@ -57,6 +58,7 @@ ngOnInit() {
        this.materiasDisponibles = materiasDisponibles;
        this.length = this.materiasDisponibles.length;
        this.materiasDisponiblesActivas = this.materiasDisponibles.slice(0, this.pageSize);
+       this.marcarMateriasAnteriormenteSeleccionadas();
      });
    }
 
@@ -170,6 +172,20 @@ enviarComisionesSeleccionadas(){
   this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones).subscribe(data => {
     this.utilesService.irA('encuesta-finalizada');
   });
+}
+
+marcarMateriasAnteriormenteSeleccionadas(){
+  for(const materia of this.materiasDisponibles){
+    if(materia.comisionRegistrado != null){
+      const comisionSeleccionada = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id, materia.comisionRegistrado);
+      this.guardarRegistro(materia, comisionSeleccionada);
+    }
+  }
+
+}
+limpiarInformacionComisionesSeleccionadas() {
+  this.comisionesSeleccionadas = [];
+  this.registroComisionesService.limpiarHorarios();
 }
 
 }
