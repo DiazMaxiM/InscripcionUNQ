@@ -37,8 +37,12 @@ obtenerMateriasDisponibles(idStudent: number) {
 }
 
 enviarComisionesSeleccionadas(idStudent: number, comisiones) {
-  const comisionesJson = JSON.stringify(comisiones);
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  return this.httpClient.post('/api/poll/comisionesSeleccionadas/' + idStudent, comisionesJson, { headers});
+  return this.httpClient.post('/api/poll/comisionesSeleccionada/' + idStudent, comisiones, {headers});
 }
+
+getCertificadoDePreinscripcion(idStudent: number) {
+  return this.httpClient.get('/api/pdf/' + idStudent, { responseType: 'blob'});
+}
+
 }

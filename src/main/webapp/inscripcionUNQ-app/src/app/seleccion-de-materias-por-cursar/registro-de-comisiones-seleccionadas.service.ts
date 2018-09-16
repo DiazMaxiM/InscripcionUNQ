@@ -87,5 +87,8 @@ haySuperposicionEntreHorarios(horarioOcupado: Horario, horarioDeConsulta: Horari
   horarioOcupado.horarioDeFinalizacion >= horarioDeConsulta.horarioDeComienzo;
 }
 
+limpiarHorarios() {
+  this.horariosOcupados = [];
+}
 
 }

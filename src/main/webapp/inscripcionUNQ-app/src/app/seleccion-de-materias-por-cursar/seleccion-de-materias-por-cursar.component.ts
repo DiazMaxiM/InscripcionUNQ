@@ -43,6 +43,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   ) {}
 
 ngOnInit() {
+   this.limpiarInformacionComisionesSeleccionadas();
     this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
         this.pollInfo = pollInfo;
         if (!(this.materiasDisponibles.length > 0)) {
@@ -57,6 +58,7 @@ ngOnInit() {
        this.materiasDisponibles = materiasDisponibles;
        this.length = this.materiasDisponibles.length;
        this.materiasDisponiblesActivas = this.materiasDisponibles.slice(0, this.pageSize);
+       this.marcarMateriasAnteriormenteSeleccionadas();
      });
    }
 
@@ -94,13 +96,14 @@ agregarComisionSeleccionada(materia) {
     this.guardarRegistro(materia,registro);
   }
 }
-mostrarNombreDelaComisionSeleccionada(materia, nombreDeLaComision) {
-    const materiaActualizada = this.materiaActualizada(materia, nombreDeLaComision, true);
+
+mostrarInformacionDelaComisionSeleccionada(materia, comisionSeleccionada: ComisionSeleccionada) {
+    const materiaActualizada = this.materiaActualizada(materia,comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
     this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
     this.updatePagination(this.pageIndex,  this.pageSize);
   }
 
-materiaActualizada(oldSubject, commissionName, checked) {
+materiaActualizada(oldSubject, commissionName, horariosSeleccionados, checked) {
     return {
          'id': oldSubject.id,
          'code': oldSubject.code,
@@ -108,6 +111,7 @@ materiaActualizada(oldSubject, commissionName, checked) {
          'approved': oldSubject.approved,
          'checked': checked,
          'commissionName': commissionName,
+         'horariosSeleccionados': horariosSeleccionados,
          'commissionsJson': oldSubject.commissionsJson
        };
     }
@@ -126,14 +130,14 @@ abrirDialogoParaSeleccionarComision(materia) {
 }
 
 deseleccionarMateria(materia) {
-  const materiaActualizada = this.materiaActualizada(materia, '', false);
+  const materiaActualizada = this.materiaActualizada(materia, '', [], false);
   this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
   this.updatePagination(this.pageIndex, this.pageSize);
 }
 
 guardarRegistro(materia, registro: ComisionSeleccionada) {
   if (registro != null && registro.horariosSeleccionados.length > 0) {
-        this.mostrarNombreDelaComisionSeleccionada(materia, registro.nombreDeLaComision);
+        this.mostrarInformacionDelaComisionSeleccionada(materia, registro);
         this.comisionesSeleccionadas.push(registro);
   } else{
     if (registro != null && registro.horariosSeleccionados.length == 0){
@@ -163,9 +167,25 @@ finalizarEncuesta(){
 enviarComisionesSeleccionadas(){
   const comisiones= [];
   for (const comision of this.comisionesSeleccionadas){
-    comisiones.push(new Comision(comision.idComision));
+    comisiones.push(new Comision(String(comision.idComision)));
   }
-  this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones);
+  this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones).subscribe(data => {
+    this.utilesService.irA('encuesta-finalizada');
+  });
+}
+
+marcarMateriasAnteriormenteSeleccionadas(){
+  for(const materia of this.materiasDisponibles){
+    if(materia.comisionRegistrado != null){
+      const comisionSeleccionada = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id, materia.comisionRegistrado);
+      this.guardarRegistro(materia, comisionSeleccionada);
+    }
+  }
+
+}
+limpiarInformacionComisionesSeleccionadas() {
+  this.comisionesSeleccionadas = [];
+  this.registroComisionesService.limpiarHorarios();
 }
 
 }

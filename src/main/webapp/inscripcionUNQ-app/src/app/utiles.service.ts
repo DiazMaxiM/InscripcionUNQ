@@ -41,4 +41,8 @@ export class UtilesService {
      dialogConfig);
  }
 
+ salir() {
+   this.irA('');
+ }
+
 }

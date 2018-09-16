@@ -5,6 +5,7 @@ export class  Subject {
   approved?: boolean;
   checked?: boolean;
   commissionName?: string;
+  comisionRegistrado?: any;
 
   constructor(
     id?: number,
@@ -12,7 +13,8 @@ export class  Subject {
     name?: string,
     approved?: boolean,
     checked?: boolean,
-    commissionName?: string
+    commissionName?: string,
+    comisionRegistrado?: any
 
   ) {
     this.id = id;
@@ -21,5 +23,6 @@ export class  Subject {
     this.approved = approved;
     this.checked = checked;
     this.commissionName = commissionName;
+    this.comisionRegistrado = comisionRegistrado;
   }
 }
