@@ -24,6 +24,9 @@
         </div>
         <div class="col-2">
           {{materia.commissionName}}
+          <div *ngFor="let horario of materia.horariosSeleccionados">
+            {{horario.dia}} de {{horario.horarioDeComienzo | amLocal | amDateFormat: 'HH:mm'}} a {{horario.horarioDeFinalizacion | amLocal | amDateFormat: 'HH:mm'}}
+          </div>
         </div>
       </div>
       <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">

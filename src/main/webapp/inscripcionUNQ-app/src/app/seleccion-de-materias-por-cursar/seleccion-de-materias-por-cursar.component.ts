@@ -94,13 +94,14 @@ agregarComisionSeleccionada(materia) {
     this.guardarRegistro(materia,registro);
   }
 }
-mostrarNombreDelaComisionSeleccionada(materia, nombreDeLaComision) {
-    const materiaActualizada = this.materiaActualizada(materia, nombreDeLaComision, true);
+
+mostrarInformacionDelaComisionSeleccionada(materia, comisionSeleccionada: ComisionSeleccionada) {
+    const materiaActualizada = this.materiaActualizada(materia,comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
     this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
     this.updatePagination(this.pageIndex,  this.pageSize);
   }
 
-materiaActualizada(oldSubject, commissionName, checked) {
+materiaActualizada(oldSubject, commissionName, horariosSeleccionados, checked) {
     return {
          'id': oldSubject.id,
          'code': oldSubject.code,
@@ -108,6 +109,7 @@ materiaActualizada(oldSubject, commissionName, checked) {
          'approved': oldSubject.approved,
          'checked': checked,
          'commissionName': commissionName,
+         'horariosSeleccionados': horariosSeleccionados,
          'commissionsJson': oldSubject.commissionsJson
        };
     }
@@ -126,14 +128,14 @@ abrirDialogoParaSeleccionarComision(materia) {
 }
 
 deseleccionarMateria(materia) {
-  const materiaActualizada = this.materiaActualizada(materia, '', false);
+  const materiaActualizada = this.materiaActualizada(materia, '', [], false);
   this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
   this.updatePagination(this.pageIndex, this.pageSize);
 }
 
 guardarRegistro(materia, registro: ComisionSeleccionada) {
   if (registro != null && registro.horariosSeleccionados.length > 0) {
-        this.mostrarNombreDelaComisionSeleccionada(materia, registro.nombreDeLaComision);
+        this.mostrarInformacionDelaComisionSeleccionada(materia, registro);
         this.comisionesSeleccionadas.push(registro);
   } else{
     if (registro != null && registro.horariosSeleccionados.length == 0){
