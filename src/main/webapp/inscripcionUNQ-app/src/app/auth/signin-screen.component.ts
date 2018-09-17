@@ -23,18 +23,15 @@ export class SigninScreenComponent {
       Validators.required
     ]);
   onSubmit() {
-      //comprobar dni valido, por ahora solo verifica que no sea vacío
       const dni = this.dniFormControl.value;
-
       this.restService.getPolls(dni).subscribe(polls => {
         const pollInfo = new PollInfo(dni,polls);
         this.pollService.sendStudentPollInfo(pollInfo);
-       this.utilesService.irA('encuestas');
+        this.utilesService.irA('encuestas');
       },
-      (err:HttpErrorResponse) => {
+      (err: HttpErrorResponse) => {
 
-          //Acá hay que llamar al servicio que me devuelve el mensaje de error
-          this.utilesService.mostrarMensajeYRedireccionar('ACÁ VA EL MENSAJE QUE ME VIENE DEL JSON', 'home');
+          this.utilesService.mostrarMensajeYSalir(err.error);
       });
   }
 }

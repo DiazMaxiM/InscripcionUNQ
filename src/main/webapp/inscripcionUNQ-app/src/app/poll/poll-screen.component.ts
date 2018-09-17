@@ -41,8 +41,7 @@ export class PollScreenComponent implements OnInit {
     if (this.polls.length > 1) {
       this.utilesService.mostrarMensaje(mensaje);
     } else {
-      this.utilesService.mostrarMensaje(mensaje);
-      this.utilesService.salir();
+      this.utilesService.mostrarMensajeYSalir(mensaje);
     }
   }
 }

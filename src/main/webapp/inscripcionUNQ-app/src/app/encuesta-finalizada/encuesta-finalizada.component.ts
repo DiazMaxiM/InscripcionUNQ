@@ -49,7 +49,10 @@ export class EncuestaFinalizadaComponent implements OnInit {
            link.click();
            document.body.removeChild(link);
        } else {
-           // html5 download not supported
+           // html5 download no soportado
+           const mensaje = 'No se puede descargar el certificado desde tú navegador';
+           this.utilesService.mostrarMensajeYSalir(mensaje);
+
        }
    }
   }

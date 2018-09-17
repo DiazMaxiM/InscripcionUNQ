@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
 import { Student } from './student.model';
 import {UtilesService} from '../utiles.service';
+import {HttpErrorResponse } from '@angular/common/http';
+
 @Component({
   selector: 'app-data-verification-screen',
   templateUrl: './data-verification-screen.component.html',
@@ -66,6 +68,9 @@ onSubmit() {
         const mensaje = 'Los datos fueron actualizados con exito';
          this.utilesService.mostrarMensajeYRedireccionar(mensaje, 'materias-aprobadas');
 
+       },
+       (err: HttpErrorResponse) => {
+         this.utilesService.mostrarMensajeDeError(err);
        });
   }
 }

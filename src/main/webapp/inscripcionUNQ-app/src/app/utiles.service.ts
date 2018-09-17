@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material';
 import {FeedbackUsuarioDialogoComponent} from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
 import { Router } from '@angular/router';
+import {HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class UtilesService {
@@ -54,6 +55,16 @@ export class UtilesService {
     date.setMinutes(fecha.minute);
     date.setSeconds(fecha.second);
     return date;
+  }
+
+  mostrarMensajeYSalir(mensaje) {
+    this.mostrarMensaje(mensaje);
+    this.salir();
+
+  }
+
+  mostrarMensajeDeError(error: HttpErrorResponse) {
+     this.mostrarMensaje(error.error.msg);
   }
 
 }
