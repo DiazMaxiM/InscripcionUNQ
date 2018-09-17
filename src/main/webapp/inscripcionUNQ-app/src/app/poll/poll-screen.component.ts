@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { PollService } from './poll.service';
-import {Router} from '@angular/router';
 import {PollInfo} from './poll-info.model';
+import {UtilesService} from '../utiles.service';
 
 @Component({
   selector: 'app-poll-screen',
@@ -11,10 +11,10 @@ import {PollInfo} from './poll-info.model';
 export class PollScreenComponent implements OnInit {
   constructor(
   private pollService: PollService,
-  private router: Router
+  private utilesService: UtilesService
 ) { }
   pollInfo: PollInfo;
-  polls: any;
+  polls: any[];
 
   ngOnInit() {
     this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
@@ -23,9 +23,26 @@ export class PollScreenComponent implements OnInit {
     });
   }
 
-  editPoll(idPoll:number) {
-    this.pollInfo.idCurrentPoll = idPoll;
-    this.pollService.sendStudentPollInfo(this.pollInfo);
-    this.router.navigate(['verificacion-de-datos']);
+  editPoll(poll) {
+    const fechaDeFinalizacion = this.utilesService.crearFecha(poll.endDate);
+    const fechaDeHoy = new Date();
+    if (fechaDeFinalizacion >= fechaDeHoy) {
+      this.pollInfo.idCurrentPoll = poll.id;
+      this.pollService.sendStudentPollInfo(this.pollInfo);
+      this.utilesService.irA('verificacion-de-datos');
+
+    } else {
+       this.informarEstadoEncuesta();
+    }
+  }
+
+  informarEstadoEncuesta() {
+    const mensaje = 'La encuesta no se encuentra vigente';
+    if (this.polls.length > 1) {
+      this.utilesService.mostrarMensaje(mensaje);
+    } else {
+      this.utilesService.mostrarMensaje(mensaje);
+      this.utilesService.salir();
+    }
   }
 }

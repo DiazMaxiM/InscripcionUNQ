@@ -45,4 +45,15 @@ export class UtilesService {
    this.irA('');
  }
 
+ crearFecha(fecha) {
+    const date = new Date();
+    date.setDate(fecha.dayOfMonth);
+    date.setMonth(fecha.monthValue -1 );
+    date.setFullYear(fecha.year);
+    date.setHours(fecha.hour);
+    date.setMinutes(fecha.minute);
+    date.setSeconds(fecha.second);
+    return date;
+  }
+
 }
