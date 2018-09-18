@@ -12,7 +12,7 @@
        <td>{{ poll.name }}</td>
        <td>{{ poll.startDate.dayOfMonth | number:'2.0' }}/{{ poll.startDate.monthValue | number:'2.0' }}/{{ poll.startDate.year}}</td>
        <td>{{ poll.endDate.dayOfMonth | number:'2.0'}}/{{ poll.endDate.monthValue | number:'2.0'}}/{{ poll.endDate.year}}</td>
-       <td><i class="material-icons edit-icon" (click)="editPoll(poll)">edit</i></td>
+       <td><i class="material-icons edit-icon" (click)="editPoll(poll.id)">edit</i></td>
      </tr>
     <mat-divider></mat-divider>
    </tbody>

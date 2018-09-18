@@ -23,25 +23,10 @@ export class PollScreenComponent implements OnInit {
     });
   }
 
-  editPoll(poll) {
-    const fechaDeFinalizacion = this.utilesService.crearFecha(poll.endDate);
-    const fechaDeHoy = new Date();
-    if (fechaDeFinalizacion >= fechaDeHoy) {
-      this.pollInfo.idCurrentPoll = poll.id;
+  editPoll(idPoll) {
+
+      this.pollInfo.idCurrentPoll = idPoll;
       this.pollService.sendStudentPollInfo(this.pollInfo);
       this.utilesService.irA('verificacion-de-datos');
-
-    } else {
-       this.informarEstadoEncuesta();
-    }
-  }
-
-  informarEstadoEncuesta() {
-    const mensaje = 'La encuesta no se encuentra vigente';
-    if (this.polls.length > 1) {
-      this.utilesService.mostrarMensaje(mensaje);
-    } else {
-      this.utilesService.mostrarMensajeYSalir(mensaje);
-    }
   }
 }

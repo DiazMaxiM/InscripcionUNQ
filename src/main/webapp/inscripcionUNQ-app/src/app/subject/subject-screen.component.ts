@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { RestService } from '../rest.service';
 import { PollService } from '../poll/poll.service';
-import { Router } from '@angular/router';
 import { PollInfo } from '../poll/poll-info.model';
 import { element } from '@angular/core/src/render3/instructions';
 import {PageEvent} from '@angular/material';
 import { Subject } from './subject.model';
+import {UtilesService} from '../utiles.service';
 
 @Component({
   selector: 'app-subject-screen',
@@ -28,8 +28,8 @@ export class SubjectScreenComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private router: Router,
-    private pollService: PollService
+    private pollService: PollService,
+    private utilesService: UtilesService
   ) {}
 
   ngOnInit() {
@@ -45,14 +45,18 @@ export class SubjectScreenComponent implements OnInit {
       this.subjects = subjects;
       this.length = this.subjects.length;
       this.activePageDataSubjects = this.subjects.slice(0, this.pageSize);
-    });
+    }, (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+   });
   }
 
     updateStubjets() {
       this.restService.updateStubjets(this.pollInfo.idStudent, this.subjects)
       .subscribe(res => {
-      });
-      this.router.navigate(['materias-por-cursar']);
+        this.utilesService.irA('materias-por-cursar');
+      }, (err) => {
+        this.utilesService.mostrarMensajeDeError(err);
+     });
     }
 
     update(id) {

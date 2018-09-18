@@ -31,7 +31,7 @@ export class SigninScreenComponent {
       },
       (err: HttpErrorResponse) => {
 
-          this.utilesService.mostrarMensajeYSalir(err.error);
+          this.utilesService.mostrarMensajeDeError(err);
       });
   }
 }
