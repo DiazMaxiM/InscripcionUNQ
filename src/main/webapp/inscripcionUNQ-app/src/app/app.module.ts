@@ -30,6 +30,7 @@ import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-
 import { UtilesService } from './utiles.service';
 import {HttpClientModule} from '@angular/common/http';
 import {EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
+import { LoginAdminScreenComponent } from './login-admin/loginadmin-screen.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-final
     SubjectScreenComponent,
     SeleccionDeMateriasPorCursarComponent,
     SeleccionDeComisionDialogoComponent,
-    EncuestaFinalizadaComponent
+    EncuestaFinalizadaComponent,
+    LoginAdminScreenComponent
   ],
   imports: [
     BrowserModule,
