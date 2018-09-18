@@ -18,6 +18,7 @@ mas información [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/Visi%C
 
 ## Entregas
 Prueba de concepto [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/Prueba-de-concepto)
+
 Entrega 1 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/05---Entrega-1)
 
 [![Build Status](https://travis-ci.org/DiazMaxiM/InscripcionUNQ.svg?branch=master)](https://travis-ci.org/DiazMaxiM/InscripcionUNQ)
