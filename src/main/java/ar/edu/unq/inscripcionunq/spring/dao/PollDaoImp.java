@@ -16,7 +16,6 @@ public class PollDaoImp extends GenericDaoImp<Poll> implements PollDao {
 
 	@Override
 	protected Class<Poll> getDomainClass() {
-		// TODO Auto-generated method stub
 		return Poll.class;
 	}
 

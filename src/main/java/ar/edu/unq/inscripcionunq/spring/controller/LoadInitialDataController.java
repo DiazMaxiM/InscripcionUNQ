@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.AcademicOffer;
+import ar.edu.unq.inscripcionunq.spring.model.Administrador;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
@@ -37,6 +38,11 @@ public class LoadInitialDataController {
 
 	@Autowired
 	private GenericService<Poll> pollServiceImp;
+	
+	@Autowired
+	private GenericService<Administrador> adminstradorServiceImp;
+	
+	
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -546,7 +552,10 @@ public class LoadInitialDataController {
 		poll.addStudent(maxi);
 
 		pollServiceImp.save(poll);
-
+		
+		Administrador administrador = new Administrador("zaracho.rosali@gmail.com","123");
+        adminstradorServiceImp.save(administrador);
+		
 	}
 
 }
