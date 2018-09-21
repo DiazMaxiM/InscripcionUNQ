@@ -6,6 +6,9 @@ import {HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class UtilesService {
+
+  dialogo;
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -22,12 +25,15 @@ export class UtilesService {
 
   }
 
-  crearConfiguracionDelDialogo(msj: String) {
+  crearConfiguracionDelDialogo(msj: String, cargando= false) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '600px';
+    dialogConfig.height = '200px';
     dialogConfig.data = {
-        mensaje: msj
+        mensaje: msj,
+        cargando: cargando
       };
     return dialogConfig;
   }
@@ -38,7 +44,7 @@ export class UtilesService {
 
  mostrarMensaje(mensaje) {
    const dialogConfig = this.crearConfiguracionDelDialogo(mensaje);
-   const dialogRef = this.dialog.open(FeedbackUsuarioDialogoComponent,
+   this.dialog.open(FeedbackUsuarioDialogoComponent,
      dialogConfig);
  }
 
@@ -66,11 +72,25 @@ export class UtilesService {
   mostrarMensajeDeError(error: HttpErrorResponse) {
 
      if (error.status >= 500) {
-       const mensaje = 'En este momento no realizar la petición. Por favor uelve a intentarlo';
+       const mensaje = 'En este momento no se puede procesar la petición. Por favor uelve a intentarlo';
        this.mostrarMensajeYSalir(mensaje);
      } else {
        this.mostrarMensaje(error.error.msg);
      }
+  }
+
+  activarDialogoCargando() {
+    const mensaje = 'Procesado....';
+    const dialogConfig = this.crearConfiguracionDelDialogo(mensaje, true);
+    const dialogRef = this.dialog.open(FeedbackUsuarioDialogoComponent,
+    dialogConfig);
+    this.dialogo = dialogRef;
+  }
+
+  desactivarDialogoCargandoYRedireccionar(direccion: string) {
+    this.dialogo.close();
+    this.dialogo = null;
+    this.irA(direccion);
   }
 
 }

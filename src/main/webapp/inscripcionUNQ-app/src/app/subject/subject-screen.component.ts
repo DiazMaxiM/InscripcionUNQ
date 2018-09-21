@@ -45,9 +45,10 @@ export class SubjectScreenComponent implements OnInit {
   }
 
     updateStubjets() {
+      this.utilesService.activarDialogoCargando();
       this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.subjects)
       .subscribe(res => {
-        this.utilesService.irA('materias-por-cursar');
+        this.utilesService.desactivarDialogoCargandoYRedireccionar('materias-por-cursar');
       }, (err) => {
         this.utilesService.mostrarMensajeDeError(err);
      });

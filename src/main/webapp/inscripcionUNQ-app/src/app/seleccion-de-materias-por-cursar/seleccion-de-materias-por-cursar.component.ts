@@ -155,20 +155,22 @@ finalizarEncuesta(){
   }
 }
 
-enviarComisionesSeleccionadas(){
+enviarComisionesSeleccionadas() {
   const comisiones= [];
-  for (const comision of this.comisionesSeleccionadas){
+  for (const comision of this.comisionesSeleccionadas) {
     comisiones.push(new Comision(String(comision.idComision)));
   }
+  this.utilesService.activarDialogoCargando();
   this.restService.enviarComisionesSeleccionadas(this.idEstudiante, comisiones).subscribe(data => {
-    this.utilesService.irA('encuesta-finalizada');
+  this.utilesService.desactivarDialogoCargandoYRedireccionar('encuesta-finalizada');
   });
 }
 
-marcarMateriasAnteriormenteSeleccionadas(){
-  for(const materia of this.materiasDisponibles){
-    if(materia.comisionRegistrado != null){
-      const comisionSeleccionada = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id, materia.comisionRegistrado);
+marcarMateriasAnteriormenteSeleccionadas() {
+  for (const materia of this.materiasDisponibles) {
+    if (materia.comisionRegistrado != null) {
+      const comisionSeleccionada = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id, 
+        materia.comisionRegistrado);
       this.guardarRegistro(materia, comisionSeleccionada);
     }
   }

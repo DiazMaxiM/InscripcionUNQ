@@ -1,5 +1,13 @@
-.mat-dialog-content{
-  height: 100px;
-  margin-top: 10%;
-  width: 100%;
+.progress-spinner {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin: 0 auto;
+}
+
+.boton-aceptar{
+  padding-top: 15px;
+}
+
+/deep/ .mat-dialog-content {
+  overflow-y: hidden !important;
 }

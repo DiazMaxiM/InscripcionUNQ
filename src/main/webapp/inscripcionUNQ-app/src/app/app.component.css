@@ -37,3 +37,7 @@ h2{
 .texto-centrado {
 	text-align: center;
 }
+
+.sinBorder{
+	border: 0
+  }

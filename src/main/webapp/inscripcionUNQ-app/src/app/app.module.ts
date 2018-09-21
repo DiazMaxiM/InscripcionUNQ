@@ -56,7 +56,8 @@ import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.componen
     MomentModule,
     HttpClientModule
   ],
-  providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService, UtilesService],
+  providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
+    UtilesService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent]
 })

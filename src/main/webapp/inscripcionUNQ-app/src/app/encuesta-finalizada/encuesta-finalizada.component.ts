@@ -5,7 +5,7 @@ import {UtilesService} from '../utiles.service';
 @Component({
   selector: 'app-encuesta-finalizada',
   templateUrl: './encuesta-finalizada.component.html',
-  styleUrls: ['./encuesta-finalizada.component.css']
+  styleUrls: ['./encuesta-finalizada.component.css', '../app.component.css']
 })
 export class EncuestaFinalizadaComponent {
 
