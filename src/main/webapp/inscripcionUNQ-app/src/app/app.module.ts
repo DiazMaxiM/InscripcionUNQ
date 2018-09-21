@@ -14,7 +14,6 @@ import { PollScreenComponent } from './poll/poll-screen.component';
 import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
 import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
 import { RestService } from './rest.service';
-import { PollService } from './poll/poll.service';
 
 import { Routing} from './app.routing';
 import { MomentModule } from 'ngx-moment';
@@ -57,7 +56,7 @@ import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.componen
     MomentModule,
     HttpClientModule
   ],
-  providers: [RestService, PollService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService, UtilesService],
+  providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService, UtilesService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent]
 })

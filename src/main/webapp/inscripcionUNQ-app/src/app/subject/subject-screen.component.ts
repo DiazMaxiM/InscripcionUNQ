@@ -1,8 +1,5 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { RestService } from '../rest.service';
-import { PollService } from '../poll/poll.service';
-import { PollInfo } from '../poll/poll-info.model';
-import { element } from '@angular/core/src/render3/instructions';
 import {PageEvent} from '@angular/material';
 import { Subject } from './subject.model';
 import {UtilesService} from '../utiles.service';
@@ -14,9 +11,9 @@ import {UtilesService} from '../utiles.service';
 })
 export class SubjectScreenComponent implements OnInit {
 
-  pollInfo: PollInfo;
   subjects: Subject[] = [];
   activePageDataSubjects = [];
+  idEstudiante: string;
 
   // MatPaginator Inputs
  length = 0;
@@ -28,19 +25,16 @@ export class SubjectScreenComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private pollService: PollService,
     private utilesService: UtilesService
   ) {}
 
   ngOnInit() {
-    this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
-        this.pollInfo = pollInfo;
+        this.idEstudiante = localStorage.getItem('idEstudiante');
         this.getSubjets();
-      });
     }
 
   getSubjets() {
-    this.restService.getSubjets(this.pollInfo.idStudent)
+    this.restService.getMateriasAprobadas(this.idEstudiante)
     .subscribe(subjects => {
       this.subjects = subjects;
       this.length = this.subjects.length;
@@ -51,7 +45,7 @@ export class SubjectScreenComponent implements OnInit {
   }
 
     updateStubjets() {
-      this.restService.updateStubjets(this.pollInfo.idStudent, this.subjects)
+      this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.subjects)
       .subscribe(res => {
         this.utilesService.irA('materias-por-cursar');
       }, (err) => {

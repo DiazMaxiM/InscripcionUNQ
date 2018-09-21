@@ -1,9 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component} from '@angular/core';
 import { RestService } from '../rest.service';
-import { PollService } from '../poll/poll.service';
-import { PollInfo } from '../poll/poll-info.model';
-import {HttpErrorResponse } from '@angular/common/http';
 import {UtilesService} from '../utiles.service';
 
 @Component({
@@ -11,29 +7,22 @@ import {UtilesService} from '../utiles.service';
   templateUrl: './encuesta-finalizada.component.html',
   styleUrls: ['./encuesta-finalizada.component.css']
 })
-export class EncuestaFinalizadaComponent implements OnInit {
-
-  pollInfo: PollInfo;
+export class EncuestaFinalizadaComponent {
 
   constructor(
     private restService: RestService,
-    private pollService: PollService,
     private utilesService: UtilesService
   ) {}
 
-  ngOnInit() {
-    this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
-        this.pollInfo = pollInfo;
-      });
-    }
 
-  descargarCertificado(){
-    this.restService.getCertificadoDePreinscripcion(this.pollInfo.idStudent).subscribe(data => {
+  descargarCertificado() {
+    const idEstudiante  = localStorage.getItem('idEstudiante');
+    this.restService.getCertificadoDePreinscripcion(idEstudiante).subscribe(data => {
       this.descargarArchivo(data);
     });
   }
 
-  descargarArchivo(pdf){
+  descargarArchivo(pdf) {
     const nombreDeArchivo = 'certificado-de-Pre-Inscripcion.pdf';
     if (navigator.msSaveBlob) {
        // IE 10+
@@ -57,6 +46,7 @@ export class EncuestaFinalizadaComponent implements OnInit {
    }
   }
   salir() {
+    localStorage.clear();
     this.utilesService.salir();
   }
 }

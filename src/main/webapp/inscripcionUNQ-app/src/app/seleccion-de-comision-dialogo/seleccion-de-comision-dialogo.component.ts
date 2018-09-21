@@ -1,11 +1,8 @@
 import {Component, Inject} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {DataDialogo} from './data-dialogo.model' ;
 import { ComisionSeleccionada } from './comision-seleccionada.model';
-import { Horario } from './horario.model';
-import { FormBuilder, FormGroup} from '@angular/forms';
-import { PollInfo } from '../poll/poll-info.model';
-import { PollService } from '../poll/poll.service';
+import { FormBuilder} from '@angular/forms';
 import {RegistroDeComisionesSeleccionadasService} from '../seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 @Component({
      selector: 'app-seleccion-de-comision-dialogo',

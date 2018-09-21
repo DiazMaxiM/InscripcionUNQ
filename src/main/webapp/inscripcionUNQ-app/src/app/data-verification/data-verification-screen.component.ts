@@ -1,9 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestService } from '../rest.service';
-import { PollService } from '../poll/poll.service';
-import { Router } from '@angular/router';
-import { PollInfo } from '../poll/poll-info.model';
 import { Student } from './student.model';
 import {UtilesService} from '../utiles.service';
 import {HttpErrorResponse } from '@angular/common/http';
@@ -17,20 +14,19 @@ export class DataVerificationComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private pollService: PollService,
     private formBuilder: FormBuilder,
     private utilesService: UtilesService
   ) {}
 
-  pollInfo: PollInfo;
   dataVerificationForm: FormGroup;
-  idCurrentStudent: number;
+  idEstudiante: string;
+  dniEstudiante: string;
+  idEncuestaActual: string;
 
 ngOnInit() {
-    this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
-      this.pollInfo = pollInfo;
-      this.getStudentData();
-    });
+    this.dniEstudiante = localStorage.getItem('dniEstudiante');
+    this.idEncuestaActual = localStorage.getItem('idEncuestaActual');
+    this.getStudentData();
     this.createDataStudentFormGroup();
   }
 
@@ -43,14 +39,15 @@ createDataStudentFormGroup() {
   }
 
 getStudentData() {
-    this.restService.getStudentData(this.pollInfo.dniStudent,this.pollInfo.idCurrentPoll)
+    this.restService.getInformacionEstudiante(this.dniEstudiante, this.idEncuestaActual)
     .subscribe(data =>
       this.setStudenDataOnForm(data)
     );
   }
 
 setStudenDataOnForm(student) {
-  this.idCurrentStudent = student.id;
+  this.idEstudiante = student.id;
+  localStorage.setItem('idEstudiante', this.idEstudiante);
   this.dataVerificationForm.setValue({
     'name': student.name,
     'lastName': student.lastName,
@@ -61,10 +58,9 @@ setStudenDataOnForm(student) {
 onSubmit() {
   if (this.dataVerificationForm.valid) {
     const { name, lastName, email} = this.dataVerificationForm.value;
-    const studentData = new Student(this.pollInfo.dniStudent, name, lastName, email, this.idCurrentStudent);
+    const studentData = new Student(this.dniEstudiante, name, lastName, email, this.idEstudiante);
     this.restService.updateStudentData(studentData)
       .subscribe(res => {
-        this.updatePollInfo();
         const mensaje = 'Los datos fueron actualizados con exito';
          this.utilesService.mostrarMensajeYRedireccionar(mensaje, 'materias-aprobadas');
 
@@ -73,11 +69,6 @@ onSubmit() {
          this.utilesService.mostrarMensajeDeError(err);
        });
   }
-}
-
-updatePollInfo(){
-  this.pollInfo.idStudent =  this.idCurrentStudent;
-  this.pollService.sendStudentPollInfo(this.pollInfo);
 }
 
 }

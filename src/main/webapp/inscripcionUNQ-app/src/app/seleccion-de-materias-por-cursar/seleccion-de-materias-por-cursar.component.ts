@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material';
 import { SeleccionDeComisionDialogoComponent} from '../seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestService } from '../rest.service';
-import { PollService } from '../poll/poll.service';
-import { PollInfo } from '../poll/poll-info.model';
 import { ComisionSeleccionada } from '../seleccion-de-comision-dialogo/comision-seleccionada.model';
 import {PageEvent} from '@angular/material';
 import {Subject} from '../subject/subject.model';
@@ -20,7 +17,6 @@ import {Comision} from './comision.model';
 
 export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
-    pollInfo: PollInfo;
     materiasDisponibles: Subject[] = [];
 
     // MatPaginator Output
@@ -32,28 +28,23 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
    pageSizeOptions: number[] = [5, 10];
    materiasDisponiblesActivas: Subject[] = [];
    comisionesSeleccionadas: ComisionSeleccionada[] = [];
+   idEstudiante: string;
 
   constructor(
     private restService: RestService,
-    private pollService: PollService,
-    private formBuilder: FormBuilder,
     private dialog: MatDialog,
     private registroComisionesService: RegistroDeComisionesSeleccionadasService,
     private utilesService: UtilesService
   ) {}
 
 ngOnInit() {
-   this.limpiarInformacionComisionesSeleccionadas();
-    this.pollService.currentPollInfo.subscribe((pollInfo: PollInfo) => {
-        this.pollInfo = pollInfo;
-        if (!(this.materiasDisponibles.length > 0)) {
-           this.obtenerMateriasDisponibles();
-        }
-      });
+     this.idEstudiante = localStorage.getItem('idEstudiante');
+     this.limpiarInformacionComisionesSeleccionadas();
+     this.obtenerMateriasDisponibles();
   }
 
   obtenerMateriasDisponibles() {
-     this.restService.obtenerMateriasDisponibles(this.pollInfo.idStudent)
+     this.restService.obtenerMateriasDisponibles(this.idEstudiante)
      .subscribe(materiasDisponibles => {
        this.materiasDisponibles = materiasDisponibles;
        this.length = this.materiasDisponibles.length;
@@ -169,7 +160,7 @@ enviarComisionesSeleccionadas(){
   for (const comision of this.comisionesSeleccionadas){
     comisiones.push(new Comision(String(comision.idComision)));
   }
-  this.restService.enviarComisionesSeleccionadas(this.pollInfo.idStudent,comisiones).subscribe(data => {
+  this.restService.enviarComisionesSeleccionadas(this.idEstudiante, comisiones).subscribe(data => {
     this.utilesService.irA('encuesta-finalizada');
   });
 }

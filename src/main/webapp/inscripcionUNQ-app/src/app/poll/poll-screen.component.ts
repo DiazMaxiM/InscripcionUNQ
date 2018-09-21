@@ -1,6 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { PollService } from './poll.service';
-import {PollInfo} from './poll-info.model';
 import {UtilesService} from '../utiles.service';
 
 @Component({
@@ -10,23 +8,16 @@ import {UtilesService} from '../utiles.service';
 })
 export class PollScreenComponent implements OnInit {
   constructor(
-  private pollService: PollService,
   private utilesService: UtilesService
 ) { }
-  pollInfo: PollInfo;
   polls: any[];
 
   ngOnInit() {
-    this.pollService.currentPollInfo.subscribe((pollInfo:PollInfo) => {
-      this.pollInfo = pollInfo;
-      this.polls = pollInfo.polls;
-    });
+      this.polls = JSON.parse(localStorage.getItem('encuestasVigentes'));
   }
 
-  editPoll(idPoll) {
-
-      this.pollInfo.idCurrentPoll = idPoll;
-      this.pollService.sendStudentPollInfo(this.pollInfo);
+  editPoll(idEncuestaActual) {
+      localStorage.setItem('idEncuestaActual', idEncuestaActual);
       this.utilesService.irA('verificacion-de-datos');
   }
 }

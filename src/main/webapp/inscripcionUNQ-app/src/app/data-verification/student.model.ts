@@ -3,14 +3,14 @@ export class Student {
   mail: string;
   name: string;
   lastName: string;
-  dni: number;
-  id: number;
+  dni: string;
+  id: string;
   constructor(
-    dni: number,
+    dni: string,
     name: string,
     lastName: string,
     mail: string,
-    id: number
+    id: string
   ) {
     this.dni = dni;
     this.name = name;
