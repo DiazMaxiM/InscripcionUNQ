@@ -31,7 +31,7 @@ import { UtilesService } from './utiles.service';
 import {HttpClientModule} from '@angular/common/http';
 import {EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
 import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
-import { TareasAdminScreenComponent } from './tareas-admin/tareasadmin-screen.component';
+import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { TareasAdminScreenComponent } from './tareas-admin/tareasadmin-screen.co
     SeleccionDeComisionDialogoComponent,
     EncuestaFinalizadaComponent,
     LoginUsuarioComponent,
-    TareasAdminScreenComponent
+    TareasUsuarioComponent
   ],
   imports: [
     BrowserModule,

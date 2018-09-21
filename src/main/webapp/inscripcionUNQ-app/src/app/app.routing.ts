@@ -5,7 +5,7 @@ import { SubjectScreenComponent} from './subject/subject-screen.component';
 import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
 import { EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
 import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
-import { TareasAdminScreenComponent } from './tareas-admin/tareasadmin-screen.component';
+import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 import { LoginEstudianteComponent } from './autenticacion/login-estudiante.component';
 
 const APP_ROUTES: Routes = [
@@ -16,7 +16,7 @@ const APP_ROUTES: Routes = [
   { path: 'materias-por-cursar', component: SeleccionDeMateriasPorCursarComponent },
   { path: 'encuesta-finalizada', component: EncuestaFinalizadaComponent },
   { path: 'login-usuario', component: LoginUsuarioComponent },
-  { path: 'tareas-usuario', component: TareasAdminScreenComponent },
+  { path: 'tareas-usuario', component: TareasUsuarioComponent },
   { path: '**', redirectTo: '' }
 ];
 
