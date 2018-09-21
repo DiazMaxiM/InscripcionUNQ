@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Student } from './data-verification/student.model';
 import { Subject } from './subject/subject.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Administrador } from './login-admin/administrador.model';
+import { Usuario } from './autenticacion/usuario.model';
 
 @Injectable()
 export class RestService {
@@ -47,9 +47,9 @@ getCertificadoDePreinscripcion(idStudent: number) {
 }
 
 
-ingresarAdministrador(administrador: Administrador) {
+ingresarUsuario(usuario: Usuario) {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  return this.httpClient.post('/api/administracion/ingresoAdmistrador', administrador, { headers });
+  return this.httpClient.post('/api/encuesta/ingresoUsuario', usuario, { headers });
 }
 
 }

@@ -64,7 +64,14 @@ export class UtilesService {
   }
 
   mostrarMensajeDeError(error: HttpErrorResponse) {
-     this.mostrarMensaje(error.error.msg);
+     console.log(error);
+     let mensaje;
+     if (error.status >= 500) {
+       mensaje = 'En este momento no realizar la petición. Por favor uelve a intentarlo';
+     } else {
+       mensaje = error.error.msg;
+     }
+     this.mostrarMensaje(mensaje);
   }
 
 }

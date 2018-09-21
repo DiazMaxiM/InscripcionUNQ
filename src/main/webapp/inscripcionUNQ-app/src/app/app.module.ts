@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import 'hammerjs';
 
-import { SigninScreenComponent } from './auth/signin-screen.component';
+import { LoginEstudianteComponent } from './autenticacion/login-estudiante.component';
 import { PollScreenComponent } from './poll/poll-screen.component';
 import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
 import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
@@ -30,13 +30,13 @@ import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-
 import { UtilesService } from './utiles.service';
 import {HttpClientModule} from '@angular/common/http';
 import {EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
-import { LoginAdminScreenComponent } from './login-admin/loginadmin-screen.component';
+import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
 import { TareasAdminScreenComponent } from './tareas-admin/tareasadmin-screen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SigninScreenComponent,
+    LoginEstudianteComponent,
     PollScreenComponent,
     DataVerificationComponent,
     FeedbackUsuarioDialogoComponent,
@@ -44,7 +44,7 @@ import { TareasAdminScreenComponent } from './tareas-admin/tareasadmin-screen.co
     SeleccionDeMateriasPorCursarComponent,
     SeleccionDeComisionDialogoComponent,
     EncuestaFinalizadaComponent,
-    LoginAdminScreenComponent,
+    LoginUsuarioComponent,
     TareasAdminScreenComponent
   ],
   imports: [

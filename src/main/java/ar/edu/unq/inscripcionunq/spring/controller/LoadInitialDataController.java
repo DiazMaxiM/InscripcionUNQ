@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.AcademicOffer;
-import ar.edu.unq.inscripcionunq.spring.model.Administrador;
+import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.model.Career;
 import ar.edu.unq.inscripcionunq.spring.model.Commission;
 import ar.edu.unq.inscripcionunq.spring.model.Poll;
@@ -40,7 +40,7 @@ public class LoadInitialDataController {
 	private GenericService<Poll> pollServiceImp;
 	
 	@Autowired
-	private GenericService<Administrador> adminstradorServiceImp;
+	private GenericService<Usuario> usuarioServiceImp;
 	
 	
 
@@ -553,8 +553,8 @@ public class LoadInitialDataController {
 
 		pollServiceImp.save(poll);
 		
-		Administrador administrador = new Administrador("zaracho.rosali@gmail.com","123");
-        adminstradorServiceImp.save(administrador);
+		Usuario usuario = new Usuario("zaracho.rosali@gmail.com","123");
+        usuarioServiceImp.save(usuario);
 		
 	}
 

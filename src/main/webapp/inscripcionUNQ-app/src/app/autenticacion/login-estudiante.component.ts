@@ -7,11 +7,11 @@ import {HttpErrorResponse } from '@angular/common/http';
 import {UtilesService} from '../utiles.service';
 
 @Component({
-  selector: 'app-signin-screen',
-  templateUrl: './signin-screen.component.html',
-  styleUrls: ['./signin-screen.component.css']
+  selector: 'app-login-estudiante',
+  templateUrl: './login-estudiante.component.html',
+  styleUrls: ['./login-estudiante.component.css']
 })
-export class SigninScreenComponent {
+export class LoginEstudianteComponent {
 
   constructor(
     private restService: RestService,

@@ -2,17 +2,19 @@ package ar.edu.unq.inscripcionunq.spring.model;
 
 import javax.persistence.Entity;
 
-@Entity(name = "Administrador")
-public class Administrador extends BaseEntity{
+import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
+
+@Entity(name = "Usuario")
+public class Usuario extends BaseEntity{
 	
 	private String email; 
 	private String password;
 	
-	public Administrador() {
+	public Usuario() {
 		super();
 	}
 	
-	public Administrador(String email, String password) {
+	public Usuario(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -32,6 +34,12 @@ public class Administrador extends BaseEntity{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public void validarPassword(String password) throws PasswordInvalidoException {
+		if (!this.password.equals(password)) {
+			throw new PasswordInvalidoException();
+		};
 	}
 	
 

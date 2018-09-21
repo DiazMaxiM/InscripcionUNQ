@@ -1,17 +1,17 @@
 
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Administrador } from './administrador.model';
+import { Usuario } from './usuario.model';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {UtilesService} from '../utiles.service';
 
 @Component({
-  selector: 'app-loginadmin-screen',
-  templateUrl: './loginadmin-screen.component.html',
-  styleUrls: ['./loginadmin-screen.component.css']
+  selector: 'app-login-usuario',
+  templateUrl: './login-usuario.component.html',
+  styleUrls: ['./login-usuario.component.css']
 })
-export class LoginAdminScreenComponent implements OnInit {
+export class LoginUsuarioComponent implements OnInit {
     constructor(
       private formBuilder: FormBuilder,
       private restService: RestService,
@@ -34,10 +34,10 @@ export class LoginAdminScreenComponent implements OnInit {
     onSubmit() {
       if (this.loginVerificationForm.valid) {
         const { email, password} = this.loginVerificationForm.value;
-        const administrador = new Administrador(email,password);
-        this.restService.ingresarAdministrador(administrador)
+        const usuario = new Usuario(email, password);
+        this.restService.ingresarUsuario(usuario)
           .subscribe(res => {
-             this.utilesService.irA('tareas-admin');
+             this.utilesService.irA('tareas-usuario');
            },
            (err: HttpErrorResponse) => {
              this.utilesService.mostrarMensajeDeError(err);
