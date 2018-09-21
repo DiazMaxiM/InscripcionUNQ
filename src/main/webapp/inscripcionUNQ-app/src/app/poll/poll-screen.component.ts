@@ -14,6 +14,10 @@ export class PollScreenComponent implements OnInit {
 
   ngOnInit() {
       this.polls = JSON.parse(localStorage.getItem('encuestasVigentes'));
+      if (this.polls.length == 0) {
+        const mensaje = 'No se encontraron encuestas para el DNI ingresado';
+        this.utilesService.mostrarMensajeYSalir(mensaje);
+      }
   }
 
   editPoll(idEncuestaActual) {
