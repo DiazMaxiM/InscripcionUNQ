@@ -11,7 +11,7 @@ export class MatPaginatorI18n extends MatPaginatorIntl {
     const endIndex =
       startIndex < totalResults ?
         Math.min(startIndex + pageSize, totalResults) :
-        startIndex + pageSize; return `${startIndex + 1} - ${endIndex} sur ${totalResults}`
+        startIndex + pageSize; return `${startIndex + 1} - ${endIndex} de  ${totalResults}`
       ;
   }
 }

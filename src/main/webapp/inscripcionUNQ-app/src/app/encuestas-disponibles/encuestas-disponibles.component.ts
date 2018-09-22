@@ -2,25 +2,25 @@ import { Component, OnInit} from '@angular/core';
 import {UtilesService} from '../utiles.service';
 
 @Component({
-  selector: 'app-poll-screen',
-  templateUrl: './poll-screen.component.html',
-  styleUrls: ['./poll-screen.component.css']
+  selector: 'app-encuestas-disponibles',
+  templateUrl: './encuestas-disponibles.component.html',
+  styleUrls: ['./encuestas-disponibles.component.css']
 })
-export class PollScreenComponent implements OnInit {
+export class EncuestasDisponiblesComponent implements OnInit {
   constructor(
   private utilesService: UtilesService
 ) { }
-  polls: any[];
+  encuestas: any[];
 
   ngOnInit() {
-      this.polls = JSON.parse(localStorage.getItem('encuestasVigentes'));
-      if (this.polls.length == 0) {
+      this.encuestas = JSON.parse(localStorage.getItem('encuestasVigentes'));
+      if (this.encuestas.length == 0) {
         const mensaje = 'No se encontraron encuestas para el DNI ingresado';
         this.utilesService.mostrarMensajeYSalir(mensaje);
       }
   }
 
-  editPoll(idEncuestaActual) {
+  editarEncuesta(idEncuestaActual) {
       localStorage.setItem('idEncuestaActual', idEncuestaActual);
       this.utilesService.irA('verificacion-de-datos');
   }

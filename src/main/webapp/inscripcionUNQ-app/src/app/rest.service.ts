@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { Student } from './data-verification/student.model';
-import { Subject } from './subject/subject.model';
+import { Estudiante } from './informacion-del-usuario/estudiante.model';
+import { Materia } from './materias-aprobadas/materia.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Usuario } from './autenticacion/usuario.model';
 
@@ -11,39 +9,39 @@ export class RestService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getEncuestasVigentes(idStudent: number) {
-    return this.httpClient.get('/api/poll/user/' + idStudent);
+  getEncuestasVigentes(idEstudiante: number) {
+    return this.httpClient.get('/api/poll/user/' + idEstudiante);
   }
 
-  getInformacionEstudiante(dniStudent: string, idPoll: string) {
-    return this.httpClient.get('/api/poll/userData/' + dniStudent + '/' + idPoll);
+  getInformacionEstudiante(dniEstudiante: string, idEncuestaActual: string) {
+    return this.httpClient.get('/api/poll/userData/' + dniEstudiante + '/' + idEncuestaActual);
 }
 
-updateStudentData(studentData: Student) {
+actualizarInformacionEstudiante(informacionEstudiante: Estudiante) {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  return this.httpClient.post('/api/poll/userData', studentData, { headers });
+  return this.httpClient.post('/api/poll/userData', informacionEstudiante, { headers });
 }
 
-getMateriasAprobadas(idStudent: string) {
-  return this.httpClient.get<Array<Subject>>('/api/poll/userApprovedSubjects/' + idStudent);
+getMateriasAprobadas(idEstudiante: string) {
+  return this.httpClient.get<Array<Materia>>('/api/poll/userApprovedSubjects/' + idEstudiante);
 }
 
-actualizarMateriasAprobadas(idStudent: string, subjects) {
+actualizarMateriasAprobadas(idEstudiante: string, materiasAprobadas) {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  return this.httpClient.post('/api/poll/userApprovedSubjects/' + idStudent, subjects, { headers });
+  return this.httpClient.post('/api/poll/userApprovedSubjects/' + idEstudiante, materiasAprobadas, { headers });
 }
 
-obtenerMateriasDisponibles(idStudent: string) {
-  return this.httpClient.get<Array<Subject>>('/api/poll/userDisapprovedSubjectsWithCommissionAvailable/' + idStudent);
+obtenerMateriasDisponibles(idEstudiante: string) {
+  return this.httpClient.get<Array<Materia>>('/api/poll/userDisapprovedSubjectsWithCommissionAvailable/' + idEstudiante);
 }
 
-enviarComisionesSeleccionadas(idStudent: string, comisiones) {
+enviarComisionesSeleccionadas(idEstudiante: string, comisionesSeleccionadas) {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  return this.httpClient.post('/api/poll/comisionesSeleccionada/' + idStudent, comisiones, {headers});
+  return this.httpClient.post('/api/poll/comisionesSeleccionada/' + idEstudiante, comisionesSeleccionadas, {headers});
 }
 
-getCertificadoDePreinscripcion(idStudent: string) {
-  return this.httpClient.get('/api/pdf/' + idStudent, { responseType: 'blob'});
+getCertificadoDePreinscripcion(idEstudiante: string) {
+  return this.httpClient.get('/api/pdf/' + idEstudiante, { responseType: 'blob'});
 }
 
 

@@ -4,7 +4,7 @@ import { SeleccionDeComisionDialogoComponent} from '../seleccion-de-comision-dia
 import { RestService } from '../rest.service';
 import { ComisionSeleccionada } from '../seleccion-de-comision-dialogo/comision-seleccionada.model';
 import {PageEvent} from '@angular/material';
-import {Subject} from '../subject/subject.model';
+import {Materia} from '../materias-aprobadas/materia.model';
 import {RegistroDeComisionesSeleccionadasService} from './registro-de-comisiones-seleccionadas.service';
 import {UtilesService} from '../utiles.service';
 import {Comision} from './comision.model';
@@ -17,7 +17,7 @@ import {Comision} from './comision.model';
 
 export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
-    materiasDisponibles: Subject[] = [];
+    materiasDisponibles: Materia[] = [];
 
     // MatPaginator Output
     pageEvent: PageEvent;
@@ -26,7 +26,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
    pageSize = 10;
    pageIndex = 0;
    pageSizeOptions: number[] = [5, 10];
-   materiasDisponiblesActivas: Subject[] = [];
+   materiasDisponiblesActivas: Materia[] = [];
    comisionesSeleccionadas: ComisionSeleccionada[] = [];
    idEstudiante: string;
 
@@ -40,7 +40,8 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 ngOnInit() {
      this.idEstudiante = localStorage.getItem('idEstudiante');
      this.limpiarInformacionComisionesSeleccionadas();
-     this.obtenerMateriasDisponibles();
+     this.obtenerMateriasDisponibles();;
+
   }
 
   obtenerMateriasDisponibles() {
@@ -89,7 +90,8 @@ agregarComisionSeleccionada(materia) {
 }
 
 mostrarInformacionDelaComisionSeleccionada(materia, comisionSeleccionada: ComisionSeleccionada) {
-    const materiaActualizada = this.materiaActualizada(materia,comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
+    const materiaActualizada = this.materiaActualizada(materia,
+      comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
     this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
     this.updatePagination(this.pageIndex,  this.pageSize);
   }

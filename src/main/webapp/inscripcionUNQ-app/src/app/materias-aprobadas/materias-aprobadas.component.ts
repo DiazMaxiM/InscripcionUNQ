@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { RestService } from '../rest.service';
 import {PageEvent} from '@angular/material';
-import { Subject } from './subject.model';
+import { Materia } from './materia.model';
 import {UtilesService} from '../utiles.service';
 
 @Component({
-  selector: 'app-subject-screen',
-  templateUrl: './subject-screen.component.html',
-  styleUrls: ['./subject-screen.component.css']
+  selector: 'app-materias-aprobadas',
+  templateUrl: './materias-aprobadas.component.html',
+  styleUrls: ['./materias-aprobadas.component.css']
 })
-export class SubjectScreenComponent implements OnInit {
+export class MateriasAprobadasComponent implements OnInit {
 
-  subjects: Subject[] = [];
-  activePageDataSubjects = [];
+  materias: Materia[] = [];
+  materiasEnPagina = [];
   idEstudiante: string;
 
   // MatPaginator Inputs
@@ -30,23 +30,23 @@ export class SubjectScreenComponent implements OnInit {
 
   ngOnInit() {
         this.idEstudiante = localStorage.getItem('idEstudiante');
-        this.getSubjets();
+        this.getMateriasAprobadas();
     }
 
-  getSubjets() {
+  getMateriasAprobadas() {
     this.restService.getMateriasAprobadas(this.idEstudiante)
     .subscribe(subjects => {
-      this.subjects = subjects;
-      this.length = this.subjects.length;
-      this.activePageDataSubjects = this.subjects.slice(0, this.pageSize);
+      this.materias = subjects;
+      this.length = this.materias.length;
+      this.materiasEnPagina = this.materias.slice(0, this.pageSize);
     }, (err) => {
       this.utilesService.mostrarMensajeDeError(err);
    });
   }
 
-    updateStubjets() {
+    actualizarMateriasAprobadas() {
       this.utilesService.activarDialogoCargando();
-      this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.subjects)
+      this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.materias)
       .subscribe(res => {
         this.utilesService.desactivarDialogoCargandoYRedireccionar('materias-por-cursar');
       }, (err) => {
@@ -54,27 +54,27 @@ export class SubjectScreenComponent implements OnInit {
      });
     }
 
-    update(id) {
+    seleccionarMateria(id) {
       const result = [];
-      for (const i in this.subjects) {
-        if (this.subjects[i].id === id) {
+      for (const i in this.materias) {
+        if (this.materias[i].id == id) {
           result.push({
-            'id': this.subjects[i].id,
-            'code': this.subjects[i].code,
-            'name': this.subjects[i].name,
-            'approved': !this.subjects[i].approved
+            'id': this.materias[i].id,
+            'code': this.materias[i].code,
+            'name': this.materias[i].name,
+            'approved': !this.materias[i].approved
           });
         } else {
-          result.push(this.subjects[i]);
+          result.push(this.materias[i]);
         }
       }
-      this.subjects = result;
+      this.materias = result;
     }
 
   onPageChanged(e) {
     const firstCut = e.pageIndex * e.pageSize;
     const secondCut = firstCut + e.pageSize;
-    this.activePageDataSubjects = this.subjects.slice(firstCut, secondCut);
+    this.materiasEnPagina = this.materias.slice(firstCut, secondCut);
 }
 setPageSizeOptions(setPageSizeOptionsInput: string) {
   this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);

@@ -7,9 +7,9 @@
      </tr>
    </thead>
    <tbody>
-     <tr *ngFor="let materia of activePageDataSubjects">
+     <tr *ngFor="let materia of materiasEnPagina">
        <td>{{materia.name}}</td>
-       <td><mat-checkbox [checked]='materia.approved' color="warn" (change)="update(materia.id)"></mat-checkbox></td>
+       <td><mat-checkbox [checked]='materia.approved' color="warn" (change)="seleccionarMateria(materia.id)"></mat-checkbox></td>
      </tr>
     <mat-divider></mat-divider>
    </tbody>
@@ -18,5 +18,5 @@
      </mat-paginator>
 </div>
 <div>
-    <button class="btn btn-danger" (click)="updateStubjets()" mat-fab color="primary">Siguiente</button>
+    <button class="btn btn-danger" (click)="actualizarMateriasAprobadas()" mat-fab color="primary">Siguiente</button>
 </div>

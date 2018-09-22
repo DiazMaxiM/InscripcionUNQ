@@ -1,4 +1,4 @@
-export class Student {
+export class Estudiante {
 
   mail: string;
   name: string;
