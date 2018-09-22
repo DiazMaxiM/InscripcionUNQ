@@ -18,7 +18,6 @@ export class MateriasAprobadasComponent implements OnInit {
   // MatPaginator Inputs
  length = 0;
  pageSize = 10;
- pageSizeOptions: number[] = [5, 10];
 
  // MatPaginator Output
  pageEvent: PageEvent;
@@ -71,12 +70,10 @@ export class MateriasAprobadasComponent implements OnInit {
       this.materias = result;
     }
 
-  onPageChanged(e) {
+  cambiarPagina(e) {
     const firstCut = e.pageIndex * e.pageSize;
     const secondCut = firstCut + e.pageSize;
     this.materiasEnPagina = this.materias.slice(firstCut, secondCut);
 }
-setPageSizeOptions(setPageSizeOptionsInput: string) {
-  this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-}
+
 }

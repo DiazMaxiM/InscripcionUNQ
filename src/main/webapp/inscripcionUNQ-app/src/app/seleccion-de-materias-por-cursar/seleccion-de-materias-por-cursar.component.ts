@@ -25,7 +25,6 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
    length = 0;
    pageSize = 10;
    pageIndex = 0;
-   pageSizeOptions: number[] = [5, 10];
    materiasDisponiblesActivas: Materia[] = [];
    comisionesSeleccionadas: ComisionSeleccionada[] = [];
    idEstudiante: string;
@@ -54,19 +53,16 @@ ngOnInit() {
      });
    }
 
-onPageChanged(e) {
+cambiarPagina(e) {
   this.pageIndex = e.pageIndex;
   this.pageSize = e.pageSize;
-  this.updatePagination(e.pageIndex, e.pageSize);
+  this.actualizarPaginacion(e.pageIndex, e.pageSize);
 }
 
-updatePagination(pageIndex, pageSize) {
+actualizarPaginacion(pageIndex, pageSize) {
   const firstCut = pageIndex * pageSize;
   const secondCut = firstCut + pageSize;
   this.materiasDisponiblesActivas = this.materiasDisponibles.slice(firstCut, secondCut);
-}
-setPageSizeOptions(setPageSizeOptionsInput: string) {
-  this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
 }
 
 materiaSeleccionada(materia, checkbox) {
@@ -93,7 +89,7 @@ mostrarInformacionDelaComisionSeleccionada(materia, comisionSeleccionada: Comisi
     const materiaActualizada = this.materiaActualizada(materia,
       comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
     this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
-    this.updatePagination(this.pageIndex,  this.pageSize);
+    this.actualizarPaginacion(this.pageIndex,  this.pageSize);
   }
 
 materiaActualizada(oldSubject, commissionName, horariosSeleccionados, checked) {
@@ -125,7 +121,7 @@ abrirDialogoParaSeleccionarComision(materia) {
 deseleccionarMateria(materia) {
   const materiaActualizada = this.materiaActualizada(materia, '', [], false);
   this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
-  this.updatePagination(this.pageIndex, this.pageSize);
+  this.actualizarPaginacion(this.pageIndex, this.pageSize);
 }
 
 guardarRegistro(materia, registro: ComisionSeleccionada) {

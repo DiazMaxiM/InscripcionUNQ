@@ -27,7 +27,7 @@
       <mat-divider></mat-divider>
     </tbody>
   </table>
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChanged($event)">
+      <mat-paginator [length]="length" [pageSize]="pageSize" (page)="cambiarPagina($event)">
       </mat-paginator>
 </div>
 <div class="col-12">
