@@ -19,6 +19,7 @@ export class LoginEstudianteComponent {
   dniFormControl = new FormControl('', [
       Validators.required
     ]);
+
   onSubmit() {
       const dni = this.dniFormControl.value;
       this.restService.getEncuestasVigentes(dni).subscribe(encuestas => {

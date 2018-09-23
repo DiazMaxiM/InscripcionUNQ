@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig} from '@angular/material';
 import {FeedbackUsuarioDialogoComponent} from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 import {HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
@@ -12,7 +12,8 @@ export class UtilesService {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-  ) {}
+  ) {
+  }
 
   mostrarMensajeYRedireccionar(mensaje, ruta) {
     const dialogConfig = this.crearConfiguracionDelDialogo(mensaje);
@@ -49,6 +50,7 @@ export class UtilesService {
  }
 
  salir() {
+   localStorage.clear();
    this.irA('');
  }
 

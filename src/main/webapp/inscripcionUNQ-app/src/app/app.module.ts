@@ -10,41 +10,41 @@ import { MaterialModule } from './material.module';
 import 'hammerjs';
 
 import { LoginEstudianteComponent } from './autenticacion/login-estudiante.component';
-import { PollScreenComponent } from './poll/poll-screen.component';
-import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
+import { InformacionEstudianteComponent } from './informacion-del-usuario/informacion-estudiante.component';
 import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
 import { RestService } from './rest.service';
 
-import { Routing} from './app.routing';
+import { AppRoutingModule} from './app.routing';
 import { MomentModule } from 'ngx-moment';
 
 import { FeedbackUsuarioDialogoComponent } from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
-import { SubjectScreenComponent} from './subject/subject-screen.component';
+import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aprobadas.component';
 
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
 import { MatPaginatorI18n } from './spanish-paginator-intl';
 import { MatPaginatorIntl } from '@angular/material';
-import {RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
+import { RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 import { UtilesService } from './utiles.service';
-import {HttpClientModule} from '@angular/common/http';
-import {EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
+import { HttpClientModule} from '@angular/common/http';
+import { EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
 import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
 import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
+import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginEstudianteComponent,
-    PollScreenComponent,
-    DataVerificationComponent,
+    InformacionEstudianteComponent,
     FeedbackUsuarioDialogoComponent,
-    SubjectScreenComponent,
     SeleccionDeMateriasPorCursarComponent,
     SeleccionDeComisionDialogoComponent,
     EncuestaFinalizadaComponent,
     LoginUsuarioComponent,
-    TareasUsuarioComponent
+    TareasUsuarioComponent,
+    EncuestasDisponiblesComponent,
+    MateriasAprobadasComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +52,7 @@ import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.componen
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    Routing,
+    AppRoutingModule,
     MomentModule,
     HttpClientModule
   ],

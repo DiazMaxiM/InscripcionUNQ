@@ -1,4 +1,4 @@
-export class  Subject {
+export class  Materia {
   id?: number;
   code?: string;
   name?: string;

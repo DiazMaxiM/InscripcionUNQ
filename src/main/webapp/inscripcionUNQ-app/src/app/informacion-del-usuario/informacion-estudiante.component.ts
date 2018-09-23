@@ -1,16 +1,16 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestService } from '../rest.service';
-import { Student } from './student.model';
+import { Estudiante } from './estudiante.model';
 import {UtilesService} from '../utiles.service';
 import {HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-data-verification-screen',
-  templateUrl: './data-verification-screen.component.html',
-  styleUrls: ['./data-verification-screen.component.css']
+  selector: 'app-informacion-estudiante',
+  templateUrl: './informacion-estudiante.component.html',
+  styleUrls: ['./informacion-estudiante.component.css']
 })
-export class DataVerificationComponent implements OnInit {
+export class InformacionEstudianteComponent implements OnInit {
 
   constructor(
     private restService: RestService,
@@ -18,7 +18,7 @@ export class DataVerificationComponent implements OnInit {
     private utilesService: UtilesService
   ) {}
 
-  dataVerificationForm: FormGroup;
+  informacionEstudianteForm: FormGroup;
   idEstudiante: string;
   dniEstudiante: string;
   idEncuestaActual: string;
@@ -26,40 +26,40 @@ export class DataVerificationComponent implements OnInit {
 ngOnInit() {
     this.dniEstudiante = localStorage.getItem('dniEstudiante');
     this.idEncuestaActual = localStorage.getItem('idEncuestaActual');
-    this.getStudentData();
-    this.createDataStudentFormGroup();
+    this.getInformacionEstudiante();
+    this.crearFormularioEstudiante();
   }
 
-createDataStudentFormGroup() {
-    this.dataVerificationForm = this.formBuilder.group({
-          name: ['', Validators.required],
-          lastName: ['', Validators.required],
+crearFormularioEstudiante() {
+    this.informacionEstudianteForm = this.formBuilder.group({
+          nombres: ['', Validators.required],
+          apellidos: ['', Validators.required],
           email: ['', [Validators.required, Validators.email]]
       });
   }
 
-getStudentData() {
+  getInformacionEstudiante() {
     this.restService.getInformacionEstudiante(this.dniEstudiante, this.idEncuestaActual)
     .subscribe(data =>
-      this.setStudenDataOnForm(data)
+      this.insertarInformacionEstudianteEnFormulario(data)
     );
   }
 
-setStudenDataOnForm(student) {
-  this.idEstudiante = student.id;
+insertarInformacionEstudianteEnFormulario(estudiante) {
+  this.idEstudiante = estudiante.id;
   localStorage.setItem('idEstudiante', this.idEstudiante);
-  this.dataVerificationForm.setValue({
-    'name': student.name,
-    'lastName': student.lastName,
-    'email': student.mail
+  this.informacionEstudianteForm.setValue({
+    'nombres': estudiante.name,
+    'apellidos': estudiante.lastName,
+    'email': estudiante.mail
   });
 }
 
 onSubmit() {
-  if (this.dataVerificationForm.valid) {
-    const { name, lastName, email} = this.dataVerificationForm.value;
-    const studentData = new Student(this.dniEstudiante, name, lastName, email, this.idEstudiante);
-    this.restService.updateStudentData(studentData)
+  if (this.informacionEstudianteForm.valid) {
+    const { nombres, apellidos, email} = this.informacionEstudianteForm.value;
+    const studentData = new Estudiante(this.dniEstudiante, nombres, apellidos, email, this.idEstudiante);
+    this.restService.actualizarInformacionEstudiante(studentData)
       .subscribe(res => {
         const mensaje = 'Los datos fueron actualizados con exito';
          this.utilesService.mostrarMensajeYRedireccionar(mensaje, 'materias-aprobadas');

@@ -21,10 +21,10 @@ export class LoginUsuarioComponent implements OnInit {
     loginVerificationForm: FormGroup;
 
     ngOnInit() {
-      this.createLoginFormGroup();
+      this.crearLoginFormGroup();
     }
 
-  createLoginFormGroup() {
+  crearLoginFormGroup() {
       this.loginVerificationForm = this.formBuilder.group({
               password: ['', [Validators.required]],
               email: ['', [Validators.required,Validators.email]]

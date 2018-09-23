@@ -1,18 +1,19 @@
-﻿import { Routes, RouterModule } from '@angular/router';
-import { PollScreenComponent } from './poll/poll-screen.component';
-import { DataVerificationComponent } from './data-verification/data-verification-screen.component';
-import { SubjectScreenComponent} from './subject/subject-screen.component';
+﻿import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
 import { EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
 import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
 import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 import { LoginEstudianteComponent } from './autenticacion/login-estudiante.component';
+import { InformacionEstudianteComponent } from './informacion-del-usuario/informacion-estudiante.component';
+import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
+import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aprobadas.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginEstudianteComponent, pathMatch: 'full' },
-  { path: 'encuestas', component: PollScreenComponent },
-  { path: 'materias-aprobadas', component: SubjectScreenComponent },
-  { path: 'verificacion-de-datos', component: DataVerificationComponent },
+  { path: 'encuestas', component: EncuestasDisponiblesComponent },
+  { path: 'materias-aprobadas', component: MateriasAprobadasComponent },
+  { path: 'verificacion-de-datos', component: InformacionEstudianteComponent },
   { path: 'materias-por-cursar', component: SeleccionDeMateriasPorCursarComponent },
   { path: 'encuesta-finalizada', component: EncuestaFinalizadaComponent },
   { path: 'login-usuario', component: LoginUsuarioComponent },
@@ -20,4 +21,8 @@ const APP_ROUTES: Routes = [
   { path: '**', redirectTo: '' }
 ];
 
-export const Routing = RouterModule.forRoot(APP_ROUTES);
+  @NgModule({
+    imports: [RouterModule.forRoot(APP_ROUTES)],
+    exports: [RouterModule]
+  })
+  export class AppRoutingModule { }

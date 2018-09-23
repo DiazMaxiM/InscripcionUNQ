@@ -4,7 +4,7 @@ import { SeleccionDeComisionDialogoComponent} from '../seleccion-de-comision-dia
 import { RestService } from '../rest.service';
 import { ComisionSeleccionada } from '../seleccion-de-comision-dialogo/comision-seleccionada.model';
 import {PageEvent} from '@angular/material';
-import {Subject} from '../subject/subject.model';
+import {Materia} from '../materias-aprobadas/materia.model';
 import {RegistroDeComisionesSeleccionadasService} from './registro-de-comisiones-seleccionadas.service';
 import {UtilesService} from '../utiles.service';
 import {Comision} from './comision.model';
@@ -17,7 +17,7 @@ import {Comision} from './comision.model';
 
 export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
-    materiasDisponibles: Subject[] = [];
+    materiasDisponibles: Materia[] = [];
 
     // MatPaginator Output
     pageEvent: PageEvent;
@@ -25,8 +25,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
    length = 0;
    pageSize = 10;
    pageIndex = 0;
-   pageSizeOptions: number[] = [5, 10];
-   materiasDisponiblesActivas: Subject[] = [];
+   materiasDisponiblesActivas: Materia[] = [];
    comisionesSeleccionadas: ComisionSeleccionada[] = [];
    idEstudiante: string;
 
@@ -40,7 +39,8 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 ngOnInit() {
      this.idEstudiante = localStorage.getItem('idEstudiante');
      this.limpiarInformacionComisionesSeleccionadas();
-     this.obtenerMateriasDisponibles();
+     this.obtenerMateriasDisponibles();;
+
   }
 
   obtenerMateriasDisponibles() {
@@ -53,19 +53,16 @@ ngOnInit() {
      });
    }
 
-onPageChanged(e) {
+cambiarPagina(e) {
   this.pageIndex = e.pageIndex;
   this.pageSize = e.pageSize;
-  this.updatePagination(e.pageIndex, e.pageSize);
+  this.actualizarPaginacion(e.pageIndex, e.pageSize);
 }
 
-updatePagination(pageIndex, pageSize) {
+actualizarPaginacion(pageIndex, pageSize) {
   const firstCut = pageIndex * pageSize;
   const secondCut = firstCut + pageSize;
   this.materiasDisponiblesActivas = this.materiasDisponibles.slice(firstCut, secondCut);
-}
-setPageSizeOptions(setPageSizeOptionsInput: string) {
-  this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
 }
 
 materiaSeleccionada(materia, checkbox) {
@@ -89,9 +86,10 @@ agregarComisionSeleccionada(materia) {
 }
 
 mostrarInformacionDelaComisionSeleccionada(materia, comisionSeleccionada: ComisionSeleccionada) {
-    const materiaActualizada = this.materiaActualizada(materia,comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
+    const materiaActualizada = this.materiaActualizada(materia,
+      comisionSeleccionada.nombreDeLaComision,comisionSeleccionada.horariosSeleccionados, true);
     this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
-    this.updatePagination(this.pageIndex,  this.pageSize);
+    this.actualizarPaginacion(this.pageIndex,  this.pageSize);
   }
 
 materiaActualizada(oldSubject, commissionName, horariosSeleccionados, checked) {
@@ -123,7 +121,7 @@ abrirDialogoParaSeleccionarComision(materia) {
 deseleccionarMateria(materia) {
   const materiaActualizada = this.materiaActualizada(materia, '', [], false);
   this.materiasDisponibles[this.materiasDisponibles.indexOf(materia)] = materiaActualizada;
-  this.updatePagination(this.pageIndex, this.pageSize);
+  this.actualizarPaginacion(this.pageIndex, this.pageSize);
 }
 
 guardarRegistro(materia, registro: ComisionSeleccionada) {
