@@ -49,9 +49,9 @@ insertarInformacionEstudianteEnFormulario(estudiante) {
   this.idEstudiante = estudiante.id;
   localStorage.setItem('idEstudiante', this.idEstudiante);
   this.informacionEstudianteForm.setValue({
-    'nombres': estudiante.name,
-    'apellidos': estudiante.lastName,
-    'email': estudiante.mail
+    'nombres': estudiante.nombre,
+    'apellidos': estudiante.apellido,
+    'email': estudiante.email
   });
 }
 

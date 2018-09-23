@@ -19,7 +19,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	@Override
 	public void verificarSiExisteUsuario(String email,String password) throws ObjectNotFoundinDBException, PasswordInvalidoException {
 		
-		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmaill(email);
+		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(email);
 		if (usuario == null) {
 			throw new ObjectNotFoundinDBException();
 		}else {

@@ -3,13 +3,13 @@ package ar.edu.unq.inscripcionunq.spring.validacion;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.model.Student;
+import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
 public class ValidacionEstudiante extends Validacion{
 	
-	public boolean estudianteValido(Student estudiante) throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
-		return nombreValido(estudiante.getName()) && apellidoValido(estudiante.getLastName()) &&
-				emailValido(estudiante.getMail());
+	public boolean estudianteValido(Estudiante estudiante) throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+		return nombreValido(estudiante.getNombre()) && apellidoValido(estudiante.getApellido()) &&
+				emailValido(estudiante.getEmail());
 	}
 	
 	private boolean nombreValido(String nombre) throws NombreInvalidoException {

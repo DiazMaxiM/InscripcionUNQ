@@ -4,6 +4,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
 public interface UsuarioDao extends GenericDao<Usuario> {
 	
-	Usuario obtenerUsuarioDesdeEmaill(String email);
+	Usuario obtenerUsuarioDesdeEmail(String email);
 
 }

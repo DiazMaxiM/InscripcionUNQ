@@ -4,12 +4,8 @@ public class ObjectNotFoundinDBException extends ExceptionGeneric implements Exc
 
 	public ObjectNotFoundinDBException() {
 		super(0, "");
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 }

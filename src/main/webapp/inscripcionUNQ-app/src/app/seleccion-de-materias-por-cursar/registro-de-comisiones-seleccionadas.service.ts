@@ -50,7 +50,7 @@ horariosEnElMismoDia(horarioPorOcupar: Horario) {
 }
 
  nuevoRegistro(idMateria, comision) {
-   const registro = new ComisionSeleccionada(comision.id, comision.name, idMateria);
+   const registro = new ComisionSeleccionada(comision.id, comision.nombre, idMateria);
    for (const horario of comision.intervalJson) {
      const horarioSeleccionado = this.crearHorario(horario);
      registro.agregarHorario(horarioSeleccionado);
@@ -70,7 +70,7 @@ crearHorario(horario) {
   const horaDeInicio = this.nuevoHorario(horario.startDate);
   const horaDeFin = this.nuevoHorario(horario.endDate);
 
-  return new Horario(horario.day, horaDeInicio, horaDeFin);
+  return new Horario(horario.dia, horaDeInicio, horaDeFin);
 }
 
  esHorarioSuperpuesto(horarioOcupado: Horario, horarioDeConsulta: Horario) {

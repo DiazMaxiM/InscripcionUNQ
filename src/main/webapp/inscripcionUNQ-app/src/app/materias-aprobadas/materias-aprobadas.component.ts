@@ -59,9 +59,9 @@ export class MateriasAprobadasComponent implements OnInit {
         if (this.materias[i].id == id) {
           result.push({
             'id': this.materias[i].id,
-            'code': this.materias[i].code,
-            'name': this.materias[i].name,
-            'approved': !this.materias[i].approved
+            'codigo': this.materias[i].codigo,
+            'nombre': this.materias[i].nombre,
+            'aprobada': !this.materias[i].aprobada
           });
         } else {
           result.push(this.materias[i]);
