@@ -3,6 +3,7 @@ import { Estudiante } from './informacion-del-usuario/estudiante.model';
 import { Materia } from './materias-aprobadas/materia.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Usuario } from './autenticacion/usuario.model';
+import { Carrera } from './carreras/carrera.model';
 
 @Injectable()
 export class RestService {
@@ -49,5 +50,10 @@ ingresarUsuario(usuario: Usuario) {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   return this.httpClient.post('/api/encuesta/ingresoUsuario', usuario, { headers });
 }
+
+getCarreras() {
+  return this.httpClient.get<Array<Carrera>>('/api/carreras');
+}
+
 
 }

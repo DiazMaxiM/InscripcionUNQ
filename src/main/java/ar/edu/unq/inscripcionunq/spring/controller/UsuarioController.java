@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailUsuarioNoExisteException;
-import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
