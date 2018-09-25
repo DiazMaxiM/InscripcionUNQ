@@ -7,7 +7,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 
 @Service
 @Transactional
-
-public class CarreraServiceImp extends GenericServiceImp<Carrera> implements GenericService<Carrera> {
-
+public class CarreraServiceImp extends GenericServiceImp<Carrera> implements CarreraService {
+      
 }

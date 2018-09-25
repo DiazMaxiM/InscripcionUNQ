@@ -8,6 +8,7 @@ import { LoginEstudianteComponent } from './autenticacion/login-estudiante.compo
 import { InformacionEstudianteComponent } from './informacion-del-usuario/informacion-estudiante.component';
 import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
 import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aprobadas.component';
+import { CarrerasComponent } from './carreras/carreras.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginEstudianteComponent, pathMatch: 'full' },
@@ -18,6 +19,7 @@ const APP_ROUTES: Routes = [
   { path: 'encuesta-finalizada', component: EncuestaFinalizadaComponent },
   { path: 'login-usuario', component: LoginUsuarioComponent },
   { path: 'tareas-usuario', component: TareasUsuarioComponent },
+  { path: 'carreras', component: CarrerasComponent },
   { path: '**', redirectTo: '' }
 ];
 

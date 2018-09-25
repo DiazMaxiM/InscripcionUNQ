@@ -31,6 +31,7 @@ import { EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-fina
 import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
 import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
+import { CarrerasComponent } from './carreras/carreras.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas
     LoginUsuarioComponent,
     TareasUsuarioComponent,
     EncuestasDisponiblesComponent,
-    MateriasAprobadasComponent
+    MateriasAprobadasComponent,
+    CarrerasComponent
   ],
   imports: [
     BrowserModule,
