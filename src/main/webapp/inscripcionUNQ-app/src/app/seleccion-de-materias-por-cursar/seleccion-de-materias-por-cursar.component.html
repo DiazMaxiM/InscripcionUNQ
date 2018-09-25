@@ -20,7 +20,7 @@
         <td>
           {{materia.nombreComision}}
           <div *ngFor="let horario of materia.horariosSeleccionados">
-            {{horario.dia}} de {{horario.horaComienzo | amLocal | amDateFormat: 'HH:mm'}} a {{horario.horarioDeFinalizacion | amLocal | amDateFormat: 'HH:mm'}}
+            {{horario.dia}} de {{horario.horarioDeComienzo | amLocal | amDateFormat: 'HH:mm'}} a {{horario.horarioDeFinalizacion | amLocal | amDateFormat: 'HH:mm'}}
           </div>
         </td>
       </tr>

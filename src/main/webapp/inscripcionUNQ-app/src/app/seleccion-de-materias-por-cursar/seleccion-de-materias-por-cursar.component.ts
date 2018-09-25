@@ -75,7 +75,7 @@ materiaSeleccionada(materia, checkbox) {
 }
 
 agregarComisionSeleccionada(materia) {
-  const comisiones: any[] = materia.commissionsJson;
+  const comisiones: any[] = materia.comisionesJson;
   if (comisiones.length > 1) {
     this.abrirDialogoParaSeleccionarComision(materia);
   } else {
@@ -92,16 +92,16 @@ mostrarInformacionDelaComisionSeleccionada(materia, comisionSeleccionada: Comisi
     this.actualizarPaginacion(this.pageIndex,  this.pageSize);
   }
 
-materiaActualizada(oldSubject, commissionName, horariosSeleccionados, checked) {
+materiaActualizada(oldSubject, nombreComision, horariosSeleccionados, checked) {
     return {
          'id': oldSubject.id,
-         'code': oldSubject.code,
-         'name': oldSubject.name,
-         'approved': oldSubject.approved,
+         'codigo': oldSubject.codigo,
+         'nombre': oldSubject.nombre,
+         'aprobada': oldSubject.aprobada,
          'checked': checked,
-         'commissionName': commissionName,
+         'nombreComision': nombreComision,
          'horariosSeleccionados': horariosSeleccionados,
-         'commissionsJson': oldSubject.commissionsJson
+         'comisionesJson': oldSubject.comisionesJson
        };
     }
 
@@ -167,7 +167,7 @@ enviarComisionesSeleccionadas() {
 marcarMateriasAnteriormenteSeleccionadas() {
   for (const materia of this.materiasDisponibles) {
     if (materia.comisionRegistrado != null) {
-      const comisionSeleccionada = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id, 
+      const comisionSeleccionada = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id,
         materia.comisionRegistrado);
       this.guardarRegistro(materia, comisionSeleccionada);
     }

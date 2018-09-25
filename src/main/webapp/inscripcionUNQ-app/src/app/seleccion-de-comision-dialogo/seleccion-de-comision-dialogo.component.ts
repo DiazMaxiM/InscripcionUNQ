@@ -20,7 +20,7 @@ import {RegistroDeComisionesSeleccionadasService} from '../seleccion-de-materias
       private fb: FormBuilder,
        @Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
          this.materia = data.materia;
-         this.comisiones = this.materia.commissionsJson;
+         this.comisiones = this.materia.comisionesJson;
  }
 
  enviarRegistro(comisionSeleccionada: ComisionSeleccionada) {
