@@ -8,8 +8,8 @@
    </thead>
    <tbody>
      <tr *ngFor="let materia of materiasEnPagina">
-       <td>{{materia.name}}</td>
-       <td><mat-checkbox [checked]='materia.approved' color="warn" (change)="seleccionarMateria(materia.id)"></mat-checkbox></td>
+       <td>{{materia.nombre}}</td>
+       <td><mat-checkbox [checked]='materia.aprobada' color="warn" (change)="seleccionarMateria(materia.id)"></mat-checkbox></td>
      </tr>
     <mat-divider></mat-divider>
    </tbody>

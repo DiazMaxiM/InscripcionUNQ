@@ -9,9 +9,9 @@
    </thead>
    <tbody>
      <tr *ngFor="let encuesta of encuestas">
-       <td>{{ encuesta.name }}</td>
-       <td>{{ encuesta.startDate.dayOfMonth | number:'2.0' }}/{{ encuesta.startDate.monthValue | number:'2.0' }}/{{ encuesta.startDate.year}}</td>
-       <td>{{ encuesta.endDate.dayOfMonth | number:'2.0'}}/{{ encuesta.endDate.monthValue | number:'2.0'}}/{{ encuesta.endDate.year}}</td>
+       <td>{{ encuesta.nombre }}</td>
+       <td>{{ encuesta.horaComienzo.dayOfMonth | number:'2.0' }}/{{ encuesta.horaComienzo.monthValue | number:'2.0' }}/{{ encuesta.horaComienzo.year}}</td>
+       <td>{{ encuesta.horaFin.dayOfMonth | number:'2.0'}}/{{ encuesta.horaFin.monthValue | number:'2.0'}}/{{ encuesta.horaFin.year}}</td>
        <td><i class="material-icons edit-icon" (click)="editarEncuesta(encuesta.id)">edit</i></td>
      </tr>
     <mat-divider></mat-divider>

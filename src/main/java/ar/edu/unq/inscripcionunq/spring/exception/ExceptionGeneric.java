@@ -2,9 +2,6 @@ package ar.edu.unq.inscripcionunq.spring.exception;
 
 public abstract class ExceptionGeneric extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7766681825318222454L;
 	private Integer code;
 	private String msg;

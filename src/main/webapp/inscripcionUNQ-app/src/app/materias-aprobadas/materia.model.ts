@@ -1,28 +1,28 @@
 export class  Materia {
   id?: number;
-  code?: string;
-  name?: string;
-  approved?: boolean;
+  codigo?: string;
+  nombre?: string;
+  aprobada?: boolean;
   checked?: boolean;
-  commissionName?: string;
+  nombreComision?: string;
   comisionRegistrado?: any;
 
   constructor(
     id?: number,
-    code?: string,
-    name?: string,
-    approved?: boolean,
+    codigo?: string,
+    nombre?: string,
+    aprobada?: boolean,
     checked?: boolean,
-    commissionName?: string,
+    nombreComision?: string,
     comisionRegistrado?: any
 
   ) {
     this.id = id;
-    this.code = code;
-    this.name = name;
-    this.approved = approved;
+    this.codigo = codigo;
+    this.nombre = nombre;
+    this.aprobada = aprobada;
     this.checked = checked;
-    this.commissionName = commissionName;
+    this.nombreComision = nombreComision;
     this.comisionRegistrado = comisionRegistrado;
   }
 }

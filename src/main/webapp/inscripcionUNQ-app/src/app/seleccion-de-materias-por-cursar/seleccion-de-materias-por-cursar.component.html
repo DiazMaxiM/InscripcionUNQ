@@ -15,10 +15,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let materia of materiasDisponiblesActivas">
-        <td>{{materia.name}}</td>
+        <td>{{materia.nombre}}</td>
         <td><mat-checkbox [checked]='materia.checked' (change)="materiaSeleccionada(materia,$event)" color="warn"></mat-checkbox></td>
         <td>
-          {{materia.commissionName}}
+          {{materia.nombreComision}}
           <div *ngFor="let horario of materia.horariosSeleccionados">
             {{horario.dia}} de {{horario.horarioDeComienzo | amLocal | amDateFormat: 'HH:mm'}} a {{horario.horarioDeFinalizacion | amLocal | amDateFormat: 'HH:mm'}}
           </div>

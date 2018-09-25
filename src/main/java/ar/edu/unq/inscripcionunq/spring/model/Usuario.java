@@ -6,7 +6,6 @@ import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 
 @Entity(name = "Usuario")
 public class Usuario extends BaseEntity{
-	
 	private String email; 
 	private String password;
 	

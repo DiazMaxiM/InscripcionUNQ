@@ -15,7 +15,7 @@ public class UsuarioDaoImp extends GenericDaoImp<Usuario> implements UsuarioDao
 	}
 
 	@Override
-	public Usuario obtenerUsuarioDesdeEmaill(String email) {
+	public Usuario obtenerUsuarioDesdeEmail(String email) {
 		Session session = this.sessionFactory.getCurrentSession();
 		
 		return (Usuario) session.createQuery("from Usuario where email = :email")

@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 @ComponentScans(value = { @ComponentScan("ar.edu.unq.inscripcionunq.spring.dao"),
-		@ComponentScan("ar.edu.unq.inscripcionunq.spring.service") })
+@ComponentScan("ar.edu.unq.inscripcionunq.spring.service") })
 public class AppConfig {
 
 	@Autowired
