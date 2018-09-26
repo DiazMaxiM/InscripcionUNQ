@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itextpdf.text.DocumentException;
 
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
@@ -41,8 +42,8 @@ public class EncuestaController {
 			throws UserInPollNotFoundException {
 		List<Encuesta> encuestas = encuestaServiceImp.getTodasLasEncuestasActivasParaDni(dni);
 
-		List<EncuestaJson> minipolls = encuestas.stream().map(m -> new EncuestaJson(m.getId(), m.getNombre(), m.getHoraComienzo(),
-				m.getHoraFin(), encuestaServiceImp.puedeGenerarPDF(dni, m.getId()))
+		List<EncuestaJson> minipolls = encuestas.stream().map(m -> new EncuestaJson(m.getId(), m.getNombre(),
+				m.getHoraComienzo(), m.getHoraFin(), encuestaServiceImp.puedeGenerarPDF(dni, m.getId()))
 
 		).collect(Collectors.toList());
 		return ResponseEntity.ok().body(minipolls);
@@ -72,7 +73,7 @@ public class EncuestaController {
 		try {
 			try {
 				estudianteServiceImp.enviarCertificado(id);
-			} catch (DocumentException | EmailException e) {
+			} catch (DocumentException | EmailException | CertificadoException e) {
 			}
 		} catch (StudentNotExistenException | IdNumberFormatException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));

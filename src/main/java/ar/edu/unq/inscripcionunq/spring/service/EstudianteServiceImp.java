@@ -15,14 +15,15 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
+import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Certificado;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
-import ar.edu.unq.inscripcionunq.spring.model.Mail;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.Mail;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 @Service
@@ -112,7 +113,7 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 	}
 
 	public Certificado getCertificado(String idEstudiante)
-			throws StudentNotExistenException, DocumentException, IdNumberFormatException {
+			throws StudentNotExistenException, DocumentException, IdNumberFormatException, CertificadoException {
 		try {
 			Estudiante estudiante = this.get(new Long(idEstudiante));
 			Certificado certificado = new Certificado();
@@ -126,8 +127,8 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 		}
 	}
 
-	public void enviarCertificado(String idEstudiante)
-			throws StudentNotExistenException, DocumentException, IdNumberFormatException, EmailException {
+	public void enviarCertificado(String idEstudiante) throws StudentNotExistenException, DocumentException,
+			IdNumberFormatException, EmailException, CertificadoException {
 		try {
 			Estudiante estudiante = this.get(new Long(idEstudiante));
 			Certificado certificado = new Certificado();

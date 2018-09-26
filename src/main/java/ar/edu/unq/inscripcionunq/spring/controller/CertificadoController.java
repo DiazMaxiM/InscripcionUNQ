@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Certificado;
@@ -30,7 +31,7 @@ public class CertificadoController {
 		byte[] pdfBytes;
 		try {
 			pdfBytes = estudianteServiceImp.getCertificado(idEstudiante).getBinaryPDF();
-		} catch (StudentNotExistenException | IdNumberFormatException e) {
+		} catch (StudentNotExistenException | IdNumberFormatException | CertificadoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		HttpHeaders headers = new HttpHeaders();

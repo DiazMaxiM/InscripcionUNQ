@@ -7,6 +7,7 @@ import org.apache.commons.mail.EmailException;
 import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Certificado;
@@ -14,7 +15,8 @@ import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
 public interface EstudianteService extends GenericService<Estudiante> {
 
-	List<MateriaJson> materiasAprobadasDeUsuario(String idUsuario) throws IdNumberFormatException, StudentNotExistenException;
+	List<MateriaJson> materiasAprobadasDeUsuario(String idUsuario)
+			throws IdNumberFormatException, StudentNotExistenException;
 
 	void actualizarMateriasAprobadasDeUsuario(String idUsuario, List<MateriaJson> estudiantesJson)
 			throws IdNumberFormatException, StudentNotExistenException;
@@ -23,9 +25,9 @@ public interface EstudianteService extends GenericService<Estudiante> {
 			throws IdNumberFormatException, StudentNotExistenException;
 
 	Certificado getCertificado(String idEstudiante)
-			throws StudentNotExistenException, DocumentException, IdNumberFormatException;
+			throws StudentNotExistenException, DocumentException, IdNumberFormatException, CertificadoException;
 
-	public void enviarCertificado(String idEstudiante)
-			throws StudentNotExistenException, DocumentException, IdNumberFormatException, EmailException;
+	public void enviarCertificado(String idEstudiante) throws StudentNotExistenException, DocumentException,
+			IdNumberFormatException, EmailException, CertificadoException;
 
 }
