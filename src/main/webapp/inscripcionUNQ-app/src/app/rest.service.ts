@@ -58,10 +58,6 @@ export class RestService {
     return this.httpClient.get<Array<Materia>>('/api/materias');
   }
 
-  getCarreras() {
-    return this.httpClient.get<Array<Carrera>>('/api/carreras');
-  }
-
   eliminarCarrera(idCarrera: string) {
     return this.httpClient.delete('/api/carreras/eliminarCarrera/' + idCarrera);
   }
