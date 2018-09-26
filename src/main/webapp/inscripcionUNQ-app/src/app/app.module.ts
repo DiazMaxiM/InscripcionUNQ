@@ -32,6 +32,7 @@ import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
 import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
 import { CarrerasComponent } from './carreras/carreras.component';
+import { MateriasComponent } from './materias/materias.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CarrerasComponent } from './carreras/carreras.component';
     TareasUsuarioComponent,
     EncuestasDisponiblesComponent,
     MateriasAprobadasComponent,
-    CarrerasComponent
+    CarrerasComponent,
+    MateriasComponent
   ],
   imports: [
     BrowserModule,

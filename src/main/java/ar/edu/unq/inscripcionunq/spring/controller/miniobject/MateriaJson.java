@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
@@ -13,6 +14,8 @@ public class MateriaJson {
 	public Boolean aprobada;
 	public List<ComisionJson> comisionesJson = new ArrayList<ComisionJson>();
 	public ComisionJson comisionRegistrado;
+	public Integer horas;
+	public List<Carrera> carreras;
 
 	public MateriaJson() {
 
@@ -23,6 +26,8 @@ public class MateriaJson {
 		this.nombre = materia.getNombre();
 		this.aprobada = bool;
 		this.id = materia.getId();
+		this.horas = materia.getHoras();
+		this.carreras = materia.getCarreras();
 	}
 
 	public MateriaJson(Materia materia, boolean bool, List<Comision> collect) {
@@ -30,6 +35,8 @@ public class MateriaJson {
 		this.nombre = materia.getNombre();
 		this.aprobada = bool;
 		this.id = materia.getId();
+		this.horas = materia.getHoras();
+		this.carreras = materia.getCarreras();
 		if (!collect.isEmpty()) {
 			this.setComisionInscripto(collect.get(0));
 		}

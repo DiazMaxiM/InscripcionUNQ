@@ -25,4 +25,14 @@ export class TareasUsuarioComponent {
       });
     }
 
+    irAMaterias() {
+      this.restService.getMaterias().subscribe(materias => {
+        localStorage.setItem('materias',JSON.stringify(materias));
+        this.utilesService.irA('materias');
+      },
+      (err) => {
+          this.utilesService.mostrarMensajeDeError(err);
+      });
+    }
+
 }

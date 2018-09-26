@@ -19,5 +19,6 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	public List<Materia> getMateriasParaCarreras(List<Carrera> carreras) {
 		return ((MateriaDao) genericDao).getMateriasParaCarreras(carreras);
 	}
+	
 
 }
