@@ -14,7 +14,7 @@
           <td>{{ carrera.descripcion}}</td>
           <td>{{ carrera.estado }}</td>
           <td><i class="material-icons edit-icon" (click)="editarCarrera(carrera)">edit</i></td>
-          <td><i class="material-icons edit-icon" (click)="eliminarCarrera(carrera)">delete</i></td>
+          <td><i class="material-icons edit-icon" (click)="eliminarCarrera(carrera.id)">delete</i></td>
         </tr>
        <mat-divider></mat-divider>
       </tbody>

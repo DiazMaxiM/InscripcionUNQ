@@ -11,15 +11,25 @@ export class FeedbackUsuarioDialogoComponent {
 
    mensaje: string;
    cargando: boolean;
+   confirmar: boolean;
 
     constructor(
       public dialogRef: MatDialogRef<FeedbackUsuarioDialogoComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
         this.mensaje = data.mensaje;
         this.cargando = data.cargando;
+        this.confirmar = data.confirmar;
       }
 
     aceptar() {
         this.dialogRef.close();
+    }
+
+    cancelarAccion(){
+        this.dialogRef.close(false);
+    }
+
+    confirmarAccion() {
+        this.dialogRef.close(true);
     }
 }

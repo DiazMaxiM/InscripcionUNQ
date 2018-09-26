@@ -3,6 +3,8 @@ import { MatDialog, MatDialogConfig} from '@angular/material';
 import {FeedbackUsuarioDialogoComponent} from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
 import { Router} from '@angular/router';
 import {HttpErrorResponse } from '@angular/common/http';
+import { map} from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UtilesService {
@@ -26,7 +28,7 @@ export class UtilesService {
 
   }
 
-  crearConfiguracionDelDialogo(msj: String, cargando= false) {
+  crearConfiguracionDelDialogo(msj: String, cargando= false, confirmar = false) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
@@ -34,7 +36,8 @@ export class UtilesService {
     dialogConfig.height = '200px';
     dialogConfig.data = {
         mensaje: msj,
-        cargando: cargando
+        cargando: cargando,
+        confirmar: confirmar
       };
     return dialogConfig;
   }
@@ -94,5 +97,16 @@ export class UtilesService {
     this.dialogo = null;
     this.irA(direccion);
   }
+
+  mostrarDialogoConfirmacion(mensaje) {
+    const dialogConfig = this.crearConfiguracionDelDialogo(mensaje, false, true);
+    const dialogRef = this.dialog.open(FeedbackUsuarioDialogoComponent,
+    dialogConfig);
+   return dialogRef.afterClosed().pipe(
+      map((confirmar) => {
+        return confirmar;
+      })
+   );
+}
 
 }
