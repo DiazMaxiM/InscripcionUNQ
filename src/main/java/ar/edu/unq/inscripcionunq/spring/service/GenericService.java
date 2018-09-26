@@ -14,5 +14,5 @@ public interface GenericService<T> {
 
 	void update(T c);
 
-	void delete(Long id);
+	void delete(T c);
 }

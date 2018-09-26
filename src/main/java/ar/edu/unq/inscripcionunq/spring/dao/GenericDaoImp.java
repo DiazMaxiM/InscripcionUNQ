@@ -44,5 +44,12 @@ public abstract class GenericDaoImp<T> implements GenericDao<T> {
 		Query<T> query = session.createQuery(cq);
 		return query.getResultList();
 	}
+	
+	
+	public void delete(T object) {
+		sessionFactory.getCurrentSession().delete(object);
+	}
+	
+	
 
 }

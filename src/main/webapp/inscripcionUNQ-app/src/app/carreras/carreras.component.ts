@@ -10,10 +10,13 @@ import { Carrera } from './carrera.model';
   styleUrls: ['./carreras.component.css']
 })
 export class CarrerasComponent implements OnInit {
+
   carreras: Carrera[];
+  idCarrera;
+
   constructor(
     private restService: RestService,
-    private utilesService: UtilesService
+    private utilesService: UtilesService,
 ) { }
 
   ngOnInit() {
@@ -28,4 +31,25 @@ export class CarrerasComponent implements OnInit {
         this.utilesService.mostrarMensajeDeError(err);
     });
   }
+
+  eliminarCarrera(idCarrera) {
+     const mensaje = '¿Está seguro de que desea eliminar la carrera seleccionada?';
+     this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
+       console.log(confirma);
+       if (confirma) {
+        this.eliminar(idCarrera);
+       }
+    });
+  }
+
+  eliminar(idCarrera) {
+    this.restService.eliminarCarrera(idCarrera).subscribe(res => {
+      this.utilesService.mostrarMensaje('Se ha eliminado la carrera');
+      this.getCarreras();
+    },
+    (err: HttpErrorResponse) => {
+        this.utilesService.mostrarMensajeDeError(err);
+    });
+  }
+
 }

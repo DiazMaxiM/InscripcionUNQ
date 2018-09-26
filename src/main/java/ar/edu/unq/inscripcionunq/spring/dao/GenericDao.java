@@ -11,4 +11,6 @@ public interface GenericDao<T> {
 	List<T> list();
 
 	void update(T c);
+	
+	void delete(T c);
 }
