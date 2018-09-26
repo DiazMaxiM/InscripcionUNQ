@@ -11,6 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity(name = "Materia")
 public class Materia extends BaseEntity {
 	@Column(unique = true)
@@ -19,7 +23,7 @@ public class Materia extends BaseEntity {
 	private Integer horas;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Carrera> carreras = new ArrayList<Carrera>();
 
 	public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras) {

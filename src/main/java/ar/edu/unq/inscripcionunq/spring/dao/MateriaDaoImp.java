@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -19,15 +20,15 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 	}
 
 	@Override
-	public List<Materia> getMateriasParaCarreras(List<Carrera> careers) {
-		List<Long> careersId = new ArrayList<Long>();
-		for (Carrera career : careers) {
-			careersId.add(career.getId());
+	public List<Materia> getMateriasParaCarreras(List<Carrera> carreras) {
+		List<Long> idCarreras = new ArrayList<Long>();
+		for (Carrera carrera : carreras) {
+			idCarreras.add(carrera.getId());
 		}
-		Session session = this.sessionFactory.getCurrentSession();
-		Query<Materia> query = session.createQuery(
+		Session sesion = this.sessionFactory.getCurrentSession();
+		Query<Materia> query = sesion.createQuery(
 				"select distinct materia from Materia as materia join materia.carreras c where c.id in (:carrerasId)");
-		query.setParameterList("carrerasId", careersId);
+		query.setParameterList("carrerasId", idCarreras);
 		return query.getResultList();
 	}
 

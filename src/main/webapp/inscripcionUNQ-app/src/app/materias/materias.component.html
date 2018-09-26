@@ -1,0 +1,36 @@
+<h5 class="titulo">ABM Materias</h5>
+<div class="table-responsive">
+    <table class="table table-hover table-borderless">
+      <thead>
+        <tr>
+          <th> Código </th>
+          <th> Nombre </th>
+          <th> Carreras </th>
+          <th> Carga horaria </th>
+          <th> Estado </th>
+          <th> Acciones </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let materia of materias">
+          <td> {{ materia.codigo }} </td>
+          <td> {{ materia.nombre }} </td>
+
+          <td>
+            <tr *ngFor="let carrera of materia.carreras">
+             {{ carrera.codigo }}
+           </tr>
+          </td>
+          <td> {{ materia.horas }} </td>
+          <td> {{ materia.estado }} </td>
+          <td>
+            <i class="material-icons edit-icon" (click)="editarMateria(materia)">edit</i>
+          </td>
+          <td>
+            <i class="material-icons edit-icon">delete</i>
+          </td>
+        </tr>
+       <mat-divider></mat-divider>
+      </tbody>
+    </table>
+   </div>
