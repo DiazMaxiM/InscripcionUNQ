@@ -75,7 +75,9 @@ public class Certificado {
 			p.add(dottedline);
 			documento.add(p);
 			documento.add(new Paragraph(" "));
+			documento.add(new Paragraph("DNI: " + estudiante.getDni().toString()));
 			documento.add(new Paragraph("Estudiante: " + estudiante.getApellido() + " " + estudiante.getNombre()));
+			documento.add(new Paragraph("Mail: " + estudiante.getEmail()));
 			documento.add(new Paragraph(" "));
 			PdfPTable table = new PdfPTable(3);
 			table.setPaddingTop(1f);
