@@ -33,6 +33,7 @@ import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.componen
 import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
 import { CarrerasComponent } from './carreras/carreras.component';
 import { MateriasComponent } from './materias/materias.component';
+import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MateriasComponent } from './materias/materias.component';
     EncuestasDisponiblesComponent,
     MateriasAprobadasComponent,
     CarrerasComponent,
-    MateriasComponent
+    MateriasComponent,
+    CarreraDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ import { MateriasComponent } from './materias/materias.component';
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
     UtilesService],
   bootstrap: [AppComponent],
-  entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent]
+  entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
+  CarreraDialogoComponent]
 })
 export class AppModule { }

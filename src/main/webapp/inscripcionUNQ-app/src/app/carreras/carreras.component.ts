@@ -3,6 +3,8 @@ import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import {HttpErrorResponse } from '@angular/common/http';
 import { Carrera } from './carrera.model';
+import { CarreraDialogoComponent } from '../carrera-dialogo/carrera-dialogo.component';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 @Component({
   selector: 'app-carreras',
@@ -17,6 +19,7 @@ export class CarrerasComponent implements OnInit {
   constructor(
     private restService: RestService,
     private utilesService: UtilesService,
+    private dialog: MatDialog
 ) { }
 
   ngOnInit() {
@@ -35,7 +38,6 @@ export class CarrerasComponent implements OnInit {
   eliminarCarrera(idCarrera) {
      const mensaje = '¿Está seguro de que desea eliminar la carrera seleccionada?';
      this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
-       console.log(confirma);
        if (confirma) {
         this.eliminar(idCarrera);
        }
@@ -52,4 +54,27 @@ export class CarrerasComponent implements OnInit {
     });
   }
 
+  editarCarrera( carrera: Carrera) {
+
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = false;
+      dialogConfig.width = '600px';
+      dialogConfig.height = '450px';
+      dialogConfig.data = {
+        carrera: carrera
+      };
+
+      const dialogRef = this.dialog.open(CarreraDialogoComponent,
+          dialogConfig);
+
+
+      dialogRef.afterClosed().subscribe( val => {this.actualizarCarrera(val)}
+      );
+  }
+
+  actualizarCarrera(carrera: Carrera) {
+
+  }
 }
