@@ -3,6 +3,8 @@ import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Materia } from '../materias-aprobadas/materia.model';
+import { MatDialog, MatDialogConfig} from '@angular/material';
+import { ModificacionDeMateriaDialogoComponent } from '../modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 
 @Component({
   selector: 'app-materias',
@@ -14,7 +16,8 @@ export class MateriasComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private utilesService: UtilesService
+    private utilesService: UtilesService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -30,8 +33,25 @@ export class MateriasComponent implements OnInit {
     });
   }
 
-  editarMateria(materia){
-      console.log("Abrir dialogo");
+  editarMateria(materia) {
+      this.abrirDialogoParaEditarMateria(materia);
+  }
+
+  abrirDialogoParaEditarMateria(materia) {
+        const dialogoConfig = new MatDialogConfig();
+        dialogoConfig.disableClose = true;
+        dialogoConfig.autoFocus = true;
+        dialogoConfig.data = {
+            materia: materia,
+          };
+
+        const dialogRef = this.dialog.open(ModificacionDeMateriaDialogoComponent, dialogoConfig);
+
+        dialogRef.afterClosed().subscribe(registro => {
+          console.log("Abre dialogo");
+             //this.guardarRegistro(materia, registro);
+        });
+
   }
 
   eliminarMateria(idMateria) {
