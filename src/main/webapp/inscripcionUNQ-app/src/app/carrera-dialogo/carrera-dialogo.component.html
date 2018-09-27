@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>Edición carrera</h2>
+
+
+<mat-dialog-content [formGroup]="form">
+
+    <mat-form-field>
+
+        <input matInput
+                placeholder="Código"
+               formControlName="codigo">
+
+    </mat-form-field>
+
+    <mat-form-field>
+
+        <textarea matInput placeholder="Descripción"
+            formControlName="descripcion">
+
+        </textarea>
+
+    </mat-form-field>
+
+    <mat-form-field>
+
+        <mat-select placeholder="Estado"
+            formControlName="estado">
+
+            <mat-option value="ENABLED">
+                Activo</mat-option>
+            <mat-option value="DISABLED">
+                Inactivo</mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    <button class="btn  mat-button" mat-fab color="primary"
+            (click)="cerrar()">
+        Cerrar
+    </button>
+
+    <button class="btn btn-danger mat-button" mat-fab color="primary"
+            (click)="guardar()">
+        Guardar
+    </button>
+
+</mat-dialog-actions>
+
+
