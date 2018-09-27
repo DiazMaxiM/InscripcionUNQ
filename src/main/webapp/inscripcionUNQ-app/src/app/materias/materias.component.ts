@@ -34,6 +34,23 @@ export class MateriasComponent implements OnInit {
       console.log("Abrir dialogo");
   }
 
+  eliminarMateria(idMateria) {
+     const mensaje = '¿Está seguro de que desea eliminar la materia seleccionada?';
+     this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
+       console.log(confirma);
+       if (confirma) {
+        this.eliminar(idMateria);
+       }
+    });
+  }
 
-
+  eliminar(idMateria) {
+    this.restService.eliminarMateria(idMateria).subscribe(res => {
+      this.utilesService.mostrarMensaje('Se ha eliminado la materia');
+      this.getMaterias();
+    },
+    (err: HttpErrorResponse) => {
+        this.utilesService.mostrarMensajeDeError(err);
+    });
+  }
 }
