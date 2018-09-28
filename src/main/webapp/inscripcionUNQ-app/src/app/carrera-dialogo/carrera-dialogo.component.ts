@@ -12,7 +12,7 @@ import { DataDialogo } from './data-dialogo.model';
 export class CarreraDialogoComponent implements OnInit {
 
     form: FormGroup;
-    carrera : Carrera;
+    carrera: Carrera;
 
     constructor(
         private fb: FormBuilder,
@@ -48,7 +48,7 @@ export class CarreraDialogoComponent implements OnInit {
     guardar() {
         if (this.form.valid) {
             const { codigo, descripcion, estado} = this.form.value;
-            const carrera = new Carrera(codigo, descripcion, estado, this.carrera.id);
+            const carrera = new Carrera(codigo, descripcion, estado);
             this.dialogRef.close(carrera);
         }
     }

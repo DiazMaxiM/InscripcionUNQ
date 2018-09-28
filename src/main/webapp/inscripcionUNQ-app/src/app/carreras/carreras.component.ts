@@ -54,27 +54,48 @@ export class CarrerasComponent implements OnInit {
     });
   }
 
-  editarCarrera( carrera: Carrera) {
-
-      const dialogConfig = new MatDialogConfig();
-
-      dialogConfig.disableClose = true;
-      dialogConfig.autoFocus = false;
-      dialogConfig.width = '600px';
-      dialogConfig.height = '450px';
-      dialogConfig.data = {
-        carrera: carrera
-      };
-
-      const dialogRef = this.dialog.open(CarreraDialogoComponent,
-          dialogConfig);
-
-
-      dialogRef.afterClosed().subscribe( val => {this.actualizarCarrera(val)}
+  abrirDialogoParaLaCreacionDeCarrera() {
+    const dialogRef = this.crearConfiguracionDialogoParaCarrera();
+      dialogRef.afterClosed().subscribe( val => {this.crearNuevaCarrera(val); }
       );
   }
 
-  actualizarCarrera(carrera: Carrera) {
+  crearNuevaCarrera(carrera: Carrera) {
+      console.log(carrera);
+  }
 
+  abrirDialogoParaEdicionDeCarrera(carrera: Carrera) {
+      const dialogRef = this.crearConfiguracionDialogoParaCarrera(carrera);
+      dialogRef.afterClosed().subscribe( val => {this.actualizarCarrera(val, carrera.id); }
+      );
+  }
+
+  actualizarCarrera(carrera: Carrera, idCarrera) {
+     carrera.id = idCarrera;
+     this.restService.actualizarInformacionCarrera(carrera)
+     .subscribe(res => {
+      const mensaje = 'Los datos de la carrera actualizados con exito';
+       this.utilesService.mostrarMensaje(mensaje);
+     },
+     (err: HttpErrorResponse) => {
+       this.utilesService.mostrarMensajeDeError(err);
+     });
+  }
+
+  crearConfiguracionDialogoParaCarrera(carrera?) {
+    const dialogConfig = new  MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '600px';
+    dialogConfig.height = '450px';
+    dialogConfig.data = {
+      carrera: carrera
+    };
+
+    const dialogRef = this.dialog.open(CarreraDialogoComponent,
+            dialogConfig);
+
+    return dialogRef;
   }
 }
