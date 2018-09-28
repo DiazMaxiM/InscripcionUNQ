@@ -71,4 +71,14 @@ export class RestService {
     return this.httpClient.delete('/api/materias/eliminarMateria/' + idMateria);
   }
 
+  actualizarInformacionCarrera(informacionCarrera: Carrera) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post('/api/carreras/actualizarCarrera', informacionCarrera, { headers });
+  }
+
+  agregarNuevaCarrera(nuevaCarrera: Carrera) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/carreras/nuevaCarrera', nuevaCarrera, { headers });
+  }
+
 }

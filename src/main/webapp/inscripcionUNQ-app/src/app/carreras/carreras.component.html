@@ -1,4 +1,7 @@
 <h5 class="titulo">ABM Carreras</h5>
+<div align="center">
+  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaEdicionDeCarrera()">Nueva carrera</button>
+</div>
 <div class="table-responsive">
     <table class="table table-hover table-borderless">
       <thead>
@@ -13,7 +16,7 @@
           <td>{{ carrera.codigo }}</td>
           <td>{{ carrera.descripcion}}</td>
           <td>{{ carrera.estado }}</td>
-          <td><i class="material-icons edit-icon" (click)="editarCarrera(carrera)">edit</i></td>
+          <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)">edit</i></td>
           <td><i class="material-icons edit-icon" (click)="eliminarCarrera(carrera.id)">delete</i></td>
         </tr>
        <mat-divider></mat-divider>
