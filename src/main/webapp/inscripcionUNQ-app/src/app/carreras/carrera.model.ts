@@ -2,17 +2,17 @@ export class Carrera {
     id?: number;
     codigo?: number;
     descripcion?: string;
-    estado?: boolean;
+    habilitada?: boolean;
 
   constructor(
     codigo?: number,
     descripcion?: string,
-    estado?: boolean,
+    habilitada?: boolean,
     id?: number
   ) {
     this.codigo = codigo;
     this.descripcion = descripcion;
-    this.estado = estado;
+    this.habilitada = habilitada;
     this.id = id;
   }
 }

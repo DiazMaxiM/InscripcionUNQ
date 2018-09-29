@@ -11,7 +11,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const modules = [
   MatInputModule,
@@ -26,7 +26,8 @@ const modules = [
   MatListModule,
   MatGridListModule,
   MatRadioModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

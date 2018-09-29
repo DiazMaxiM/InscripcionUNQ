@@ -1,6 +1,6 @@
 <h5 class="titulo">ABM Carreras</h5>
 <div align="center">
-  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaEdicionDeCarrera()">Nueva carrera</button>
+  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaLaCreacionDeCarrera()">Nueva carrera</button>
 </div>
 <div class="table-responsive">
     <table class="table table-hover table-borderless">
@@ -15,7 +15,11 @@
         <tr *ngFor="let carrera of carreras">
           <td>{{ carrera.codigo }}</td>
           <td>{{ carrera.descripcion}}</td>
-          <td>{{ carrera.estado }}</td>
+          <td>
+                <mat-slide-toggle
+                    [checked]="carrera.habilitada" (change)="cambiarEstado(carrera,$event)">
+                </mat-slide-toggle>
+          </td>
           <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)">edit</i></td>
           <td><i class="material-icons edit-icon" (click)="eliminarCarrera(carrera.id)">delete</i></td>
         </tr>
