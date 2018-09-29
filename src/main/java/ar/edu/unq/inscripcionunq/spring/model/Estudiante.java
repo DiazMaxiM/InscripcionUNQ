@@ -17,7 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
-import ar.edu.unq.inscripcionunq.spring.validacion.ValidacionEstudiante;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "Estudiante")
 public class Estudiante extends BaseEntity {
@@ -95,14 +95,11 @@ public class Estudiante extends BaseEntity {
 
 	public void update(Estudiante estudiante)
 			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
-		ValidacionEstudiante validacion = new ValidacionEstudiante();
-
-		if (validacion.estudianteValido(estudiante)) {
+            Validacion.validarEstudiante(estudiante);
 			this.dni = estudiante.dni;
 			this.email = estudiante.email;
 			this.apellido = estudiante.apellido;
 			this.nombre = estudiante.nombre;
-		}
 	}
 
 	public List<Carrera> getCarrerasInscripto() {
