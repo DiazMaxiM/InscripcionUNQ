@@ -4,9 +4,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
 public class Validacion {
 	
@@ -47,5 +52,32 @@ public class Validacion {
 		nombreValido(estudiante.getNombre());
 		apellidoValido(estudiante.getApellido());
 		emailValido(estudiante.getEmail());
+	}
+
+	public static void validarCarrera(Carrera carrera) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException {
+		descripcionValida(carrera.getDescripcion());
+		codigoValido(carrera.getCodigo());
+		estadoValido(carrera.getEstado());
+	}
+
+	private static void estadoValido(TypeStatus estado) throws EstadoInvalidoException {
+		if(!TypeStatus.contains(estado.name())){
+			throw new EstadoInvalidoException();
+		}
+		
+	}
+
+	private static void codigoValido(String codigo) throws CodigoInvalidoException {
+		if(stringVacio(codigo)) {
+			throw new CodigoInvalidoException();
+		}
+		
+	}
+
+	private static void descripcionValida(String descripcion) throws DescripcionInvalidaException {
+		if (stringVacio(descripcion)) {
+			throw new DescripcionInvalidaException();
+		}
+	
 	}
 }

@@ -46,7 +46,7 @@ export class CarrerasComponent implements OnInit {
 
   eliminar(idCarrera) {
     this.restService.eliminarCarrera(idCarrera).subscribe(res => {
-      this.utilesService.mostrarMensaje('Se ha eliminado la carrera');
+      this.utilesService.mostrarMensaje('Se eliminó la carrera con exito');
       this.getCarreras();
     },
     (err: HttpErrorResponse) => {
@@ -56,26 +56,45 @@ export class CarrerasComponent implements OnInit {
 
   abrirDialogoParaLaCreacionDeCarrera() {
     const dialogRef = this.crearConfiguracionDialogoParaCarrera();
-      dialogRef.afterClosed().subscribe( val => {this.crearNuevaCarrera(val); }
-      );
+      dialogRef.afterClosed().subscribe( val => {
+        if ( val != undefined) {
+          this.crearNuevaCarrera(val);
+        }
+      });
   }
 
   crearNuevaCarrera(carrera: Carrera) {
-      console.log(carrera);
+    this.restService.agregarNuevaCarrera(carrera)
+    .subscribe(res => {
+     const mensaje = 'Se creó la nueva carrera con exito';
+      this.utilesService.mostrarMensaje(mensaje);
+      this.getCarreras();
+    },
+    (err: HttpErrorResponse) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
   }
 
   abrirDialogoParaEdicionDeCarrera(carrera: Carrera) {
       const dialogRef = this.crearConfiguracionDialogoParaCarrera(carrera);
-      dialogRef.afterClosed().subscribe( val => {this.actualizarCarrera(val, carrera.id); }
-      );
+      dialogRef.afterClosed().subscribe( val => {
+        if (val != undefined) {
+          this.actualizarCarreraSeleccionada(val, carrera.id);
+        }
+      });
   }
 
-  actualizarCarrera(carrera: Carrera, idCarrera) {
-     carrera.id = idCarrera;
+  actualizarCarreraSeleccionada(carrera: Carrera, idCarrera) {
+    carrera.id = idCarrera;
+    this.actualizarCarrera(carrera);
+  }
+
+  actualizarCarrera(carrera: Carrera) {
      this.restService.actualizarInformacionCarrera(carrera)
      .subscribe(res => {
       const mensaje = 'Los datos de la carrera actualizados con exito';
        this.utilesService.mostrarMensaje(mensaje);
+       this.getCarreras();
      },
      (err: HttpErrorResponse) => {
        this.utilesService.mostrarMensajeDeError(err);
@@ -97,5 +116,10 @@ export class CarrerasComponent implements OnInit {
             dialogConfig);
 
     return dialogRef;
+  }
+
+  cambiarEstado(carrera: Carrera, evento) {
+    carrera.habilitada = evento.checked;
+    this.actualizarCarrera(carrera);
   }
 }

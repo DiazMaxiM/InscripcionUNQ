@@ -26,7 +26,7 @@ public class Carrera extends BaseEntity {
 		return this.estado;
 	}
 
-	private void setEstado(TypeStatus estado) {
+	public void setEstado(TypeStatus estado) {
 		this.estado = estado;
 	}
 
@@ -48,6 +48,12 @@ public class Carrera extends BaseEntity {
 
 	public void deshabilitar() {
 		this.setEstado(TypeStatus.DISABLED);
+	}
+
+	public void actualizarInformacion(Carrera carreraRecibida){
+		this.setCodigo(carreraRecibida.getCodigo());
+		this.setDescripcion(carreraRecibida.getDescripcion());
+		this.setEstado(carreraRecibida.getEstado());		
 	}
 
 }

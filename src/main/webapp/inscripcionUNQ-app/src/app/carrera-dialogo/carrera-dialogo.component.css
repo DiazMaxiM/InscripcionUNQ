@@ -10,3 +10,8 @@ textarea {
 /deep/ .mat-dialog-content {
     overflow-y: hidden !important;
   }
+
+
+ .estado{
+     padding-left: 15px;
+ }
