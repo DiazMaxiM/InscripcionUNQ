@@ -93,19 +93,19 @@ export class ofertaAcademicaComponent implements OnInit {
     return dialogRef;
   }
 
-  abrirDialogoParaEdicionDeOferta(oferta) {
-    console.log(oferta);
-    const dialogRef = this.crearConfiguracionDialogoParaOferta(oferta);
+  abrirDialogoParaEdicionDeOferta(ofertaSeleccionada) {
+    const dialogRef = this.crearConfiguracionDialogoParaOferta(ofertaSeleccionada);
     dialogRef.afterClosed().subscribe( val => {
       if (val != undefined) {
-        this.actualizarOfertaSeleccionada(val, oferta.id);
+        this.actualizarOfertaSeleccionada(val, ofertaSeleccionada);
       }
     });
 
   }
 
-  actualizarOfertaSeleccionada(oferta: OfertaAcademica, idOferta) {
-    oferta.id = idOferta;
+  actualizarOfertaSeleccionada(oferta: OfertaAcademica, ofertaSeleccionada) {
+    oferta.id = ofertaSeleccionada.id;
+    oferta.nroComisionesCreadas = ofertaSeleccionada.nroComisionesCreadas;
     this.actualizarOferta(oferta);
   }
 

@@ -7,6 +7,7 @@ public class OfertaAcademicaJson {
 	public String descripcion;
 	public boolean habilitada;
 	public CarreraJson carrera;
+	public int nroComisionesCreadas;
     
 	
 
@@ -22,6 +23,16 @@ public class OfertaAcademicaJson {
 	public OfertaAcademicaJson() {
 		super();
 	}
+
+	public int getNroComisionesCreadas() {
+		return nroComisionesCreadas;
+	}
+
+	public void setNroComisionesCreadas(int nroComisionesCreadas) {
+		this.nroComisionesCreadas = nroComisionesCreadas;
+	}
+	
+	
    
 
 }

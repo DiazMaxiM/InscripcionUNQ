@@ -10,6 +10,7 @@
           <th>Descripción</th>
           <th>Estado</th>
           <th>Carrera</th>
+          <th>Comisiones</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,7 @@
                 </mat-slide-toggle>
           </td>
           <td>{{ oferta.carrera.codigo}}</td>
+          <td>{{ oferta.nroComisionesCreadas}}</td>
           <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeOferta(oferta)">edit</i></td>
           <td><i class="material-icons edit-icon" (click)="eliminarOferta(oferta.id)">delete</i></td>
           <td><i class="material-icons edit-icon" (click)="clonarOferta(oferta)">file_copy</i></td>
