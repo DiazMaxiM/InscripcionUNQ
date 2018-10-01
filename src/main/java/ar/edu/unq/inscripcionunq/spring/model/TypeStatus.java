@@ -17,4 +17,8 @@ public enum TypeStatus {
     public static boolean contains( String value ){
         return values.contains(value);
     }
+    
+    public static boolean esEstadoHabiltado(TypeStatus estado) {
+		return TypeStatus.ENABLED == estado;
+	}
 }

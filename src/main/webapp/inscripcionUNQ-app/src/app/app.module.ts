@@ -34,6 +34,9 @@ import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas
 import { CarrerasComponent } from './carreras/carreras.component';
 import { MateriasComponent } from './materias/materias.component';
 import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.component';
+import { ofertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
+import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/oferta-academica.dialogo.component';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +53,9 @@ import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.compo
     MateriasAprobadasComponent,
     CarrerasComponent,
     MateriasComponent,
-    CarreraDialogoComponent
+    CarreraDialogoComponent,
+    ofertaAcademicaComponent,
+    OfertaAcademicaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,6 @@ import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.compo
     UtilesService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
-  CarreraDialogoComponent]
+  CarreraDialogoComponent, OfertaAcademicaDialogoComponent]
 })
 export class AppModule { }

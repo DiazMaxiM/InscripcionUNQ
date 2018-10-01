@@ -9,7 +9,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 @Component({
   selector: 'app-carreras',
   templateUrl: './carreras.component.html',
-  styleUrls: ['./carreras.component.css']
+  styleUrls: ['./carreras.component.css', '../estilo-abm.component.css']
 })
 export class CarrerasComponent implements OnInit {
 
@@ -46,7 +46,7 @@ export class CarrerasComponent implements OnInit {
 
   eliminar(idCarrera) {
     this.restService.eliminarCarrera(idCarrera).subscribe(res => {
-      this.utilesService.mostrarMensaje('Se eliminó la carrera con exito');
+      this.utilesService.mostrarMensaje('La carrera fue eliminada con exito');
       this.getCarreras();
     },
     (err: HttpErrorResponse) => {
@@ -89,16 +89,16 @@ export class CarrerasComponent implements OnInit {
     this.actualizarCarrera(carrera);
   }
 
-  actualizarCarrera(carrera: Carrera) {
-     this.restService.actualizarInformacionCarrera(carrera)
-     .subscribe(res => {
-      const mensaje = 'Los datos de la carrera actualizados con exito';
-       this.utilesService.mostrarMensaje(mensaje);
-       this.getCarreras();
-     },
-     (err: HttpErrorResponse) => {
-       this.utilesService.mostrarMensajeDeError(err);
-     });
+  actualizarCarrera(carrera) {
+    this.restService.actualizarInformacionCarrera(carrera)
+    .subscribe(res => {
+     const mensaje = 'Los datos de la carrera actualizados con exito';
+      this.utilesService.mostrarMensaje(mensaje);
+      this.getCarreras();
+    },
+    (err: HttpErrorResponse) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
   }
 
   crearConfiguracionDialogoParaCarrera(carrera?) {

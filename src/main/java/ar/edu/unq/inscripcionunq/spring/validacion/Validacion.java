@@ -11,6 +11,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
 public class Validacion {
@@ -79,5 +80,12 @@ public class Validacion {
 			throw new DescripcionInvalidaException();
 		}
 	
+	}
+
+	public static void validarOfertaAcademica(OfertaAcademica oferta) throws DescripcionInvalidaException, NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
+		descripcionValida(oferta.getDescripcion());
+		nombreValido(oferta.getNombre());
+		estadoValido(oferta.getEstado());
+		validarCarrera(oferta.getCarrera());
 	}
 }
