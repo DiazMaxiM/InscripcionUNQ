@@ -41,13 +41,15 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	
 	private OfertaAcademicaJson crearOfertaJson(OfertaAcademica oferta) {
 		Carrera carrera = ofertaAcademicaDaoImp.getCarreraEnOferta(oferta.getId());
-		
+		List<Comision> comisiones = ofertaAcademicaDaoImp.getComisionesEnOferta(oferta.getId());
 		CarreraJson carreraJson = new CarreraJson(carrera.getId(),carrera.getCodigo(),
 				carrera.getDescripcion(),TypeStatus.esEstadoHabiltado(carrera.getEstado()));
 		
-		return new OfertaAcademicaJson(oferta.getId(), oferta.getNombre(), 
+		OfertaAcademicaJson ofertaJson = new OfertaAcademicaJson(oferta.getId(), oferta.getNombre(), 
 				oferta.getDescripcion(), TypeStatus.esEstadoHabiltado(oferta.getEstado()),
 				carreraJson);
+		ofertaJson.setNroComisionesCreadas(comisiones.size());
+		return ofertaJson;
 		
 	}
 

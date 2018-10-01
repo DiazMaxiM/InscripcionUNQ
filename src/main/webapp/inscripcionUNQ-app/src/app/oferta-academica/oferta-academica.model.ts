@@ -6,6 +6,7 @@ export class OfertaAcademica {
     descripcion?: string;
     habilitada?: boolean;
     carrera?: Carrera;
+    nroComisionesCreadas?: number;
 
   constructor(
     nombre?: string,
