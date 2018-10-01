@@ -4,6 +4,7 @@ import { Materia } from './materias-aprobadas/materia.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Usuario } from './autenticacion/usuario.model';
 import { Carrera } from './carreras/carrera.model';
+import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 
 @Injectable()
 export class RestService {
@@ -71,9 +72,9 @@ export class RestService {
     return this.httpClient.delete('/api/materias/eliminarMateria/' + idMateria);
   }
 
-  actualizarInformacionCarrera(informacionCarrera: Carrera) {
+  actualizarInformacionCarrera(carreraActualizada: Carrera) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post('/api/carreras/actualizarCarrera', informacionCarrera, { headers });
+    return this.httpClient.post('/api/carreras/actualizarCarrera', carreraActualizada, { headers });
   }
 
   agregarNuevaCarrera(nuevaCarrera: Carrera) {
@@ -81,4 +82,26 @@ export class RestService {
     return this.httpClient.put('/api/carreras/nuevaCarrera', nuevaCarrera, { headers });
   }
 
+  getOfertas() {
+    return this.httpClient.get<Array<OfertaAcademica>>('/api/ofertas-academicas');
+  }
+
+  eliminarOferta(idOferta: string) {
+    return this.httpClient.delete('/api/ofertas-academicas/eliminarOferta/' + idOferta);
+  }
+
+  clonarOferta(oferta: OfertaAcademica) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/ofertas-academicas/clonarOferta/', oferta, { headers });
+  }
+
+  crearNuevaOferta(nuevaOferta: OfertaAcademica) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api//ofertas-academicas/crearOferta/', nuevaOferta, { headers });
+  }
+
+  actualizarInformacionDeOferta(ofertaActualizada: OfertaAcademica) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post('/api/ofertas-academicas/actualizarOferta/', ofertaActualizada, { headers });
+  }
 }

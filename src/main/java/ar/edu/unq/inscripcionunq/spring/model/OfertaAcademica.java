@@ -10,14 +10,17 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "OfertaAcademica")
 public class OfertaAcademica extends BaseEntity {
+	
 	private String nombre;
 	private String descripcion;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
 	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Comision> comisiones = new ArrayList<Comision>();
+	private List<Comision> comisiones = new ArrayList<>();
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Carrera carrera;
 
@@ -34,8 +37,69 @@ public class OfertaAcademica extends BaseEntity {
 		this.comisiones.add(comision);
 	}
 	
+	@JsonIgnore
 	public List<Comision> getCommissions(){
 		return comisiones;
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public TypeStatus getEstado() {
+		return estado;
+	}
+
+	public void setEstado(TypeStatus estado) {
+		this.estado = estado;
+	}
+
+	public void setComisiones(List<Comision> comisiones) {
+		this.comisiones = comisiones;
+	}
+    
+	@JsonIgnore
+	public Carrera getCarrera() {
+		return carrera;
+	}
+
+	public void setCarrera(Carrera carrera) {
+		this.carrera = carrera;
+	}
+
+	public OfertaAcademica clonar() {
+		OfertaAcademica ofertaClonada = new OfertaAcademica();
+		ofertaClonada.setNombre(nombre);
+		ofertaClonada.setDescripcion(descripcion);
+		ofertaClonada.setEstado(estado);
+		ofertaClonada.setComisiones(comisiones);
+		ofertaClonada.setCarrera(carrera);
+		return ofertaClonada;
+	}
+
+	public void actualizarInformacion(OfertaAcademica ofertaRecibida) {
+		setNombre(ofertaRecibida.getNombre());
+		setDescripcion(ofertaRecibida.getDescripcion());
+		setCarrera(ofertaRecibida.getCarrera());
+		setEstado(ofertaRecibida.getEstado());
+	}
+	
+	
+	
+	
+	
+	
 
 }

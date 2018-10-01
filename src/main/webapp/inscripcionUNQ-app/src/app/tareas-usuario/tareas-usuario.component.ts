@@ -35,4 +35,19 @@ export class TareasUsuarioComponent {
       });
     }
 
+
+    irAOfertaAcademica() {
+
+      this.restService.getOfertas().subscribe(ofertas => {
+        console.log(ofertas);
+        localStorage.setItem('ofertas', JSON.stringify(ofertas));
+        this.utilesService.irA('oferta-academica');
+      },
+      (err) => {
+          this.utilesService.mostrarMensajeDeError(err);
+      });
+    }
+
+
+
 }

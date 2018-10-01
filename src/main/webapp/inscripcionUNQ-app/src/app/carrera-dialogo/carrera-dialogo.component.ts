@@ -8,7 +8,7 @@ import { UtilesService } from '../utiles.service';
 @Component({
     selector: 'app-carrera-dialogo',
     templateUrl: './carrera-dialogo.component.html',
-    styleUrls: ['./carrera-dialogo.component.css']
+    styleUrls: ['../dialogo-abm.component.css']
 })
 export class CarreraDialogoComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Carrera</h2>
+<h2 mat-dialog-title>Oferta Académica</h2>
 
 
 <mat-dialog-content [formGroup]="form">
@@ -6,9 +6,9 @@
     <mat-form-field>
 
         <input matInput
-                placeholder="Código"
-               formControlName="codigo" required>
-               <mat-error *ngIf="form.get('codigo').hasError('required')">
+                placeholder="Nombre"
+               formControlName="nombre" required>
+               <mat-error *ngIf="form.get('nombre').hasError('required')">
                 Campo obligatorio
               </mat-error>       
 
@@ -25,7 +25,17 @@
           </mat-error> 
 
     </mat-form-field>
-
+    <mat-form-field>
+            <input type="text" placeholder="Carrera" formControlName="carrera" matInput [matAutocomplete]="auto" required>
+            <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let carrera of filtroCarreras | async" [value]="carrera.descripcion" (onSelectionChange)="carreraSeleccionada(carrera)">
+                 {{carrera.descripcion}}
+            </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="form.get('carrera').hasError('required')">
+                    Campo obligatorio
+                  </mat-error> 
+      </mat-form-field>
 </mat-dialog-content>
 <section >Estado
         <mat-slide-toggle
