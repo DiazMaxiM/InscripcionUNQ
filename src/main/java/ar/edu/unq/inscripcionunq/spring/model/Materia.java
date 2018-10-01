@@ -15,6 +15,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
+
 @Entity(name = "Materia")
 public class Materia extends BaseEntity {
 	@Column(unique = true)
@@ -87,6 +92,14 @@ public class Materia extends BaseEntity {
 		this.estado = estado;
 	}
 
+	public void update(Materia materia) {
+//			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+//            Validacion.validarEstudiante(estudiante);
+		this.codigo = materia.codigo;
+		this.nombre = materia.nombre;
+		this.horas =materia.horas;
+		this.carreras = materia.carreras;
+	}
 	public void deshabilitar() {
 		setEstado(TypeStatus.DISABLED);
 	}

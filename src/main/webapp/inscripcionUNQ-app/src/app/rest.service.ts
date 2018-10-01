@@ -65,7 +65,7 @@ export class RestService {
 
   actualizarInformacionMateria(informacionMateria: Materia) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post('/api/materia', informacionMateria, { headers });
+    return this.httpClient.post('/api/materias/modificarMateria', informacionMateria, { headers });
   }
 
   eliminarMateria(idMateria: string) {
