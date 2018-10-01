@@ -524,7 +524,7 @@ public class CargaInicialDeDatosController {
 		commlyp.agregarHorarios(TypeDay.LUNES, LocalTime.of(9, 00), 2f);
 		commlyp.agregarHorarios(TypeDay.MARTES, LocalTime.of(9, 00), 2f);
 		long idcommlyp = comisionServiceImp.save(commlyp);
-		acc1.agregarComision(comisionServiceImp.get(idcommlyp));
+		acc2.agregarComision(comisionServiceImp.get(idcommlyp));
 
 		Comision commiDV = new Comision("Videojuegos C1", materiaServiceImp.get(iDV), 30);
 		commiDV.agregarHorarios(TypeDay.MIERCOLES, LocalTime.of(8, 00), 4f);

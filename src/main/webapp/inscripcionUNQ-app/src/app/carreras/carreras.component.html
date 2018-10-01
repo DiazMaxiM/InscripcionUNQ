@@ -20,8 +20,8 @@
                     [checked]="carrera.habilitada" (change)="cambiarEstado(carrera,$event)">
                 </mat-slide-toggle>
           </td>
-          <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)">edit</i></td>
-          <td><i class="material-icons edit-icon" (click)="eliminarCarrera(carrera.id)">delete</i></td>
+          <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
+          <td><i class="material-icons edit-icon" (click)="eliminarCarrera(carrera.id)" data-toggle="tooltip" data-placement="top" title="Eliminar">delete</i></td>
         </tr>
        <mat-divider></mat-divider>
       </tbody>
