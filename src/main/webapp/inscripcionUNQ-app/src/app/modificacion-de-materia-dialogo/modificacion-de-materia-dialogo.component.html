@@ -6,24 +6,25 @@
   <mat-form-field>
     <input matInput placeholder="Nombre" formControlName="nombre">
   </mat-form-field>
-  
-  <mat-checkbox placeholder="Nombre" formControlName="nombre" *ngFor="let carrera of materia.carreras">
-      <mat-hint>{{carrera.nombre}}</mat-hint>
-        
-
+  <ng-container *ngFor="let carrera of carreras">
+      
+  <mat-checkbox (change)="onChange(carrera)" placeholder="carrera.nombre" formControlName="carreras" >
+      {{carrera.nombre}}
   </mat-checkbox>
-
-
+</ng-container>
+<br/>
   <mat-form-field>
     <input matInput placeholder="Carga horaria" formControlName="horas">
   </mat-form-field>
-  <mat-form-field>
-    <mat-select placeholder="Estado" formControlName="estado">
-      <mat-option value="ENABLED"> Activo </mat-option>
-      <mat-option value="DISABLED"> Inactivo </mat-option>
-    </mat-select>
-  </mat-form-field>
 </mat-dialog-content>
+
+<section >Estado
+    <mat-slide-toggle
+          class="estado"
+          [(ngModel)]="checked">
+      </mat-slide-toggle>
+    
+</section>
 <mat-dialog-actions align="end">
   <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
     Cerrar

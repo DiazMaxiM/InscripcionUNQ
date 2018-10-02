@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { RestService } from '../rest.service';
 import {PageEvent} from '@angular/material';
-import { Materia } from './materia.model';
+import { MateriaEstudiante } from './materia-estudiante.model';
 import {UtilesService} from '../utiles.service';
 
 @Component({
@@ -11,7 +11,7 @@ import {UtilesService} from '../utiles.service';
 })
 export class MateriasAprobadasComponent implements OnInit {
 
-  materias: Materia[] = [];
+  materias: MateriaEstudiante[] = [];
   materiasEnPagina = [];
   idEstudiante: string;
 

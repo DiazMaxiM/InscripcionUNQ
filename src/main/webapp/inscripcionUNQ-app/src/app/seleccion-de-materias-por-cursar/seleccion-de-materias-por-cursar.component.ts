@@ -4,7 +4,7 @@ import { SeleccionDeComisionDialogoComponent} from '../seleccion-de-comision-dia
 import { RestService } from '../rest.service';
 import { ComisionSeleccionada } from '../seleccion-de-comision-dialogo/comision-seleccionada.model';
 import {PageEvent} from '@angular/material';
-import {Materia} from '../materias-aprobadas/materia.model';
+import {MateriaEstudiante} from '../materias-aprobadas/materia-estudiante.model';
 import {RegistroDeComisionesSeleccionadasService} from './registro-de-comisiones-seleccionadas.service';
 import {UtilesService} from '../utiles.service';
 import {Comision} from './comision.model';
@@ -17,7 +17,7 @@ import {Comision} from './comision.model';
 
 export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
-    materiasDisponibles: Materia[] = [];
+    materiasDisponibles: MateriaEstudiante[] = [];
 
     // MatPaginator Output
     pageEvent: PageEvent;
@@ -25,7 +25,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
    length = 0;
    pageSize = 10;
    pageIndex = 0;
-   materiasDisponiblesActivas: Materia[] = [];
+   materiasDisponiblesActivas: MateriaEstudiante[] = [];
    comisionesSeleccionadas: ComisionSeleccionada[] = [];
    idEstudiante: string;
 

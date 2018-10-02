@@ -28,7 +28,7 @@ public class Materia extends BaseEntity {
 	private Integer horas;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Carrera> carreras = new ArrayList<Carrera>();
 
 	public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras) {
@@ -36,6 +36,14 @@ public class Materia extends BaseEntity {
 		this.setNombre(nombre);
 		this.setHoras(horas);
 		this.carreras = listaDeCarreras;
+	}
+
+    public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras, TypeStatus estado) {
+		this.setCodigo(codigo);
+		this.setNombre(nombre);
+		this.setHoras(horas);
+		this.carreras = listaDeCarreras;
+        this.estado = estado; 
 	}
 
 	public Materia(String codigo, String nombre, Integer hours) {
@@ -97,8 +105,9 @@ public class Materia extends BaseEntity {
 //            Validacion.validarEstudiante(estudiante);
 		this.codigo = materia.codigo;
 		this.nombre = materia.nombre;
-		this.horas =materia.horas;
+		this.horas = materia.horas;
 		this.carreras = materia.carreras;
+        this.estado = materia.estado;
 	}
 	public void deshabilitar() {
 		setEstado(TypeStatus.DISABLED);

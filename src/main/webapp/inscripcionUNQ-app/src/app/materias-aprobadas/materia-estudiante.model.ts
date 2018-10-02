@@ -1,4 +1,4 @@
-export class  Materia {
+export class  MateriaEstudiante {
   id?: number;
   codigo?: string;
   nombre?: string;
