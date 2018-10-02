@@ -7,7 +7,7 @@ public class OfertaAcademicaJson {
 	public String descripcion;
 	public boolean habilitada;
 	public CarreraJson carrera;
-	public int nroComisionesCreadas;
+	public Long nroComisionesCreadas;
     
 	
 
@@ -24,11 +24,11 @@ public class OfertaAcademicaJson {
 		super();
 	}
 
-	public int getNroComisionesCreadas() {
+	public Long getNroComisionesCreadas() {
 		return nroComisionesCreadas;
 	}
 
-	public void setNroComisionesCreadas(int nroComisionesCreadas) {
+	public void setNroComisionesCreadas(Long nroComisionesCreadas) {
 		this.nroComisionesCreadas = nroComisionesCreadas;
 	}
 	

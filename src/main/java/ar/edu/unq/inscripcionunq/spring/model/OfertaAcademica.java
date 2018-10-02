@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "OfertaAcademica")
@@ -20,6 +23,7 @@ public class OfertaAcademica extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
 	@ManyToMany(fetch = FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.EXTRA)
 	private List<Comision> comisiones = new ArrayList<>();
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Carrera carrera;
