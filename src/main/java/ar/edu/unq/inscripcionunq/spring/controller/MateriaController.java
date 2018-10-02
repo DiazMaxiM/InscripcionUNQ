@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CarreraNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
@@ -23,6 +23,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.service.EstudianteService;
@@ -37,7 +38,7 @@ public class MateriaController {
 
 	@GetMapping("/materias")
 	public ResponseEntity<List> getMaterias() {
-		return ResponseEntity.ok().body(materiaServiceImp.list());
+		return ResponseEntity.ok().body(materiaServiceImp.getMateriasJson());
 	}
 	
 	@DeleteMapping("/materias/eliminarMateria/{idMateria}")
@@ -53,17 +54,14 @@ public class MateriaController {
 	}
 	
 	@PostMapping("/materias/modificarMateria")
-	public ResponseEntity modificarMateria(@RequestBody MateriaJson materiaJson) throws NombreInvalidoException{
-		Materia materiaRecived = new Materia(materiaJson.codigo, materiaJson.nombre, materiaJson.horas, materiaJson.carreras);
-		Materia materia;
+	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException{
 		try {
-			materia = materiaServiceImp.get(materiaJson.id);
-			materia.update(materiaRecived);
-			materiaServiceImp.update(materia);
-		} catch (ObjectNotFoundinDBException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-					.body(new ExceptionJson(new StudentNotExistenException()));
+			materiaServiceImp.actualizarMateria(materiaJson);
+		} catch (IdNumberFormatException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		} catch (MateriaNoExisteException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().build();
 	}
 }

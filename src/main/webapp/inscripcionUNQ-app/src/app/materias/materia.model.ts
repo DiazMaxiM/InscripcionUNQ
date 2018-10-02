@@ -2,10 +2,10 @@ export class Materia {
     id?: number;
     codigo?: number;
     nombre?: string;
-    carreras?: any;
     horas?: number;
-    estado?: boolean;
-
+    estado: boolean;
+    carreras?: any;
+  
   constructor(
     codigo?: number,
     nombre?: string,
