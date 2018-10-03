@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itextpdf.text.DocumentException;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
@@ -25,6 +26,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Mail;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
+import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
 @Service
 @Transactional
@@ -49,9 +51,12 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 		}
 		List<Carrera> carreras = estudiante.getCarrerasInscripto();
 		List<Materia> materias = materiaDaoImp.getMateriasParaCarreras(carreras);
-		List<MateriaJson> materiasAprobadas = materias.stream().map(s -> new MateriaJson(s, estudiante.estaAprobada(s)))
-				.collect(Collectors.toList());
+		List<MateriaJson> materiasAprobadas = materias.stream().map(s -> new MateriaJson(s, this.carrerasACarrerasJson(s.getCarreras()),estudiante.estaAprobada(s))).collect(Collectors.toList());
 		return materiasAprobadas;
+	}
+	
+	public List<CarreraJson> carrerasACarrerasJson(List<Carrera> carreras){
+		return carreras.stream().map(c -> new CarreraJson(c.getId(), c.getCodigo(),c.getDescripcion(),TypeStatus.esEstadoHabiltado(c.getEstado()))).collect(Collectors.toList());
 	}
 
 	@Override
