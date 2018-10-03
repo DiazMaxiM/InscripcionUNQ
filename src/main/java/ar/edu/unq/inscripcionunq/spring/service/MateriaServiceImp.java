@@ -9,19 +9,18 @@ import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
-import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
-import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,9 +72,10 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	}
 
     @Override
-	public void actualizarMateria(MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException {
+	public void actualizarMateria(MateriaSistemaJson materiaJson) throws IdNumberFormatException, 
+	MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, CodigoInvalidoException, 
+	NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
 		Materia materiaNueva = this.mapearMateriaDesdeJson(materiaJson);
-		//Materia materiaOriginal = new Materia();
 		Materia materiaOriginal = null;
 
 		try {
@@ -85,24 +85,19 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		} catch (ObjectNotFoundinDBException e) {
 			throw new MateriaNoExisteException();
 		}
-		/*
-		if (materiaNueva != null) {
-            materiaOriginal.actualizarMateria(materiaNueva);
-            this.save(materiaOriginal);
-		}*/
+		
 		if(materiaNueva != null){
 			this.actualizarInformacionDeLaMateria(materiaOriginal, materiaNueva);
 		}
-		
     }
 
-	private void actualizarInformacionDeLaMateria(Materia materiaOriginal, Materia materiaNueva) throws ExisteMateriaConElMismoCodigoException {
+	private void actualizarInformacionDeLaMateria(Materia materiaOriginal, Materia materiaNueva) throws ExisteMateriaConElMismoCodigoException, 
+	CodigoInvalidoException, NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
 		if(!materiaOriginal.getCodigo().equals(materiaNueva.getCodigo())) {
 			validarSiExisteMateriaConElMismoCodigo(materiaNueva.getCodigo());	
 		}
 		materiaOriginal.actualizarMateria(materiaNueva);
-		this.save(materiaOriginal);
-		
+		this.save(materiaOriginal);	
 	}
 
     private Materia mapearMateriaDesdeJson(MateriaSistemaJson materiaJson) throws IdNumberFormatException, 
@@ -119,13 +114,13 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
             carreras.add(carreraOriginal);
 		});
 		Materia materia = new Materia(materiaJson.codigo,materiaJson.nombre,materiaJson.horas,carreras, estado);
-//		Validacion.validarMateria(materia);
 		return materia;
 	}
 
 	@Override
 	public void agregarNuevaMateria(MateriaSistemaJson materiaJson) throws DescripcionInvalidaException,
-			CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, IdNumberFormatException, MateriaNoExisteException {
+			CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, 
+			IdNumberFormatException, MateriaNoExisteException {
 		Materia nuevaMateria = this.mapearMateriaDesdeJson(materiaJson);
 		this.validarSiExisteMateriaConElMismoCodigo(nuevaMateria.getCodigo());
 		this.save(nuevaMateria);
@@ -137,7 +132,5 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		if(materia != null){
 			throw new ExisteMateriaConElMismoCodigoException();
 		}
-		
-		
 	}
 }

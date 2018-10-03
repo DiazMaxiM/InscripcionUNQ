@@ -13,29 +13,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
-import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.CarreraNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
-import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
-import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
-import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
-import ar.edu.unq.inscripcionunq.spring.model.Materia;
-import ar.edu.unq.inscripcionunq.spring.service.EstudianteService;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
-import ar.edu.unq.inscripcionunq.spring.service.MateriaServiceImp;
 
 @RestController
 public class MateriaController {
@@ -57,11 +45,10 @@ public class MateriaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
-
 	}
 	
 	@PostMapping("/materias/modificarMateria")
-	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException{
+	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, CodigoInvalidoException, NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException{
 		try {
 			materiaServiceImp.actualizarMateria(materiaJson);
 		} catch (IdNumberFormatException e) {
@@ -82,6 +69,5 @@ public class MateriaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
-
 	}
 }
