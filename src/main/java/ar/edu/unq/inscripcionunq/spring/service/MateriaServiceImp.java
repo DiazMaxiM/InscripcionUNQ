@@ -6,7 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
-import ar.edu.unq.inscripcionunq.spring.exception.CarreraNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
@@ -15,16 +19,20 @@ import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
+import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-
 public class MateriaServiceImp extends GenericServiceImp<Materia> implements MateriaService {
 
     @Autowired 
 	CarreraDao carreraDaoImp;
+
+	@Autowired 
+	MateriaDao materiaDaoImp;
 
 	@Override
 	@Transactional
@@ -35,24 +43,21 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
     @Override
 	public List<MateriaSistemaJson> getMateriasJson() {
 		List<Materia> materias = this.list();
-		return materias.stream().map(o -> this.crearMateriaJson(o)).collect(Collectors.toList());
+		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
 	}
 
     private MateriaSistemaJson crearMateriaJson(Materia materia) {
         List<CarreraJson> carrerasJson = new ArrayList<CarreraJson>();
         materia.getCarreras().forEach((carrera) -> {
-            
 			CarreraJson carreraJson = new CarreraJson(carrera.getId(),carrera.getCodigo(),
 				carrera.getDescripcion(),TypeStatus.esEstadoHabiltado(carrera.getEstado()));
             carrerasJson.add(carreraJson);
 		});
 		
-		MateriaSistemaJson materiaJson = new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(), 
-carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
+		MateriaSistemaJson materiaJson = new MateriaSistemaJson(materia.getId(), materia.getCodigo(), 
+			materia.getNombre(), materia.getHoras(), carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
 		return materiaJson;
-		
 	}
-
 
 	@Override
 	public void eliminarMateria(String idMateria) throws IdNumberFormatException, MateriaNoExisteException {
@@ -64,14 +69,15 @@ carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
 		} catch (ObjectNotFoundinDBException e) {
 			throw new MateriaNoExisteException();
 		}
-		
 		this.delete(materia);
 	}
 
     @Override
-	public void actualizarMateria(MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException {
+	public void actualizarMateria(MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException {
 		Materia materiaNueva = this.mapearMateriaDesdeJson(materiaJson);
-		Materia materiaOriginal = new Materia();
+		//Materia materiaOriginal = new Materia();
+		Materia materiaOriginal = null;
+
 		try {
 			materiaOriginal = this.get(materiaJson.id);
         } catch (NumberFormatException e) { 
@@ -79,15 +85,28 @@ carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
 		} catch (ObjectNotFoundinDBException e) {
 			throw new MateriaNoExisteException();
 		}
+		/*
 		if (materiaNueva != null) {
-            materiaOriginal.update(materiaNueva);
+            materiaOriginal.actualizarMateria(materiaNueva);
             this.save(materiaOriginal);
+		}*/
+		if(materiaNueva != null){
+			this.actualizarInformacionDeLaMateria(materiaOriginal, materiaNueva);
 		}
 		
     }
 
-    private Materia mapearMateriaDesdeJson(MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException  {
+	private void actualizarInformacionDeLaMateria(Materia materiaOriginal, Materia materiaNueva) throws ExisteMateriaConElMismoCodigoException {
+		if(!materiaOriginal.getCodigo().equals(materiaNueva.getCodigo())) {
+			validarSiExisteMateriaConElMismoCodigo(materiaNueva.getCodigo());	
+		}
+		materiaOriginal.actualizarMateria(materiaNueva);
+		this.save(materiaOriginal);
 		
+	}
+
+    private Materia mapearMateriaDesdeJson(MateriaSistemaJson materiaJson) throws IdNumberFormatException, 
+    MateriaNoExisteException  {
 		TypeStatus estado = materiaJson.estado ? TypeStatus.ENABLED : TypeStatus.DISABLED;
         List<Carrera> carreras = new ArrayList<Carrera>();
         materiaJson.carreras.forEach((carreraJson) -> {
@@ -104,4 +123,21 @@ carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
 		return materia;
 	}
 
+	@Override
+	public void agregarNuevaMateria(MateriaSistemaJson materiaJson) throws DescripcionInvalidaException,
+			CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, IdNumberFormatException, MateriaNoExisteException {
+		Materia nuevaMateria = this.mapearMateriaDesdeJson(materiaJson);
+		this.validarSiExisteMateriaConElMismoCodigo(nuevaMateria.getCodigo());
+		this.save(nuevaMateria);
+	}
+
+	@Override
+	public void validarSiExisteMateriaConElMismoCodigo(String codigo) throws ExisteMateriaConElMismoCodigoException {
+		Materia materia = materiaDaoImp.encontrarMateriaConElMismoCodigo(codigo);
+		if(materia != null){
+			throw new ExisteMateriaConElMismoCodigoException();
+		}
+		
+		
+	}
 }
