@@ -7,5 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 public interface MateriaDao extends GenericDao<Materia> {
 
-	List<Materia> getMateriasParaCarreras(List<Carrera> careers);
+	List<Materia> getMateriasParaCarreras(List<Carrera> carreras);
+
+	Materia encontrarMateriaConElMismoCodigo(String codigo);
 }

@@ -3,7 +3,6 @@ package ar.edu.unq.inscripcionunq.spring.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -30,6 +29,14 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 				"select distinct materia from Materia as materia join materia.carreras c where c.id in (:carrerasId)");
 		query.setParameterList("carrerasId", idCarreras);
 		return query.getResultList();
+	}
+
+	@Override
+	public Materia encontrarMateriaConElMismoCodigo(String codigo) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (Materia) session.createQuery("from Materia where codigo = :codigo")
+				.setParameter("codigo", codigo)
+			    .uniqueResult();
 	}
 
 }
