@@ -100,7 +100,7 @@ public class Materia extends BaseEntity {
 		this.estado = estado;
 	}
 
-	public void update(Materia materia) {
+	public void actualizarMateria(Materia materia) {
 //			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
 //            Validacion.validarEstudiante(estudiante);
 		this.codigo = materia.codigo;

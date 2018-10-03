@@ -1,10 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.unq.inscripcionunq.spring.model.Carrera;
-import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 public class MateriaSistemaJson {
@@ -13,7 +10,6 @@ public class MateriaSistemaJson {
 	public String nombre;
     public Integer horas;
 	public boolean estado;
-//	public List<Carrera> carreras;
     public List<CarreraJson> carreras;
 
 	public MateriaSistemaJson() {
@@ -28,15 +24,6 @@ public class MateriaSistemaJson {
 //		this.carreras = materia.getCarreras();
         this.estado = estado;
 	}
-
- /*   public MateriaSistemaJson(Long id, String codigo, String nombre, Integer horas, List<Carrera> carreras, boolean estado) {
-		this.id = id;
-        this.codigo = codigo;
-		this.nombre = nombre;
-		this.horas = horas;
-		this.carreras = carreras;
-        this.estado = estado;
-	}*/
 
      public MateriaSistemaJson(Long id, String codigo, String nombre, Integer horas, List<CarreraJson> carreras, boolean estado) {
 		this.id = id;
