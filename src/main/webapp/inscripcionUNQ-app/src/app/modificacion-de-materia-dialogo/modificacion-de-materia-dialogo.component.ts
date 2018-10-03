@@ -156,26 +156,22 @@ export class CarreraDialogoComponent implements OnInit {
         if (this.carrera != null) {
 
             this.form.setValue({
-                'codigo': this.carrera.codigo,
-                'descripcion': this.carrera.descripcion,
-              });
-            this.checked = this.carrera.habilitada;
+                'codigo': '',
+                'nombre': '',
+                'horas': ''
+            });
         }
     }
 
-
     guardar() {
         if (this.form.valid) {
-            const { codigo, descripcion} = this.form.value;
-            const carrera = new Carrera(codigo, descripcion, this.checked);
-            this.dialogRef.close(carrera);
+            const { codigo, nombre, horas } = this.form.value;
+            const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas);
+            this.dialogRef.close(materia);
         }
     }
 
     cerrar() {
         this.dialogRef.close();
     }
-
 }
-
- */
