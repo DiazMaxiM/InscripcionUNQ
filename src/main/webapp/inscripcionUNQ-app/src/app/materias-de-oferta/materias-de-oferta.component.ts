@@ -4,6 +4,7 @@ import { UtilesService } from '../utiles.service';
 import { Materia } from '../materias/materia.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { ComisionMateriaDialogoComponent } from '../comision-material-dialogo/comision-materia-dialogo.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-materias-de-oferta',
@@ -55,6 +56,32 @@ export class MateriasDeOfertaComponent implements OnInit {
             dialogConfig);
 
     return dialogRef;
+  }
+
+  actualizarMateria(materia) {
+    this.restService.actualizarInformacionMateria(materia)
+      .subscribe(res => {
+        const mensaje = 'Los datos de la materia fueron actualizados con éxito';
+        this.utilesService.mostrarMensaje(mensaje);
+        this.getMaterias();
+      },
+        (err: HttpErrorResponse) => {
+          this.utilesService.mostrarMensajeDeError(err);
+        });
+  }
+
+  cambiarEstado(materia: Materia, evento) {
+    materia.estado = evento.checked;
+    this.actualizarMateria(materia);
+  }
+
+  getMaterias() {
+    this.restService.getMaterias().subscribe(materias => {
+      this.materias = materias;
+    },
+      (err: HttpErrorResponse) => {
+        this.utilesService.mostrarMensajeDeError(err);
+      });
   }
 
 }
