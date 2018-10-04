@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
@@ -24,6 +26,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
+import ar.edu.unq.inscripcionunq.spring.service.MateriaServiceImp;
 
 @RestController
 public class MateriaController {

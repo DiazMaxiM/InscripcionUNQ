@@ -18,6 +18,11 @@ import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
+
 @Entity(name = "Materia")
 public class Materia extends BaseEntity {
 	@Column(unique = true)

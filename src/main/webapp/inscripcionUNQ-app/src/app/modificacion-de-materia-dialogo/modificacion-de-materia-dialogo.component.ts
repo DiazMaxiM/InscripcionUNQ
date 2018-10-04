@@ -28,7 +28,9 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
         private dialogRef: MatDialogRef<ModificacionDeMateriaDialogoComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
         this.materia = data.materia;
-        this.carrerasSeleccionadas = data.materia.carreras;
+        if(data.materia != null){
+            this.carrerasSeleccionadas = data.materia.carreras;
+        }
     }
 
     ngOnInit() {
@@ -86,75 +88,6 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
             });
             this.checked = this.materia.estado;
         } else {
-            this.form.setValue({
-                'codigo': '',
-                'nombre': '',
-                'horas': ''
-            });
-            this.checked = this.materia.estado;
-        }
-
-    }
-
-    guardar() {
-        if (this.form.valid) {
-            const { codigo, nombre, horas } = this.form.value;
-            const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas);
-            this.dialogRef.close(materia);
-        }
-    }
-
-    cerrar() {
-        this.dialogRef.close();
-    }
-    onChange(carrera) {
-
-    
-  
-    }
-}
-/*
-import {Compoent, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {FormBuilder, Validators, FormGroup} from '@angular/forms';
-import { Carrera } from '../carreras/carrera.model';
-import { DataDialogo } from './data-dialogo.model';
-import { UtilesService } from '../utiles.service';
-
-@Component({
-    selector: 'app-carrera-dialogo',
-    templateUrl: './carrera-dialogo.component.html',
-    styleUrls: ['../dialogo-abm.component.css']
-})
-export class CarreraDialogoComponent implements OnInit {
-
-    form: FormGroup;
-    carrera: Carrera;
-    checked = false;
-
-    constructor(
-        private fb: FormBuilder,
-        private utilesService: UtilesService,
-        private dialogRef: MatDialogRef<CarreraDialogoComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DataDialogo ) {
-            this.carrera = data.carrera;
-    }
-    ngOnInit() {
-        this.crearFormularioCarrera();
-        this.insertarInformacionDeLaCarreraEnFormulario();
-
-    }
-
-    crearFormularioCarrera() {
-        this.form = this.fb.group({
-            codigo: ['', Validators.required],
-            descripcion: ['', Validators.required]
-        });
-    }
-
-    insertarInformacionDeLaCarreraEnFormulario() {
-        if (this.carrera != null) {
-
             this.form.setValue({
                 'codigo': '',
                 'nombre': '',
