@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Estudiante } from './informacion-del-usuario/estudiante.model';
-import { Materia } from './materias-aprobadas/materia.model';
+import { MateriaEstudiante } from './materias-aprobadas/materia-estudiante.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Usuario } from './autenticacion/usuario.model';
 import { Carrera } from './carreras/carrera.model';
+import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class RestService {
   }
 
   getMateriasAprobadas(idEstudiante: string) {
-    return this.httpClient.get<Array<Materia>>('/api/poll/userApprovedSubjects/' + idEstudiante);
+    return this.httpClient.get<Array<MateriaEstudiante>>('/api/poll/userApprovedSubjects/' + idEstudiante);
   }
 
   actualizarMateriasAprobadas(idEstudiante: string, materiasAprobadas) {
@@ -34,7 +35,7 @@ export class RestService {
   }
 
   obtenerMateriasDisponibles(idEstudiante: string) {
-    return this.httpClient.get<Array<Materia>>('/api/poll/userDisapprovedSubjectsWithCommissionAvailable/' + idEstudiante);
+    return this.httpClient.get<Array<MateriaEstudiante>>('/api/poll/userDisapprovedSubjectsWithCommissionAvailable/' + idEstudiante);
   }
 
   enviarComisionesSeleccionadas(idEstudiante: string, comisionesSeleccionadas) {
@@ -65,11 +66,16 @@ export class RestService {
 
   actualizarInformacionMateria(informacionMateria: Materia) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post('/api/materia', informacionMateria, { headers });
+    return this.httpClient.post('/api/materias/modificarMateria', informacionMateria, { headers });
   }
 
   eliminarMateria(idMateria: string) {
     return this.httpClient.delete('/api/materias/eliminarMateria/' + idMateria);
+  }
+
+  agregarNuevaMateria(nuevaMateria: Materia) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/materias/nuevaMateria', nuevaMateria, { headers });
   }
 
   actualizarInformacionCarrera(carreraActualizada: Carrera) {

@@ -11,9 +11,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
+
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "Materia")
 public class Materia extends BaseEntity {
@@ -23,7 +31,7 @@ public class Materia extends BaseEntity {
 	private Integer horas;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private List<Carrera> carreras = new ArrayList<Carrera>();
 
 	public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras) {
@@ -31,6 +39,14 @@ public class Materia extends BaseEntity {
 		this.setNombre(nombre);
 		this.setHoras(horas);
 		this.carreras = listaDeCarreras;
+	}
+
+    public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras, TypeStatus estado) {
+		this.setCodigo(codigo);
+		this.setNombre(nombre);
+		this.setHoras(horas);
+		this.carreras = listaDeCarreras;
+        this.estado = estado; 
 	}
 
 	public Materia(String codigo, String nombre, Integer hours) {
@@ -87,6 +103,16 @@ public class Materia extends BaseEntity {
 		this.estado = estado;
 	}
 
+	public void actualizarMateria(Materia materia) throws CodigoInvalidoException, NombreInvalidoException, 
+	EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
+		Validacion.validarMateria(materia);
+		this.codigo = materia.codigo;
+		this.nombre = materia.nombre;
+		this.horas = materia.horas;
+		this.carreras = materia.carreras;
+        this.estado = materia.estado;
+	}
+	
 	public void deshabilitar() {
 		setEstado(TypeStatus.DISABLED);
 	}

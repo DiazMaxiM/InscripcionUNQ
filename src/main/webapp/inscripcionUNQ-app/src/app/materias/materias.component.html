@@ -1,4 +1,7 @@
 <h5 class="titulo">ABM Materias</h5>
+<div align="center">
+    <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaLaCreacionDeMateria()">Nueva materia</button>
+  </div>
 <div class="table-responsive">
     <table class="table table-hover table-borderless">
       <thead>
@@ -14,19 +17,26 @@
         <tr *ngFor="let materia of materias">
           <td> {{ materia.codigo }} </td>
           <td> {{ materia.nombre }} </td>
-
           <td>
             <tr *ngFor="let carrera of materia.carreras">
              {{ carrera.codigo }}
            </tr>
           </td>
           <td> {{ materia.horas }} </td>
-          <td> {{ materia.estado }} </td>
           <td>
-            <i class="material-icons edit-icon" (click)="editarMateria(materia)">edit</i>
+              <mat-slide-toggle
+                  [checked]="materia.estado" (change)="cambiarEstado(materia,$event)">
+              </mat-slide-toggle>
           </td>
           <td>
-            <i class="material-icons edit-icon" (click)="eliminarMateria(materia.id)">delete</i>
+            <i class="material-icons edit-icon" 
+            (click)="abrirDialogoParaEdicionDeMateria(materia)" 
+            data-toggle="tooltip" data-placement="top" title="Editar">edit</i>
+            </td>
+          <td>
+              <i class="material-icons edit-icon" 
+              (click)="eliminarMateria(materia.id)" 
+              data-toggle="tooltip" data-placement="top" title="Eliminar">delete</i>
           </td>
         </tr>
        <mat-divider></mat-divider>

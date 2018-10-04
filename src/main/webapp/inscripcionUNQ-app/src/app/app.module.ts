@@ -36,7 +36,7 @@ import { MateriasComponent } from './materias/materias.component';
 import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.component';
 import { ofertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
 import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/oferta-academica.dialogo.component';
-
+import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,8 @@ import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/ofer
     MateriasComponent,
     CarreraDialogoComponent,
     ofertaAcademicaComponent,
-    OfertaAcademicaDialogoComponent
+    OfertaAcademicaDialogoComponent,
+    ModificacionDeMateriaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +72,6 @@ import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/ofer
     UtilesService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
-  CarreraDialogoComponent, OfertaAcademicaDialogoComponent]
+  CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent]
 })
 export class AppModule { }

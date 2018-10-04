@@ -1,5 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.validacion;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -8,17 +10,19 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
 public class Validacion {
 	
-	  private Validacion() {
-		    throw new IllegalStateException("Vakidacion class");
-		  }
+	private Validacion() {
+		throw new IllegalStateException("Validacion class");
+	}
 	
 	public static boolean stringVacio(String string) {
 		return StringUtils.isEmpty(string);
@@ -28,7 +32,6 @@ public class Validacion {
 		EmailValidator validator = EmailValidator.getInstance();
 		return validator.isValid(email);
 	}
-	
 	
 	private static void nombreValido(String nombre) throws NombreInvalidoException {
 		if(stringVacio(nombre)){
@@ -49,13 +52,15 @@ public class Validacion {
 		}
 	}
 
-	public static void validarEstudiante(Estudiante estudiante) throws NombreInvalidoException, EmailInvalidoException, ApellidoInvalidoException {
+	public static void validarEstudiante(Estudiante estudiante) throws NombreInvalidoException, EmailInvalidoException, 
+	ApellidoInvalidoException {
 		nombreValido(estudiante.getNombre());
 		apellidoValido(estudiante.getApellido());
 		emailValido(estudiante.getEmail());
 	}
 
-	public static void validarCarrera(Carrera carrera) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException {
+	public static void validarCarrera(Carrera carrera) throws DescripcionInvalidaException, CodigoInvalidoException, 
+	EstadoInvalidoException {
 		descripcionValida(carrera.getDescripcion());
 		codigoValido(carrera.getCodigo());
 		estadoValido(carrera.getEstado());
@@ -65,27 +70,47 @@ public class Validacion {
 		if(!TypeStatus.contains(estado.name())){
 			throw new EstadoInvalidoException();
 		}
-		
 	}
 
 	private static void codigoValido(String codigo) throws CodigoInvalidoException {
 		if(stringVacio(codigo)) {
 			throw new CodigoInvalidoException();
 		}
-		
 	}
 
 	private static void descripcionValida(String descripcion) throws DescripcionInvalidaException {
 		if (stringVacio(descripcion)) {
 			throw new DescripcionInvalidaException();
 		}
-	
 	}
 
-	public static void validarOfertaAcademica(OfertaAcademica oferta) throws DescripcionInvalidaException, NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
+	public static void validarOfertaAcademica(OfertaAcademica oferta) throws DescripcionInvalidaException, 
+	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
 		descripcionValida(oferta.getDescripcion());
 		nombreValido(oferta.getNombre());
 		estadoValido(oferta.getEstado());
 		validarCarrera(oferta.getCarrera());
+	}
+	
+	private static void horarioValido(String horario) throws HorarioInvalidoException {
+		if(stringVacio(horario)){
+			throw new HorarioInvalidoException();
+		}
+	}
+	
+	public static void validarCarreras(List<Carrera> carreras) throws DescripcionInvalidaException, 
+	CodigoInvalidoException, EstadoInvalidoException {
+		for (Carrera carrera : carreras) {
+			validarCarrera(carrera);
+		}
+	}
+	
+	public static void validarMateria(Materia materia) throws CodigoInvalidoException, NombreInvalidoException, 
+	EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
+		codigoValido(materia.getCodigo());
+		nombreValido(materia.getNombre());
+		horarioValido(String.valueOf(materia.getHoras()));
+		validarCarreras(materia.getCarreras());
+		estadoValido(materia.getEstado());
 	}
 }
