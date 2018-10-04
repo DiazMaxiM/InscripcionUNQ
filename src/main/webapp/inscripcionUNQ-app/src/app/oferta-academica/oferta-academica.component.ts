@@ -9,7 +9,7 @@ import { OfertaAcademicaDialogoComponent } from '../oferta-academica-dialogo/ofe
 @Component({
   selector: 'app-oferta-academica',
   templateUrl: './oferta-academica.component.html',
-  styleUrls: ['./oferta-academica.component.css', '../estilo-abm.component.css']
+  styleUrls: ['../estilo-abm.component.css']
 })
 export class ofertaAcademicaComponent implements OnInit {
 

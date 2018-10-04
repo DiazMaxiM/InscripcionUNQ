@@ -9,7 +9,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 @Component({
   selector: 'app-carreras',
   templateUrl: './carreras.component.html',
-  styleUrls: ['./carreras.component.css', '../estilo-abm.component.css']
+  styleUrls: ['../estilo-abm.component.css']
 })
 export class CarrerasComponent implements OnInit {
 

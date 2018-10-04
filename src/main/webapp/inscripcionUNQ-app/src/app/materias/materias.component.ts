@@ -9,7 +9,7 @@ import { ModificacionDeMateriaDialogoComponent } from '../modificacion-de-materi
 @Component({
   selector: 'app-materias',
   templateUrl: './materias.component.html',
-  styleUrls: ['./materias.component.css']
+  styleUrls: ['../estilo-abm.component.css']
 })
 export class MateriasComponent implements OnInit {
   materias: Materia[];
