@@ -38,6 +38,7 @@ import { ofertaAcademicaComponent } from './oferta-academica/oferta-academica.co
 import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/oferta-academica.dialogo.component';
 import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 import { MateriasDeOfertaComponent } from './materias-de-oferta/materias-de-oferta.component';
+import { ComisionMateriaDialogoComponent } from './comision-material-dialogo/comision-materia-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MateriasDeOfertaComponent } from './materias-de-oferta/materias-de-ofer
     ofertaAcademicaComponent,
     OfertaAcademicaDialogoComponent,
     ModificacionDeMateriaDialogoComponent,
-    MateriasDeOfertaComponent
+    MateriasDeOfertaComponent,
+    ComisionMateriaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +76,7 @@ import { MateriasDeOfertaComponent } from './materias-de-oferta/materias-de-ofer
     UtilesService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
-  CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent]
+  CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
+  ComisionMateriaDialogoComponent]
 })
 export class AppModule { }
