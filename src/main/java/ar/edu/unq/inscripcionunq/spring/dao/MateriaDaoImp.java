@@ -39,4 +39,13 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 			    .uniqueResult();
 	}
 
+	@Override
+	public List<Materia> getMateriasParaCarrera(Long idCarrera) {
+		Session sesion = this.sessionFactory.getCurrentSession();
+		Query<Materia> query = sesion.createQuery(
+				"select distinct materia from Materia as materia join materia.carreras c where c.id = :carreraId");
+		query.setParameter("carreraId", idCarrera);
+		return query.getResultList();
+	}
+
 }

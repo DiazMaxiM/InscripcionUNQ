@@ -15,10 +15,13 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
+import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import java.util.stream.Collectors;
@@ -132,5 +135,14 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		if(materia != null){
 			throw new ExisteMateriaConElMismoCodigoException();
 		}
+	}
+
+	@Override
+	@Transactional
+	public List<MateriaSistemaJson> getMateriasParaCarrera(String idCarrera) {
+		Long id = new Long(idCarrera);
+		List<Materia> materias = ((MateriaDao) genericDao).getMateriasParaCarrera(id);
+		
+		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
 	}
 }

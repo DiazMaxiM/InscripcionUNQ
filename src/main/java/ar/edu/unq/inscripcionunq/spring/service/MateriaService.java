@@ -27,5 +27,7 @@ public interface MateriaService extends GenericService<Materia> {
 	void agregarNuevaMateria(MateriaSistemaJson materiaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, IdNumberFormatException, MateriaNoExisteException;
     
 	void validarSiExisteMateriaConElMismoCodigo(String codigo) throws ExisteMateriaConElMismoCodigoException;
+	
+	List<MateriaSistemaJson> getMateriasParaCarrera(String idCarrera);
 
 }

@@ -103,11 +103,16 @@ export class RestService {
 
   crearNuevaOferta(nuevaOferta: OfertaAcademica) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put('/api//ofertas-academicas/crearOferta/', nuevaOferta, { headers });
+    return this.httpClient.put('/api/ofertas-academicas/crearOferta/', nuevaOferta, { headers });
   }
 
   actualizarInformacionDeOferta(ofertaActualizada: OfertaAcademica) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/ofertas-academicas/actualizarOferta/', ofertaActualizada, { headers });
+  }
+
+  getMateriasDeCarrera(idCarrera: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.get<Array<Materia>>('/api/oferta-academica/materias/' + idCarrera);
   }
 }

@@ -25,6 +25,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaServiceImp;
 
@@ -72,5 +73,10 @@ public class MateriaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/oferta-academica/materias/{idCarrera}")
+	public ResponseEntity getMateriasParaCarrera(@PathVariable String idCarrera) throws IdNumberFormatException {
+		return ResponseEntity.ok().body(materiaServiceImp.getMateriasParaCarrera(idCarrera));
 	}
 }

@@ -129,6 +129,14 @@ export class ofertaAcademicaComponent implements OnInit {
 
   }
 
-
+  irAMaterias(idCarrera) {
+    this.restService.getMateriasDeCarrera(idCarrera).subscribe(materias => {
+      localStorage.setItem('materias-de-oferta',JSON.stringify(materias));
+      this.utilesService.irA('materias-de-oferta');
+    },
+    (err) => {
+        this.utilesService.mostrarMensajeDeError(err);
+    });
+  }
 
 }
