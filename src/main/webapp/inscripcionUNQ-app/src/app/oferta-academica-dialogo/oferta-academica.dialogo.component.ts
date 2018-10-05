@@ -18,7 +18,7 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 
     form: FormGroup;
     oferta: OfertaAcademica;
-    checked = false;
+    checked = true;
     carreras: Carrera[];
     filtroCarreras: Observable<Carrera[]>;
     carreraParaOferta: Carrera;

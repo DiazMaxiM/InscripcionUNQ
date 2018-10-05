@@ -60,17 +60,9 @@ export class RestService {
     return this.httpClient.get<Array<Materia>>('/api/materias');
   }
 
-  eliminarCarrera(idCarrera: string) {
-    return this.httpClient.delete('/api/carreras/eliminarCarrera/' + idCarrera);
-  }
-
   actualizarInformacionMateria(informacionMateria: Materia) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/materias/modificarMateria', informacionMateria, { headers });
-  }
-
-  eliminarMateria(idMateria: string) {
-    return this.httpClient.delete('/api/materias/eliminarMateria/' + idMateria);
   }
 
   agregarNuevaMateria(nuevaMateria: Materia) {
@@ -90,10 +82,6 @@ export class RestService {
 
   getOfertas() {
     return this.httpClient.get<Array<OfertaAcademica>>('/api/ofertas-academicas');
-  }
-
-  eliminarOferta(idOferta: string) {
-    return this.httpClient.delete('/api/ofertas-academicas/eliminarOferta/' + idOferta);
   }
 
   clonarOferta(oferta: OfertaAcademica) {

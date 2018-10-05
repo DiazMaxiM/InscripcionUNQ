@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
@@ -25,9 +22,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
-import ar.edu.unq.inscripcionunq.spring.service.MateriaServiceImp;
 
 @RestController
 public class MateriaController {
@@ -38,17 +33,6 @@ public class MateriaController {
 	@GetMapping("/materias")
 	public ResponseEntity<List> getMaterias() {
 		return ResponseEntity.ok().body(materiaServiceImp.getMateriasJson());
-	}
-	
-	@DeleteMapping("/materias/eliminarMateria/{idMateria}")
-	public ResponseEntity eliminarMateria(@PathVariable String idMateria) {
-		try {
-			materiaServiceImp.eliminarMateria(idMateria);
-		}
-		catch (IdNumberFormatException | MateriaNoExisteException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-		}
-		return ResponseEntity.ok().build();
 	}
 	
 	@PostMapping("/materias/modificarMateria")

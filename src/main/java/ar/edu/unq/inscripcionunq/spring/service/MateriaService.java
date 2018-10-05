@@ -17,8 +17,6 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson
 public interface MateriaService extends GenericService<Materia> {
 
 	List<Materia> getMateriasParaCarreras(List<Carrera> carreras);
-
-	void eliminarMateria(String idMateria) throws IdNumberFormatException, MateriaNoExisteException;
     
 	void actualizarMateria(MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, CodigoInvalidoException, NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException;
     

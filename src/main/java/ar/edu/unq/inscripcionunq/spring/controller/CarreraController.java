@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +19,6 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.service.CarreraService;
 
 @RestController
@@ -34,19 +31,6 @@ public class CarreraController {
 	public ResponseEntity<List> getCarreras() {
 		return ResponseEntity.ok().body(carreraServiceImp.getCarrerasJson());
 		
-	}
-	
-	@DeleteMapping("/carreras/eliminarCarrera/{idCarrera}")
-	public ResponseEntity eliminarCarrera(@PathVariable String idCarrera) {
-		try {
-			carreraServiceImp.eliminarCarrera(idCarrera);
-		}
-		catch (IdNumberFormatException | CarreraNoExisteException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-		}
-		return ResponseEntity.ok().build();
-
-
 	}
 	
 	@PutMapping("/carreras/nuevaCarrera")

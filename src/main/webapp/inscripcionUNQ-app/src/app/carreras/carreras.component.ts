@@ -35,25 +35,6 @@ export class CarrerasComponent implements OnInit {
     });
   }
 
-  eliminarCarrera(idCarrera) {
-     const mensaje = '¿Está seguro de que desea eliminar la carrera seleccionada?';
-     this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
-       if (confirma) {
-        this.eliminar(idCarrera);
-       }
-    });
-  }
-
-  eliminar(idCarrera) {
-    this.restService.eliminarCarrera(idCarrera).subscribe(res => {
-      this.utilesService.mostrarMensaje('La carrera fue eliminada con exito');
-      this.getCarreras();
-    },
-    (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-    });
-  }
-
   abrirDialogoParaLaCreacionDeCarrera() {
     const dialogRef = this.crearConfiguracionDialogoParaCarrera();
       dialogRef.afterClosed().subscribe( val => {
