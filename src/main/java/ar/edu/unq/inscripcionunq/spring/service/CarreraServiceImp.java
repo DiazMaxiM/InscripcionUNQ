@@ -14,7 +14,6 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
@@ -26,20 +25,6 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
     
     @Autowired
     CarreraDao carreraDaoImp;
-    
-	@Override
-	public void eliminarCarrera(String idCarrera) throws IdNumberFormatException, CarreraNoExisteException {
-		Carrera carrera;
-		try {
-			carrera = this.get(new Long(idCarrera));
-		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new CarreraNoExisteException();
-		}
-		
-		this.delete(carrera);
-	}
 
 	@Override
 	public void agregarNuevaCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, ExisteCarreraConElMismoCodigoException {

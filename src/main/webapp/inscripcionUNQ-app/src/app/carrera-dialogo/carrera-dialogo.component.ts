@@ -14,7 +14,7 @@ export class CarreraDialogoComponent implements OnInit {
 
     form: FormGroup;
     carrera: Carrera;
-    checked = false;
+    checked = true;
 
     constructor(
         private fb: FormBuilder,

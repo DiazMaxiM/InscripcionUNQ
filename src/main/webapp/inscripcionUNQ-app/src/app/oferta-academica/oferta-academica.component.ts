@@ -35,16 +35,6 @@ export class ofertaAcademicaComponent implements OnInit {
     });
   }
 
-  eliminarOferta(idOferta) {
-    this.restService.eliminarOferta(idOferta).subscribe(res => {
-      this.utilesService.mostrarMensaje('La oferta fue eliminada con exito');
-      this.getOfertas();
-    },
-    (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-    });
-  }
-
   clonarOferta(oferta) {
     this.restService.clonarOferta(oferta).subscribe(res => {
       this.utilesService.mostrarMensaje('La oferta fue clonada con exito');

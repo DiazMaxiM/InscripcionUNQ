@@ -15,13 +15,10 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
-import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
-import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import java.util.stream.Collectors;
@@ -49,29 +46,16 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	}
 
     private MateriaSistemaJson crearMateriaJson(Materia materia) {
-        List<CarreraJson> carrerasJson = new ArrayList<CarreraJson>();
+        List<CarreraJson> carrerasJson = new ArrayList<>();
         materia.getCarreras().forEach((carrera) -> {
 			CarreraJson carreraJson = new CarreraJson(carrera.getId(),carrera.getCodigo(),
 				carrera.getDescripcion(),TypeStatus.esEstadoHabiltado(carrera.getEstado()));
             carrerasJson.add(carreraJson);
 		});
 		
-		MateriaSistemaJson materiaJson = new MateriaSistemaJson(materia.getId(), materia.getCodigo(), 
+		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), 
 			materia.getNombre(), materia.getHoras(), carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
-		return materiaJson;
-	}
 
-	@Override
-	public void eliminarMateria(String idMateria) throws IdNumberFormatException, MateriaNoExisteException {
-		Materia materia;
-		try {
-			materia = this.get(new Long(idMateria));
-		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new MateriaNoExisteException();
-		}
-		this.delete(materia);
 	}
 
     @Override
@@ -103,10 +87,9 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		this.save(materiaOriginal);	
 	}
 
-    private Materia mapearMateriaDesdeJson(MateriaSistemaJson materiaJson) throws IdNumberFormatException, 
-    MateriaNoExisteException  {
+    private Materia mapearMateriaDesdeJson(MateriaSistemaJson materiaJson){
 		TypeStatus estado = materiaJson.estado ? TypeStatus.ENABLED : TypeStatus.DISABLED;
-        List<Carrera> carreras = new ArrayList<Carrera>();
+        List<Carrera> carreras = new ArrayList<>();
         materiaJson.carreras.forEach((carreraJson) -> {
             TypeStatus estadoCarrera = carreraJson.habilitada ? TypeStatus.ENABLED : TypeStatus.DISABLED;
 			Carrera carrera = new Carrera(carreraJson.codigo,
@@ -116,8 +99,8 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
             carreraOriginal.actualizarInformacion(carrera);
             carreras.add(carreraOriginal);
 		});
-		Materia materia = new Materia(materiaJson.codigo,materiaJson.nombre,materiaJson.horas,carreras, estado);
-		return materia;
+		return new Materia(materiaJson.codigo,materiaJson.nombre,materiaJson.horas,carreras, estado);
+		
 	}
 
 	@Override

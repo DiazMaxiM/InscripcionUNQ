@@ -9,12 +9,9 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 
 public interface CarreraService extends GenericService<Carrera> {
-
-	void eliminarCarrera(String idCarrera) throws IdNumberFormatException, CarreraNoExisteException;
 
 	void agregarNuevaCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, ExisteCarreraConElMismoCodigoException;
     

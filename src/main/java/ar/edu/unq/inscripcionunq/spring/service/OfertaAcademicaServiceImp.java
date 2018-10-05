@@ -14,7 +14,6 @@ import ar.edu.unq.inscripcionunq.spring.dao.OfertaAcademicaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
@@ -51,21 +50,6 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 		ofertaJson.setNroComisionesCreadas(nroComisiones);
 		return ofertaJson;
 		
-	}
-
-	
-	@Override
-	public void eliminarOferta(String idOferta)throws IdNumberFormatException,OfertaNoExisteException {
-		OfertaAcademica oferta;
-		try {
-			oferta = this.get(new Long(idOferta));
-		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new OfertaNoExisteException();
-		}
-		
-		this.delete(oferta);
 	}
 
 	@Override

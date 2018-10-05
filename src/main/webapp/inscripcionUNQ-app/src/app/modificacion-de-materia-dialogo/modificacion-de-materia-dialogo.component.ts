@@ -17,7 +17,7 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
     materia: Materia;
     carreras: Carrera[];
     carrerasSeleccionadas: Carrera[] = [];
-    checked = false;
+    checked = true;
     carreraChecked = false;
     form: FormGroup;
 
