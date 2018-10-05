@@ -24,7 +24,7 @@
           </td>
           <td>{{ oferta.carrera.codigo}}</td>
           <td>
-            <button (click)="irAMaterias(oferta.carrera.id)" type="button" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Editar comisiones">{{ oferta.nroComisionesCreadas}}</button>
+            <button (click)="irAMaterias(oferta.id)" type="button" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Editar comisiones">{{ oferta.nroComisionesCreadas}}</button>
           </td>
           <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeOferta(oferta)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
           <td><i class="material-icons edit-icon" (click)="clonarOferta(oferta)" data-toggle="tooltip" data-placement="top" title="Clonar">file_copy</i></td>
