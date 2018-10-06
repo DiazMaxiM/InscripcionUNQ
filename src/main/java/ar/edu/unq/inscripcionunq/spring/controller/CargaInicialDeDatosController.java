@@ -17,8 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
-import ar.edu.unq.inscripcionunq.spring.model.Periodo;
-import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
+import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
@@ -40,10 +39,12 @@ public class CargaInicialDeDatosController {
 
 	@Autowired
 	private GenericService<Encuesta> encuestaServiceImp;
-	
+
 	@Autowired
 	private GenericService<Usuario> usuarioServiceImp;
 	
+	@Autowired
+	private GenericService<TipoIncidencia> tipoIncidenciaServiceImp;
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -553,11 +554,24 @@ public class CargaInicialDeDatosController {
 		poll.agregarEstudiante(maxi);
 
 		encuestaServiceImp.save(poll);
-		
-		Usuario usuario = new Usuario("zaracho.rosali@gmail.com","123");
-        usuarioServiceImp.save(usuario);
-        
-		
+
+		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
+		usuarioServiceImp.save(usuario);
+
+		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");
+		tipoIncidenciaServiceImp.save(tipoIncidencia);
+
+		tipoIncidencia = new TipoIncidencia("Cambio de Mail");
+		tipoIncidenciaServiceImp.save(tipoIncidencia);
+
+		tipoIncidencia = new TipoIncidencia("Correccion de nombre y apellido");
+		tipoIncidenciaServiceImp.save(tipoIncidencia);
+
+		tipoIncidencia = new TipoIncidencia("No puedo cursar por problemas de horarios");
+		tipoIncidenciaServiceImp.save(tipoIncidencia);
+
+		tipoIncidencia = new TipoIncidencia("La franja horaria no corresponde con mi promedio");
+		tipoIncidenciaServiceImp.save(tipoIncidencia);
 	}
 
 }
