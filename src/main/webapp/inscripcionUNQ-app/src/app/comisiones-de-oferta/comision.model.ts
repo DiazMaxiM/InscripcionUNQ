@@ -1,17 +1,19 @@
 export class Comision {
     idComision?: number;
     nombre?: string;
+    nombreMateria?: string;
     horarios = [];
-    idMateria?: number;
   
     constructor(
       idComision?: number,
       nombre?: string,
-      idMateria?: number,
+      nombreMateria?: string,
+      horarios?: any
     ) {
       this.idComision = idComision;
       this.nombre = nombre;
-      this.idMateria = idMateria;
+      this.nombreMateria = nombreMateria;
+      this.horarios = horarios;
     }
   
     agregarHorario(horario) {

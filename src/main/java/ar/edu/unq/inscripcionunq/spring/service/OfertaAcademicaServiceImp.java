@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import ar.edu.unq.inscripcionunq.spring.dao.OfertaAcademicaDao;
@@ -102,6 +103,15 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 		ofertaActual.actualizarInformacion(ofertaRecibida);
 		this.save(ofertaActual);
 		
+	}
+
+	@Override
+	@Transactional
+	public List<ComisionJson> getComisionesEnOferta(String idOferta) {
+		Long id = new Long(idOferta);
+		List<Comision> comisiones = ((OfertaAcademicaDao) genericDao).getComisionesEnOferta(id);
+		
+		return comisiones.stream().map(c -> new ComisionJson(c)).collect(Collectors.toList());
 	}
 
 }

@@ -15,10 +15,10 @@
         <tbody>
             <tr *ngFor="let comision of comisiones">
                 <td>{{ comision.nombre }}</td>
-                <td>{{ comision.materia.nombre }}</td>
+                <td>{{ comision.nombreMateria }}</td>
                 <td> {{ comision.cupo }}</td>
                 <td>
-                    <tr *ngFor="let horario of comision.horarios">
+                    <tr *ngFor="let horario of comision.horarioJson">
                             {{horario.dia}} {{horario.horaComienzo.hour  | number:'2.0'}} : {{horario.horaComienzo.minute  | number:'2.0'}} a {{horario.horaFin.hour | number:'2.0'}} : {{horario.horaFin.minute | number:'2.0'}}
                     </tr>
                 </td>
