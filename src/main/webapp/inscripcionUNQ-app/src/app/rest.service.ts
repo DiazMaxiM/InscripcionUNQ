@@ -6,6 +6,7 @@ import { Usuario } from './autenticacion/usuario.model';
 import { Carrera } from './carreras/carrera.model';
 import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
+import { Comision } from './comisiones-de-oferta/comision.model';
 
 @Injectable()
 export class RestService {
@@ -102,5 +103,10 @@ export class RestService {
   getMateriasDeCarrera(idCarrera: string) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.get<Array<Materia>>('/api/oferta-academica/materias/' + idCarrera);
+  }
+
+  getComisionesDeOferta(idOferta: string) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.get<Array<Comision>>('/api/oferta-academica/comisiones/' + idOferta);
   }
 }

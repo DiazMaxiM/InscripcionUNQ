@@ -37,7 +37,7 @@ import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.compo
 import { ofertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
 import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/oferta-academica.dialogo.component';
 import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
-import { MateriasDeOfertaComponent } from './materias-de-oferta/materias-de-oferta.component';
+import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-de-oferta.component';
 import { ComisionMateriaDialogoComponent } from './comision-material-dialogo/comision-materia-dialogo.component';
 
 @NgModule({
@@ -59,7 +59,7 @@ import { ComisionMateriaDialogoComponent } from './comision-material-dialogo/com
     ofertaAcademicaComponent,
     OfertaAcademicaDialogoComponent,
     ModificacionDeMateriaDialogoComponent,
-    MateriasDeOfertaComponent,
+    ComisionesDeOfertaComponent,
     ComisionMateriaDialogoComponent
   ],
   imports: [

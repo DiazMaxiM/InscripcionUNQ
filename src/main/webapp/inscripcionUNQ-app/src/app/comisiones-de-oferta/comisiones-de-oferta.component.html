@@ -1,0 +1,34 @@
+<div align="center">
+    <button class="btn btn-danger" mat-fab color="primary" 
+    (click)= "abrirDialogoParaAgregarMateria()">Agregar comisión</button>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Materia</th>
+                <th>Cupo</th>
+                <th>Horarios</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let comision of comisiones">
+                <td>{{ comision.nombre }}</td>
+                <td>{{ comision.materia.nombre }}</td>
+                <td> {{ comision.cupo }}</td>
+                <td>
+                    <tr *ngFor="let horario of comision.horarios">
+                            {{horario.dia}} {{horario.horaComienzo.hour  | number:'2.0'}} : {{horario.horaComienzo.minute  | number:'2.0'}} a {{horario.horaFin.hour | number:'2.0'}} : {{horario.horaFin.minute | number:'2.0'}}
+                    </tr>
+                </td>
+                <td>
+                    <i class="material-icons edit-icon" 
+                    data-toggle="tooltip" 
+                    data-placement="top" title="Quitar de oferta">delete</i>
+                </td>
+            </tr>
+            <mat-divider></mat-divider>
+        </tbody>
+    </table>
+</div>

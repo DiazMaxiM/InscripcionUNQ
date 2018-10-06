@@ -119,10 +119,10 @@ export class ofertaAcademicaComponent implements OnInit {
 
   }
 
-  irAMaterias(idCarrera) {
-    this.restService.getMateriasDeCarrera(idCarrera).subscribe(materias => {
-      localStorage.setItem('materias-de-oferta',JSON.stringify(materias));
-      this.utilesService.irA('materias-de-oferta');
+  irAMaterias(idOferta) {
+    this.restService.getComisionesDeOferta(idOferta).subscribe(comisiones => {
+      localStorage.setItem('comisiones-de-oferta',JSON.stringify(comisiones));
+      this.utilesService.irA('comisiones-de-oferta');
     },
     (err) => {
         this.utilesService.mostrarMensajeDeError(err);
