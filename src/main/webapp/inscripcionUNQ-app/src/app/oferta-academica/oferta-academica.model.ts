@@ -1,7 +1,7 @@
 import { Carrera } from '../carreras/carrera.model';
 
 export class OfertaAcademica {
-    id?: number;
+    id?: string;
     nombre?: string;
     descripcion?: string;
     habilitada?: boolean;

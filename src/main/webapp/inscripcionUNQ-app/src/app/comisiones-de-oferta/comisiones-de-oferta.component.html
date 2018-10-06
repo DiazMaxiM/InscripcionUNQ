@@ -1,6 +1,6 @@
 <div align="center">
     <button class="btn btn-danger" mat-fab color="primary" 
-    (click)= "abrirDialogoParaAgregarMateria()">Agregar comisión</button>
+    (click)= "abrirDialogoComision()">Agregar comisión</button>
 </div>
 <div class="table-responsive">
     <table class="table table-hover">
@@ -24,8 +24,13 @@
                 </td>
                 <td>
                     <i class="material-icons edit-icon" 
+                        data-toggle="tooltip" 
+                        data-placement="top" title="Editar" (click)= "abrirDialogoComision(comision)" >edit</i>
+                </td>
+                <td>
+                    <i class="material-icons edit-icon" 
                     data-toggle="tooltip" 
-                    data-placement="top" title="Quitar de oferta">delete</i>
+                    data-placement="top" title="Eliminar">delete</i>
                 </td>
             </tr>
             <mat-divider></mat-divider>

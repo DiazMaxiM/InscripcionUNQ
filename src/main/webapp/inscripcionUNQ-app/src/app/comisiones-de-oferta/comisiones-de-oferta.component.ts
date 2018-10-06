@@ -3,8 +3,8 @@ import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 import { Comision } from './comision.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
-import { ComisionMateriaDialogoComponent } from '../comision-material-dialogo/comision-materia-dialogo.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ComisionOfertaDialogoComponent } from '../comision-oferta-dialogo/comision-oferta-dialogo.component';
 
 @Component({
   selector: 'app-comisiones-de-oferta',
@@ -15,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ComisionesDeOfertaComponent implements OnInit {
   comisiones: Comision[];
   idOferta;
+  comisionSeleccionada;
 
   constructor(
     private restService: RestService,
@@ -26,23 +27,45 @@ export class ComisionesDeOfertaComponent implements OnInit {
     this.comisiones = JSON.parse(localStorage.getItem('comisiones-de-oferta'));
   }
 
-  abrirDialogoParaAgregarComision(comision) {
-    const dialogRef = this.crearConfiguracionDialogoParaComision();
+  abrirDialogoComision(comision?: Comision) {
+    this.comisionSeleccionada = comision;
+    const dialogRef = this.crearConfiguracionDialogoParaComision(comision);
+    dialogRef.afterClosed().subscribe( val => {
+      if (val != undefined) {
+        this.guardarComision(val);
+      }
+    });
   }
 
-  abrirDialogoParaVerComisiones(){
+  guardarComision(comision: Comision) {
+    if(this.comisionSeleccionada != null ) {
+       this.guardarComisionModificada(comision);
+    } else {
+       this.guardarNuevaComision(comision)
+    }
+  }
+  guardarComisionModificada(comision: Comision) {
+    comision.idComision = this.comisionSeleccionada.id;
+
   }
 
+  guardarNuevaComision(comision: Comision) {
 
-  crearConfiguracionDialogoParaComision() {
+  }
+
+  crearConfiguracionDialogoParaComision(comision?) {
     const dialogConfig = new  MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
-    dialogConfig.width = '600px';
-    dialogConfig.height = '450px';
+    dialogConfig.width = '800px';
+    dialogConfig.height = '600px';
+    dialogConfig.data = {
+      comision: comision
+    };
 
-    const dialogRef = this.dialog.open(ComisionMateriaDialogoComponent,
+
+    const dialogRef = this.dialog.open(ComisionOfertaDialogoComponent,
             dialogConfig);
 
     return dialogRef;
