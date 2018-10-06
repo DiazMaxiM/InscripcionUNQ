@@ -47,7 +47,6 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
     }
 
     filtrarCarrera(val: string): Carrera[] {
-        console.log(val);
         return this.carreras.filter(option => {
           return option.descripcion.toLowerCase().match(val.toLowerCase());
         });

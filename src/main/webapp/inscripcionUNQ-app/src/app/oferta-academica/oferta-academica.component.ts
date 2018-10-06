@@ -119,9 +119,10 @@ export class ofertaAcademicaComponent implements OnInit {
 
   }
 
-  irAComisiones(idOferta) {
-    this.restService.getComisionesDeOferta(idOferta).subscribe(comisiones => {
+  irAComisiones(oferta: OfertaAcademica) {
+    this.restService.getComisionesDeOferta(oferta.id).subscribe(comisiones => {
       localStorage.setItem('comisiones-de-oferta',JSON.stringify(comisiones));
+      localStorage.setItem('oferta-seleccionada', JSON.stringify(oferta));
       this.utilesService.irA('comisiones-de-oferta');
     },
     (err) => {

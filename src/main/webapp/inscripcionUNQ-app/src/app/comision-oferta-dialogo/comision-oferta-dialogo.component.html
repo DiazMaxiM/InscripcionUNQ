@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Comision</h2>
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <input matInput placeholder="Nombre" formControlName="nombre" required>
+    <mat-error *ngIf="form.get('nombre').hasError('required')">
+        Campo obligatorio
+      </mat-error> 
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" placeholder="Cupo" formControlName="cupo" required>
+    <mat-error *ngIf="form.get('cupo').hasError('required')">
+        Campo obligatorio
+      </mat-error> 
+  </mat-form-field>
+  <mat-form-field>
+      <input type="text" placeholder="Materia" formControlName="materia" matInput [matAutocomplete]="auto" required>
+      <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let materia of filtroMaterias | async" [value]="materia.nombre" (onSelectionChange)="materiaSeleccionada(materia)">
+           {{materia.nombre}}
+      </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="form.get('materia').hasError('required')">
+              Campo obligatorio
+            </mat-error> 
+</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+    Cerrar
+  </button>
+  <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+    Guardar
+  </button>
+</mat-dialog-actions>

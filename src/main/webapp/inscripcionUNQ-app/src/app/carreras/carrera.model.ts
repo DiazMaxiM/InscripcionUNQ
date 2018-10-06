@@ -1,5 +1,5 @@
 export class Carrera {
-    id?: number;
+    id?: string;
     codigo?: number;
     descripcion?: string;
     habilitada?: boolean;
@@ -8,7 +8,7 @@ export class Carrera {
     codigo?: number,
     descripcion?: string,
     habilitada?: boolean,
-    id?: number
+    id?: string
   ) {
     this.codigo = codigo;
     this.descripcion = descripcion;
