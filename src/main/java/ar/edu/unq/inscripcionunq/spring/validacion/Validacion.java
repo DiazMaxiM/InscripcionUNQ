@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import ar.edu.unq.inscripcionunq.spring.exception.AnhoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
@@ -12,10 +13,14 @@ import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
 public class Validacion {
@@ -112,5 +117,37 @@ public class Validacion {
 		horarioValido(String.valueOf(materia.getHoras()));
 		validarCarreras(materia.getCarreras());
 		estadoValido(materia.getEstado());
+	}
+
+	public static void validarPeriodo(Periodo periodo) throws AnhoInvalidoException, NumeroInvalidoException, PeriodoInvalidoException {
+		anoValido(periodo.getAnho());
+		numeroValido(periodo.getNumero());
+		tipoPeriodoValido(periodo.getDuracion());
+		
+	}
+
+	private static void tipoPeriodoValido(TipoPeriodo tipoṔeriodo) throws PeriodoInvalidoException {
+		if(!TipoPeriodo.contains(tipoṔeriodo.name())){
+			throw new PeriodoInvalidoException();
+		}
+		
+	}
+
+	private static void numeroValido(Integer numero) throws NumeroInvalidoException {
+		if(!esNumeroValido(numero)) {
+			throw new NumeroInvalidoException();
+		}
+		
+	}
+	
+	private static boolean esNumeroValido(Integer numero) {
+		return numero != null || numero instanceof Integer;
+	}
+
+	private static void anoValido(Integer anho) throws AnhoInvalidoException {
+		if(!esNumeroValido(anho)) {
+			throw new AnhoInvalidoException();
+		}
+		
 	}
 }
