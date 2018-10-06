@@ -17,6 +17,8 @@ import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
@@ -42,6 +44,8 @@ public class CargaInicialDeDatosController {
 	@Autowired
 	private GenericService<Usuario> usuarioServiceImp;
 	
+	@Autowired
+	private GenericService<Periodo> periodoServiceImp;
 	
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -555,6 +559,10 @@ public class CargaInicialDeDatosController {
 		
 		Usuario usuario = new Usuario("zaracho.rosali@gmail.com","123");
         usuarioServiceImp.save(usuario);
+        
+        Periodo periodo = new Periodo(2018,2,TipoPeriodo.CUATRIMESTRAL);
+        periodo.generarCodigo();
+        periodoServiceImp.save(periodo);
 		
 	}
 
