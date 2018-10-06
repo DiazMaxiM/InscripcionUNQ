@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export class ComisionesDeOfertaComponent implements OnInit {
   comisiones: Comision[];
-  idMateria;
+  idOferta;
 
   constructor(
     private restService: RestService,

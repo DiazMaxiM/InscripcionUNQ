@@ -19,6 +19,14 @@ public class Comision extends BaseEntity {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Horario> horarios = new ArrayList<Horario>();
 	private Integer cupo;
+	public Integer getCupo() {
+		return cupo;
+	}
+
+	public void setCupo(Integer cupo) {
+		this.cupo = cupo;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Materia materia;
 	@Enumerated(EnumType.STRING)

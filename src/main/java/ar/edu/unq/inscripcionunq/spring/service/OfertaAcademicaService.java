@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
@@ -19,5 +20,7 @@ public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
 	void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException;
 
 	void actualizarOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, OfertaNoExisteException;
+
+	List<ComisionJson> getComisionesEnOferta(String idOferta);
 
 }
