@@ -14,6 +14,7 @@ import { ModificacionDeMateriaDialogoComponent } from '../modificacion-de-materi
 export class MateriasComponent implements OnInit {
   materias: Materia[];
   idMateria;
+  materiaBuscada: string;
 
   constructor(
     private restService: RestService,

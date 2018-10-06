@@ -39,6 +39,7 @@ import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/ofer
 import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-de-oferta.component';
 import { ComisionMateriaDialogoComponent } from './comision-material-dialogo/comision-materia-dialogo.component';
+import { filtroBusquedaPipe } from './filtro-busqueda.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ComisionMateriaDialogoComponent } from './comision-material-dialogo/com
     OfertaAcademicaDialogoComponent,
     ModificacionDeMateriaDialogoComponent,
     ComisionesDeOfertaComponent,
-    ComisionMateriaDialogoComponent
+    ComisionMateriaDialogoComponent,
+    filtroBusquedaPipe
   ],
   imports: [
     BrowserModule,

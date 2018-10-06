@@ -13,3 +13,12 @@
 .edit-icon:hover{
 	cursor: pointer;
 }
+
+.container-buscador {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container-buscador > * {
+    width: 50%;
+  }
