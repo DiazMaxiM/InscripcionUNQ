@@ -1,5 +1,8 @@
 package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
+import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+
 public class OfertaAcademicaJson {
 	
 	public  Long id;
@@ -8,16 +11,18 @@ public class OfertaAcademicaJson {
 	public boolean habilitada;
 	public CarreraJson carrera;
 	public Long nroComisionesCreadas;
+	public PeriodoJson periodo;
     
 	
 
-	public OfertaAcademicaJson(Long id, String nombre, String descripcion, boolean habilitada, CarreraJson carreraJson) {
+	public OfertaAcademicaJson(OfertaAcademica oferta) {
 		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.habilitada = habilitada;
-		this.carrera = carreraJson;
+		this.id = oferta.getId();
+		this.nombre = oferta.getNombre();
+		this.descripcion = oferta.getDescripcion();
+		this.habilitada = TypeStatus.esEstadoHabiltado(oferta.getEstado());
+		this.carrera = new CarreraJson(oferta.getCarrera());
+		this.periodo = new PeriodoJson(oferta.getPeriodo());
 	}
 
 	public OfertaAcademicaJson() {

@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 
 public class AcademicOfferTest {
 	private OfertaAcademica ofertaAcademica;
@@ -15,7 +16,8 @@ public class AcademicOfferTest {
 	@Before
 	public void setUp() throws Exception {
 		Carrera carrera = Mockito.mock(Carrera.class);
-		ofertaAcademica = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", carrera);
+		Periodo periodo = Mockito.mock(Periodo.class);
+		ofertaAcademica = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", carrera,periodo);
 	}
 	
 	@Test

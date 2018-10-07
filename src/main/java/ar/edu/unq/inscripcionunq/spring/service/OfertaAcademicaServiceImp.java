@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.OfertaAcademicaDao;
+import ar.edu.unq.inscripcionunq.spring.dao.PeriodoDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
@@ -23,6 +23,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
@@ -36,6 +37,8 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	CarreraDao carreraDaoImp;
 	@Autowired 
 	ComisionDao comisionImp;
+	@Autowired 
+	PeriodoDao periodoDaoImp;
 	
 	@Override
 	public List<OfertaAcademicaJson> getOfertasAcademicasJson() {
@@ -46,12 +49,8 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	private OfertaAcademicaJson crearOfertaJson(OfertaAcademica oferta) {
 		Carrera carrera = ofertaAcademicaDaoImp.getCarreraEnOferta(oferta.getId());
 		Long nroComisiones = (long) oferta.getComisiones().size();
-		CarreraJson carreraJson = new CarreraJson(carrera.getId(),carrera.getCodigo(),
-				carrera.getDescripcion(),TypeStatus.esEstadoHabiltado(carrera.getEstado()));
-		
-		OfertaAcademicaJson ofertaJson = new OfertaAcademicaJson(oferta.getId(), oferta.getNombre(), 
-				oferta.getDescripcion(), TypeStatus.esEstadoHabiltado(oferta.getEstado()),
-				carreraJson);
+		oferta.setCarrera(carrera);
+		OfertaAcademicaJson ofertaJson = new OfertaAcademicaJson(oferta);
 		ofertaJson.setNroComisionesCreadas(nroComisiones);
 		return ofertaJson;
 		
@@ -82,7 +81,8 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	
 	private OfertaAcademica armarOfertaDesdeJson(OfertaAcademicaJson ofertaAcademicaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException {
 		Carrera carrera = carreraDaoImp.get(ofertaAcademicaJson.carrera.id);
-		OfertaAcademica oferta = new OfertaAcademica(ofertaAcademicaJson.nombre, ofertaAcademicaJson.descripcion,carrera);
+		Periodo periodo = periodoDaoImp.get(ofertaAcademicaJson.periodo.id);
+		OfertaAcademica oferta = new OfertaAcademica(ofertaAcademicaJson.nombre, ofertaAcademicaJson.descripcion,carrera, periodo);
 		TypeStatus estado = ofertaAcademicaJson.habilitada ? TypeStatus.ENABLED : TypeStatus.DISABLED;
 		oferta.setEstado(estado);
 		Validacion.validarOfertaAcademica(oferta);

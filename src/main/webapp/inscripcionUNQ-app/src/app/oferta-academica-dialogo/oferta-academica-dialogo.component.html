@@ -1,49 +1,62 @@
 <h2 mat-dialog-title>Oferta Académica</h2>
 
 
-<mat-dialog-content [formGroup]="form">
+<mat-dialog-content>
+   <div [formGroup]="form">
+        <mat-form-field>
 
-    <mat-form-field>
-
-        <input matInput
-                placeholder="Nombre"
-               formControlName="nombre" required>
-               <mat-error *ngIf="form.get('nombre').hasError('required')">
-                Campo obligatorio
-              </mat-error>       
-
-    </mat-form-field>
-
-    <mat-form-field>
-
-        <textarea matInput placeholder="Descripción"
-            formControlName="descripcion" required>
-
-        </textarea>
-        <mat-error *ngIf="form.get('descripcion').hasError('required')">
-            Campo obligatorio
-          </mat-error> 
-
-    </mat-form-field>
-    <mat-form-field>
-            <input type="text" placeholder="Carrera" formControlName="carrera" matInput [matAutocomplete]="auto" required>
-            <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let carrera of filtroCarreras | async" [value]="carrera.descripcion" (onSelectionChange)="carreraSeleccionada(carrera)">
-                 {{carrera.descripcion}}
-            </mat-option>
-            </mat-autocomplete>
-            <mat-error *ngIf="form.get('carrera').hasError('required')">
+                <input matInput
+                        placeholder="Nombre"
+                       formControlName="nombre" required>
+                       <mat-error *ngIf="form.get('nombre').hasError('required')">
+                        Campo obligatorio
+                      </mat-error>       
+        
+            </mat-form-field>
+        
+            <mat-form-field>
+        
+                <textarea matInput placeholder="Descripción"
+                    formControlName="descripcion" required>
+        
+                </textarea>
+                <mat-error *ngIf="form.get('descripcion').hasError('required')">
                     Campo obligatorio
                   </mat-error> 
-      </mat-form-field>
-</mat-dialog-content>
-<section >Estado
+        
+            </mat-form-field>
+            <mat-form-field>
+                    <input type="text" placeholder="Carrera" formControlName="carrera" matInput [matAutocomplete]="auto" required>
+                    <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let carrera of filtroCarreras | async" [value]="carrera.descripcion" (onSelectionChange)="carreraSeleccionada(carrera)">
+                         {{carrera.descripcion}}
+                    </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="form.get('carrera').hasError('required')">
+                            Campo obligatorio
+                          </mat-error> 
+            </mat-form-field>
+            <mat-form-field>
+                    <input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
+                    <mat-autocomplete #autoPeriodo="matAutocomplete">
+                    <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado(periodo)">
+                         {{periodo.codigo}}
+                    </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="form.get('periodo').hasError('required')">
+                            Campo obligatorio
+                          </mat-error> 
+            </mat-form-field>
+
+   </div>
+   <section >Estado
         <mat-slide-toggle
             class="estado"
             [(ngModel)]="checked">
         </mat-slide-toggle>
 </section>
-
+    
+</mat-dialog-content>
 <mat-dialog-actions align="end">
 
     <button class="btn  mat-button" mat-fab color="primary"

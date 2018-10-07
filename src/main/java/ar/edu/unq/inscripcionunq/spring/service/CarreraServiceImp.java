@@ -78,7 +78,7 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 	@Override
 	public List<CarreraJson> getCarrerasJson() {
 		List<Carrera> carreras = this.list();
-        return carreras.stream().map(c -> new CarreraJson(c.getId(), c.getCodigo(),c.getDescripcion(),TypeStatus.esEstadoHabiltado(c.getEstado()))).collect(Collectors.toList());
+        return carreras.stream().map(c -> new CarreraJson(c)).collect(Collectors.toList());
 	}
 
       

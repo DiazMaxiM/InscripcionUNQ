@@ -48,8 +48,7 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
     private MateriaSistemaJson crearMateriaJson(Materia materia) {
         List<CarreraJson> carrerasJson = new ArrayList<>();
         materia.getCarreras().forEach((carrera) -> {
-			CarreraJson carreraJson = new CarreraJson(carrera.getId(),carrera.getCodigo(),
-				carrera.getDescripcion(),TypeStatus.esEstadoHabiltado(carrera.getEstado()));
+			CarreraJson carreraJson = new CarreraJson(carrera);
             carrerasJson.add(carreraJson);
 		});
 		
