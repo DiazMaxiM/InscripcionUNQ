@@ -2,6 +2,11 @@
     <button class="btn btn-danger" mat-fab color="primary" 
     (click)= "abrirDialogoComision()">Agregar comisión</button>
 </div>
+<div class="container-buscador">
+    <mat-form-field>
+        <input matInput [(ngModel)]="comisionBuscada" placeholder="Buscar comisión"> 
+  </mat-form-field> 
+</div>
 <div class="table-responsive">
     <table class="table table-hover">
         <thead>
@@ -13,7 +18,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let comision of comisiones">
+            <tr *ngFor="let comision of comisiones | filtroBusqueda: {nombre: comisionBuscada, nombreMateria: comisionBuscada}; let i=index;">
+                <td style="width: 5%; display: none">{{i +1}}</td>
                 <td>{{ comision.nombre }}</td>
                 <td>{{ comision.nombreMateria }}</td>
                 <td> {{ comision.cupo }}</td>
@@ -23,14 +29,9 @@
                     </tr>
                 </td>
                 <td>
-                    <i class="material-icons edit-icon" 
-                        data-toggle="tooltip" 
-                        data-placement="top" title="Editar" (click)= "abrirDialogoComision(comision)" >edit</i>
-                </td>
-                <td>
-                    <i class="material-icons edit-icon" 
+                    <i class="material-icons edit-icon" (click)="quitarComisionDeOferta(comision.id)"
                     data-toggle="tooltip" 
-                    data-placement="top" title="Eliminar">delete</i>
+                    data-placement="top" title="Eliminar comisión de oferta">delete</i>
                 </td>
             </tr>
             <mat-divider></mat-divider>

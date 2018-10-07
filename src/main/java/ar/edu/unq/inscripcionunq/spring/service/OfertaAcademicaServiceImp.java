@@ -11,10 +11,12 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
+import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.OfertaAcademicaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
@@ -32,6 +34,8 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	OfertaAcademicaDao ofertaAcademicaDaoImp;
 	@Autowired 
 	CarreraDao carreraDaoImp;
+	@Autowired 
+	ComisionDao comisionImp;
 	
 	@Override
 	public List<OfertaAcademicaJson> getOfertasAcademicasJson() {
@@ -41,7 +45,7 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	
 	private OfertaAcademicaJson crearOfertaJson(OfertaAcademica oferta) {
 		Carrera carrera = ofertaAcademicaDaoImp.getCarreraEnOferta(oferta.getId());
-		Long nroComisiones = (long) oferta.getCommissions().size();
+		Long nroComisiones = (long) oferta.getComisiones().size();
 		CarreraJson carreraJson = new CarreraJson(carrera.getId(),carrera.getCodigo(),
 				carrera.getDescripcion(),TypeStatus.esEstadoHabiltado(carrera.getEstado()));
 		
@@ -112,6 +116,20 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 		List<Comision> comisiones = ((OfertaAcademicaDao) genericDao).getComisionesEnOferta(id);
 		
 		return comisiones.stream().map(c -> new ComisionJson(c)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void quitarComisionDeOferta(String idComision, String idOferta) throws ObjectNotFoundinDBException, IdNumberFormatException {
+		Long idOf = new Long(idOferta);
+		Long idCom = new Long(idComision);
+		try {
+			OfertaAcademica oferta = ((OfertaAcademicaDao) genericDao).get(idOf);
+			Comision comision = comisionImp.get(idCom);
+			oferta.getComisiones().remove(comision);
+			this.save(oferta);
+ 		} catch (NumberFormatException e) {		
+ 			throw new IdNumberFormatException();		
+ 		} 		
 	}
 
 }

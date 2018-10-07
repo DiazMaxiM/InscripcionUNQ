@@ -4,6 +4,7 @@ import { UtilesService } from '../utiles.service';
 import { Comision } from './comision.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
+import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { ComisionOfertaDialogoComponent } from '../comision-oferta-dialogo/comision-oferta-dialogo.component';
 
 @Component({
@@ -15,7 +16,9 @@ import { ComisionOfertaDialogoComponent } from '../comision-oferta-dialogo/comis
 export class ComisionesDeOfertaComponent implements OnInit {
   comisiones: Comision[];
   idOferta;
+  oferta: OfertaAcademica;
   comisionSeleccionada;
+  comisionBuscada;
 
   constructor(
     private restService: RestService,
@@ -25,52 +28,8 @@ export class ComisionesDeOfertaComponent implements OnInit {
 
   ngOnInit() {
     this.comisiones = JSON.parse(localStorage.getItem('comisiones-de-oferta'));
+    this.oferta = JSON.parse(localStorage.getItem('oferta-seleccionada'));
   }
-
-  abrirDialogoComision(comision?: Comision) {
-    this.comisionSeleccionada = comision;
-    const dialogRef = this.crearConfiguracionDialogoParaComision(comision);
-    dialogRef.afterClosed().subscribe( val => {
-      if (val != undefined) {
-        this.guardarComision(val);
-      }
-    });
-  }
-
-  guardarComision(comision: Comision) {
-    if(this.comisionSeleccionada != null ) {
-       this.guardarComisionModificada(comision);
-    } else {
-       this.guardarNuevaComision(comision)
-    }
-  }
-  guardarComisionModificada(comision: Comision) {
-    comision.idComision = this.comisionSeleccionada.id;
-
-  }
-
-  guardarNuevaComision(comision: Comision) {
-
-  }
-
-  crearConfiguracionDialogoParaComision(comision?) {
-    const dialogConfig = new  MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = '800px';
-    dialogConfig.height = '600px';
-    dialogConfig.data = {
-      comision: comision
-    };
-
-
-    const dialogRef = this.dialog.open(ComisionOfertaDialogoComponent,
-            dialogConfig);
-
-    return dialogRef;
-  }
-
 
   getComisiones(id) {
     this.restService.getComisionesDeOferta(id).subscribe(comisiones => {
@@ -80,5 +39,24 @@ export class ComisionesDeOfertaComponent implements OnInit {
         this.utilesService.mostrarMensajeDeError(err);
       });
   }
+
+  quitarComisionDeOferta(idComision){
+    const mensaje = '¿Está seguro de que desea quitar la comisión seleccionada de la oferta académica?';		
+    this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {		
+      if(confirma) {		
+       this.quitarComision(idComision);		
+      }		
+   });
+  }		
+  
+  quitarComision(idComision) {		
+   this.restService.quitarComisionDeOferta(idComision, this.oferta.id).subscribe(res => {		
+     this.utilesService.mostrarMensaje('La comisión fue removida con éxito');		
+     this.getComisiones(this.oferta.id);		
+   },		
+   (err: HttpErrorResponse) => {		
+       this.utilesService.mostrarMensajeDeError(err);		
+   });		
+ }
 
 }
