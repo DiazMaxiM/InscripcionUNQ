@@ -14,6 +14,8 @@ import { PeriodoDialogoComponent } from '../periodo-dialogo/periodo-dialogo.comp
 })
 export class PeriodoComponent implements OnInit{
 
+  mostrarPeriodos;
+
    periodos: Periodo[];
     constructor(
       private restService: RestService,
@@ -23,6 +25,11 @@ export class PeriodoComponent implements OnInit{
 
     ngOnInit() {
       this.periodos = JSON.parse(localStorage.getItem('periodos'));
+      this.hayPeriodosParaMostrar();
+    }
+
+    hayPeriodosParaMostrar() {
+      this.mostrarPeriodos = this.periodos.length > 0;
     }
 
     crearConfiguracionDialogoParaPeriodo() {
@@ -35,7 +42,7 @@ export class PeriodoComponent implements OnInit{
       return dialogRef;
     }
 
-    abrirDialogoParaCreacionDePeriodo(){
+    abrirDialogoParaCreacionDePeriodo() {
       const dialogRef = this.crearConfiguracionDialogoParaPeriodo();
       dialogRef.afterClosed().subscribe( val => {
         if ( val != undefined) {
@@ -45,6 +52,22 @@ export class PeriodoComponent implements OnInit{
     }
 
     crearNuevoPeriodo(periodo: Periodo) {
+      this.restService.crearNuevoPeriodo(periodo).subscribe(periodos => {
+        this.getPeriodos();
+      },
+      (err) => {
+          this.utilesService.mostrarMensajeDeError(err);
+      });
+    }
+
+    getPeriodos() {
+      this.restService.getPeriodos().subscribe(periodos => {
+        this.periodos = periodos;
+        this.hayPeriodosParaMostrar();
+      },
+      (err) => {
+          this.utilesService.mostrarMensajeDeError(err);
+      });
 
     }
 }

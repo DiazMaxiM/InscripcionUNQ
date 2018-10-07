@@ -25,13 +25,16 @@
       </mat-error>   
     </mat-form-field>
     <mat-form-field>
-            <mat-select placeholder="Tipo de Período" [formControl]="tipoPeriodo" required>
+            <mat-select placeholder="Tipo de Período" formControlName="tipoPeriodo" required>
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let periodo of tipoPeriodo" [value]="periodo">
+                    <mat-option *ngFor="let periodo of tipoPeriodos" [value]="periodo">
                       {{periodo}}
                     </mat-option>
                   </mat-select>
       </mat-form-field>
+      <mat-error *ngIf="form.get('tipoPeriodo').hasError('required') && form.get('tipoPeriodo').touched">
+            Campo obligatorio
+          </mat-error>  
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

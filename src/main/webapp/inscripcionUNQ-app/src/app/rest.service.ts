@@ -116,11 +116,17 @@ export class RestService {
   }
 
   getTipoPeriodos() {
-    return this.httpClient.get('/api/tipoPeriodos');
+    return this.httpClient.get<Array<string>>('/api/tipoPeriodos');
   }
 
   quitarComisionDeOferta(idComision: string, idOferta: string){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.delete('api/oferta-academica/eliminarComision/' + idComision + '/' + idOferta);
   }
+
+  crearNuevoPeriodo(nuevoPeriodo: Periodo) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/periodos/crearPeriodo/', nuevoPeriodo, { headers });
+  }
+
 }
