@@ -5,7 +5,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
 public class IncidenciaJson {
 	public Long id;
 	public String descripcion;
-	public TipoIncidenciaJson tipoIncidenciaJson;
+	public TipoIncidenciaJson tipoIncidencia;
 	public String tipoEstadoIncidencia;
 
 	public IncidenciaJson() {
@@ -13,7 +13,7 @@ public class IncidenciaJson {
 
 	public IncidenciaJson(Incidencia incidencia) {
 		this.id = incidencia.getId();
-		this.tipoIncidenciaJson = new TipoIncidenciaJson(incidencia.getTipoIncidencia());
+		this.tipoIncidencia = new TipoIncidenciaJson(incidencia.getTipoIncidencia());
 		this.descripcion = incidencia.getDescripcion();
 		this.tipoEstadoIncidencia = incidencia.getTipoEstadoIncidencia().toString();
 	}

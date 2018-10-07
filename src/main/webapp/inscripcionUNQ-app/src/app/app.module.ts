@@ -42,6 +42,7 @@ import { filtroBusquedaPipe } from './filtro-busqueda.pipe';
 import { ComisionOfertaDialogoComponent } from './comision-oferta-dialogo/comision-oferta-dialogo.component';
 import { PeriodoComponent } from './periodos/periodo.component';
 import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.component';
+import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.compo
     filtroBusquedaPipe,
     ComisionOfertaDialogoComponent,
     PeriodoComponent,
-    PeriodoDialogoComponent
+    PeriodoDialogoComponent,
+    IncidenciaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +85,6 @@ import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.compo
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
-  ComisionOfertaDialogoComponent,PeriodoDialogoComponent]
+  ComisionOfertaDialogoComponent,PeriodoDialogoComponent, IncidenciaDialogoComponent]
 })
 export class AppModule { }

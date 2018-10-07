@@ -8,6 +8,7 @@ import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
 import { Periodo } from './periodos/periodo.model';
+import { Incidencia } from './incidencia-dialogo/incidencia.model';
 
 @Injectable()
 export class RestService {
@@ -127,6 +128,15 @@ export class RestService {
   crearNuevoPeriodo(nuevoPeriodo: Periodo) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/periodos/crearPeriodo/', nuevoPeriodo, { headers });
+  }
+
+  getTipoIncidencia() {
+    return this.httpClient.get<Array<string>>('/api/tipoIncidencias');
+  }
+
+  agregarIncidencia(incidencia: Incidencia){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/incidencia/', incidencia, {headers});
   }
 
 }
