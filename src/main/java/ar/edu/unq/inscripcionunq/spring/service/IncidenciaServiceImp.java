@@ -32,7 +32,8 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 
 	@Override
 	public void agregarIncidencia(IncidenciaJson incidenciaJson) {
-		Incidencia incidencia = new Incidencia(tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidenciaJson.id),
+		TipoIncidencia tipo = tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidencia.id);
+		Incidencia incidencia = new Incidencia(tipo,
 				incidenciaJson.descripcion);
 		incidenciaDaoImp.save(incidencia);
 	}
@@ -41,7 +42,7 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 	public void actualizarIncidencia(IncidenciaJson incidenciaJson) {
 		Incidencia incidencia = incidenciaDaoImp.get(incidenciaJson.id);
 		incidencia.setDescripcion(incidenciaJson.descripcion);
-		TipoIncidencia tipoIncidencia = tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidenciaJson.id);
+		TipoIncidencia tipoIncidencia = tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidencia.id);
 		incidencia.setTipoIncidencia(tipoIncidencia);
 		incidencia.setTipoEstadoIncidencia(TipoEstadoIncidencia.valueOf(incidenciaJson.tipoEstadoIncidencia));
 		incidenciaDaoImp.update(incidencia);

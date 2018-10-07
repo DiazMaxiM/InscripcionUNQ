@@ -22,6 +22,7 @@ h2{
 
 .logo {
 	height: 70%;
+	width: min-content;
 }
 
 .non-lateral-padding {
@@ -40,4 +41,16 @@ h2{
 
 .sinBorder{
 	border: 0
+}
+
+.boton-incidencia{
+	color: #B3291C;
+}
+
+.boton-incidencia:hover{
+	cursor: pointer;
+	color: #f2f2f2;
+	background-color: #B3291C;
+	border-radius: 50%; 
+	transform: scale(1.2);
 }
