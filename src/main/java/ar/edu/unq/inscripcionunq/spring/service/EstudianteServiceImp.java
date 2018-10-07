@@ -51,12 +51,11 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 		}
 		List<Carrera> carreras = estudiante.getCarrerasInscripto();
 		List<Materia> materias = materiaDaoImp.getMateriasParaCarreras(carreras);
-		List<MateriaJson> materiasAprobadas = materias.stream().map(s -> new MateriaJson(s, this.carrerasACarrerasJson(s.getCarreras()),estudiante.estaAprobada(s))).collect(Collectors.toList());
-		return materiasAprobadas;
+		return materias.stream().map(s -> new MateriaJson(s, this.carrerasACarrerasJson(s.getCarreras()),estudiante.estaAprobada(s))).collect(Collectors.toList());
 	}
 	
 	public List<CarreraJson> carrerasACarrerasJson(List<Carrera> carreras){
-		return carreras.stream().map(c -> new CarreraJson(c.getId(), c.getCodigo(),c.getDescripcion(),TypeStatus.esEstadoHabiltado(c.getEstado()))).collect(Collectors.toList());
+		return carreras.stream().map(c -> new CarreraJson(c)).collect(Collectors.toList());
 	}
 
 	@Override

@@ -40,7 +40,6 @@ public class PeriodoServiceImpl extends GenericServiceImp<Periodo> implements Pe
 	private Periodo armarPeriodoDesdeJson(PeriodoJson periodoJson) throws AnhoInvalidoException, NumeroInvalidoException, PeriodoInvalidoException {
 		TipoPeriodo tipoPeriodo = TipoPeriodo.valueOf(periodoJson.tipoPeriodo);
 		Periodo periodo = new Periodo(periodoJson.anho,periodoJson.numero,tipoPeriodo);
-		periodo.generarCodigo();
 		Validacion.validarPeriodo(periodo);
 		return periodo;
 		

@@ -73,7 +73,7 @@ export class ofertaAcademicaComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
     dialogConfig.width = '600px';
-    dialogConfig.height = '450px';
+    dialogConfig.height = '600px';
     dialogConfig.data = {
       oferta: oferta
     };

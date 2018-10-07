@@ -25,6 +25,7 @@ public class Periodo extends BaseEntity {
 		this.anho = anho;
 		this.numero = numero;
 		this.duracion = duracion;
+		this.generarCodigo();
 	}
 
 

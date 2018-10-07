@@ -17,7 +17,9 @@ import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
@@ -45,6 +47,10 @@ public class CargaInicialDeDatosController {
 	
 	@Autowired
 	private GenericService<TipoIncidencia> tipoIncidenciaServiceImp;
+	
+	@Autowired
+	private GenericService<Periodo> periodoServiceImp;
+		
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -314,9 +320,12 @@ public class CargaInicialDeDatosController {
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long arduino = materiaServiceImp.save(matt);
+		
+		Periodo periodo = new Periodo(2018,2,TipoPeriodo.CUATRIMESTRAL);
+		periodoServiceImp.save(periodo);
 
-		OfertaAcademica acc1 = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi);
-		OfertaAcademica acc2 = new OfertaAcademica("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds);
+		OfertaAcademica acc1 = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi,periodo);
+		OfertaAcademica acc2 = new OfertaAcademica("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds,periodo);
 
 		Comision commMate1 = new Comision("Mate1 C1", materiaServiceImp.get(mate1), 30);
 		commMate1.agregarHorarios(TypeDay.MARTES, LocalTime.of(9, 00), 4.0f);

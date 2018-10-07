@@ -27,11 +27,14 @@ public class OfertaAcademica extends BaseEntity {
 	private List<Comision> comisiones = new ArrayList<>();
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Carrera carrera;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Periodo periodo;
 
-	public OfertaAcademica(String nombre, String descripcion, Carrera carrera) {
+	public OfertaAcademica(String nombre, String descripcion, Carrera carrera, Periodo periodo) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.carrera = carrera;
+		this.periodo = periodo;
 	}
 
 	public OfertaAcademica() {
@@ -102,6 +105,14 @@ public class OfertaAcademica extends BaseEntity {
 	
 	public void eliminarComision(Comision comision) {
 		this.getComisiones().remove(comision);
+	}
+	
+	public Periodo getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Periodo periodo) {
+		this.periodo = periodo;
 	}
 
 }
