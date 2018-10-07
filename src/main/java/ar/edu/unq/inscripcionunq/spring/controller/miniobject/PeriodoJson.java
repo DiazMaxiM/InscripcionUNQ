@@ -2,7 +2,6 @@ package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
 
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
-import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 
 public class PeriodoJson {
 	
@@ -11,7 +10,6 @@ public class PeriodoJson {
 	public Integer anho;
 	public String tipoPeriodo;
 	public Integer numero;
-	private TipoPeriodo tipoṔeriodo;
 	
 	public PeriodoJson() {
 		super();

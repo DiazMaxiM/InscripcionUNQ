@@ -16,6 +16,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.AnhoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoSePudoGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.service.PeriodoService;
 
 @RestController
@@ -40,6 +41,11 @@ public class PeriodoController {
 		}
 		return ResponseEntity.ok().build();
 
+	}
+	
+	@GetMapping("/tipoPeriodos")
+	public ResponseEntity getTiposPeriodos() {
+		return ResponseEntity.ok().body(TipoPeriodo.values());
 	}
 
 }

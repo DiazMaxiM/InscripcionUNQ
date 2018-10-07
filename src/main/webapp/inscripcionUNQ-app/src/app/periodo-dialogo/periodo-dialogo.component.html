@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>Período</h2>
+
+
+<mat-dialog-content [formGroup]="form">
+
+    <mat-form-field>
+
+        <input matInput
+                placeholder="Año"
+                type="number"
+               formControlName="anho" required>
+               <mat-error *ngIf="form.get('anho').hasError('required')">
+                Campo obligatorio
+              </mat-error>       
+
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput
+        placeholder="Número"
+        type="number"
+       formControlName="numero" required>
+       <mat-error *ngIf="form.get('numero').hasError('required')">
+        Campo obligatorio
+      </mat-error>   
+    </mat-form-field>
+    <mat-form-field>
+            <mat-select placeholder="Tipo de Período" [formControl]="tipoPeriodo" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let periodo of tipoPeriodo" [value]="periodo">
+                      {{periodo}}
+                    </mat-option>
+                  </mat-select>
+      </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    <button class="btn  mat-button" mat-fab color="primary"
+            (click)="cerrar()">
+        Cancelar
+    </button>
+
+    <button class="btn btn-danger mat-button" mat-fab color="primary" [disabled]="form.invalid"
+            (click)="guardar()">
+        Guardar
+    </button>
+
+</mat-dialog-actions>

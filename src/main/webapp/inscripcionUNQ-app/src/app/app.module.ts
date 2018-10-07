@@ -40,6 +40,8 @@ import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia
 import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-de-oferta.component';
 import { filtroBusquedaPipe } from './filtro-busqueda.pipe';
 import { ComisionOfertaDialogoComponent } from './comision-oferta-dialogo/comision-oferta-dialogo.component';
+import { PeriodoComponent } from './periodos/periodo.component';
+import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { ComisionOfertaDialogoComponent } from './comision-oferta-dialogo/comisi
     ModificacionDeMateriaDialogoComponent,
     ComisionesDeOfertaComponent,
     filtroBusquedaPipe,
-    ComisionOfertaDialogoComponent
+    ComisionOfertaDialogoComponent,
+    PeriodoComponent,
+    PeriodoDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +83,6 @@ import { ComisionOfertaDialogoComponent } from './comision-oferta-dialogo/comisi
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
-  ComisionOfertaDialogoComponent]
+  ComisionOfertaDialogoComponent,PeriodoDialogoComponent]
 })
 export class AppModule { }

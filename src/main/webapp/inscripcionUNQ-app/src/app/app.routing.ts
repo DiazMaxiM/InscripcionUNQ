@@ -12,6 +12,7 @@ import { CarrerasComponent } from './carreras/carreras.component';
 import { MateriasComponent } from './materias/materias.component';
 import { ofertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
 import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-de-oferta.component';
+import { PeriodoComponent } from './periodos/periodo.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginEstudianteComponent, pathMatch: 'full' },
@@ -26,6 +27,7 @@ const APP_ROUTES: Routes = [
   { path: 'materias', component: MateriasComponent },
   { path: 'oferta-academica', component: ofertaAcademicaComponent },
   { path: 'comisiones-de-oferta', component: ComisionesDeOfertaComponent },
+  { path: 'periodos', component: PeriodoComponent },
   { path: '**', redirectTo: '' }
 ];
 

@@ -39,7 +39,6 @@ export class TareasUsuarioComponent {
     irAOfertaAcademica() {
 
       this.restService.getOfertas().subscribe(ofertas => {
-        console.log(ofertas);
         localStorage.setItem('ofertas', JSON.stringify(ofertas));
         this.utilesService.irA('oferta-academica');
       },
@@ -47,6 +46,18 @@ export class TareasUsuarioComponent {
           this.utilesService.mostrarMensajeDeError(err);
       });
     }
+
+    irAPeriodos() {
+      this.restService.getPeriodos().subscribe(periodos => {
+        localStorage.setItem('periodos', JSON.stringify(periodos));
+        this.utilesService.irA('periodos');
+      },
+      (err) => {
+          this.utilesService.mostrarMensajeDeError(err);
+      });
+
+    }
+
 
 
 
