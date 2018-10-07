@@ -73,10 +73,22 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
         });
       }
 
+    irATarerasUsuario(mensaje){
+        this.cerrar();
+        this.utilesService.mostrarMensajeYRedireccionar(mensaje, 'tareas-usuario'); 
+    }
+    guardarCarreras(carreras: Carrera[]) {
+       if (carreras.length == 0 ) {
+         const mensaje = 'No se encontraron carreras para la oferta';
+         this.irATarerasUsuario(mensaje);
+       }
+       this.carreras = carreras;
+       this.crearFiltroCarreras();
+    }
+
     getCarreras() {
         this.restService.getCarreras().subscribe(carreras => {
-          this.carreras = carreras;
-          this.crearFiltroCarreras();
+          this.guardarCarreras(carreras);
         },
         (err) => {
             this.utilesService.mostrarMensajeDeError(err);
@@ -86,12 +98,21 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
     getPeriodos() {
         this.restService.getPeriodos().subscribe(periodos => {
           this.periodos = periodos;
-          this.crearFiltroPeriodos();
+          this.guardarPeriodos(periodos);
         },
         (err) => {
             this.utilesService.mostrarMensajeDeError(err);
         });
     }
+
+    guardarPeriodos(periodos: Periodo[]) {
+        if (periodos.length == 0 ) {
+          const mensaje = 'No se encontraron períodos para la oferta';
+          this.irATarerasUsuario(mensaje);
+        }
+        this.periodos = periodos;
+        this.crearFiltroPeriodos();
+     }
 
 
     crearFormularioCarrera() {
