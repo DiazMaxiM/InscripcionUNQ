@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.service.OfertaAcademicaService;
 
@@ -74,5 +76,15 @@ public class OfertaAcademicaController {
 	@GetMapping("/oferta-academica/comisiones/{idOferta}")
 	public ResponseEntity getComisionesEnOferta(@PathVariable String idOferta) throws IdNumberFormatException {
 		return ResponseEntity.ok().body(ofertaAcademicaServiceImpl.getComisionesEnOferta(idOferta));
+	}
+	
+	@DeleteMapping("/oferta-academica/eliminarComision/{idComision}/{idOferta}")
+	public ResponseEntity quitarComisionDeOferta(@PathVariable String idComision, @PathVariable String idOferta) throws IdNumberFormatException {
+		try {
+			ofertaAcademicaServiceImpl.quitarComisionDeOferta(idComision, idOferta);
+		} catch (ObjectNotFoundinDBException e) {			
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		return ResponseEntity.ok().build();
 	}
 }

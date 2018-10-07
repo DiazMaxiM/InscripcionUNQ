@@ -42,7 +42,7 @@ public class OfertaAcademica extends BaseEntity {
 	}
 	
 	@JsonIgnore
-	public List<Comision> getCommissions(){
+	public List<Comision> getComisiones(){
 		return comisiones;
 	}
 
@@ -100,10 +100,8 @@ public class OfertaAcademica extends BaseEntity {
 		setEstado(ofertaRecibida.getEstado());
 	}
 	
-	
-	
-	
-	
-	
+	public void eliminarComision(Comision comision) {
+		this.getComisiones().remove(comision);
+	}
 
 }

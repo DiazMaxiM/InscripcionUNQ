@@ -33,7 +33,5 @@ public class OfertaAcademicaDaoImp extends GenericDaoImp<OfertaAcademica> implem
 				.setParameter("idOferta", idOferta)
 				.getResultList();
 	}
-	
-
 
 }

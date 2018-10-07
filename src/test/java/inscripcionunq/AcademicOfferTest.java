@@ -10,25 +10,38 @@ import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 
 public class AcademicOfferTest {
-	private OfertaAcademica academicOffer;
+	private OfertaAcademica ofertaAcademica;
 	
 	@Before
 	public void setUp() throws Exception {
-		Carrera career = Mockito.mock(Carrera.class);
-		academicOffer = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", career);
+		Carrera carrera = Mockito.mock(Carrera.class);
+		ofertaAcademica = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", carrera);
 	}
 	
 	@Test
-	public void createAnOfferAndVerifyThisHasNoCommissions() {		
-		assertEquals(0, academicOffer.getCommissions().size());
+	public void crearUnaOfertaYverificarQueNoTieneComisiones() {		
+		assertEquals(0, ofertaAcademica.getComisiones().size());
 	}
 
 	@Test
-	public void addACommissionAndVerifyThatItWasAdded() {
-		Comision commission = Mockito.mock(Comision.class);
-		academicOffer.agregarComision(commission);
+	public void agregarComisionYVerificarQueFueAgregada() {
+		Comision comision = Mockito.mock(Comision.class);
+		ofertaAcademica.agregarComision(comision);
 		
-		assertTrue(academicOffer.getCommissions().contains(commission));
-		assertEquals(1, academicOffer.getCommissions().size());
+		assertTrue(ofertaAcademica.getComisiones().contains(comision));
+		assertEquals(1, ofertaAcademica.getComisiones().size());
+	}
+	
+	@Test
+	public void eliminoComisionyVerificoSiFueEliminada() {
+		Comision comision1 = Mockito.mock(Comision.class);
+		Comision comision2 = Mockito.mock(Comision.class);
+		ofertaAcademica.agregarComision(comision1);
+		ofertaAcademica.agregarComision(comision2);
+		
+		assertTrue(ofertaAcademica.getComisiones().contains(comision1));
+		
+		ofertaAcademica.eliminarComision(comision1);
+		assertFalse(ofertaAcademica.getComisiones().contains(comision1));
 	}
 }
