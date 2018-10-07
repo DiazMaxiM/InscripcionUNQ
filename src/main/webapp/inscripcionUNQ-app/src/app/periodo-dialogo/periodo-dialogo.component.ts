@@ -3,6 +3,7 @@ import { MatDialogRef} from '@angular/material';
 import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
+import { Periodo } from '../periodos/periodo.model';
 
 @Component({
     selector: 'app-periodo-dialogo',
@@ -13,7 +14,7 @@ import { RestService } from '../rest.service';
 export class PeriodoDialogoComponent implements OnInit {
 
     form: FormGroup;
-    tipoPeriodos;
+    tipoPeriodos: string[] = [];
 
 
     constructor(
@@ -24,17 +25,17 @@ export class PeriodoDialogoComponent implements OnInit {
     }
     ngOnInit() {
         this.crearFormularioComision();
-        this.tipoPeriodos();
+        this.getTipoPeriodos();
 
     }
 
-    getTipoPeriodos(){
-      this.restService.getTipoPeriodos().subscribe(periodos => {
-          this.tipoPeriodos = periodos;
-      });
+    getTipoPeriodos() {
+        if (this.tipoPeriodos.length == 0) {
+            this.restService.getTipoPeriodos().subscribe(periodos => {
+                this.tipoPeriodos = periodos;
+            });
+        }
     }
-
-
 
     crearFormularioComision() {
         this.form = this.fb.group({
@@ -46,6 +47,9 @@ export class PeriodoDialogoComponent implements OnInit {
 
     guardar() {
         if (this.form.valid) {
+             const { anho, numero, tipoPeriodo} = this.form.value;
+            const periodo = new Periodo(anho, numero, tipoPeriodo);
+            this.dialogRef.close(periodo);
         }
     }
 

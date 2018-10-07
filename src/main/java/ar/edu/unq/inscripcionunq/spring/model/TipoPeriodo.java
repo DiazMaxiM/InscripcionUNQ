@@ -17,9 +17,9 @@ public enum TipoPeriodo {
         return values.contains(value);
     }
 
-	public static String getCodigoPeriodo(TipoPeriodo tipoṔeriodo) {
+	public static String getCodigoPeriodo(TipoPeriodo duracion) {
 		String codigoPeriodo;
-		  switch (tipoṔeriodo) {
+		  switch (duracion) {
           case MENSUAL: 
               codigoPeriodo = "M";
               break;

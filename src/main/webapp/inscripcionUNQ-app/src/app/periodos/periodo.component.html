@@ -2,7 +2,7 @@
 <div align="center">
   <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDePeriodo()">Nuevo Período</button>
 </div>
-<div class="table-responsive">
+<div *ngIf="mostrarPeriodos" class="table-responsive">
     <table class="table table-hover table-borderless">
       <thead>
         <tr>
