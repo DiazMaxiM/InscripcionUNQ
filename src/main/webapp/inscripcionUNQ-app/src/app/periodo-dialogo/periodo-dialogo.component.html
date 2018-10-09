@@ -31,10 +31,10 @@
                       {{periodo}}
                     </mat-option>
                   </mat-select>
-      </mat-form-field>
       <mat-error *ngIf="form.get('tipoPeriodo').hasError('required') && form.get('tipoPeriodo').touched">
             Campo obligatorio
-          </mat-error>  
+    </mat-error>  
+</mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

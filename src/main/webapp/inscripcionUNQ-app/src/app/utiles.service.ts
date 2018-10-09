@@ -4,7 +4,6 @@ import {FeedbackUsuarioDialogoComponent} from './feedback-usuario-dialogo/feedba
 import { Router} from '@angular/router';
 import {HttpErrorResponse } from '@angular/common/http';
 import { map} from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class UtilesService {
@@ -98,6 +97,11 @@ export class UtilesService {
     this.irA(direccion);
   }
 
+  desactivarDialogoCargando() {
+    this.dialogo.close();
+    this.dialogo = null;
+  }
+
   mostrarDialogoConfirmacion(mensaje) {
     const dialogConfig = this.crearConfiguracionDelDialogo(mensaje, false, true);
     const dialogRef = this.dialog.open(FeedbackUsuarioDialogoComponent,
@@ -107,6 +111,14 @@ export class UtilesService {
         return confirmar;
       })
    );
+}
+
+nuevoHorario(horario) {
+  const date = new Date();
+  date.setHours(horario.hour);
+  date.setMinutes(horario.minute);
+  date.setSeconds(horario.second);
+  return date;
 }
 
 }

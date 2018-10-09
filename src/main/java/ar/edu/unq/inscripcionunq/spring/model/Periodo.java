@@ -4,12 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OrderBy;
 
 @Entity(name = "Periodo")
 public class Periodo extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;
 	@Column(unique = true)
+	@OrderBy("codigo DESC")
 	private String codigo;
 	private Integer anho;
 	private Integer numero;

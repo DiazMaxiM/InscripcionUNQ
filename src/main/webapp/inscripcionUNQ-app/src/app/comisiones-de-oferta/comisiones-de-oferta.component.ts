@@ -5,7 +5,6 @@ import { Comision } from './comision.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
-import { ComisionOfertaDialogoComponent } from '../comision-oferta-dialogo/comision-oferta-dialogo.component';
 
 @Component({
   selector: 'app-comisiones-de-oferta',
@@ -34,6 +33,7 @@ export class ComisionesDeOfertaComponent implements OnInit {
   getComisiones(id) {
     this.restService.getComisionesDeOferta(id).subscribe(comisiones => {
       this.comisiones = comisiones;
+      console.log(comisiones);
     },
       (err: HttpErrorResponse) => {
         this.utilesService.mostrarMensajeDeError(err);
@@ -42,21 +42,21 @@ export class ComisionesDeOfertaComponent implements OnInit {
 
   quitarComisionDeOferta(idComision){
     const mensaje = '¿Está seguro de que desea quitar la comisión seleccionada de la oferta académica?';		
-    this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {		
-      if(confirma) {		
-       this.quitarComision(idComision);		
-      }		
+    this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
+      if (confirma) {
+       this.quitarComision(idComision);
+      }
    });
-  }		
-  
-  quitarComision(idComision) {		
+  }
+
+  quitarComision(idComision) {
    this.restService.quitarComisionDeOferta(idComision, this.oferta.id).subscribe(res => {		
      this.utilesService.mostrarMensaje('La comisión fue removida con éxito');		
-     this.getComisiones(this.oferta.id);		
-   },		
-   (err: HttpErrorResponse) => {		
-       this.utilesService.mostrarMensajeDeError(err);		
-   });		
+     this.getComisiones(this.oferta.id);
+   },
+   (err: HttpErrorResponse) => {
+       this.utilesService.mostrarMensajeDeError(err);
+   });
  }
 
 }

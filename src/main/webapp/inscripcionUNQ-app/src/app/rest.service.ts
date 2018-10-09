@@ -6,9 +6,9 @@ import { Usuario } from './autenticacion/usuario.model';
 import { Carrera } from './carreras/carrera.model';
 import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
-import { Comision } from './comisiones-de-oferta/comision.model';
 import { Periodo } from './periodos/periodo.model';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
+import { Comision } from './comisiones-de-oferta/comision.model';
 
 @Injectable()
 export class RestService {
@@ -137,6 +137,19 @@ export class RestService {
   agregarIncidencia(incidencia: Incidencia){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/incidencia/', incidencia, {headers});
+  }
+
+  getComisionesEnPeriodo(idPeriodo) {
+    return this.httpClient.get<Array<Comision>>('/api/comisiones/comisionesEnPeriodo/' + idPeriodo );
+  }
+
+  getDias() {
+    return this.httpClient.get<Array<string>>('/api/dias');
+  }
+
+  crearNuevaComision(comision: Comision) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/comision/nuevaComision/', comision, { headers });
   }
 
 }

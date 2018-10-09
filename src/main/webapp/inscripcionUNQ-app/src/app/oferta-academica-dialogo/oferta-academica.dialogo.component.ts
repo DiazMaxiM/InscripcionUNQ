@@ -9,6 +9,7 @@ import {map, startWith} from 'rxjs/operators';
 import { Carrera } from '../carreras/carrera.model';
 import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';
+import { AppRutas } from '../app-rutas.model';
 
 @Component({
     selector: 'app-oferta-academica-dialogo',
@@ -75,7 +76,7 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 
     irATarerasUsuario(mensaje){
         this.cerrar();
-        this.utilesService.mostrarMensajeYRedireccionar(mensaje, 'tareas-usuario'); 
+        this.utilesService.mostrarMensajeYRedireccionar(mensaje, AppRutas.TAREAS_USUARIO);
     }
     guardarCarreras(carreras: Carrera[]) {
        if (carreras.length == 0 ) {
