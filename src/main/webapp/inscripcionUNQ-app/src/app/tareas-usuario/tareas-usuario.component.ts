@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
+import { AppRutas } from '../app-rutas.model';
 
 
 @Component({
@@ -56,6 +57,10 @@ export class TareasUsuarioComponent {
           this.utilesService.mostrarMensajeDeError(err);
       });
 
+    }
+
+    irAComisiones() {
+      this.utilesService.irA(AppRutas.COMISIONES);
     }
 
 

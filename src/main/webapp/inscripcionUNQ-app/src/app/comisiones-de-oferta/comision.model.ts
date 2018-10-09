@@ -1,26 +1,30 @@
+import { Periodo } from '../periodos/periodo.model';
+import { Materia } from '../materias/materia.model';
+
 export class Comision {
-    idComision?: number;
+    id?: number;
     nombre?: string;
-    nombreMateria?: string;
-    horarios = [];
+    horarioJson = [];
     cupo?: string;
+    periodo?: Periodo;
+    materia?: Materia;
 
 
     constructor(
-      idComision?: number,
       nombre?: string,
-      nombreMateria?: string,
-      horarios?: any,
       cupo?: string,
+      periodo?: Periodo,
+      materia?: Materia,
+      idComision?: number,
     ) {
-      this.idComision = idComision;
+      this.id = idComision;
       this.nombre = nombre;
-      this.nombreMateria = nombreMateria;
-      this.horarios = horarios;
       this.cupo = cupo;
+      this.periodo = periodo;
+      this.materia = materia;
     }
 
     agregarHorario(horario) {
-      this.horarios.push(horario);
+      this.horarioJson.push(horario);
     }
   }

@@ -41,6 +41,15 @@ public class MateriaJson {
 		}
 	}
 
+	public MateriaJson(Materia materia) {
+		this.id = materia.getId();
+		this.nombre = materia.getNombre();
+	}
+	
+
+	
+	
+
 	private void setComisionInscripto(Comision comision) {
 		this.comisionRegistrado = new ComisionJson(comision);
 	}

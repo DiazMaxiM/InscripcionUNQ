@@ -17,25 +17,20 @@ import javax.persistence.OneToMany;
 public class Comision extends BaseEntity {
 	private String nombre;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Horario> horarios = new ArrayList<Horario>();
+	private List<Horario> horarios = new ArrayList<>();
 	private Integer cupo;
-	public Integer getCupo() {
-		return cupo;
-	}
-
-	public void setCupo(Integer cupo) {
-		this.cupo = cupo;
-	}
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Materia materia;
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Periodo periodo;
 
-	public Comision(String nombre, Materia materia, Integer cupo) {
+	public Comision(String nombre, Materia materia, Integer cupo, Periodo periodo) {
 		this.nombre = nombre;
 		this.materia = materia;
 		this.cupo = cupo;
+		this.periodo = periodo;
 	}
 
 	public Materia getMateria() {
@@ -75,5 +70,21 @@ public class Comision extends BaseEntity {
 			textoHorarios = textoHorarios.concat(horario.toString());
 		}
 		return textoHorarios;
+	}
+	
+	public Integer getCupo() {
+		return cupo;
+	}
+
+	public void setCupo(Integer cupo) {
+		this.cupo = cupo;
+	}
+	
+	public Periodo getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Periodo periodo) {
+		this.periodo = periodo;
 	}
 }

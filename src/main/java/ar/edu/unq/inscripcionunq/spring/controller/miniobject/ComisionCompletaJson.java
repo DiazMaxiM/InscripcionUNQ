@@ -6,26 +6,28 @@ import java.util.List;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Horario;
 
-
-public class ComisionJson {
-	public Long id;
-	public String nombre;
+public class ComisionCompletaJson extends ComisionJson{
+	
+	public MateriaJson materia;
 	public List<HorarioJson> horarioJson = new ArrayList<>();
-	public Integer cupo;
+	public PeriodoJson periodo;
 
-	public ComisionJson() {
+	public ComisionCompletaJson() {
 
 	}
 
-	public ComisionJson(Comision comision) {
+	public ComisionCompletaJson(Comision comision) {
 		this.id = comision.getId();
 		this.nombre = comision.getNombre();
+		this.materia = new MateriaJson(comision.getMateria());
 		List<Horario> horarios = comision.getHorarios();
 
 		for (Horario horario : horarios) {
 			horarioJson.add(new HorarioJson(horario));
 		}
 		this.cupo = comision.getCupo();
+		this.periodo = new PeriodoJson(comision.getPeriodo());
 	}
+
 
 }

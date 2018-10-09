@@ -7,7 +7,7 @@ import {PageEvent} from '@angular/material';
 import {MateriaEstudiante} from '../materias-aprobadas/materia-estudiante.model';
 import {RegistroDeComisionesSeleccionadasService} from './registro-de-comisiones-seleccionadas.service';
 import {UtilesService} from '../utiles.service';
-import {Comision} from './comision.model';
+import { Comision } from '../comisiones-de-oferta/comision.model';
 
 @Component({
   selector: 'app-seleccion-de-materias-por-cursar',
@@ -80,7 +80,7 @@ agregarComisionSeleccionada(materia) {
     this.abrirDialogoParaSeleccionarComision(materia);
   } else {
     const comision = comisiones[0];
-    const registro = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id,comision);
+    const registro = this.registroComisionesService.crearRegistroDeComisionSeleccionada(materia.id, comision);
     this.guardarRegistro(materia,registro);
   }
 }
@@ -156,11 +156,18 @@ finalizarEncuesta(){
 enviarComisionesSeleccionadas() {
   const comisiones= [];
   for (const comision of this.comisionesSeleccionadas) {
-    comisiones.push(new Comision(String(comision.idComision)));
+    const comisionSeleccionada = new Comision();
+    comisionSeleccionada.id = comision.idComision;
+    comisiones.push(comisionSeleccionada);
   }
+  console.log(comisiones);
   this.utilesService.activarDialogoCargando();
   this.restService.enviarComisionesSeleccionadas(this.idEstudiante, comisiones).subscribe(data => {
   this.utilesService.desactivarDialogoCargandoYRedireccionar('encuesta-finalizada');
+  },
+  (err) => {
+      this.utilesService.desactivarDialogoCargando();
+      this.utilesService.mostrarMensajeDeError(err);
   });
 }
 
@@ -174,6 +181,7 @@ marcarMateriasAnteriormenteSeleccionadas() {
   }
 
 }
+
 limpiarInformacionComisionesSeleccionadas() {
   this.comisionesSeleccionadas = [];
   this.registroComisionesService.limpiarHorarios();

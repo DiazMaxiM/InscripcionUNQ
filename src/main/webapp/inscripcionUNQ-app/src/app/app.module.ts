@@ -39,10 +39,16 @@ import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/ofer
 import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-de-oferta.component';
 import { filtroBusquedaPipe } from './filtro-busqueda.pipe';
-import { ComisionOfertaDialogoComponent } from './comision-oferta-dialogo/comision-oferta-dialogo.component';
 import { PeriodoComponent } from './periodos/periodo.component';
 import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.component';
+<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
 import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
+=======
+import { ComisionesComponent } from './comisiones/comisiones.component';
+import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+>>>>>>> Creación abm de comisiones
 
 @NgModule({
   declarations: [
@@ -65,10 +71,14 @@ import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dial
     ModificacionDeMateriaDialogoComponent,
     ComisionesDeOfertaComponent,
     filtroBusquedaPipe,
-    ComisionOfertaDialogoComponent,
     PeriodoComponent,
     PeriodoDialogoComponent,
+<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
     IncidenciaDialogoComponent
+=======
+    ComisionesComponent,
+    ComisionDialogoComponent
+>>>>>>> Creación abm de comisiones
   ],
   imports: [
     BrowserModule,
@@ -78,13 +88,18 @@ import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dial
     ReactiveFormsModule,
     AppRoutingModule,
     MomentModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
     UtilesService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
+<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
   ComisionOfertaDialogoComponent,PeriodoDialogoComponent, IncidenciaDialogoComponent]
+=======
+  ComisionDialogoComponent, PeriodoDialogoComponent]
+>>>>>>> Creación abm de comisiones
 })
 export class AppModule { }

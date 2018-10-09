@@ -8,13 +8,20 @@ import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 public class HorarioJson {
 
 	public TypeDay dia;
-	public LocalTime horaComienzo;
-	public LocalTime horaFin;
+	public Hora horaComienzo;
+	public Hora horaFin;
+	public Float duracion;
 
 	public HorarioJson(Horario horario) {
 		this.dia = horario.getDia();
-		this.horaComienzo = horario.getHoraComienzo();
-		this.horaFin = horaComienzo.plusMinutes((long) (horario.getCantidadDeHoras() * 60 - 1));
+		this.horaComienzo = this.crearHorario(horario.getHoraComienzo());
+		this.horaFin = this.crearHorario(horario.getHoraComienzo().plusMinutes((long) (horario.getCantidadDeHoras() * 60 - 1)));
+	    this.duracion = horario.getCantidadDeHoras();
+	}
+
+	private Hora crearHorario(LocalTime horario) {
+		
+		return new Hora(horario.getHour(),horario.getMinute());
 	}
 
 	public HorarioJson() {

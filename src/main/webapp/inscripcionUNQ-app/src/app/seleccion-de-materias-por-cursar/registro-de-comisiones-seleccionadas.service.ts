@@ -62,7 +62,6 @@ nuevoHorario(horario) {
   const date = new Date();
   date.setHours(horario.hour);
   date.setMinutes(horario.minute);
-  date.setSeconds(horario.second);
   return date;
 }
 

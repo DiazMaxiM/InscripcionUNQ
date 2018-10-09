@@ -10,4 +10,6 @@ public interface ComisionDao extends GenericDao<Comision> {
 
 	List<Comision> getTodasLasComisionesDeMateriaEnEncuesta(Long idEncuesta);
 
+	List<Comision> getComisionParaPeriodo(Long idPeriodo);
+
 }

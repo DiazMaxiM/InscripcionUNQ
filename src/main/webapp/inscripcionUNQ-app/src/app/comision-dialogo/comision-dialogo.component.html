@@ -1,0 +1,112 @@
+  <div [formGroup]="form">
+      <div class="form-row">
+      <mat-form-field class="col">
+        <input matInput placeholder="Nombre" formControlName="nombre" required>
+        <mat-error *ngIf="form.get('nombre').hasError('required')">
+          Campo obligatorio
+        </mat-error> 
+      </mat-form-field>
+      <mat-form-field class="col">
+          <input type="text" placeholder="Materia" formControlName="materia" matInput [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let materia of filtroMaterias | async" [value]="materia.nombre" (onSelectionChange)="materiaSeleccionada(materia)">
+              {{materia.nombre}}
+          </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="form.get('materia').hasError('required')">
+                  Campo obligatorio
+          </mat-error> 
+      </mat-form-field>
+      </div>
+    <div class="form-row">
+        <mat-form-field class="form-group col-md-6">
+            <input matInput type="number" placeholder="Cupo" formControlName="cupo" required>
+            <mat-error *ngIf="form.get('cupo').hasError('required')">
+                Campo obligatorio
+              </mat-error> 
+          </mat-form-field>
+          <mat-form-field class="form-group col-md-6">
+              <input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
+              <mat-autocomplete #autoPeriodo="matAutocomplete">
+              <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado(periodo)">
+                   {{periodo.codigo}}
+              </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="form.get('periodo').hasError('required')">
+                      Campo obligatorio
+              </mat-error> 
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngIf="!mostrarformularioParaHorarios">
+      <button type="button" class="btn btn-link" (click)="mostarFormularioHorarios()">+Agregar horario</button>
+  </div>
+  <div *ngIf="mostrarformularioParaHorarios" [formGroup]="formHorario">
+    Horario
+    <div class="form-row">
+        <mat-form-field class="col-md-6">
+            <mat-select placeholder="Día" formControlName="dia" required>
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let dia of dias" [value]="dia">
+                {{dia}}
+              </mat-option>
+            </mat-select>
+           <mat-error *ngIf="formHorario.get('dia').hasError('required')">Campo obligatorio</mat-error>
+          </mat-form-field>
+        <div class="row col-md-12">
+            <div class="col">
+                Horario de comienzo 
+                 <ngb-timepicker formControlName="horarioComienzo" required></ngb-timepicker>
+                <mat-error *ngIf="formHorario.get('horarioComienzo').hasError('required') && formHorario.get('dia').touched">Campo obligatorio</mat-error>
+             </div>
+             <mat-form-field class="form-group col">
+                <input matInput type="number" placeholder="Duración" formControlName="duracion" required>
+                <mat-error *ngIf="formHorario.get('duracion').hasError('required')">
+                    Campo obligatorio
+                  </mat-error> 
+              </mat-form-field>
+        </div>
+    </div>
+    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardarHorario()">
+      Agregar
+    </button>
+  </div>
+  <div *ngIf="horarios" class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Día</th>
+                <th>Horario de comienzo</th>
+                <th>Cantidad de horas</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let horario of horarios">
+                <td> {{horario.dia}}</td>
+                <td>
+                    {{horario.horaComienzo.hour  | number:'2.0'}} : {{horario.horaComienzo.minute  | number:'2.0'}}
+                </td>
+                <td> {{horario.duracion}}</td>
+                <td>
+                    <i class="material-icons edit-icon" (click)="editarHorarip(horario)"
+                    data-toggle="tooltip" 
+                    data-placement="top" title="Editar horario">edit</i>
+                </td>
+                <td>
+                    <i class="material-icons edit-icon" (click)="eliminarHorarip(horario)"
+                    data-toggle="tooltip" 
+                    data-placement="top" title="Eliminar horario">delete</i>
+                </td>
+            </tr>
+            <mat-divider></mat-divider>
+        </tbody>
+    </table>
+</div>
+<div align="end">
+    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+      Cerrar
+    </button>
+    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+      Guardar
+    </button>
+</div>
