@@ -41,14 +41,11 @@ import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-d
 import { filtroBusquedaPipe } from './filtro-busqueda.pipe';
 import { PeriodoComponent } from './periodos/periodo.component';
 import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.component';
-<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
 import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
-=======
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
->>>>>>> Creación abm de comisiones
 
 @NgModule({
   declarations: [
@@ -73,12 +70,9 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
     filtroBusquedaPipe,
     PeriodoComponent,
     PeriodoDialogoComponent,
-<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
-    IncidenciaDialogoComponent
-=======
+    IncidenciaDialogoComponent,
     ComisionesComponent,
     ComisionDialogoComponent
->>>>>>> Creación abm de comisiones
   ],
   imports: [
     BrowserModule,
@@ -96,10 +90,6 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
-<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
-  ComisionOfertaDialogoComponent,PeriodoDialogoComponent, IncidenciaDialogoComponent]
-=======
-  ComisionDialogoComponent, PeriodoDialogoComponent]
->>>>>>> Creación abm de comisiones
+  IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent]
 })
 export class AppModule { }

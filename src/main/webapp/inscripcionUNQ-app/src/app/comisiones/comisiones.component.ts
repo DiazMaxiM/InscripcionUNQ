@@ -26,7 +26,6 @@ export class ComisionesComponent implements OnInit {
   mostrarComisiones;
   comisionBuscada;
   comisionSeleccionada;
-  periodoActual;
 
   constructor(
     private restService: RestService,
@@ -73,21 +72,18 @@ filtrarPeriodo(val: string): Periodo[] {
 
 periodoSeleccionado(event: MatOptionSelectionChange, periodo: Periodo) {
   if (event.source.selected) {
-    this.periodoActual = periodo;
-    this.getComisionesEnPeriodo();
+    this.getComisionesEnPeriodo(periodo);
   }
 }
 
-getComisionesEnPeriodo() {
-  if(this.periodoActual != null) {
-    this.restService.getComisionesEnPeriodo(this.periodoActual.id).subscribe(comisiones => {
+getComisionesEnPeriodo(periodo) {
+    this.restService.getComisionesEnPeriodo(periodo.id).subscribe(comisiones => {
       this.guardarComisiones(comisiones);
       console.log(comisiones);
     },
     (err) => {
         this.utilesService.mostrarMensajeDeError(err);
     });
-  }
 }
 
 guardarComisiones(comisiones) {
@@ -125,14 +121,21 @@ guardarComisionModificada(comision: Comision) {
  }
 
 guardarNuevaComision(comision: Comision) {
-  console.log(comision);
   this.restService.crearNuevaComision(comision).subscribe(rest => {
-    this.getComisionesEnPeriodo();
+    this.mostarComisionEnPeriodo(comision.periodo);
   },
   (err) => {
       this.utilesService.mostrarMensajeDeError(err);
   });
 }
+
+mostarComisionEnPeriodo(periodo) {
+  this.periodoControl = new FormControl(periodo.codigo);
+  this.getComisionesEnPeriodo(periodo);
+}
+
+
+
 
 crearConfiguracionDialogoParaComision(comision?) {
  const dialogConfig = new  MatDialogConfig();

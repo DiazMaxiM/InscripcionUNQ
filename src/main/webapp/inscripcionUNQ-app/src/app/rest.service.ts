@@ -7,11 +7,8 @@ import { Carrera } from './carreras/carrera.model';
 import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 import { Periodo } from './periodos/periodo.model';
-<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
-=======
 import { Comision } from './comisiones-de-oferta/comision.model';
->>>>>>> Creación abm de comisiones
 
 @Injectable()
 export class RestService {
@@ -133,7 +130,6 @@ export class RestService {
     return this.httpClient.put('/api/periodos/crearPeriodo/', nuevoPeriodo, { headers });
   }
 
-<<<<<<< 611a5999bf5ce32456a39418a1a31085f2703e97
   getTipoIncidencia() {
     return this.httpClient.get<Array<string>>('/api/tipoIncidencias');
   }
@@ -143,8 +139,6 @@ export class RestService {
     return this.httpClient.put('/api/incidencia/', incidencia, {headers});
   }
 
-}
-=======
   getComisionesEnPeriodo(idPeriodo) {
     return this.httpClient.get<Array<Comision>>('/api/comisiones/comisionesEnPeriodo/' + idPeriodo );
   }
@@ -159,4 +153,3 @@ export class RestService {
   }
 
 }
->>>>>>> Creación abm de comisiones
