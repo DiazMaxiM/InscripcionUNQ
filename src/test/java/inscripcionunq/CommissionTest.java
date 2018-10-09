@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
@@ -18,7 +19,8 @@ public class CommissionTest {
 	@Before
 	public void setUp() throws Exception {
 		subject = Mockito.mock(Materia.class);
-		commission = new Comision("Mate1 C1", subject, 30);
+		Periodo periodo = Mockito.mock(Periodo.class);
+		commission = new Comision("Mate1 C1", subject, 30,periodo);
 	}
 
 	@Test
