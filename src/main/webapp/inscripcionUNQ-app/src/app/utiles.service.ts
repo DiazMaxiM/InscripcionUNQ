@@ -121,4 +121,17 @@ nuevoHorario(horario) {
   return date;
 }
 
+
+ordenarComisionesPorNombre(comisiones) {
+  const comisionesOrdenadas = comisiones.sort(function(o1,o2) {
+    if (o1.nombre > o2.nombre) {
+      return 1;
+    } else if (o1.nombre < o2.nombre) {
+      return -1;
+    }
+    return 0;
+  });
+  return comisionesOrdenadas;
+}
+
 }

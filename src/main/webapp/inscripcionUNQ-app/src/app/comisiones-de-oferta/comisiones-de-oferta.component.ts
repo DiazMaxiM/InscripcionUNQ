@@ -26,30 +26,17 @@ export class ComisionesDeOfertaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.comisiones = this.ordenarComisionesPorNombre(JSON.parse(localStorage.getItem('comisiones-de-oferta')));
+    this.comisiones = this.utilesService.ordenarComisionesPorNombre(JSON.parse(localStorage.getItem('comisiones-de-oferta')));
     this.oferta = JSON.parse(localStorage.getItem('oferta-seleccionada'));
   }
 
   getComisiones(id) {
     this.restService.getComisionesDeOferta(id).subscribe(comisiones => {
-      
-      this.comisiones = this.ordenarComisionesPorNombre(comisiones);
+      this.comisiones = this.utilesService.ordenarComisionesPorNombre(comisiones);
     },
       (err: HttpErrorResponse) => {
         this.utilesService.mostrarMensajeDeError(err);
       });
-  }
-
-  ordenarComisionesPorNombre(comisiones){
-    var comisionesOrdenadas = comisiones.sort(function(o1,o2) {
-      if (o1.nombre > o2.nombre) {
-        return 1;
-      } else if (o1.nombre < o2.nombre) {
-        return -1;
-      } 
-      return 0;
-    });
-    return comisionesOrdenadas
   }
 
   quitarComisionDeOferta(idComision){
