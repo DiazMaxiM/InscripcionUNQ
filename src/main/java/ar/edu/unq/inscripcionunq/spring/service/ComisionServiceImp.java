@@ -14,9 +14,17 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.HorarioJson;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import ar.edu.unq.inscripcionunq.spring.dao.PeriodoDao;
+import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
+import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Service
 @Transactional
@@ -57,13 +65,13 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 	}
 
 	@Override
-	public void crearNuevaComision(ComisionCompletaJson comisionJson) {
+	public void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
 		Comision comision = armarComisionDesdeJson(comisionJson);
 		this.save(comision);
 		
 	}
 
-	private Comision armarComisionDesdeJson(ComisionCompletaJson comisionJson) {
+	private Comision armarComisionDesdeJson(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
 		Materia materia = materiaDaoImp.get(comisionJson.materia.id);
 		Periodo periodo = periodoDaoImp.get(comisionJson.periodo.id);
 		Comision comision = new Comision(comisionJson.nombre, materia, comisionJson.cupo, periodo);
@@ -71,7 +79,22 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 			LocalTime horaInicio = LocalTime.of(horario.horaComienzo.hour, horario.horaComienzo.minute);
 			comision.agregarHorarios(horario.dia, horaInicio ,horario.duracion);
 		}
+		Validacion.validarComision(comision);
 		return comision;
+	}
+
+	@Override
+	public void editarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException {
+		try {
+			Comision comision = this.get(comisionJson.id);
+			Comision comisionEditada = armarComisionDesdeJson(comisionJson);
+			comision.modificarDatos(comisionEditada);
+			this.save(comision);
+		} catch (ObjectNotFoundinDBException e) {
+			throw new CommissionNotExistenException();
+			
+		}
+		
 	}
 
 }

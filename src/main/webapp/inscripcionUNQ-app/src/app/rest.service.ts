@@ -152,4 +152,9 @@ export class RestService {
     return this.httpClient.put('/api/comision/nuevaComision/', comision, { headers });
   }
 
+  actualizarInformacionDeComision(comision: Comision) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post('/api/comision/editarComision/', comision, { headers });
+  }
+
 }

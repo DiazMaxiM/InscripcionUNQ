@@ -7,18 +7,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionCompletaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
-import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
-import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
+import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.service.ComisionService;
 
@@ -50,7 +52,26 @@ public class ComisionController {
 	
 	@PutMapping("/comision/nuevaComision")
 	public ResponseEntity agregarNuevaComision(@RequestBody ComisionCompletaJson comisionJson) {
-		comisionServiceImp.crearNuevaComision(comisionJson);
+		try {
+			comisionServiceImp.crearNuevaComision(comisionJson);
+		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
+				| ComisionSinHorariosException e) {
+			
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		return ResponseEntity.ok().build();
+
+	}
+	
+	@PostMapping("/comision/editarComision")
+	public ResponseEntity editarComision(@RequestBody ComisionCompletaJson comisionJson) {
+		try {
+			comisionServiceImp.editarComision(comisionJson);
+		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
+				| ComisionSinHorariosException | CommissionNotExistenException e) {
+			
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 		return ResponseEntity.ok().build();
 
 	}
