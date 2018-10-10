@@ -10,7 +10,6 @@ import { startWith, map } from 'rxjs/operators';
 import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';
 import { AppRutas } from '../app-rutas.model';
-import { Horario } from '../seleccion-de-comision-dialogo/horario.model';
 import { HorarioComision } from './horario-comision.model';
 
 @Component({
@@ -26,13 +25,15 @@ export class ComisionDialogoComponent implements OnInit {
     comision: Comision;
     materias: Materia[];
     filtroMaterias: Observable<Materia[]>;
-    materiaParaComision: Materia;
     mostrarformularioParaHorarios = false;
+    mostrarTablaHorarios = false;
     dias;
     periodos: Periodo[];
     filtroPeriodos: Observable<Periodo[]>;
     periodoActual;
+    materiaActual;
     horarios = [];
+    horarioAEditar: HorarioComision;
 
     constructor(
         private fb: FormBuilder,
@@ -44,7 +45,7 @@ export class ComisionDialogoComponent implements OnInit {
     }
     ngOnInit() {
         this.crearFormularioComision();
-        this.insertarInformacionDeComisioEnFormulario();
+        this.insertarInformacionDeComisionEnFormularioYCrearTablaDeHorarios();
         this.getMaterias();
         this.crearFormularioParaHorario();
         this.getDias();
@@ -55,11 +56,10 @@ export class ComisionDialogoComponent implements OnInit {
     getDias() {
         this.restService.getDias().subscribe(dias => {
             this.dias = dias;
-        })
+        });
     }
 
     crearFiltroMaterias() {
-
         this.filtroMaterias = this.form.controls['materia'].valueChanges.pipe(
             startWith(''),
             map(val => this.filtrarMaterias(val))
@@ -73,7 +73,6 @@ export class ComisionDialogoComponent implements OnInit {
       }
 
     getMaterias() {
-
         this.restService.getMaterias().subscribe(materias => {
           this.materias = materias;
           this.crearFiltroMaterias();
@@ -91,6 +90,7 @@ export class ComisionDialogoComponent implements OnInit {
         });
 
     }
+
     crearFormularioComision() {
         this.form = this.fb.group({
             nombre: ['', Validators.required],
@@ -100,7 +100,7 @@ export class ComisionDialogoComponent implements OnInit {
         });
     }
 
-    insertarInformacionDeComisioEnFormulario() {
+    insertarInformacionDeComisionEnFormularioYCrearTablaDeHorarios() {
         if (this.comision != null) {
             this.form.setValue({
                 'nombre': this.comision.nombre,
@@ -108,7 +108,17 @@ export class ComisionDialogoComponent implements OnInit {
                 'materia': this.comision.materia.nombre,
                 'periodo': this.comision.periodo.codigo
               });
+           this.materiaActual = this.comision.materia;
+           this.periodoActual = this.comision.periodo;
 
+           this.crearTablaConHorarios(this.comision.horarioJson);
+        }
+    }
+
+    crearTablaConHorarios(horarioJson: HorarioComision[]) {
+        for(const horario of horarioJson) {
+            this.agregarHorario(horario.dia, horario.horaComienzo, horario.duracion);
+            this.mostrarHorariosSeleccionados();
         }
     }
 
@@ -118,7 +128,7 @@ export class ComisionDialogoComponent implements OnInit {
             const comision = new Comision();
             comision.nombre = nombre;
             comision.cupo = cupo;
-            comision.materia = this.materiaParaComision;
+            comision.materia = this.materiaActual;
             comision.periodo = this.periodoActual;
             comision.horarioJson = this.horarios;
             this.dialogRef.close(comision);
@@ -131,14 +141,34 @@ export class ComisionDialogoComponent implements OnInit {
 
     mostarFormularioHorarios() {
        this.mostrarformularioParaHorarios = true;
+       this.mostrarTablaHorarios = false;
+    }
+
+    mostrarHorariosSeleccionados() {
+        if (this.horarios.length > 0) {
+            this.mostrarTablaHorarios = true;
+        } else {
+            this.mostrarTablaHorarios = false;
+        }
+        this.mostrarformularioParaHorarios = false;
     }
 
     guardarHorario() {
         if (this.formHorario.valid) {
             const { dia, horarioComienzo, duracion} = this.formHorario.value;
-            const horario = new HorarioComision(dia, horarioComienzo, duracion);
+            this.agregarHorario(dia, horarioComienzo, duracion);
+            this.mostrarHorariosSeleccionados();
+            this.formHorario.reset();
+        }
+    }
+
+    agregarHorario(dia, horarioComienzo, duracion) {
+        const horario = new HorarioComision(dia, horarioComienzo, duracion);
+        if (this.horarioAEditar != null) {
+            this.horarios[this.horarios.indexOf(this.horarioAEditar)] = horario;
+            this.horarioAEditar = null;
+        } else  {
             this.horarios.push(horario);
-            this.mostrarformularioParaHorarios = false;
         }
     }
 
@@ -185,6 +215,33 @@ export class ComisionDialogoComponent implements OnInit {
     }
 
     materiaSeleccionada(materia) {
-        this.materiaParaComision = materia;
+        this.materiaActual = materia;
+    }
+
+    editarHorarip(horario: HorarioComision) {
+        this.horarioAEditar = horario;
+        this.formHorario.setValue({
+            'dia': horario.dia,
+            'duracion': horario.duracion,
+            'horarioComienzo': horario.horaComienzo,
+          });
+        this.mostarFormularioHorarios();
+    }
+
+
+    cancelarHorario() {
+        this.formHorario.reset();
+        if (this.horarios.length > 0) {
+            this.mostrarHorariosSeleccionados();
+        } else{
+            this.mostrarformularioParaHorarios = false;
+        }
+    }
+
+    eliminarHorario(horario) {
+        const index = this.horarios.indexOf(horario);
+        this.horarios.splice(index, 1);
+        this.mostrarHorariosSeleccionados();
+
     }
 }

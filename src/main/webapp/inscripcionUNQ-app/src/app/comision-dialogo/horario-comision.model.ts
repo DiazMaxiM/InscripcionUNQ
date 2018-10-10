@@ -1,4 +1,5 @@
 export class HorarioComision {
+    id?: number;
     dia: string;
     horaComienzo;
     duracion: number;
@@ -6,10 +7,12 @@ export class HorarioComision {
     constructor(
       dia: string,
       horario,
-      duracion: number
+      duracion: number,
+      id?: number
     ) {
       this.dia = dia;
       this.horaComienzo = horario;
       this.duracion = duracion;
+      this.id = id;
     }
   }

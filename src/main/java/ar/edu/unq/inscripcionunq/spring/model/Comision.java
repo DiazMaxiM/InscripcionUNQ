@@ -87,4 +87,13 @@ public class Comision extends BaseEntity {
 	public void setPeriodo(Periodo periodo) {
 		this.periodo = periodo;
 	}
+
+	public void modificarDatos(Comision comisionEditada) {
+		this.nombre = comisionEditada.getNombre();
+		this.horarios = comisionEditada.getHorarios();
+		this.cupo = comisionEditada.getCupo();
+		this.materia = comisionEditada.getMateria();
+		this.periodo = comisionEditada.getPeriodo();
+		
+	}
 }

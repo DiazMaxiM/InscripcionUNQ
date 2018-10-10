@@ -118,9 +118,18 @@ guardarComision(comision: Comision) {
 
 guardarComisionModificada(comision: Comision) {
   comision.id = this.comisionSeleccionada.id;
+  console.log(comision);
+  this.restService.actualizarInformacionDeComision(comision).subscribe(rest => {
+    this.mostarComisionEnPeriodo(comision.periodo);
+  },
+  (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+  });
  }
 
+
 guardarNuevaComision(comision: Comision) {
+  console.log(comision);
   this.restService.crearNuevaComision(comision).subscribe(rest => {
     this.mostarComisionEnPeriodo(comision.periodo);
   },
@@ -133,9 +142,6 @@ mostarComisionEnPeriodo(periodo) {
   this.periodoControl = new FormControl(periodo.codigo);
   this.getComisionesEnPeriodo(periodo);
 }
-
-
-
 
 crearConfiguracionDialogoParaComision(comision?) {
  const dialogConfig = new  MatDialogConfig();
@@ -150,7 +156,6 @@ crearConfiguracionDialogoParaComision(comision?) {
          dialogConfig);
   return dialogRef;
 }
-
 
 
 }

@@ -8,15 +8,20 @@ import org.apache.commons.validator.routines.EmailValidator;
 import ar.edu.unq.inscripcionunq.spring.exception.AnhoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
+import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
+import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.Horario;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
@@ -147,6 +152,43 @@ public class Validacion {
 	private static void anoValido(Integer anho) throws AnhoInvalidoException {
 		if(!esNumeroValido(anho)) {
 			throw new AnhoInvalidoException();
+		}
+		
+	}
+
+	public static void validarComision(Comision comision) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
+		conMateria(comision.getMateria());
+		conPeriodo(comision.getPeriodo());
+	    nombreValido(comision.getNombre());
+	    cupoValido(comision.getCupo());
+	    horariosValidos(comision.getHorarios());
+		
+	}
+
+	private static void conPeriodo(Periodo periodo) throws PeriodoInvalidoException {
+		if(periodo == null) {
+			throw new PeriodoInvalidoException();
+		}
+		
+	}
+
+	private static void conMateria(Materia materia) throws MateriaNoExisteException {
+		if(materia == null) {
+			throw new MateriaNoExisteException();
+		}
+		
+	}
+
+	private static void horariosValidos(List<Horario> horarios) throws ComisionSinHorariosException {
+		if(horarios.size() == 0) {
+			throw new ComisionSinHorariosException();
+		}
+		
+	}
+
+	private static void cupoValido(Integer cupo) throws CupoInvalidoException {
+		if(!esNumeroValido(cupo)) {
+			throw new CupoInvalidoException();
 		}
 		
 	}

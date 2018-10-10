@@ -6,13 +6,14 @@ import ar.edu.unq.inscripcionunq.spring.model.Horario;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 
 public class HorarioJson {
-
+    public Long id;
 	public TypeDay dia;
 	public Hora horaComienzo;
 	public Hora horaFin;
 	public Float duracion;
 
 	public HorarioJson(Horario horario) {
+		this.id = horario.getId();
 		this.dia = horario.getDia();
 		this.horaComienzo = this.crearHorario(horario.getHoraComienzo());
 		this.horaFin = this.crearHorario(horario.getHoraComienzo().plusMinutes((long) (horario.getCantidadDeHoras() * 60 - 1)));
