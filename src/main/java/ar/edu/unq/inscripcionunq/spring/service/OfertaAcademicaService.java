@@ -18,8 +18,6 @@ public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
 
 	List<OfertaAcademicaJson> getOfertasAcademicasJson();
 
-	void clonarOferta(Long idOferta) throws OfertaNoExisteException;
-
 	void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException;
 
 	void actualizarOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, OfertaNoExisteException;

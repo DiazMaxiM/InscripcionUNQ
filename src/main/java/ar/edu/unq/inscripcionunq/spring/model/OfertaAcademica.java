@@ -92,15 +92,6 @@ public class OfertaAcademica extends BaseEntity {
 		this.carrera = carrera;
 	}
 
-	public OfertaAcademica clonar() {
-		OfertaAcademica ofertaClonada = new OfertaAcademica();
-		ofertaClonada.setNombre(nombre);
-		ofertaClonada.setDescripcion(descripcion);
-		ofertaClonada.setEstado(estado);
-		ofertaClonada.setComisiones(comisiones);
-		ofertaClonada.setCarrera(carrera);
-		return ofertaClonada;
-	}
 
 	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException, 
 	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {

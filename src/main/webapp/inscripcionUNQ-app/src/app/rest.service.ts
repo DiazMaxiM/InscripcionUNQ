@@ -87,11 +87,6 @@ export class RestService {
     return this.httpClient.get<Array<OfertaAcademica>>('/api/ofertas-academicas');
   }
 
-  clonarOferta(oferta: OfertaAcademica) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put('/api/ofertas-academicas/clonarOferta/', oferta, { headers });
-  }
-
   crearNuevaOferta(nuevaOferta: OfertaAcademica) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/ofertas-academicas/crearOferta/', nuevaOferta, { headers });
