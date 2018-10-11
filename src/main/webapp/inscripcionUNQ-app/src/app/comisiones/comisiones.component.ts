@@ -79,7 +79,6 @@ periodoSeleccionado(event: MatOptionSelectionChange, periodo: Periodo) {
 getComisionesEnPeriodo(periodo) {
     this.restService.getComisionesEnPeriodo(periodo.id).subscribe(comisiones => {
       this.guardarComisiones(comisiones);
-      console.log(comisiones);
     },
     (err) => {
         this.utilesService.mostrarMensajeDeError(err);
@@ -93,7 +92,7 @@ guardarComisiones(comisiones) {
       this.comisiones = [];
 
     } else {
-      this.comisiones = comisiones;
+      this.comisiones = this.utilesService.ordenarComisionesPorNombre(comisiones);
       this.mostrarComisiones = true;
     }
 }
@@ -118,7 +117,6 @@ guardarComision(comision: Comision) {
 
 guardarComisionModificada(comision: Comision) {
   comision.id = this.comisionSeleccionada.id;
-  console.log(comision);
   this.restService.actualizarInformacionDeComision(comision).subscribe(rest => {
     this.mostarComisionEnPeriodo(comision.periodo);
   },
@@ -129,7 +127,6 @@ guardarComisionModificada(comision: Comision) {
 
 
 guardarNuevaComision(comision: Comision) {
-  console.log(comision);
   this.restService.crearNuevaComision(comision).subscribe(rest => {
     this.mostarComisionEnPeriodo(comision.periodo);
   },
@@ -155,6 +152,27 @@ crearConfiguracionDialogoParaComision(comision?) {
   const dialogRef = this.dialog.open(ComisionDialogoComponent,
          dialogConfig);
   return dialogRef;
+}
+
+
+eliminarComision(comision: Comision){
+    const mensaje = '¿Está seguro de que desea eliminar la comisión seleccionada de la oferta académica?';
+    this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
+      if (confirma) {
+       this.eliminar(comision);
+      }
+   });
+  }
+
+
+eliminar(comision: Comision) {
+  this.restService.eliminarComision(comision.id).subscribe(res => {
+    this.utilesService.mostrarMensaje('La comisión fue eliminada con éxito');
+    this.getComisionesEnPeriodo(comision.periodo);
+  },
+  (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+  });
 }
 
 

@@ -12,11 +12,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
 
 @Entity(name = "Comision")
 public class Comision extends BaseEntity {
 	private String nombre;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("dia ASC")
 	private List<Horario> horarios = new ArrayList<>();
 	private Integer cupo;
 	@ManyToOne(fetch = FetchType.LAZY)

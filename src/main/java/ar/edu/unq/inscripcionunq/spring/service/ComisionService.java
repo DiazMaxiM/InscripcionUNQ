@@ -7,6 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -23,5 +24,7 @@ public interface ComisionService extends GenericService<Comision> {
 	void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException;
 
 	void editarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException;
+
+	void eliminarComision(String idComision) throws IdNumberFormatException, CommissionNotExistenException;
 
 }
