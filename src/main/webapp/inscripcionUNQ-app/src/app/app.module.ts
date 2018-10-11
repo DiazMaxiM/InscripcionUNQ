@@ -45,7 +45,7 @@ import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dial
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialogo/comisiones-de-oferta-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,8 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
     PeriodoDialogoComponent,
     IncidenciaDialogoComponent,
     ComisionesComponent,
-    ComisionDialogoComponent
+    ComisionDialogoComponent,
+    ComisionesDeOfertaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +91,6 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
-  IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent]
+  IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent]
 })
 export class AppModule { }

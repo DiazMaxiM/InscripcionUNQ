@@ -157,4 +157,9 @@ export class RestService {
     return this.httpClient.post('/api/comision/editarComision/', comision, { headers });
   }
 
+  actualizarComisionesDeOferta(idOferta: string, comisionesSeleccionadas) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post('/api/oferta-academica/actualizar-comisiones/' + idOferta, comisionesSeleccionadas, {headers});
+  }
+
 }

@@ -15,6 +15,12 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
+
 @Entity(name = "OfertaAcademica")
 public class OfertaAcademica extends BaseEntity {
 	
@@ -96,7 +102,9 @@ public class OfertaAcademica extends BaseEntity {
 		return ofertaClonada;
 	}
 
-	public void actualizarInformacion(OfertaAcademica ofertaRecibida) {
+	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException, 
+	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
+		Validacion.validarOfertaAcademica(ofertaRecibida);
 		setNombre(ofertaRecibida.getNombre());
 		setDescripcion(ofertaRecibida.getDescripcion());
 		setCarrera(ofertaRecibida.getCarrera());

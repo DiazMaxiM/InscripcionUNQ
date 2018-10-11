@@ -1,5 +1,6 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionCompletaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
@@ -103,7 +105,8 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 		}
 	}
 
-	private void actualizarInformacionDeOferta(OfertaAcademica ofertaActual, OfertaAcademica ofertaRecibida){
+	private void actualizarInformacionDeOferta(OfertaAcademica ofertaActual, OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException, 
+	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException{
 		ofertaActual.actualizarInformacion(ofertaRecibida);
 		this.save(ofertaActual);
 		
@@ -131,5 +134,26 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
  			throw new IdNumberFormatException();		
  		} 		
 	}
+
+	@Override
+	public void actualizarComisiones(String idOferta, List<IdJson> idsJson) throws IdNumberFormatException {
+		OfertaAcademica oferta;
+		List <Comision> comisiones = new ArrayList <Comision>();
+		try {
+			oferta = ofertaAcademicaDaoImp.get(new Long(idOferta));
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} 
+		for (IdJson idJson : idsJson) {
+			try {
+				comisiones.add(comisionImp.get(new Long(idJson.id)));
+			} catch (NumberFormatException e) {
+				throw new IdNumberFormatException();
+			} 
+			oferta.setComisiones(comisiones);
+		}
+		ofertaAcademicaDaoImp.update(oferta);
+	}
+
 
 }
