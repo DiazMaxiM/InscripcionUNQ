@@ -162,4 +162,9 @@ export class RestService {
     return this.httpClient.post('/api/oferta-academica/actualizar-comisiones/' + idOferta, comisionesSeleccionadas, {headers});
   }
 
+  eliminarComision(idComision: number) {
+    return this.httpClient.delete('/api/comision/eliminarComision/' + idComision);
+  }
+
+
 }

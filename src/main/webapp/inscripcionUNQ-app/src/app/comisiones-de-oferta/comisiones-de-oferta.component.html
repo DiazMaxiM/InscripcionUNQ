@@ -20,7 +20,7 @@
         <tbody>
             <tr *ngFor="let comision of comisiones | filtroBusqueda: {nombre: comisionBuscada, nombreMateria: comisionBuscada}; let i=index;">
                 <td style="width: 5%; display: none">{{i +1}}</td>
-                <td>{{ comision.nombre }}</td>
+                <td>{{ comision.nombre | titlecase }}</td>
                 <td>{{ comision.materia.nombre }}</td>
                 <td> {{ comision.cupo }}</td>
                 <td>
