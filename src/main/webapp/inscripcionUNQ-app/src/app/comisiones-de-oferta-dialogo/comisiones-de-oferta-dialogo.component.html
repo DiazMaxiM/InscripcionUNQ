@@ -1,7 +1,4 @@
-<div align="center">
-    <button class="btn btn-danger" mat-fab color="primary" 
-    (click)= "abrirDialogoComision()">Asociar comisión</button>
-</div>
+<h1 class="h5">Asociar comisión</h1>
 <div class="container-buscador">
     <mat-form-field>
         <input matInput [(ngModel)]="comisionBuscada" placeholder="Buscar comisión"> 
@@ -29,12 +26,20 @@
                     </tr>
                 </td>
                 <td>
-                    <i class="material-icons edit-icon" (click)="quitarComisionDeOferta(comision.id)"
-                    data-toggle="tooltip" 
-                    data-placement="top" title="Eliminar comisión de oferta">delete</i>
+                    <mat-checkbox [checked]='verificarSeleccion(comision)' 
+                    (change)="onChange(comision,$event)" 
+                    color="warn"></mat-checkbox>
                 </td>
             </tr>
             <mat-divider></mat-divider>
         </tbody>
     </table>
+</div>
+<div align="end">
+    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+      Cerrar
+    </button>
+    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+      Guardar
+    </button>
 </div>
