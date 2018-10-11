@@ -31,8 +31,6 @@ public class MateriaController {
 	@Autowired
 	private MateriaService materiaServiceImp;
 
-
-	
 	@GetMapping("/materias")
 	@Loggable
 	public ResponseEntity<List> getMaterias() {
@@ -41,12 +39,15 @@ public class MateriaController {
 	
 	@PostMapping("/materias/modificarMateria")
 	@Loggable
-	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, CodigoInvalidoException, NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException{
+	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws 
+	IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, 
+	CodigoInvalidoException, NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, 
+	HorarioInvalidoException{
 		try {
 			materiaServiceImp.actualizarMateria(materiaJson);
-		} catch (IdNumberFormatException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-		} catch (MateriaNoExisteException e) {
+		} catch (IdNumberFormatException | MateriaNoExisteException | ExisteMateriaConElMismoCodigoException | 
+				CodigoInvalidoException | NombreInvalidoException | EstadoInvalidoException | DescripcionInvalidaException | 
+				HorarioInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
@@ -57,8 +58,8 @@ public class MateriaController {
 	CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, IdNumberFormatException, MateriaNoExisteException {
 		try {
 			materiaServiceImp.agregarNuevaMateria(materiaJson);
-		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException
-				| ExisteMateriaConElMismoCodigoException e) {
+		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException | 
+				ExisteMateriaConElMismoCodigoException | IdNumberFormatException | MateriaNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
