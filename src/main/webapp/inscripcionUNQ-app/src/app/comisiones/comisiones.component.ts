@@ -156,7 +156,7 @@ crearConfiguracionDialogoParaComision(comision?) {
 
 
 eliminarComision(comision: Comision){
-    const mensaje = '¿Está seguro de que desea eliminar la comisión seleccionada de la oferta académica?';
+    const mensaje = '¿Está seguro de que desea eliminar la comisión seleccionada?';
     this.utilesService.mostrarDialogoConfirmacion(mensaje).subscribe(confirma => {
       if (confirma) {
        this.eliminar(comision);
