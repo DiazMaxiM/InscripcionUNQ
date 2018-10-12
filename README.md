@@ -21,5 +21,7 @@ Prueba de concepto [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/Prue
 
 Entrega 1 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/05---Entrega-1)
 
+Entrega 2 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/Entrega-2)
+
 [![Build Status](https://travis-ci.org/DiazMaxiM/InscripcionUNQ.svg?branch=master)](https://travis-ci.org/DiazMaxiM/InscripcionUNQ)
 
