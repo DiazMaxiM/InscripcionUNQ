@@ -59,22 +59,6 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 	}
 
 	@Override
-	public void clonarOferta(Long idOferta) throws OfertaNoExisteException {
-		OfertaAcademica oferta;
-		try {
-			oferta = this.get(idOferta);
-		} catch (ObjectNotFoundinDBException e) {
-			throw new OfertaNoExisteException();
-		}
-		Carrera carrera = ofertaAcademicaDaoImp.getCarreraEnOferta(oferta.getId());
-		List<Comision> comisiones = ofertaAcademicaDaoImp.getComisionesEnOferta(oferta.getId());
-		oferta.setCarrera(carrera);
-		oferta.setComisiones(comisiones);
-		this.save(oferta.clonar());	
-		
-	}
-
-	@Override
 	public void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException {
 		OfertaAcademica oferta = this.armarOfertaDesdeJson(ofertaJson);
 		this.save(oferta);

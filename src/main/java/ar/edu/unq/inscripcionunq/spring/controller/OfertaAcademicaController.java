@@ -37,18 +37,6 @@ public class OfertaAcademicaController {
 		
 	}
 	
-	@PutMapping("/ofertas-academicas/clonarOferta/")
-	public ResponseEntity clonarCarrera(@RequestBody OfertaAcademicaJson ofertaJson) {
-		try {
-			ofertaAcademicaServiceImpl.clonarOferta(ofertaJson.id);
-		} catch (OfertaNoExisteException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-		}
-		
-		return ResponseEntity.ok().build();
-
-	}
-	
 	@PutMapping("/ofertas-academicas/crearOferta/")
 	public ResponseEntity crearNuevaOferta(@RequestBody OfertaAcademicaJson ofertaJson) {
 		try {
