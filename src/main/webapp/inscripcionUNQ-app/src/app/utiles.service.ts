@@ -76,7 +76,7 @@ export class UtilesService {
   mostrarMensajeDeError(error: HttpErrorResponse) {
 
      if (error.status >= 500) {
-       const mensaje = 'En este momento no se puede procesar la petición. Por favor vuelva a intentarlo más tarde';
+       const mensaje = 'En este momento no se puede procesar la petición. Por favor vuelva a intentar más tarde';
        this.mostrarMensajeYSalir(mensaje);
      } else {
        this.mostrarMensaje(error.error.msg);
