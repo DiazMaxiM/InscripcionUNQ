@@ -53,6 +53,8 @@ export class CarreraDialogoComponent implements OnInit {
             const { codigo, descripcion} = this.form.value;
             const carrera = new Carrera(codigo, descripcion, this.checked);
             this.dialogRef.close(carrera);
+        }else{
+            this.utilesService.validateAllFormFields(this.form);
         }
     }
 

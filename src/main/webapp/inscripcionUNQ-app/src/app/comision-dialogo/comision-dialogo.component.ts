@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef, MatOptionSelectionChange} from '@angular/material';
 import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
 import { Comision } from '../comisiones-de-oferta/comision.model';
 import { UtilesService } from '../utiles.service';
@@ -11,6 +11,7 @@ import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';
 import { AppRutas } from '../app-rutas.model';
 import { HorarioComision } from './horario-comision.model';
+import { AppMensajes } from '../app-mensajes.model';
 
 @Component({
     selector: 'app-comision-dialogo',
@@ -30,8 +31,6 @@ export class ComisionDialogoComponent implements OnInit {
     dias;
     periodos: Periodo[];
     filtroPeriodos: Observable<Periodo[]>;
-    periodoActual;
-    materiaActual;
     horarios = [];
     horarioAEditar: HorarioComision;
 
@@ -108,8 +107,6 @@ export class ComisionDialogoComponent implements OnInit {
                 'materia': this.comision.materia.nombre,
                 'periodo': this.comision.periodo.codigo
               });
-           this.materiaActual = this.comision.materia;
-           this.periodoActual = this.comision.periodo;
 
            this.crearTablaConHorarios(this.comision.horarioJson);
         }
@@ -123,15 +120,40 @@ export class ComisionDialogoComponent implements OnInit {
     }
 
     guardar() {
-        if (this.form.valid && this.horarios.length > 0) {
-            const { nombre, cupo} = this.form.value;
+        if (this.form.valid) {
+           this.armarComision();
+        } else {
+            this.utilesService.validateAllFormFields(this.form);
+        }
+    }
+
+    armarComision() {
+        const { nombre, cupo, materia, periodo} = this.form.value;
+        if (this.hayMateriaValida(materia) && this.hayPeriodoValido(periodo) && this.hayHorariosSeleccionados()) {
             const comision = new Comision();
             comision.nombre = nombre;
             comision.cupo = cupo;
-            comision.materia = this.materiaActual;
-            comision.periodo = this.periodoActual;
+            comision.materia = this.utilesService.obtenerMateria(this.materias, materia);
+            comision.periodo = this.utilesService.obtenerPeriodo(this.periodos,periodo);
             comision.horarioJson = this.horarios;
             this.dialogRef.close(comision);
+        }
+    }
+
+    hayMateriaValida(materia) {
+        return this.utilesService.materiaValida(this.materias,materia)
+    }
+
+    hayPeriodoValido(periodo) {
+        return this.utilesService.periodoValido(this.periodos,periodo);
+    }
+
+    hayHorariosSeleccionados(){
+        if(this.horarios.length == 0) {
+            this.utilesService.mostrarMensaje(AppMensajes.NO_HAY_HORARIOS_CARGADOS);
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -159,6 +181,8 @@ export class ComisionDialogoComponent implements OnInit {
             this.agregarHorario(dia, horarioComienzo, duracion);
             this.mostrarHorariosSeleccionados();
             this.formHorario.reset();
+        } else {
+            this.utilesService.validateAllFormFields(this.formHorario);
         }
     }
 
@@ -210,15 +234,7 @@ export class ComisionDialogoComponent implements OnInit {
         });
       }
 
-    periodoSeleccionado(periodo) {
-      this.periodoActual = periodo;
-    }
-
-    materiaSeleccionada(materia) {
-        this.materiaActual = materia;
-    }
-
-    editarHorarip(horario: HorarioComision) {
+    editarHorarip(horario: HorarioComision){
         this.horarioAEditar = horario;
         this.formHorario.setValue({
             'dia': horario.dia,

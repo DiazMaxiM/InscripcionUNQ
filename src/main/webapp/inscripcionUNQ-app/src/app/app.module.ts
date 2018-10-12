@@ -46,6 +46,8 @@ import { ComisionesComponent } from './comisiones/comisiones.component';
 import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialogo/comisiones-de-oferta-dialogo.component';
+import { EquivalenciasComponent } from './equivalencias/equivalencias.component';
+import { EquivalenciaDialogoComponent } from './equivalencia-dialogo/equivalencia-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialo
     IncidenciaDialogoComponent,
     ComisionesComponent,
     ComisionDialogoComponent,
-    ComisionesDeOfertaDialogoComponent
+    ComisionesDeOfertaDialogoComponent,
+    EquivalenciasComponent,
+    EquivalenciaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +95,7 @@ import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialo
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
-  IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent]
+  IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
+  EquivalenciaDialogoComponent]
 })
 export class AppModule { }
