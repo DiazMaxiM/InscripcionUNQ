@@ -9,6 +9,7 @@ import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 import { Periodo } from './periodos/periodo.model';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
+import { Equivalencia } from './equivalencias/equivalencia.model';
 
 @Injectable()
 export class RestService {
@@ -161,5 +162,12 @@ export class RestService {
     return this.httpClient.delete('/api/comision/eliminarComision/' + idComision);
   }
 
+  getEquivalencias(){
+    return this.httpClient.get<Array<Equivalencia>>('/api/equivalencias');
+  }
 
+  agregarNuevaEquivalencia(equivalencia: Equivalencia){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put('/api/equivalencia', equivalencia, { headers });
+  }
 }

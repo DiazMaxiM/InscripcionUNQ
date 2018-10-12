@@ -1,0 +1,36 @@
+<h1 class="h5">Agregar equivalencia</h1>
+<div class="container-buscador">
+    <mat-form-field>
+        <input matInput [(ngModel)]="materiaBuscada" placeholder="Buscar materia"> 
+  </mat-form-field> 
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaBuscada}; let i=index;">
+                <td style="width: 5%; display: none">{{i +1}}</td>
+                <td>{{ materia.nombre }}</td>
+                <td>
+                    <mat-checkbox 
+                    (change)="onChange(materia,$event)" 
+                    color="warn"></mat-checkbox>
+                </td>
+            </tr>
+            <mat-divider></mat-divider>
+        </tbody>
+    </table>
+</div>
+<div align="end">
+    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+      Cerrar
+    </button>
+    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+      Guardar
+    </button>
+</div>

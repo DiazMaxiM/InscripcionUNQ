@@ -1,0 +1,21 @@
+<div align="center">
+    <button class="btn btn-danger" mat-fab color="primary" 
+    (click)= "abrirDialogoNuevaEquivalencia()">Agregar Equivalencia</button>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Equivalencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let equivalencia of equivalencias">
+                <td>{{ equivalencia.materiaOrigen }}</td>
+                <td>{{ equivalencia.materiaDestino }}</td>
+            </tr>
+            <mat-divider></mat-divider>
+        </tbody>
+    </table>
+</div>
