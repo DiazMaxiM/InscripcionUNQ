@@ -1,3 +1,4 @@
+<h2 mat-dialog-title>Comisión</h2>
   <div [formGroup]="form">
       <div class="form-row">
       <mat-form-field class="col-md-10">
@@ -9,7 +10,7 @@
       <mat-form-field class="col-md-10">
           <input type="text" placeholder="Materia" formControlName="materia" matInput [matAutocomplete]="auto" required>
           <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let materia of filtroMaterias | async" [value]="materia.nombre" (onSelectionChange)="materiaSeleccionada(materia)">
+          <mat-option *ngFor="let materia of filtroMaterias | async" [value]="materia.nombre">
               {{materia.nombre}}
           </mat-option>
           </mat-autocomplete>
@@ -28,7 +29,7 @@
           <mat-form-field class="form-group col-md-6">
               <input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
               <mat-autocomplete #autoPeriodo="matAutocomplete">
-              <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado(periodo)">
+              <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo">
                    {{periodo.codigo}}
               </mat-option>
               </mat-autocomplete>

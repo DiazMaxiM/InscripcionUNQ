@@ -14,6 +14,7 @@ import { EquivalenciaDialogoComponent } from '../equivalencia-dialogo/equivalenc
 export class EquivalenciasComponent implements OnInit {
 
   equivalencias: Equivalencia[];
+  equivalenciaActual: Equivalencia;
 
   constructor(
     private restService: RestService,
@@ -34,13 +35,36 @@ export class EquivalenciasComponent implements OnInit {
     });
   }
 
-  abrirDialogoNuevaEquivalencia(){
-    const dialogRef = this.crearConfiguracionDialogoParaEquivalencia();
+  abrirDialogoEquivalencia(equivalencia?: Equivalencia) {
+    this.equivalenciaActual = equivalencia;
+    const dialogRef = this.crearConfiguracionDialogoParaEquivalencia(equivalencia);
     dialogRef.afterClosed().subscribe( val => {
       if ( val != undefined) {
-        this.crearNuevaEquivalencia(val);
+        this.guardarEquivalencia(val);
       }
     });
+  }
+
+  guardarEquivalencia(equivalencia) {
+    if (this.equivalenciaActual == null){
+      this.crearNuevaEquivalencia(equivalencia);
+    } else{
+      this.actualizarEquivalencia(equivalencia);
+    }
+
+  }
+  actualizarEquivalencia(equivalencia: Equivalencia) {
+    equivalencia.id = this.equivalenciaActual.id;
+    this.equivalenciaActual = null;
+    this.restService.actualizarEquivalencia(equivalencia)
+    .subscribe(res => {
+      const mensaje = 'La equivalencia fue actualizada con éxito';
+       this.utilesService.mostrarMensaje(mensaje);
+       this.getEquivalencias();
+     },
+     (err: HttpErrorResponse) => {
+       this.utilesService.mostrarMensajeDeError(err);
+     });
   }
 
   crearConfiguracionDialogoParaEquivalencia(equivalencia?) {
@@ -48,8 +72,8 @@ export class EquivalenciasComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
-    dialogConfig.width = '600px';
-    dialogConfig.height = '450px';
+    dialogConfig.width = '450px';
+    dialogConfig.height = '250px';
     dialogConfig.data = {
       equivalencia: equivalencia
     };

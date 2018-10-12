@@ -26,10 +26,6 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
     periodos: Periodo[];
     filtroPeriodos: Observable<Periodo[]>;
 
-    carreraParaOferta: Carrera;
-    periodoParaOferta: Periodo;
-
-
     constructor(
         private fb: FormBuilder,
         private utilesService: UtilesService,
@@ -130,32 +126,42 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
             this.form.setValue({
                 'nombre': this.oferta.nombre,
                 'descripcion': this.oferta.descripcion,
-                'carrera': this.oferta.carrera.descripcion,
+                'carrera': this.oferta.carrera.codigo,
                 'periodo': this.oferta.periodo.codigo
               });
             this.checked = this.oferta.habilitada;
-            this.carreraParaOferta = this.oferta.carrera;
         }
     }
 
 
     guardar() {
         if (this.form.valid) {
-            const { nombre, descripcion} = this.form.value;
-            const oferta = new OfertaAcademica(nombre, descripcion, this.checked, this.carreraParaOferta, this.periodoParaOferta);
+          this.armarOferta();
+        } else{
+            this.utilesService.validateAllFormFields(this.form);
+        }
+    }
+
+    armarOferta(){
+        const { nombre, descripcion,periodo,carrera} = this.form.value;
+        if(this.hayPeriodoValido(periodo) && this.hayCarreraValida(carrera)){
+            const periodoSeleccionado = this.utilesService.obtenerPeriodo(this.periodos,periodo);
+            const carreraSeleccionada = this.utilesService.obtenerCarrera(this.carreras,carrera);
+            const oferta = new OfertaAcademica(nombre, descripcion, this.checked, carreraSeleccionada, periodoSeleccionado);
             this.dialogRef.close(oferta);
         }
+
+    }
+
+    hayPeriodoValido(periodo) {
+      return this.utilesService.periodoValido(this.periodos,periodo);
+    }
+
+    hayCarreraValida(carrera) {
+        return this.utilesService.carreraValida(this.carreras, carrera);
     }
 
     cerrar() {
         this.dialogRef.close();
-    }
-
-    carreraSeleccionada(carrera) {
-        this.carreraParaOferta = carrera;
-    }
-
-    periodoSeleccionado(periodo) {
-        this.periodoParaOferta = periodo;
     }
 }

@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Materia } from '../materias/materia.model';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatOptionSelectionChange, MAT_DIALOG_DATA } from '@angular/material';
 import { Equivalencia } from '../equivalencias/equivalencia.model';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DataDialogo } from './data-dialogo.model';
+import { AppMensajes } from '../app-mensajes.model';
+import { AppRutas } from '../app-rutas.model';
 
 @Component({
     selector: 'app-equivalencia-dialogo',
@@ -14,48 +20,109 @@ import { Equivalencia } from '../equivalencias/equivalencia.model';
 
 export class EquivalenciaDialogoComponent implements OnInit {
   materias: Materia[];
-  materiasSeleccionadas: Materia[] = [];
-  materiaBuscada;
+  filtroMateriasOrigen: Observable<Materia[]>;
+  filtroMateriasDestino: Observable<Materia[]>;
+  form: FormGroup;
+  equivalencia: Equivalencia;
 
   constructor(
-    private restService: RestService,
     private utilesService: UtilesService,
-    private dialogRef: MatDialogRef<EquivalenciaDialogoComponent>)
-    {}
+    private restService: RestService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<EquivalenciaDialogoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
+      this.equivalencia = data.equivalencia;
+    }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getMaterias();
+    this.crearFormularioEquivalencia();
+    this.insertarInformacionDeEquivalenciaEnFormulario();
   }
 
-  getMaterias(){
+  insertarInformacionDeEquivalenciaEnFormulario(){
+    if (this.equivalencia != null) {
+      this.form.setValue({
+          'materiaOrigen': this.equivalencia.materiaOrigen.nombre,
+          'materiaDestino': this.equivalencia.materiaDestino.nombre
+        });
+  }
+}
+
+  crearFormularioEquivalencia() {
+    this.form = this.fb.group({
+        materiaOrigen: ['', Validators.required],
+        materiaDestino: ['', Validators.required],
+    });
+}
+
+  getMaterias() {
     this.restService.getMaterias().subscribe(materias => {
-      this.materias = materias;
+      this.guardarMaterias(materias);
     },
       (err: HttpErrorResponse) => {
         this.utilesService.mostrarMensajeDeError(err);
       });
+    }
+
+    guardarMaterias(materias: Materia[]){
+      if (materias.length == 0) {
+        this.irATarerasUsuario(AppMensajes.N0_HAY_MATERIAS_CARGADAS);
+
+      } else {
+        this.materias = materias;
+        this.crearFiltroMateriasOrigen();
+        this.crearFiltroMateriasDestino();
+      }
+    }
+
+
+    irATarerasUsuario(mensaje){
+      this.cerrar();
+      this.utilesService.mostrarMensajeYRedireccionar(mensaje, AppRutas.TAREAS_USUARIO);
   }
 
-  onChange(materia, $event) {
-    if ($event.checked) {
-      this.materiasSeleccionadas.push(materia);
+    crearFiltroMateriasOrigen() {
+        this.filtroMateriasOrigen = this.form.controls['materiaOrigen'].valueChanges.pipe(
+            startWith(''),
+            map(val => this.filtrarMaterias(val))
+          );
     }
-    else {
-        this.materiasSeleccionadas.forEach(materiaSeleccionada => {
-            if (materia.id == materiaSeleccionada.id) {
-                this.materiasSeleccionadas.splice(this.materiasSeleccionadas.indexOf(materiaSeleccionada), 1);
-            }
-        });
-    }
+
+    crearFiltroMateriasDestino() {
+      this.filtroMateriasDestino = this.form.controls['materiaDestino'].valueChanges.pipe(
+          startWith(''),
+          map(val => this.filtrarMaterias(val))
+        );
   }
+
+  filtrarMaterias(val: string): Materia[] {
+    return this.materias.filter(option => {
+      return option.nombre.toLowerCase().match(val.toLowerCase());
+    });
+  }
+
 
   guardar() {
-    if(this.materiasSeleccionadas.length != 2){
-      this.utilesService.mostrarMensaje('Debe seleccionar dos materias para poder crear una equivalencia');
-    } else {
-      const equivalencia = new Equivalencia(this.materiasSeleccionadas[0], this.materiasSeleccionadas[1]);
+    if(this.form.valid) {
+      this.armarEquivalencia();
+    } else{
+      this.utilesService.validateAllFormFields(this.form);
+    }
+  }
+
+  armarEquivalencia(){
+    const { materiaOrigen, materiaDestino} = this.form.value;
+    if(this.hayMateriaValida(materiaOrigen) && this.hayMateriaValida(materiaDestino)) {
+      const equivalencia = new Equivalencia();
+      equivalencia.materiaOrigen = this.utilesService.obtenerMateria(this.materias, materiaOrigen);
+      equivalencia.materiaDestino = this.utilesService.obtenerMateria(this.materias, materiaDestino);
       this.dialogRef.close(equivalencia);
     }
+  }
+
+  hayMateriaValida(materia) {
+    return this.utilesService.materiaValida(this.materias,materia);
   }
 
   cerrar() {

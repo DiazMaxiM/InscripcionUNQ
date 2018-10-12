@@ -170,4 +170,9 @@ export class RestService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/equivalencia', equivalencia, { headers });
   }
+
+  actualizarEquivalencia(equivalencia: Equivalencia){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post('/api/equivalencia', equivalencia, { headers });
+  }
 }
