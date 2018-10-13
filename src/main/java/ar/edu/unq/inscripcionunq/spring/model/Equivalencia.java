@@ -1,15 +1,15 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity(name = "Equivalencia")
 public class Equivalencia extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-	@Column(length = 3000)
+	@OneToOne
 	private Materia materiaOrigen;
-	@Column(length = 3000) 
+	@OneToOne
 	private Materia materiaDestino;
 
 	public Equivalencia() {

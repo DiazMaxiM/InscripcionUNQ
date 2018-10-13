@@ -16,6 +16,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
+import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
@@ -55,6 +56,9 @@ public class CargaInicialDeDatosController {
 
 	@Autowired
 	private WebService webService;
+
+	@Autowired
+	private GenericService<Equivalencia> equivalenciaServiceImp;
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -564,6 +568,8 @@ public class CargaInicialDeDatosController {
 
 		Long idEncuesta = encuestaServiceImp.save(poll);
 
+		Equivalencia equivalenciaSeg = new Equivalencia(materiaServiceImp.get(sI), materiaServiceImp.get(segInfo));
+		equivalenciaServiceImp.save(equivalenciaSeg);
 		try {
 			webService.importarEstudiantes(idEncuesta);
 		} catch (ConexionWebServiceException | EncuestaNoExisteException e) {

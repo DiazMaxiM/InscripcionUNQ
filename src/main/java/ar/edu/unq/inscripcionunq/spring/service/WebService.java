@@ -1,7 +1,9 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
+import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
@@ -38,6 +41,9 @@ public class WebService {
 
 	@Autowired
 	public EncuestaService encuestaServiceImp;
+
+	@Autowired
+	public EquivalenciaService equivalenciaServiceImp;
 
 	public void importarEstudiantes(Long idEncuesta) throws ConexionWebServiceException, EncuestaNoExisteException {
 		String response = null;
@@ -61,6 +67,8 @@ public class WebService {
 		EstudianteWebServiceJson[] estudiantesWebServiceJson = new Gson().fromJson(mJson,
 				EstudianteWebServiceJson[].class);
 
+		List<Equivalencia> equivalencias = equivalenciaServiceImp.list();
+
 		Map<String, Materia> materias = new HashMap<String, Materia>();
 		Map<String, Carrera> carreras = new HashMap<String, Carrera>();
 
@@ -79,7 +87,12 @@ public class WebService {
 					materias.put(materiaWebServiceJson.codigo,
 							materiaServiceImp.getMateriaPorCodigo(materiaWebServiceJson.codigo));
 				}
-				estudianteNuevo.agregarMateriaAprobada(materias.get(materiaWebServiceJson.codigo));
+				Materia materiaAprobada = materias.get(materiaWebServiceJson.codigo);
+				estudianteNuevo.agregarMateriaAprobada(materiaAprobada);
+				List<Materia> materiasEquivalentes = equivalencias.stream()
+						.filter(e -> e.isEquivalencia(materiaAprobada)).map(eq -> eq.getEquivalencia(materiaAprobada))
+						.collect(Collectors.toList());
+				materiasEquivalentes.stream().forEach(mE -> estudianteNuevo.agregarMateriaAprobada(mE));
 			}
 			encuesta.agregarEstudiante(estudianteNuevo);
 		}
