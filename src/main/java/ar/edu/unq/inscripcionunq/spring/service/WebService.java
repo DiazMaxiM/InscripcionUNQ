@@ -60,7 +60,6 @@ public class WebService {
 		try {
 			encuesta = encuestaServiceImp.get(idEncuesta);
 		} catch (ObjectNotFoundinDBException e) {
-			// TODO Auto-generated catch block
 			throw new EncuestaNoExisteException();
 		}
 

@@ -11,6 +11,8 @@ import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
 import { Equivalencia } from './equivalencias/equivalencia.model';
 
+const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
 @Injectable()
 export class RestService {
 
@@ -25,7 +27,6 @@ export class RestService {
   }
 
   actualizarInformacionEstudiante(informacionEstudiante: Estudiante) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/poll/userData', informacionEstudiante, { headers });
   }
 
@@ -34,7 +35,6 @@ export class RestService {
   }
 
   actualizarMateriasAprobadas(idEstudiante: string, materiasAprobadas) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/poll/userApprovedSubjects/' + idEstudiante, materiasAprobadas, { headers });
   }
 
@@ -43,7 +43,6 @@ export class RestService {
   }
 
   enviarComisionesSeleccionadas(idEstudiante: string, comisionesSeleccionadas) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/poll/comisionesSeleccionada/' + idEstudiante, comisionesSeleccionadas, {headers});
   }
 
@@ -52,7 +51,6 @@ export class RestService {
   }
 
   ingresarUsuario(usuario: Usuario) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/encuesta/ingresoUsuario', usuario, { headers });
   }
 
@@ -65,22 +63,18 @@ export class RestService {
   }
 
   actualizarInformacionMateria(informacionMateria: Materia) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/materias/modificarMateria', informacionMateria, { headers });
   }
 
   agregarNuevaMateria(nuevaMateria: Materia) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/materias/nuevaMateria', nuevaMateria, { headers });
   }
 
   actualizarInformacionCarrera(carreraActualizada: Carrera) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/carreras/actualizarCarrera', carreraActualizada, { headers });
   }
 
   agregarNuevaCarrera(nuevaCarrera: Carrera) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/carreras/nuevaCarrera', nuevaCarrera, { headers });
   }
 
@@ -89,22 +83,18 @@ export class RestService {
   }
 
   crearNuevaOferta(nuevaOferta: OfertaAcademica) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/ofertas-academicas/crearOferta/', nuevaOferta, { headers });
   }
 
   actualizarInformacionDeOferta(ofertaActualizada: OfertaAcademica) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/ofertas-academicas/actualizarOferta/', ofertaActualizada, { headers });
   }
 
   getMateriasDeCarrera(idCarrera: string) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.get<Array<Materia>>('/api/oferta-academica/materias/' + idCarrera);
   }
 
   getComisionesDeOferta(idOferta: string) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.get<Array<Comision>>('/api/oferta-academica/comisiones/' + idOferta);
   }
 
@@ -117,12 +107,10 @@ export class RestService {
   }
 
   quitarComisionDeOferta(idComision: string, idOferta: string){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.delete('api/oferta-academica/eliminarComision/' + idComision + '/' + idOferta);
   }
 
   crearNuevoPeriodo(nuevoPeriodo: Periodo) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/periodos/crearPeriodo/', nuevoPeriodo, { headers });
   }
 
@@ -131,7 +119,6 @@ export class RestService {
   }
 
   agregarIncidencia(incidencia: Incidencia){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/incidencia/', incidencia, {headers});
   }
 
@@ -144,17 +131,14 @@ export class RestService {
   }
 
   crearNuevaComision(comision: Comision) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.put('/api/comision/nuevaComision/', comision, { headers });
   }
 
   actualizarInformacionDeComision(comision: Comision) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/comision/editarComision/', comision, { headers });
   }
 
   actualizarComisionesDeOferta(idOferta: string, comisionesSeleccionadas) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post('/api/oferta-academica/actualizar-comisiones/' + idOferta, comisionesSeleccionadas, {headers});
   }
 
@@ -166,13 +150,11 @@ export class RestService {
     return this.httpClient.get<Array<Equivalencia>>('/api/equivalencias');
   }
 
-  agregarNuevaEquivalencia(equivalencia: Equivalencia){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  agregarNuevaEquivalencia(equivalencia: Equivalencia) {
     return this.httpClient.put('/api/equivalencia', equivalencia, { headers });
   }
 
-  actualizarEquivalencia(equivalencia: Equivalencia){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  actualizarEquivalencia(equivalencia: Equivalencia) {
     return this.httpClient.post('/api/equivalencia', equivalencia, { headers });
   }
 }
