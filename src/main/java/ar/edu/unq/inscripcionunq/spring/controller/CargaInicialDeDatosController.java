@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
-import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
@@ -23,6 +24,7 @@ import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
+import ar.edu.unq.inscripcionunq.spring.service.WebService;
 
 @RestController
 public class CargaInicialDeDatosController {
@@ -44,13 +46,15 @@ public class CargaInicialDeDatosController {
 
 	@Autowired
 	private GenericService<Usuario> usuarioServiceImp;
-	
+
 	@Autowired
 	private GenericService<TipoIncidencia> tipoIncidenciaServiceImp;
-	
+
 	@Autowired
 	private GenericService<Periodo> periodoServiceImp;
-		
+
+	@Autowired
+	private WebService webService;
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -320,14 +324,15 @@ public class CargaInicialDeDatosController {
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long arduino = materiaServiceImp.save(matt);
-		
-		Periodo periodo1 = new Periodo(2018,2,TipoPeriodo.CUATRIMESTRAL);
+
+		Periodo periodo1 = new Periodo(2018, 2, TipoPeriodo.CUATRIMESTRAL);
 		periodoServiceImp.save(periodo1);
-		Periodo periodo2 = new Periodo(2018,1,TipoPeriodo.CUATRIMESTRAL);
+		Periodo periodo2 = new Periodo(2018, 1, TipoPeriodo.CUATRIMESTRAL);
 		periodoServiceImp.save(periodo2);
 
 		OfertaAcademica acc1 = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi, periodo1);
-		OfertaAcademica acc2 = new OfertaAcademica("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds, periodo2);
+		OfertaAcademica acc2 = new OfertaAcademica("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds,
+				periodo2);
 
 		Comision commMate1 = new Comision("Mate1 C1", materiaServiceImp.get(mate1), 30, periodo1);
 		commMate1.agregarHorarios(TypeDay.MARTES, LocalTime.of(9, 00), 4.0f);
@@ -557,14 +562,14 @@ public class CargaInicialDeDatosController {
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer2));
 
-		Estudiante maxi = new Estudiante("Maximiliano Martin", "Diaz", "33810763", "diazmaxi@gmail.com");
-		maxi.agregarInscripcionACarrera(tpi);
-		maxi.agregarMateriaAprobada(materiaServiceImp.get(intro));
-		maxi.agregarMateriaAprobada(materiaServiceImp.get(mate1));
+		Long idEncuesta = encuestaServiceImp.save(poll);
 
-		poll.agregarEstudiante(maxi);
-
-		encuestaServiceImp.save(poll);
+		try {
+			webService.importarEstudiantes(idEncuesta);
+		} catch (ConexionWebServiceException | EncuestaNoExisteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
 		usuarioServiceImp.save(usuario);

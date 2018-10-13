@@ -22,16 +22,17 @@ import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 @Service
 @Transactional
 public class CarreraServiceImp extends GenericServiceImp<Carrera> implements CarreraService {
-    
-    @Autowired
-    CarreraDao carreraDaoImp;
+
+	@Autowired
+	CarreraDao carreraDaoImp;
 
 	@Override
-	public void agregarNuevaCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, ExisteCarreraConElMismoCodigoException {
+	public void agregarNuevaCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException,
+			CodigoInvalidoException, EstadoInvalidoException, ExisteCarreraConElMismoCodigoException {
 		Carrera nuevaCarrera = this.armarCarreraDesdeJson(carreraJson);
 		this.validarSiExisteCarreraConElMismoCodigo(nuevaCarrera.getCodigo());
 		this.save(nuevaCarrera);
-	    
+
 	}
 
 	@Override
@@ -40,11 +41,12 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 		if (carrera != null) {
 			throw new ExisteCarreraConElMismoCodigoException();
 		}
-		
+
 	}
 
 	@Override
-	public void actualizarCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, ExisteCarreraConElMismoCodigoException, CarreraNoExisteException {
+	public void actualizarCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException,
+			EstadoInvalidoException, ExisteCarreraConElMismoCodigoException, CarreraNoExisteException {
 		Carrera carreraRecibida = this.armarCarreraDesdeJson(carreraJson);
 		Carrera carreraActual = null;
 		try {
@@ -55,31 +57,38 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 		if (carreraActual != null) {
 			this.actualizarInformacionDeLaCarrera(carreraActual, carreraRecibida);
 		}
-		
+
 	}
-	
-	private Carrera armarCarreraDesdeJson(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException {
-		Carrera carrera = new Carrera(carreraJson.codigo,carreraJson.descripcion);
+
+	private Carrera armarCarreraDesdeJson(CarreraJson carreraJson)
+			throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException {
+		Carrera carrera = new Carrera(carreraJson.codigo, carreraJson.descripcion);
 		TypeStatus estado = carreraJson.habilitada ? TypeStatus.ENABLED : TypeStatus.DISABLED;
 		carrera.setEstado(estado);
 		Validacion.validarCarrera(carrera);
 		return carrera;
 	}
 
-	private void actualizarInformacionDeLaCarrera(Carrera carreraActual, Carrera carreraRecibida) throws ExisteCarreraConElMismoCodigoException {
-		if(!carreraActual.getCodigo().equals(carreraRecibida.getCodigo())) {
-			validarSiExisteCarreraConElMismoCodigo(carreraRecibida.getCodigo());	
+	private void actualizarInformacionDeLaCarrera(Carrera carreraActual, Carrera carreraRecibida)
+			throws ExisteCarreraConElMismoCodigoException {
+		if (!carreraActual.getCodigo().equals(carreraRecibida.getCodigo())) {
+			validarSiExisteCarreraConElMismoCodigo(carreraRecibida.getCodigo());
 		}
 		carreraActual.actualizarInformacion(carreraRecibida);
 		this.save(carreraActual);
-		
+
 	}
 
 	@Override
 	public List<CarreraJson> getCarrerasJson() {
 		List<Carrera> carreras = this.list();
-        return carreras.stream().map(c -> new CarreraJson(c)).collect(Collectors.toList());
+		return carreras.stream().map(c -> new CarreraJson(c)).collect(Collectors.toList());
 	}
 
-      
+	@Override
+	public Carrera getCarreraPorCodigo(String codigo) {
+
+		return carreraDaoImp.encontrarCarreraConElMismoCodigo(codigo);
+	}
+
 }

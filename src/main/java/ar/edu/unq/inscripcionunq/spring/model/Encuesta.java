@@ -57,16 +57,16 @@ public class Encuesta extends BaseEntity {
 	public LocalDateTime getHoraFin() {
 		return horaFin;
 	}
-	
+
 	public TypeStatus getEstado() {
 		return estado;
 	}
-	
+
 	public List<OfertaAcademica> getOfertasAcademicas() {
 		return ofertasAcademicas;
 	}
-	
-	public List<Estudiante> getEstudiantes(){
+
+	public List<Estudiante> getEstudiantes() {
 		return estudiantes;
 	}
 

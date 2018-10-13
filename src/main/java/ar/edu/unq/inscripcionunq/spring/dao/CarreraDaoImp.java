@@ -16,9 +16,8 @@ public class CarreraDaoImp extends GenericDaoImp<Carrera> implements CarreraDao 
 	@Override
 	public Carrera encontrarCarreraConElMismoCodigo(String codigo) {
 		Session session = this.sessionFactory.getCurrentSession();
-		return (Carrera) session.createQuery("from Carrera where codigo = :codigo")
-				.setParameter("codigo", codigo)
-			    .uniqueResult();
+		return (Carrera) session.createQuery("from Carrera where codigo = :codigo").setParameter("codigo", codigo)
+				.uniqueResult();
 	}
 
 }
