@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.service;
 import java.util.List;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionCompletaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
@@ -17,8 +18,6 @@ public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
 
 	List<OfertaAcademicaJson> getOfertasAcademicasJson();
 
-	void clonarOferta(Long idOferta) throws OfertaNoExisteException;
-
 	void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException;
 
 	void actualizarOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, OfertaNoExisteException;
@@ -27,4 +26,5 @@ public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
 	
 	void quitarComisionDeOferta(String idComision, String idOferta) throws ObjectNotFoundinDBException, IdNumberFormatException;
 
+	void actualizarComisiones(String idOferta, List<IdJson> idsJson) throws IdNumberFormatException;
 }

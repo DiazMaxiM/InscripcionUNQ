@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
@@ -33,18 +35,6 @@ public class OfertaAcademicaController {
 	public ResponseEntity<List> getOfertas() {
 		return ResponseEntity.ok().body(ofertaAcademicaServiceImpl.getOfertasAcademicasJson());
 		
-	}
-	
-	@PutMapping("/ofertas-academicas/clonarOferta/")
-	public ResponseEntity clonarCarrera(@RequestBody OfertaAcademicaJson ofertaJson) {
-		try {
-			ofertaAcademicaServiceImpl.clonarOferta(ofertaJson.id);
-		} catch (OfertaNoExisteException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-		}
-		
-		return ResponseEntity.ok().build();
-
 	}
 	
 	@PutMapping("/ofertas-academicas/crearOferta/")
@@ -86,5 +76,15 @@ public class OfertaAcademicaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/oferta-academica/actualizar-comisiones/{idOferta}")
+	public ResponseEntity actualizarComisiones(@PathVariable String idOferta, @RequestBody List<IdJson> idsJson) {
+		try {
+			ofertaAcademicaServiceImpl.actualizarComisiones(idOferta, idsJson);
+		} catch (IdNumberFormatException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		return ResponseEntity.ok().body(null);
 	}
 }

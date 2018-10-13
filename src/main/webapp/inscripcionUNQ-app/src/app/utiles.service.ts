@@ -1,9 +1,14 @@
-import { Injectable } from '@angular/core';
-import { MatDialog, MatDialogConfig} from '@angular/material';
+import { Injectable, ApplicationModule } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatOptionSelectionChange} from '@angular/material';
 import {FeedbackUsuarioDialogoComponent} from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
 import { Router} from '@angular/router';
 import {HttpErrorResponse } from '@angular/common/http';
 import { map} from 'rxjs/operators';
+import { Materia } from './materias/materia.model';
+import { Periodo } from './periodos/periodo.model';
+import { AppMensajes } from './app-mensajes.model';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Carrera } from './carreras/carrera.model';
 
 @Injectable()
 export class UtilesService {
@@ -76,7 +81,7 @@ export class UtilesService {
   mostrarMensajeDeError(error: HttpErrorResponse) {
 
      if (error.status >= 500) {
-       const mensaje = 'En este momento no se puede procesar la petición. Por favor vuelva a intentarlo más tarde';
+       const mensaje = 'En este momento no se puede procesar la petición. Por favor vuelva a intentar más tarde';
        this.mostrarMensajeYSalir(mensaje);
      } else {
        this.mostrarMensaje(error.error.msg);
@@ -134,4 +139,56 @@ ordenarComisionesPorNombre(comisiones) {
   return comisionesOrdenadas;
 }
 
+validateAllFormFields(formGroup: FormGroup) {
+  Object.keys(formGroup.controls).forEach(field => {
+    const control = formGroup.get(field);
+    if (control instanceof FormControl) {
+      control.markAsTouched({ onlySelf: true });
+    } else if (control instanceof FormGroup) {
+      this.validateAllFormFields(control);
+    }
+  });
+}
+
+materiaValida (materias: Materia[], nombreMateria){
+  const materia = this.obtenerMateria(materias, nombreMateria);
+  if (materia == null) {
+     this.mostrarMensaje(AppMensajes.NO_HAY_MATERIA_SELECCIONADA);
+     return false;
+  } else {
+    return true;
+  }
+}
+
+obtenerMateria(materias: Materia[], nombreMateria) {
+  return materias.find(materia => materia.nombre == nombreMateria);
+}
+
+periodoValido (periodos: Periodo[], codigoPeriodo){
+  const periodo = this.obtenerPeriodo(periodos, codigoPeriodo);
+  if (periodo == null) {
+     this.mostrarMensaje(AppMensajes.NO_HAY_PERIODO_SELECCIONADO);
+     return false;
+  } else {
+    return true;
+  }
+}
+
+obtenerPeriodo(periodos: Periodo[], codigoPeriodo) {
+  return periodos.find(periodo => periodo.codigo == codigoPeriodo);
+}
+
+carreraValida (carreras: Carrera[], codigoCarrera) {
+  const periodo = this.obtenerCarrera(carreras, codigoCarrera);
+  if (periodo == null) {
+     this.mostrarMensaje(AppMensajes.NO_HAY_CARRERA_SELECCIONADA);
+     return false;
+  } else {
+    return true;
+  }
+}
+
+obtenerCarrera(carreras: Carrera[], codigoCarrera) {
+  return carreras.find(carrera => carrera.codigo == codigoCarrera);
+}
 }

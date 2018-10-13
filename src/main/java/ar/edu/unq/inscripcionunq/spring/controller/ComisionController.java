@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -74,5 +76,15 @@ public class ComisionController {
 		}
 		return ResponseEntity.ok().build();
 
+	}
+	
+	@DeleteMapping("/comision/eliminarComision/{idComision}")
+	public ResponseEntity eliminarComision(@PathVariable String idComision) {
+		try {
+			comisionServiceImp.eliminarComision(idComision);
+		} catch (IdNumberFormatException | CommissionNotExistenException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		return ResponseEntity.ok().build();
 	}
 }

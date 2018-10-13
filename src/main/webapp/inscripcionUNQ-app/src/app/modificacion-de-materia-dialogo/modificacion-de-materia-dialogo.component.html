@@ -1,19 +1,28 @@
 <h2 mat-dialog-title>Edición materia</h2>
 <mat-dialog-content [formGroup]="form">
   <mat-form-field>
-    <input matInput placeholder="Código" formControlName="codigo">
+    <input matInput placeholder="Código" formControlName="codigo" required>
+    <mat-error *ngIf="form.get('codigo').hasError('required')">
+      Campo obligatorio
+    </mat-error> 
   </mat-form-field>
   <mat-form-field>
-    <input matInput placeholder="Nombre" formControlName="nombre">
+    <input matInput placeholder="Nombre" formControlName="nombre" required>
+    <mat-error *ngIf="form.get('codigo').hasError('required')">
+      Campo obligatorio
+    </mat-error>
   </mat-form-field>
-  <ng-container *ngFor="let carrera of carreras" >
+  <ng-container *ngFor="let carrera of carreras">
       {{carrera.codigo}}
-    <mat-checkbox [checked]="verificarSeleccion(carrera)" 
-    (change)="onChange(carrera,$event)" placeholder="carrera.nombre"  >
+    <mat-checkbox color="warn" [checked]="verificarSeleccion(carrera)" 
+    (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
     </mat-checkbox>
   </ng-container>
   <mat-form-field>
-    <input matInput placeholder="Carga horaria" formControlName="horas">
+    <input matInput type="number" placeholder="Carga horaria" formControlName="horas" required>
+    <mat-error *ngIf="form.get('horas').hasError('required')">
+      Campo obligatorio
+    </mat-error>
   </mat-form-field>
 </mat-dialog-content>
 <section >Estado
@@ -26,7 +35,8 @@
   <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
     Cerrar
   </button>
-  <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+  <button class="btn btn-danger mat-button"
+  mat-fab color="primary" (click)="guardar()">
     Guardar
   </button>
 </mat-dialog-actions>

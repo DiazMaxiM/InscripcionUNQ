@@ -20,6 +20,7 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
     checked = true;
     carreraChecked = false;
     form: FormGroup;
+    hayCarrerasSelecconadas= false;
 
     constructor(
         private fb: FormBuilder,
@@ -59,8 +60,7 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
     onChange(carrera, $event) {
         if ($event.checked) {
             this.carrerasSeleccionadas.push(carrera);
-        }
-        else {
+        } else {
             this.carrerasSeleccionadas.forEach(carreraSeleccionada => {
                 if (carrera.id == carreraSeleccionada.id) {
                     this.carrerasSeleccionadas.splice(this.carrerasSeleccionadas.indexOf(carreraSeleccionada), 1);
@@ -98,9 +98,19 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 
     guardar() {
         if (this.form.valid) {
+           this.armarMateria();
+        } else {
+            this.utilesService.validateAllFormFields(this.form);
+        }
+    }
+
+    armarMateria(){
+        if(this.carrerasSeleccionadas.length> 0) {
             const { codigo, nombre, horas } = this.form.value;
             const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas);
             this.dialogRef.close(materia);
+        } else {
+            this.utilesService.mostrarMensaje('Debe seleccionar al menos una carrera');
         }
     }
 

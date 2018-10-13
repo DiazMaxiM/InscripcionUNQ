@@ -15,8 +15,6 @@ public interface CarreraService extends GenericService<Carrera> {
 	void agregarNuevaCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException,
 			EstadoInvalidoException, ExisteCarreraConElMismoCodigoException;
 
-	void validarSiExisteCarreraConElMismoCodigo(String codigo) throws ExisteCarreraConElMismoCodigoException;
-
 	void actualizarCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException,
 			EstadoInvalidoException, ExisteCarreraConElMismoCodigoException, CarreraNoExisteException;
 

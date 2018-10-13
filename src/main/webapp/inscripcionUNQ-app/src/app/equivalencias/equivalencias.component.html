@@ -1,0 +1,23 @@
+<h5 class="titulo">ABM Equivalencias</h5>
+<div align="center">
+    <button class="btn btn-danger" mat-fab color="primary" 
+    (click)= "abrirDialogoEquivalencia()">Nueva Equivalencia</button>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Materia Origen</th>
+                <th>Materia Equivalente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let equivalencia of equivalencias">
+                <td>{{ equivalencia.materiaOrigen.nombre }}</td>
+                <td>{{ equivalencia.materiaDestino.nombre }}</td>
+                <td><i class="material-icons edit-icon" (click)="abrirDialogoEquivalencia(equivalencia)">edit</i></td>
+            </tr>
+            <mat-divider></mat-divider>
+        </tbody>
+    </table>
+</div>

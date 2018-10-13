@@ -17,6 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.dao.PeriodoDao;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
@@ -95,6 +96,19 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 			
 		}
 		
+	}
+
+	@Override
+	public void eliminarComision(String idComision) throws IdNumberFormatException, CommissionNotExistenException {
+		try {
+		   Comision comision = this.get(new Long(idComision));
+		   this.delete(comision);
+		} catch (NumberFormatException e) { 
+			throw new IdNumberFormatException();
+		} catch (ObjectNotFoundinDBException e) {
+			throw new CommissionNotExistenException();
+		}
+			
 	}
 
 }

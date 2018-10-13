@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +28,18 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 	CarreraDao carreraDaoImp;
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void agregarNuevaCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException,
 			CodigoInvalidoException, EstadoInvalidoException, ExisteCarreraConElMismoCodigoException {
 		Carrera nuevaCarrera = this.armarCarreraDesdeJson(carreraJson);
-		this.validarSiExisteCarreraConElMismoCodigo(nuevaCarrera.getCodigo());
-		this.save(nuevaCarrera);
-
+		try {
+			this.save(nuevaCarrera);
+		} catch (ConstraintViolationException e) {
+			throw new ExisteCarreraConElMismoCodigoException();
+		}
 	}
 
-	@Override
-	public void validarSiExisteCarreraConElMismoCodigo(String codigo) throws ExisteCarreraConElMismoCodigoException {
+	private void validarSiExisteCarreraConElMismoCodigo(String codigo) throws ExisteCarreraConElMismoCodigoException {
 		Carrera carrera = carreraDaoImp.encontrarCarreraConElMismoCodigo(codigo);
 		if (carrera != null) {
 			throw new ExisteCarreraConElMismoCodigoException();
@@ -48,14 +51,11 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 	public void actualizarCarrera(CarreraJson carreraJson) throws DescripcionInvalidaException, CodigoInvalidoException,
 			EstadoInvalidoException, ExisteCarreraConElMismoCodigoException, CarreraNoExisteException {
 		Carrera carreraRecibida = this.armarCarreraDesdeJson(carreraJson);
-		Carrera carreraActual = null;
 		try {
-			carreraActual = this.get(carreraJson.id);
+			Carrera carreraActual = this.get(carreraJson.id);
+			this.actualizarInformacionDeLaCarrera(carreraActual, carreraRecibida);
 		} catch (ObjectNotFoundinDBException e) {
 			throw new CarreraNoExisteException();
-		}
-		if (carreraActual != null) {
-			this.actualizarInformacionDeLaCarrera(carreraActual, carreraRecibida);
 		}
 
 	}

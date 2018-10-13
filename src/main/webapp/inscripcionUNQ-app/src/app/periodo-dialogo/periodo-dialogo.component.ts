@@ -50,6 +50,8 @@ export class PeriodoDialogoComponent implements OnInit {
              const { anho, numero, tipoPeriodo} = this.form.value;
             const periodo = new Periodo(anho, numero, tipoPeriodo);
             this.dialogRef.close(periodo);
+        }else {
+            this.utilesService.validateAllFormFields(this.form);
         }
     }
 

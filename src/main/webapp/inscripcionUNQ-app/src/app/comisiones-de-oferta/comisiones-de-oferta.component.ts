@@ -5,6 +5,7 @@ import { Comision } from './comision.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
+import { ComisionesDeOfertaDialogoComponent } from '../comisiones-de-oferta-dialogo/comisiones-de-oferta-dialogo.component';
 
 @Component({
   selector: 'app-comisiones-de-oferta',
@@ -26,8 +27,9 @@ export class ComisionesDeOfertaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.comisiones = this.utilesService.ordenarComisionesPorNombre(JSON.parse(localStorage.getItem('comisiones-de-oferta')));
+
     this.oferta = JSON.parse(localStorage.getItem('oferta-seleccionada'));
+    this.getComisiones(this.oferta.id);
   }
 
   getComisiones(id) {
@@ -58,4 +60,39 @@ export class ComisionesDeOfertaComponent implements OnInit {
    });
  }
 
+  abrirDialogoComision(){
+    const dialogRef = this.crearConfiguracionDialogoParaComision();
+      dialogRef.afterClosed().subscribe( val => {
+        if ( val != undefined) {
+          this.actualizarComisiones(val);
+        }
+      });
+  }
+
+  actualizarComisiones(comisiones){
+    this.restService.actualizarComisionesDeOferta(this.oferta.id, comisiones).subscribe(data => {
+      const mensaje = 'Los datos de la oferta académica fueron actualizados con éxito';
+      this.utilesService.mostrarMensaje(mensaje);
+      this.getComisiones(this.oferta.id);
+    },
+    (err) => {
+        this.utilesService.mostrarMensajeDeError(err);
+    });
+  }
+
+  crearConfiguracionDialogoParaComision() {
+    const dialogConfig = new  MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = '600px';
+    dialogConfig.height = '450px';
+    dialogConfig.data = {
+      incidencia: null
+    };
+
+    const dialogRef = this.dialog.open(ComisionesDeOfertaDialogoComponent,
+            dialogConfig);
+
+    return dialogRef;
+  }
 }
