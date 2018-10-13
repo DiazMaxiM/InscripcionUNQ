@@ -28,7 +28,6 @@ export class ofertaAcademicaComponent implements OnInit {
   getOfertas() {
     this.restService.getOfertas().subscribe(ofertas => {
       this.ofertas = ofertas;
-      console.log(ofertas);
     },
     (err: HttpErrorResponse) => {
         this.utilesService.mostrarMensajeDeError(err);

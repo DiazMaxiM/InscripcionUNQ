@@ -5,6 +5,7 @@ import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { MatDialogRef } from '@angular/material';
+import { AppRutas } from '../app-rutas.model';
 
 @Component({
     selector: 'app-comisiones-de-oferta-dialogo',
@@ -20,7 +21,7 @@ export class ComisionesDeOfertaDialogoComponent implements OnInit {
   comisionSeleccionada;
   comisionChecked: boolean;
   comisionBuscada;
-  
+
   constructor(
     private restService: RestService,
     private utilesService: UtilesService,
@@ -40,18 +41,31 @@ export class ComisionesDeOfertaDialogoComponent implements OnInit {
 
   getComisiones(id) {
     this.restService.getComisionesDeOferta(id).subscribe(comisiones => {
-      this.comisionesSeleccionadas = this.utilesService.ordenarComisionesPorNombre(comisiones);
+      this.guardarComisiones(comisiones);
     },
       (err: HttpErrorResponse) => {
         this.utilesService.mostrarMensajeDeError(err);
       });
   }
 
+  guardarComisiones(comisiones: Comision[]) {
+    if (comisiones.length == 0) {
+      const mensaje = 'No se encontraron comisiones para el período de la oferta';
+      this.irATarerasUsuario(mensaje);
+    } else {
+      this.comisionesSeleccionadas = this.utilesService.ordenarComisionesPorNombre(comisiones);
+    }
+  }
+
+  irATarerasUsuario(mensaje){
+    this.cerrar();
+    this.utilesService.mostrarMensajeYRedireccionar(mensaje, AppRutas.TAREAS_USUARIO);
+}
+
   onChange(comision, $event) {
     if ($event.checked) {
       this.comisionesSeleccionadas.push(comision);
-    }
-    else {
+    } else {
         this.comisionesSeleccionadas.forEach(comisionSeleccionada => {
             if (comision.id == comisionSeleccionada.id) {
                 this.comisionesSeleccionadas.splice(this.comisionesSeleccionadas.indexOf(comisionSeleccionada), 1);

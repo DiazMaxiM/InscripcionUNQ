@@ -106,9 +106,10 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
         if (periodos.length == 0 ) {
           const mensaje = 'No se encontraron períodos para la oferta';
           this.irATarerasUsuario(mensaje);
+        } else {
+            this.periodos = periodos;
+            this.crearFiltroPeriodos();
         }
-        this.periodos = periodos;
-        this.crearFiltroPeriodos();
      }
 
 
