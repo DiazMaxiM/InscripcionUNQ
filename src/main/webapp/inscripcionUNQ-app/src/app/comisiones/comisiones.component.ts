@@ -93,6 +93,7 @@ guardarComisiones(comisiones) {
 
     } else {
       this.comisiones = this.utilesService.ordenarComisionesPorNombre(comisiones);
+      console.log(comisiones);
       this.mostrarComisiones = true;
     }
 }
