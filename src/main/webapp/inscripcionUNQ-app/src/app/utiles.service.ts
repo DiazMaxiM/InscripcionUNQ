@@ -191,4 +191,16 @@ carreraValida (carreras: Carrera[], codigoCarrera) {
 obtenerCarrera(carreras: Carrera[], codigoCarrera) {
   return carreras.find(carrera => carrera.codigo == codigoCarrera);
 }
+
+soloNumero(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode;
+console.log(charCode);
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
+
+}
+
+
 }

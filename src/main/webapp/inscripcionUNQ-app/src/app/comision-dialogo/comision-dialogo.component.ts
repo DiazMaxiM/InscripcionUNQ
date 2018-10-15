@@ -259,4 +259,8 @@ export class ComisionDialogoComponent implements OnInit {
         this.mostrarHorariosSeleccionados();
 
     }
+
+    soloNumero(evento) {
+      return this.utilesService.soloNumero(evento);
+    }
 }

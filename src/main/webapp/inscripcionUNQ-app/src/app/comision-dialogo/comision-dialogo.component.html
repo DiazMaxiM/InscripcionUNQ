@@ -21,7 +21,7 @@
       </div>
     <div class="form-row">
         <mat-form-field class="form-group col-md-6">
-            <input matInput type="number" placeholder="Cupo" formControlName="cupo" required>
+            <input matInput (keypress)="soloNumero($event)" type="text" placeholder="Cupo" formControlName="cupo" required>
             <mat-error *ngIf="form.get('cupo').hasError('required')">
                 Campo obligatorio
               </mat-error> 
@@ -57,11 +57,11 @@
         <div class="row col-md-12">
             <div class="col">
                 Horario de comienzo 
-                 <ngb-timepicker formControlName="horarioComienzo" required></ngb-timepicker>
+                 <ngb-timepicker (keypress)="soloNumero($event)" formControlName="horarioComienzo" required></ngb-timepicker>
                 <mat-error *ngIf="formHorario.get('horarioComienzo').hasError('required') && formHorario.get('dia').touched">Campo obligatorio</mat-error>
              </div>
              <mat-form-field class="form-group col">
-                <input matInput type="number" placeholder="Duración" formControlName="duracion" required>
+                <input matInput type="number" (keypress)="soloNumero($event)" placeholder="Duración" formControlName="duracion" required>
                 <mat-error *ngIf="formHorario.get('duracion').hasError('required')">
                     Campo obligatorio
                   </mat-error> 
