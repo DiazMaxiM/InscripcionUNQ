@@ -33,6 +33,7 @@ export class ComisionDialogoComponent implements OnInit {
     filtroPeriodos: Observable<Periodo[]>;
     horarios = [];
     horarioAEditar: HorarioComision;
+    mostrarGuardarComision = true;
 
     constructor(
         private fb: FormBuilder,
@@ -104,7 +105,7 @@ export class ComisionDialogoComponent implements OnInit {
             this.form.setValue({
                 'nombre': this.comision.nombre,
                 'cupo': this.comision.cupo,
-                'materia': this.comision.materia.nombre,
+                'materia': this.comision.nombreMateria,
                 'periodo': this.comision.periodo.codigo
               });
 
@@ -164,6 +165,7 @@ export class ComisionDialogoComponent implements OnInit {
     mostarFormularioHorarios() {
        this.mostrarformularioParaHorarios = true;
        this.mostrarTablaHorarios = false;
+       this.mostrarGuardarComision = false;
     }
 
     mostrarHorariosSeleccionados() {
@@ -173,6 +175,7 @@ export class ComisionDialogoComponent implements OnInit {
             this.mostrarTablaHorarios = false;
         }
         this.mostrarformularioParaHorarios = false;
+        this.mostrarGuardarComision = true;
     }
 
     guardarHorario() {
@@ -247,11 +250,7 @@ export class ComisionDialogoComponent implements OnInit {
 
     cancelarHorario() {
         this.formHorario.reset();
-        if (this.horarios.length > 0) {
-            this.mostrarHorariosSeleccionados();
-        } else{
-            this.mostrarformularioParaHorarios = false;
-        }
+        this.mostrarHorariosSeleccionados();
     }
 
     eliminarHorario(horario) {
