@@ -13,6 +13,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTooltipModule} from '@angular/material';
 
 const modules = [
   MatInputModule,
@@ -29,7 +30,8 @@ const modules = [
   MatRadioModule,
   MatProgressSpinnerModule,
   MatSlideToggleModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatTooltipModule
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Edición materia</h2>
+<h2 mat-dialog-title>Edición de materia</h2>
 <mat-dialog-content [formGroup]="form">
   <mat-form-field>
     <input matInput placeholder="Código" formControlName="codigo" required>
@@ -13,12 +13,16 @@
     </mat-error>
   </mat-form-field>
   <ng-container *ngFor="let carrera of carreras">
-      {{carrera.codigo}}
-    <mat-checkbox color="warn" [checked]="verificarSeleccion(carrera)" 
-    (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
-    </mat-checkbox>
+    <ng-template #tipContent>{{carrera.descripcion}}</ng-template>
+    <div class="carrera" 
+     [ngbTooltip]="tipContent" matTooltipPosition="after">
+        {{carrera.codigo}}
+      <mat-checkbox [checked]="verificarSeleccion(carrera)" 
+        (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
+      </mat-checkbox>
+    </div>
   </ng-container>
-  <mat-form-field>
+ <mat-form-field>
     <input matInput type="number" placeholder="Carga horaria" formControlName="horas" required>
     <mat-error *ngIf="form.get('horas').hasError('required')">
       Campo obligatorio

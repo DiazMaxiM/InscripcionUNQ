@@ -146,7 +146,7 @@ public class Validacion {
 	}
 	
 	private static boolean esNumeroValido(Integer numero) {
-		return numero != null || numero instanceof Integer;
+		return numero != null || numero instanceof Integer && numero > 0;
 	}
 
 	private static void anoValido(Integer anho) throws AnhoInvalidoException {
