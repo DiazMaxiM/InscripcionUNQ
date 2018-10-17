@@ -94,9 +94,6 @@ export class ComisionesComponent implements OnInit {
 
       } else {
         this.comisiones = this.utilesService.ordenarComisionesPorNombre(comisiones);
-        this.comisiones.forEach(comision => {
-          comision.nombreMateria = comision.materia.nombre;
-      });
         this.mostrarComisiones = true;
       }
   }
