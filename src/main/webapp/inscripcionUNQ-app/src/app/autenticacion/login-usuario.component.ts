@@ -27,7 +27,7 @@ export class LoginUsuarioComponent implements OnInit {
   crearLoginFormGroup() {
       this.loginVerificationForm = this.formBuilder.group({
               password: ['', [Validators.required]],
-              email: ['', [Validators.required,Validators.email]]
+              email: ['', [Validators.required, Validators.email]]
         });
     }
 

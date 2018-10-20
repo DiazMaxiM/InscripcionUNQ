@@ -1,0 +1,24 @@
+<h5 class="titulo">ABM Usuarios</h5>
+<div align="center">
+  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDeUsuario()">Nuevo Usuario</button>
+</div>
+<div *ngIf="mostrarUsuarios" class="table-responsive">
+    <table class="table table-hover table-borderless">
+      <thead>
+        <tr>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.email }}</td>
+          <td>
+            <i class="material-icons edit-icon" (click)="eliminarUsuario(usuario)"
+            data-toggle="tooltip" 
+            data-placement="top" title="Eliminar">delete</i>
+        </td>
+        </tr>
+       <mat-divider></mat-divider>
+      </tbody>
+    </table>
+   </div>

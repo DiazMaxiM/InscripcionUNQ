@@ -6,4 +6,7 @@ export class AppMensajes {
     public static NO_HAY_CARRERA_SELECCIONADA = 'Debe seleccionar una carrera válida';
     public static NO_HAY_HORARIOS_CARGADOS = 'Debe cargar al menos un horario';
     public static N0_HAY_MATERIAS_CARGADAS = 'No se encontraron materias cargadas';
+    public static CREACION_USUARIO_EXITOSO = 'El usuario fue creado con exito';
+    public static ELIMINACION_USUARIO_EXITOSO = 'El usuario fue eliminado con éxito';
+    public static OK = 200;
  }

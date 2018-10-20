@@ -51,7 +51,7 @@ export class RestService {
   }
 
   ingresarUsuario(usuario: Usuario) {
-    return this.httpClient.post('/api/encuesta/ingresoUsuario', usuario, { headers });
+    return this.httpClient.post('/api/usuarios/ingresoUsuario', usuario, { headers });
   }
 
   getCarreras() {
@@ -157,4 +157,17 @@ export class RestService {
   actualizarEquivalencia(equivalencia: Equivalencia) {
     return this.httpClient.post('/api/equivalencia', equivalencia, { headers });
   }
+
+  getUsuarios() {
+    return this.httpClient.get<Array<Usuario>>('/api/usuarios');
+  }
+
+  crearNuevoUsuario(usuario: Usuario) {
+    return this.httpClient.put('/api/usuarios/nuevoUsuario', usuario, { headers });
+  }
+
+  eliminarUsuario(idUsuario: number) {
+    return this.httpClient.delete('/api/usuarios/eliminarUsuario/' + idUsuario);
+  }
+
 }

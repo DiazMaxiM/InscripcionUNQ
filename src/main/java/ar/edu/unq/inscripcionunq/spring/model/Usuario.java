@@ -1,11 +1,15 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 
 @Entity(name = "Usuario")
 public class Usuario extends BaseEntity{
+
+	private static final long serialVersionUID = 1L;
+	@Column(unique = true)
 	private String email; 
 	private String password;
 	

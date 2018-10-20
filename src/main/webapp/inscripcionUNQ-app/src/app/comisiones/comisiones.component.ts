@@ -165,7 +165,7 @@ export class ComisionesComponent implements OnInit {
 
   eliminar(comision: Comision) {
     this.restService.eliminarComision(comision.id).subscribe(res => {
-      this.utilesService.mostrarMensaje('La comisión fue eliminada con éxito');
+      this.utilesService.mostrarMensaje(AppMensajes.ELIMINACION_USUARIO_EXITOSO);
       this.getComisionesEnPeriodo(comision.periodo);
     },
     (err) => {

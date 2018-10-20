@@ -3,6 +3,7 @@ import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import { AppRutas } from '../app-rutas.model';
 import { Equivalencia } from '../equivalencias/equivalencia.model';
+import { Usuario } from '../autenticacion/usuario.model';
 
 
 @Component({
@@ -68,5 +69,16 @@ export class TareasUsuarioComponent {
     (err) => {
       this.utilesService.mostrarMensajeDeError(err);
     });
+  }
+
+  irAUsuarios() {
+    this.restService.getUsuarios().subscribe(usuarios => {
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      this.utilesService.irA('usuarios');
+    },
+    (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
+
   }
 }
