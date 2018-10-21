@@ -17,6 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
@@ -27,6 +28,7 @@ import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
 public class Validacion {
 	
@@ -180,7 +182,7 @@ public class Validacion {
 	}
 
 	private static void horariosValidos(List<Horario> horarios) throws ComisionSinHorariosException {
-		if(horarios.size() == 0) {
+		if(horarios.isEmpty()) {
 			throw new ComisionSinHorariosException();
 		}
 		
@@ -189,6 +191,19 @@ public class Validacion {
 	private static void cupoValido(Integer cupo) throws CupoInvalidoException {
 		if(!esNumeroValido(cupo)) {
 			throw new CupoInvalidoException();
+		}
+		
+	}
+
+	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, PasswordInvalidoException {
+	   emailValido(usuario.getEmail());
+	   passwordValido(usuario.getPassword());
+		
+	}
+
+	private static void passwordValido(String password) throws PasswordInvalidoException {
+		if(stringVacio(password)) {
+			throw new PasswordInvalidoException();
 		}
 		
 	}

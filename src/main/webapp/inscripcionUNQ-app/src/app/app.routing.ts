@@ -15,6 +15,7 @@ import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-d
 import { PeriodoComponent } from './periodos/periodo.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { EquivalenciasComponent } from './equivalencias/equivalencias.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginEstudianteComponent, pathMatch: 'full' },
@@ -32,6 +33,7 @@ const APP_ROUTES: Routes = [
   { path: 'periodos', component: PeriodoComponent },
   { path: 'comisiones', component: ComisionesComponent },
   { path: 'equivalencias', component: EquivalenciasComponent },
+  { path: 'usuarios', component: UsuariosComponent },
   { path: '**', redirectTo: '' }
 ];
 

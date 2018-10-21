@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
@@ -62,7 +63,7 @@ public class CargaInicialDeDatosController {
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void loadData() throws ObjectNotFoundinDBException {
+	public void loadData() throws ObjectNotFoundinDBException, EncryptionDecryptionAESException {
 		Carrera tpi = new Carrera("P", "Tecnicatura Universitaria en Programacion Informatica");
 		Carrera lds = new Carrera("W", "Licenciatura en Informatica");
 		long aa = carreraServiceImp.save(tpi);
@@ -578,6 +579,7 @@ public class CargaInicialDeDatosController {
 		}
 
 		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
+		usuario.codificarPassword();
 		usuarioServiceImp.save(usuario);
 
 		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");
