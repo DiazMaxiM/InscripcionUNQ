@@ -1,12 +1,17 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.dao.UsuarioDao;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
@@ -23,7 +28,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	private UsuarioDao usuarioDao;
 
 	@Override
-	public void verificarSiExisteUsuario(String email,String password) throws ObjectNotFoundinDBException, PasswordInvalidoException {
+	public void verificarSiExisteUsuario(String email,String password) throws ObjectNotFoundinDBException, PasswordInvalidoException, EncryptionDecryptionAESException {
 		
 		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(email);
 		if (usuario == null) {
@@ -36,8 +41,10 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void crearUsuario(Usuario usuario) throws EmailInvalidoException, ExisteUsuarioConElMismoEmailException, PasswordInvalidoException {
+	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, ExisteUsuarioConElMismoEmailException, PasswordInvalidoException, EncryptionDecryptionAESException {
+		Usuario usuario = new Usuario(usuarioJson.email, usuarioJson.password);
 		Validacion.validarUsuario(usuario);
+		usuario.codificarPassword();
 		try {
 			this.save(usuario);
 		} catch (ConstraintViolationException e) {
@@ -58,6 +65,14 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 			}
 		
 	}
+
+	@Override
+	public List<UsuarioJson> getUsuariosJson() {
+		List <Usuario> usuarios = this.list();
+		return usuarios.stream().map(u -> new UsuarioJson(u)).collect(Collectors.toList());
+	}
+	
+	
 			
 
 }

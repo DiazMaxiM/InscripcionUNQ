@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
@@ -40,29 +44,33 @@ public class UsuarioController {
 		} catch (PasswordInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 					.body(new ExceptionJson(new PasswordInvalidoException()));
+		} catch (EncryptionDecryptionAESException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} 
 		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/usuarios")
 	public ResponseEntity<List> getPeridos() {
-		return ResponseEntity.ok().body(usuarioServiceImp.list());
+		return ResponseEntity.ok().body(usuarioServiceImp.getUsuariosJson());
 	}
 	
 	@PutMapping("/usuarios/nuevoUsuario")
-	public ResponseEntity nuevoUsuario(@RequestBody Usuario usuarioJson){
+	public ResponseEntity nuevoUsuario(@RequestBody UsuarioJson usuarioJson){
 		try {
 			usuarioServiceImp.crearUsuario(usuarioJson);
 		} catch (EmailInvalidoException | ExisteUsuarioConElMismoEmailException | PasswordInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 					.body(new ExceptionJson(e));
+		} catch (EncryptionDecryptionAESException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/usuarios/eliminarUsuario/{idUsuario}")
-	public ResponseEntity eliminarComision(@PathVariable String idUsuario) {
+	public ResponseEntity eliminarUsuario(@PathVariable String idUsuario) {
 		try {
 			usuarioServiceImp.eliminarUsuario(idUsuario);
 		} catch (IdNumberFormatException | UsuarioNoExisteException e) {
