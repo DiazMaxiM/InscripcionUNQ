@@ -8,6 +8,7 @@ import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 import { Periodo } from './periodos/periodo.model';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
+import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
 import { Equivalencia } from './equivalencias/equivalencia.model';
 
@@ -170,4 +171,15 @@ export class RestService {
     return this.httpClient.delete('/api/usuarios/eliminarUsuario/' + idUsuario);
   }
 
+  getIncidencias() {
+    return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
+  }
+
+  getTipoEstadoIncidencias() {
+    return this.httpClient.get<Array<String>>('/api/tipoEstadosIncidencias');
+  }
+  
+  actualizarIncidencia(incidencia: IncidenciaEstado) {
+    return this.httpClient.post('/api/actualizar-incidencia/', incidencia, { headers });
+  }
 }

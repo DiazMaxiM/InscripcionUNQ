@@ -79,6 +79,15 @@ export class TareasUsuarioComponent {
     (err) => {
       this.utilesService.mostrarMensajeDeError(err);
     });
+  }
 
+  irAIncidencias(){
+    this.restService.getIncidencias().subscribe(incidencias => {
+      localStorage.setItem('incidencias', JSON.stringify(incidencias));
+      this.utilesService.irA('incidencias');
+    },
+    (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
   }
 }

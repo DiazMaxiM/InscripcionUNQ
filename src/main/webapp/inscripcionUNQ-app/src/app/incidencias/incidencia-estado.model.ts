@@ -1,18 +1,18 @@
-export class Incidencia {
-    id?: string;
-    tipoIncidencia?: string;
+export class IncidenciaEstado {
+    id?: String;
+    tipoIncidencia?: any;
     descripcion?: string;
     tipoEstadoIncidencia?: any;
-
+  
   constructor(
-    tipoIncidencia?: string,
+    tipoIncidencia?: any,
     descripcion?: string,
     tipoEstadoIncidencia?: string,
-    id?: string
+    id?: String
   ) {
     this.tipoIncidencia = tipoIncidencia;
     this.descripcion = descripcion;
-    this.tipoEstadoIncidencia = tipoEstadoIncidencia;
+    this.tipoEstadoIncidencia = tipoEstadoIncidencia; 
     this.id = id;
   }
 }

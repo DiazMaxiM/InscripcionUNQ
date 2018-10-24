@@ -50,6 +50,8 @@ import { EquivalenciasComponent } from './equivalencias/equivalencias.component'
 import { EquivalenciaDialogoComponent } from './equivalencia-dialogo/equivalencia-dialogo.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuarioDialogoComponent } from './usuario-dialogo/usuario-dialogo.component';
+import { IncidenciasComponent } from './incidencias/incidencias.component';
+import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { UsuarioDialogoComponent } from './usuario-dialogo/usuario-dialogo.compo
     EquivalenciasComponent,
     EquivalenciaDialogoComponent,
     UsuariosComponent,
-    UsuarioDialogoComponent
+    UsuarioDialogoComponent,
+    IncidenciasComponent,
+    ModificacionDeIncidenciaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +104,6 @@ import { UsuarioDialogoComponent } from './usuario-dialogo/usuario-dialogo.compo
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
-  EquivalenciaDialogoComponent, UsuarioDialogoComponent]
+  EquivalenciaDialogoComponent, UsuarioDialogoComponent, ModificacionDeIncidenciaDialogoComponent]
 })
 export class AppModule { }

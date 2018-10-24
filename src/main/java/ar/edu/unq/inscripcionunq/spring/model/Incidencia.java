@@ -11,7 +11,7 @@ public class Incidencia extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	private TipoIncidencia tipoIncidencia;
 	private String descripcion;
-	private TipoEstadoIncidencia tipoEstadoIncidencia = TipoEstadoIncidencia.ABIERTA;
+	private TipoEstadoIncidencia tipoEstadoIncidencia;
 
 	public Incidencia() {
 	}
@@ -19,7 +19,8 @@ public class Incidencia extends BaseEntity {
 	public Incidencia(TipoIncidencia tipoIncidencia, String descripcion) {
 		this.tipoIncidencia = tipoIncidencia;
 		this.descripcion = descripcion;
-	}
+		this.tipoEstadoIncidencia = TipoEstadoIncidencia.ABIERTA;
+	} 
 
 	public TipoIncidencia getTipoIncidencia() {
 		return this.tipoIncidencia;
