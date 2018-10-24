@@ -15,7 +15,8 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.service.IncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoIncidenciaService;
-
+import ar.edu.unq.inscripcionunq.spring.service.TipoEstadoIncidenciaService;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstadoIncidencia;
 @RestController
 public class IncidenciaController {
 
@@ -25,10 +26,20 @@ public class IncidenciaController {
 	@Autowired
 	private IncidenciaService incidenciaServiceImp;
 
+	@Autowired
+	private TipoEstadoIncidenciaService tipoEstadoincidenciaServiceImp;
+
 	@GetMapping("/tipoIncidencias")
 	public ResponseEntity<List> getTipoIncidencias() {
 		return ResponseEntity.ok().body(tipoIncidenciaServiceImp.getTipoIncidencias().stream()
 				.map(tipoIncidencia -> new TipoIncidenciaJson(tipoIncidencia)).collect(Collectors.toList()));
+	}
+
+	@GetMapping("/tipoEstadosIncidencias")
+	public ResponseEntity<List> getTipoEstadosIncidencias() {
+		
+		return ResponseEntity.ok().body(tipoEstadoincidenciaServiceImp.getTipoEstadosIncidencias().stream()
+		.map(tipoIncidencia -> new String(tipoIncidencia.getEstado())).collect(Collectors.toList()));
 	}
 
 	@PutMapping("/tipoIncidencia")
@@ -39,10 +50,8 @@ public class IncidenciaController {
 
 	@PostMapping("/tipoIncidencia")
 	public ResponseEntity actualizarTipoIncidencia(@RequestBody TipoIncidenciaJson tipoIncidenciaJson) {
-
 		tipoIncidenciaServiceImp.actualizarTipoIncidencia(tipoIncidenciaJson);
 		return ResponseEntity.ok().build();
-
 	}
 
 	@GetMapping("/incidencias")
@@ -56,11 +65,9 @@ public class IncidenciaController {
 		return ResponseEntity.ok().build();
 	}
 
-	@PostMapping("/incidencia")
+	@PostMapping("/actualizar-incidencia")
 	public ResponseEntity actualizarIncidencia(@RequestBody IncidenciaJson incidenciaJson) {
 		incidenciaServiceImp.actualizarIncidencia(incidenciaJson);
 		return ResponseEntity.ok().build();
-
 	}
-
 }

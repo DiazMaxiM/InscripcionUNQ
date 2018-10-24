@@ -1,6 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
 import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstadoIncidencia;
 
 public class IncidenciaJson {
 	public Long id;
@@ -15,7 +16,7 @@ public class IncidenciaJson {
 		this.id = incidencia.getId();
 		this.tipoIncidencia = new TipoIncidenciaJson(incidencia.getTipoIncidencia());
 		this.descripcion = incidencia.getDescripcion();
-		this.tipoEstadoIncidencia = incidencia.getTipoEstadoIncidencia().toString();
+		this.tipoEstadoIncidencia = incidencia.getTipoEstadoIncidencia().getEstado();
 	}
 
 }

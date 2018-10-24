@@ -16,6 +16,7 @@ import { PeriodoComponent } from './periodos/periodo.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
 import { EquivalenciasComponent } from './equivalencias/equivalencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { IncidenciasComponent } from './incidencias/incidencias.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginEstudianteComponent, pathMatch: 'full' },
@@ -34,6 +35,7 @@ const APP_ROUTES: Routes = [
   { path: 'comisiones', component: ComisionesComponent },
   { path: 'equivalencias', component: EquivalenciasComponent },
   { path: 'usuarios', component: UsuariosComponent },
+  { path: 'incidencias', component: IncidenciasComponent },
   { path: '**', redirectTo: '' }
 ];
 

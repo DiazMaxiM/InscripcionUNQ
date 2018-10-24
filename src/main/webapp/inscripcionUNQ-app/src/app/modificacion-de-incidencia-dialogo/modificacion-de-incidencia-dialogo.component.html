@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Edición de incidencia</h2>
+<mat-dialog-content [formGroup]="form">
+  <mat-form-field>
+    <input matInput formControlName="tipoIncidencia" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="descripcion" readonly>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" placeholder="Estado incidencia" formControlName="tipoEstadoIncidencia" matInput [matAutocomplete]="auto" required>
+    <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let tipoEstadoIncidencia of filtroTipoEstadoIncidencia | async" [value]="tipoEstadoIncidencia">
+        {{tipoEstadoIncidencia}}
+    </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="form.get('tipoEstadoIncidencia').hasError('required')">
+            Campo obligatorio
+    </mat-error> 
+  </mat-form-field>    
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+    Cerrar
+  </button>
+  <button class="btn btn-danger mat-button"
+  mat-fab color="primary" (click)="guardar()">
+    Guardar
+  </button>
+</mat-dialog-actions>

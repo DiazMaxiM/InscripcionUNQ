@@ -14,6 +14,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoEstadoIncidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
 
+
 @Service
 @Transactional
 public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implements IncidenciaService {
@@ -26,15 +27,13 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 
 	@Override
 	public List<Incidencia> getIncidencias() {
-
 		return incidenciaDaoImp.getIncidencias();
 	}
 
 	@Override
 	public void agregarIncidencia(IncidenciaJson incidenciaJson) {
 		TipoIncidencia tipo = tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidencia.id);
-		Incidencia incidencia = new Incidencia(tipo,
-				incidenciaJson.descripcion);
+		Incidencia incidencia = new Incidencia(tipo, incidenciaJson.descripcion);
 		incidenciaDaoImp.save(incidencia);
 	}
 
@@ -44,8 +43,10 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 		incidencia.setDescripcion(incidenciaJson.descripcion);
 		TipoIncidencia tipoIncidencia = tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidencia.id);
 		incidencia.setTipoIncidencia(tipoIncidencia);
-		incidencia.setTipoEstadoIncidencia(TipoEstadoIncidencia.valueOf(incidenciaJson.tipoEstadoIncidencia));
-		incidenciaDaoImp.update(incidencia);
+		TipoEstadoIncidencia tipoEstado;
+		incidencia.setTipoEstadoIncidencia(TipoEstadoIncidencia.getEnum(incidenciaJson.tipoEstadoIncidencia));
+
+		incidenciaDaoImp.save(incidencia);
 	}
 
 	@Override
