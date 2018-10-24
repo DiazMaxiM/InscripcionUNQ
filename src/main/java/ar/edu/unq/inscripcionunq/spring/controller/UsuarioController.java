@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.controller;
 
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,10 +60,10 @@ public class UsuarioController {
 	public ResponseEntity nuevoUsuario(@RequestBody UsuarioJson usuarioJson){
 		try {
 			usuarioServiceImp.crearUsuario(usuarioJson);
-		} catch (EmailInvalidoException | ExisteUsuarioConElMismoEmailException | PasswordInvalidoException e) {
+		} catch (EmailInvalidoException | ExisteUsuarioConElMismoEmailException e){
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 					.body(new ExceptionJson(e));
-		} catch (EncryptionDecryptionAESException e) {
+		} catch (EncryptionDecryptionAESException | EmailException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		

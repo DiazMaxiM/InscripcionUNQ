@@ -2,6 +2,8 @@ package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
+
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
@@ -16,7 +18,7 @@ public interface UsuarioService extends GenericService<Usuario>{
    
 	void verificarSiExisteUsuario(String email, String password) throws ObjectNotFoundinDBException, PasswordInvalidoException, EncryptionDecryptionAESException;
 
-	void crearUsuario(UsuarioJson usuario) throws EmailInvalidoException,ExisteUsuarioConElMismoEmailException, PasswordInvalidoException, EncryptionDecryptionAESException;
+	void crearUsuario(UsuarioJson usuario) throws EmailInvalidoException,ExisteUsuarioConElMismoEmailException,EncryptionDecryptionAESException, EmailException;
 
 	void eliminarUsuario(String idUsuario) throws UsuarioNoExisteException, IdNumberFormatException;
 

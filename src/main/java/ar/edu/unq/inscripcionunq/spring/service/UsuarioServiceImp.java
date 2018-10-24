@@ -3,6 +3,8 @@ package ar.edu.unq.inscripcionunq.spring.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.mail.EmailException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.model.Mail;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
@@ -41,16 +44,23 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, ExisteUsuarioConElMismoEmailException, PasswordInvalidoException, EncryptionDecryptionAESException {
-		Usuario usuario = new Usuario(usuarioJson.email, usuarioJson.password);
-		Validacion.validarUsuario(usuario);
-		usuario.codificarPassword();
+	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, ExisteUsuarioConElMismoEmailException,EncryptionDecryptionAESException, EmailException {
+		Validacion.esEmailValido(usuarioJson.email);
+		String password =  RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
+		Usuario usuario = new Usuario(usuarioJson.email, password);
 		try {
 			this.save(usuario);
+			enviarMail(usuario);
 		} catch (ConstraintViolationException e) {
 		    throw new ExisteUsuarioConElMismoEmailException();
 		}
 		
+	}
+
+	private void enviarMail(Usuario usuario) throws EmailException {
+		Mail mail = new Mail();
+		mail.send(usuario.getEmail(),"[Encuesta de pre inscripción] Alta Usuario",
+				"Estimado, Te enviamos tu contraseña: "+ usuario.getPassword()+ ". La misma puede ser modificada una vez ingresado a la aplicacion.");
 	}
 
 	@Override

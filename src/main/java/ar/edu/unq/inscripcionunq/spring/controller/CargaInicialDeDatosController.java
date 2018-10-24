@@ -579,7 +579,6 @@ public class CargaInicialDeDatosController {
 		}
 
 		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
-		usuario.codificarPassword();
 		usuarioServiceImp.save(usuario);
 
 		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");

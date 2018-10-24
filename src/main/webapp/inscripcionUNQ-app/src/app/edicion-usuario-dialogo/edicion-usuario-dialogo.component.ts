@@ -7,12 +7,12 @@ import { Usuario } from '../autenticacion/usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 
 @Component({
-    selector: 'app-usuario-dialogo',
-    templateUrl: './usuario-dialogo.component.html',
+    selector: 'app-edicion-usuario-dialogo',
+    templateUrl: './edicion-usuario-dialogo.component.html',
     styleUrls: ['../dialogo-abm.component.css']
 })
 
-export class UsuarioDialogoComponent implements OnInit {
+export class EdicionUsuarioDialogoComponent implements OnInit {
 
     form: FormGroup;
     tipoPeriodos: string[] = [];
@@ -21,7 +21,7 @@ export class UsuarioDialogoComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private utilesService: UtilesService,
-        private dialogRef: MatDialogRef<UsuarioDialogoComponent>,
+        private dialogRef: MatDialogRef<EdicionUsuarioDialogoComponent>,
         private restService: RestService ) {
     }
     ngOnInit() {

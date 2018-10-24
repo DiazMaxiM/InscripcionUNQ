@@ -49,9 +49,11 @@ import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialo
 import { EquivalenciasComponent } from './equivalencias/equivalencias.component';
 import { EquivalenciaDialogoComponent } from './equivalencia-dialogo/equivalencia-dialogo.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { UsuarioDialogoComponent } from './usuario-dialogo/usuario-dialogo.component';
 import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component';
+import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
+import { AltaUsuarioDialogoComponent } from './alta-usuario-dialogo/alta-usuario-dialogo.component';
+import { usuarioLogueadoService } from './usuario-logueado.service';
 
 @NgModule({
   declarations: [
@@ -83,9 +85,10 @@ import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-inci
     EquivalenciasComponent,
     EquivalenciaDialogoComponent,
     UsuariosComponent,
-    UsuarioDialogoComponent,
     IncidenciasComponent,
-    ModificacionDeIncidenciaDialogoComponent
+    ModificacionDeIncidenciaDialogoComponent,
+    EdicionUsuarioDialogoComponent,
+    AltaUsuarioDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -99,11 +102,12 @@ import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-inci
     NgbModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
-    UtilesService],
+    UtilesService, usuarioLogueadoService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
-  EquivalenciaDialogoComponent, UsuarioDialogoComponent, ModificacionDeIncidenciaDialogoComponent]
+  EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent, 
+  EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent]
 })
 export class AppModule { }

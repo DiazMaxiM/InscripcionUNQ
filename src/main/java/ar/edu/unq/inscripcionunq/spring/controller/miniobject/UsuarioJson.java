@@ -6,9 +6,11 @@ public class UsuarioJson {
 	
 	public String email; 
 	public  String password;
+	public  Long id;
 	
 	public UsuarioJson(Usuario usuario) {
 		this.email = usuario.getEmail();
+		this.id = usuario.getId();
 	}
 
 	public UsuarioJson() {

@@ -50,18 +50,21 @@ public class Mail {
 	}
 
 	public void send(String to, String subject, String mensagge) throws EmailException {
+       if(file != null) {
+    	   File fileScreenshot = new File(file);
+	       EmailAttachment attachment = new EmailAttachment();
+	   	   attachment.setPath(fileScreenshot.getPath());
+	   	   attachment.setDisposition(EmailAttachment.ATTACHMENT);
+	   	   attachment.setDescription("Attachment");
+	   	   attachment.setName(fileScreenshot.getName());
 
-		File fileScreenshot = new File(file);
-		EmailAttachment attachment = new EmailAttachment();
-		attachment.setPath(fileScreenshot.getPath());
-		attachment.setDisposition(EmailAttachment.ATTACHMENT);
-		attachment.setDescription("Attachment");
-		attachment.setName(fileScreenshot.getName());
-
-		mail.attach(attachment);
+   	      mail.attach(attachment);   
+       }
 		mail.addTo(to);
 		mail.setSubject(subject);
 		mail.setMsg(mensagge);
 		mail.send();
 	}
+	
+	
 }
