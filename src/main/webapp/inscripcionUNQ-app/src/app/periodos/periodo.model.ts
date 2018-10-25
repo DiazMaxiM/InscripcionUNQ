@@ -1,5 +1,3 @@
-import { Carrera } from '../carreras/carrera.model';
-
 export class Periodo {
     id?: string;
     codigo?: string;

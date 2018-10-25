@@ -1,13 +1,14 @@
 <h2 mat-dialog-title>Período</h2>
 <mat-dialog-content [formGroup]="form">
     <mat-form-field>
-        <input matInput
-            placeholder="Año"
-            type="number"
+        <input matInput placeholder="Año" type="number" min="1989" max="{{anhoActual}}"
             formControlName="anho" required>
-            <mat-error *ngIf="form.get('anho').hasError('required')">
-            Campo obligatorio
-            </mat-error>       
+            <mat-error *ngIf="form.get('anho').hasError('min')">
+                Ingrese un año mayor a 1989
+            </mat-error>
+            <mat-error *ngIf="form.get('anho').hasError('max')">
+                Ingrese un año menor al elegido
+            </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-select placeholder="Tipo de Período" formControlName="tipoPeriodo" required>
@@ -26,7 +27,7 @@
                 type="number"
                 formControlName="numero" required>
                 <mat-error *ngIf="form.get('numero').hasError('required')">
-                Campo obligatorio
+                    Campo obligatorio
                 </mat-error>   
         </mat-form-field>
 </mat-dialog-content>
