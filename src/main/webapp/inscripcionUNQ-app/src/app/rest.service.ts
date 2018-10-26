@@ -107,6 +107,10 @@ export class RestService {
     return this.httpClient.get<Array<string>>('/api/tipoPeriodos');
   }
 
+  getCantidadPeriodos(idPeriodo: string) {
+    return this.httpClient.get<number>('/api/cantidadPeriodos/' + idPeriodo);
+  }
+
   quitarComisionDeOferta(idComision: string, idOferta: string){
     return this.httpClient.delete('api/oferta-academica/eliminarComision/' + idComision + '/' + idOferta);
   }

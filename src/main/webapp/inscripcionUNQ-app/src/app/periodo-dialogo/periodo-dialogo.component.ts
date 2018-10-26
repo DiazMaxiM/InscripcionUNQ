@@ -5,7 +5,6 @@ import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';
 
-
 @Component({
     selector: 'app-periodo-dialogo',
     templateUrl: './periodo-dialogo.component.html',
@@ -16,6 +15,8 @@ export class PeriodoDialogoComponent implements OnInit {
     form: FormGroup;
     tipoPeriodos: string[] = [];
     anhoActual: any = new Date();
+    periodo: Periodo = new Periodo();
+    numeros: number[] = [];
     
     constructor(
         private fb: FormBuilder,
@@ -38,6 +39,15 @@ export class PeriodoDialogoComponent implements OnInit {
         }
     }
 
+    getNroPeriodos(event) {
+        if(event.isUserInput) {
+
+        this.restService.getCantidadPeriodos(event.source.value).subscribe(periodos => {
+                this.numeros = Array.from(new Array(periodos),(val,index) => index + 1);
+            });
+        }
+    }
+
     crearFormularioComision() {
         this.form = this.fb.group({
             anho : ['', [Validators.required, Validators.min(1989), Validators.max(this.anhoActual)]],
@@ -48,7 +58,7 @@ export class PeriodoDialogoComponent implements OnInit {
 
     guardar() {
         if (this.form.valid) {
-             const { anho, numero, tipoPeriodo} = this.form.value;
+            const { anho, numero, tipoPeriodo} = this.form.value;
             const periodo = new Periodo(anho, numero, tipoPeriodo);
             this.dialogRef.close(periodo);
         }else {

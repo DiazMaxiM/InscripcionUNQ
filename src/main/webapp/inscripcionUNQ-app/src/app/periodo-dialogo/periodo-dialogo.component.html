@@ -3,6 +3,9 @@
     <mat-form-field>
         <input matInput placeholder="Año" type="number" min="1989" max="{{anhoActual}}"
             formControlName="anho" required>
+            <mat-error *ngIf="form.get('anho').hasError('required')">
+                Campo obligatorio
+            </mat-error>
             <mat-error *ngIf="form.get('anho').hasError('min')">
                 Ingrese un año mayor a 1989
             </mat-error>
@@ -11,9 +14,9 @@
             </mat-error>
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Tipo de Período" formControlName="tipoPeriodo" required>
+        <mat-select   placeholder="Tipo de Período" formControlName="tipoPeriodo" required>
             <mat-option>--</mat-option>
-                <mat-option *ngFor="let periodo of tipoPeriodos" [value]="periodo">
+                <mat-option  (onSelectionChange)="getNroPeriodos($event)" *ngFor="let periodo of tipoPeriodos" [value]="periodo">
                     {{periodo}}
                 </mat-option>
         </mat-select>
@@ -22,14 +25,16 @@
         </mat-error>  
     </mat-form-field>
     <mat-form-field>
-            <input matInput
-                placeholder="Número"
-                type="number"
-                formControlName="numero" required>
-                <mat-error *ngIf="form.get('numero').hasError('required')">
-                    Campo obligatorio
-                </mat-error>   
-        </mat-form-field>
+        <mat-select placeholder="Número" formControlName="numero" required>
+            <mat-option>--</mat-option>
+                <mat-option *ngFor="let numero of numeros" [value]="numero">
+                    {{numero}}
+                </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('numero').hasError('required')">
+            Campo obligatorio
+        </mat-error>   
+    </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button class="btn  mat-button" mat-fab color="primary"

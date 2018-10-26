@@ -37,6 +37,36 @@ public enum TipoPeriodo {
               break;
       }
 		  return codigoPeriodo;
-	} 
+    }
+    
+    public static int getCantidadDePeriodo(String value) {
+        int cantidadPeriodo;
+        TipoPeriodo tipo = TipoPeriodo.MENSUAL;
+        if(value == null) throw new IllegalArgumentException();
+        for(TipoPeriodo v : values())
+            if(value.equalsIgnoreCase(v.name())) tipo = v;
+
+		  switch (tipo) {
+          case MENSUAL: 
+              cantidadPeriodo = 12;
+              break;
+          case BIMESTRAL: 
+        	  cantidadPeriodo = 6;
+              break;
+          case TRIMESTRAL:
+        	  cantidadPeriodo = 4;
+        	  break;
+          case CUATRIMESTRAL: 
+        	  cantidadPeriodo = 3;
+              break;
+          case SEMESTRAL: 
+        	  cantidadPeriodo = 2;
+              break;
+          default:
+              cantidadPeriodo = 1;
+              break;
+      }
+		  return cantidadPeriodo;
+	}
 
 }
