@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
@@ -47,6 +48,11 @@ public class PeriodoController {
 	@GetMapping("/tipoPeriodos")
 	public ResponseEntity getTiposPeriodos() {
 		return ResponseEntity.ok().body(TipoPeriodo.values());
+	}
+
+	@GetMapping("/cantidadPeriodos/{tipoPeriodo}")
+	public ResponseEntity getcantidadPeriodos(@PathVariable String tipoPeriodo){
+		return ResponseEntity.ok().body(TipoPeriodo.getCantidadDePeriodo(tipoPeriodo));
 	}
 
 }
