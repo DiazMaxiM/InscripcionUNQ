@@ -1,4 +1,4 @@
-import { Injectable, ApplicationModule } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatOptionSelectionChange} from '@angular/material';
 import {FeedbackUsuarioDialogoComponent} from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
 import { Router} from '@angular/router';
@@ -9,6 +9,7 @@ import { Periodo } from './periodos/periodo.model';
 import { AppMensajes } from './app-mensajes.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Carrera } from './carreras/carrera.model';
+import { BootController } from './boot-control';
 
 @Injectable()
 export class UtilesService {
@@ -18,6 +19,7 @@ export class UtilesService {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private ngZone: NgZone,
   ) {
   }
 
@@ -58,6 +60,8 @@ export class UtilesService {
 
  salir() {
    localStorage.clear();
+   // Triggers the reboot in main.ts
+   this.ngZone.runOutsideAngular(() => BootController.getbootControl().restart());
    this.irA('');
  }
 

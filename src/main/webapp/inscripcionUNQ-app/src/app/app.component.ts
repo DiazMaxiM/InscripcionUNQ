@@ -86,6 +86,11 @@ ngAfterViewInit() {
       if (AppMensajes.OK == res) {
           this.utilesService.mostrarMensaje(AppMensajes.MODIFICACION_PASSWORD_EXITOSO);
       }
-  });}
+  });
+}
+
+salir(){
+  this.utilesService.salir();
+}
 
 }
