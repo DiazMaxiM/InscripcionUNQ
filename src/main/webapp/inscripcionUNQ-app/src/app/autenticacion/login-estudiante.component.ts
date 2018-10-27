@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { RestService } from '../rest.service';
 import {HttpErrorResponse } from '@angular/common/http';
 import {UtilesService} from '../utiles.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login-estudiante',
@@ -13,7 +14,8 @@ export class LoginEstudianteComponent {
 
   constructor(
     private restService: RestService,
-    private utilesService: UtilesService
+    private utilesService: UtilesService,
+    public auth: AuthService
   ) {}
 
   dniFormControl = new FormControl('', [
