@@ -12,15 +12,14 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
   styleUrls: ['../estilo-abm.component.css']
 })
 export class CarrerasComponent implements OnInit {
-
   carreras: Carrera[];
   idCarrera;
-
+  
   constructor(
     private restService: RestService,
     private utilesService: UtilesService,
     private dialog: MatDialog
-) { }
+  ) { }
 
   ngOnInit() {
     this.carreras = JSON.parse(localStorage.getItem('carreras'));
@@ -37,48 +36,15 @@ export class CarrerasComponent implements OnInit {
 
   abrirDialogoParaLaCreacionDeCarrera() {
     const dialogRef = this.crearConfiguracionDialogoParaCarrera();
-      dialogRef.afterClosed().subscribe( val => {
-        if ( val != undefined) {
-          this.crearNuevaCarrera(val);
-        }
-      });
-  }
-
-  crearNuevaCarrera(carrera: Carrera) {
-    this.restService.agregarNuevaCarrera(carrera)
-    .subscribe(res => {
-     const mensaje = 'Se creó la nueva carrera con exito';
-      this.utilesService.mostrarMensaje(mensaje);
+    dialogRef.afterClosed().subscribe( val => {
       this.getCarreras();
-    },
-    (err: HttpErrorResponse) => {
-      this.utilesService.mostrarMensajeDeError(err);
     });
   }
 
   abrirDialogoParaEdicionDeCarrera(carrera: Carrera) {
-      const dialogRef = this.crearConfiguracionDialogoParaCarrera(carrera);
-      dialogRef.afterClosed().subscribe( val => {
-        if (val != undefined) {
-          this.actualizarCarreraSeleccionada(val, carrera.id);
-        }
-      });
-  }
-
-  actualizarCarreraSeleccionada(carrera: Carrera, idCarrera) {
-    carrera.id = idCarrera;
-    this.actualizarCarrera(carrera);
-  }
-
-  actualizarCarrera(carrera) {
-    this.restService.actualizarInformacionCarrera(carrera)
-    .subscribe(res => {
-     const mensaje = 'Los datos de la carrera actualizados con exito';
-      this.utilesService.mostrarMensaje(mensaje);
-      this.getCarreras();
-    },
-    (err: HttpErrorResponse) => {
-      this.utilesService.mostrarMensajeDeError(err);
+    const dialogRef = this.crearConfiguracionDialogoParaCarrera(carrera);
+    dialogRef.afterClosed().subscribe( val => {
+			this.getCarreras();
     });
   }
 
@@ -94,13 +60,25 @@ export class CarrerasComponent implements OnInit {
     };
 
     const dialogRef = this.dialog.open(CarreraDialogoComponent,
-            dialogConfig);
+        dialogConfig);
 
     return dialogRef;
+	}
+	
+	actualizarCarrera(carrera) {
+    this.restService.actualizarInformacionCarrera(carrera)
+    .subscribe(res => {
+      const mensaje = 'Los datos de la carrera fueron actualizados con éxito';
+			this.utilesService.mostrarMensaje(mensaje);
+			this.getCarreras();
+    },
+    (err: HttpErrorResponse) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
   }
 
   cambiarEstado(carrera: Carrera, evento) {
     carrera.habilitada = evento.checked;
-    this.actualizarCarrera(carrera);
+		this.actualizarCarrera(carrera);
   }
 }
