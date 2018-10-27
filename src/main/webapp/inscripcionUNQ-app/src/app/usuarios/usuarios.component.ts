@@ -45,7 +45,6 @@ export class UsuariosComponent implements OnInit{
     abrirDialogoParaCreacionDeUsuario(){
       const dialogRef = this.crearConfiguracionDialogoParaUsuario();
       dialogRef.afterClosed().subscribe(res => {
-        console.log(res);
         if (AppMensajes.OK == res) {
           this.utilesService.mostrarMensaje(AppMensajes.CREACION_USUARIO_EXITOSO);
           this.getUsuarios();

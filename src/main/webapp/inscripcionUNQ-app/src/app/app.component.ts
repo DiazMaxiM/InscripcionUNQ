@@ -7,6 +7,7 @@ import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dial
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { usuarioLogueadoService } from './usuario-logueado.service';
 import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
+import { AppMensajes } from './app-mensajes.model';
 
 @Component({
   selector: 'app-root',
@@ -78,11 +79,13 @@ ngAfterViewInit() {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = false;
     dialogConfig.width = '600px';
-    dialogConfig.height = '450px';
+    dialogConfig.height = '300px';
     const dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent,
             dialogConfig);
-
-    return dialogRef;
-  }
+    dialogRef.afterClosed().subscribe(res => {
+      if (AppMensajes.OK == res) {
+          this.utilesService.mostrarMensaje(AppMensajes.MODIFICACION_PASSWORD_EXITOSO);
+      }
+  });}
 
 }

@@ -13,12 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
-import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
@@ -26,7 +22,6 @@ import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailEx
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.UsuarioService;
 
 @RestController
@@ -36,9 +31,9 @@ public class UsuarioController {
 	private UsuarioService usuarioServiceImp;
 	
 	@PostMapping("/usuarios/ingresoUsuario")
-	public ResponseEntity ingresoUsuario(@RequestBody Usuario usuarioJson){
+	public ResponseEntity ingresoUsuario(@RequestBody UsuarioJson usuarioJson){
 		try {
-			usuarioServiceImp.verificarSiExisteUsuario(usuarioJson.getEmail(), usuarioJson.getPassword());
+			return ResponseEntity.ok().body(usuarioServiceImp.ingresarUsuario(usuarioJson));
 		} catch (ObjectNotFoundinDBException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 					.body(new ExceptionJson(new UsuarioNoExisteException()));
@@ -48,7 +43,6 @@ public class UsuarioController {
 		} catch (EncryptionDecryptionAESException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} 
-		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/usuarios")
@@ -77,6 +71,17 @@ public class UsuarioController {
 		} catch (IdNumberFormatException | UsuarioNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
+		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/usuarios/actualizarPassword")
+	public ResponseEntity actualizarPassword(@RequestBody UsuarioJson usuarioJson){
+			try {
+				usuarioServiceImp.actualizarPassword(usuarioJson);
+			} catch (UsuarioNoExisteException | PasswordInvalidoException e) {
+				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+			}
+		
 		return ResponseEntity.ok().build();
 	}
 

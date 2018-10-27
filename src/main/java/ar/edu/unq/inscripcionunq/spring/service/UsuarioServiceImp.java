@@ -29,23 +29,11 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
     
 	@Autowired
 	private UsuarioDao usuarioDao;
-
-	@Override
-	public void verificarSiExisteUsuario(String email,String password) throws ObjectNotFoundinDBException, PasswordInvalidoException, EncryptionDecryptionAESException {
-		
-		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(email);
-		if (usuario == null) {
-			throw new ObjectNotFoundinDBException();
-		}else {
-		   usuario.validarPassword(password);
-		}
-		
-	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, ExisteUsuarioConElMismoEmailException,EncryptionDecryptionAESException, EmailException {
-		Validacion.esEmailValido(usuarioJson.email);
+		Validacion.validarEmail(usuarioJson.email);
 		String password =  RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
 		Usuario usuario = new Usuario(usuarioJson.email, password);
 		try {
@@ -80,6 +68,31 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	public List<UsuarioJson> getUsuariosJson() {
 		List <Usuario> usuarios = this.list();
 		return usuarios.stream().map(u -> new UsuarioJson(u)).collect(Collectors.toList());
+	}
+
+	@Override
+	public Long ingresarUsuario(UsuarioJson usuarioJson) throws ObjectNotFoundinDBException, PasswordInvalidoException, EncryptionDecryptionAESException {
+		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(usuarioJson.email);
+		if (usuario == null) {
+			throw new ObjectNotFoundinDBException();
+		}else {
+		   usuario.validarPassword(usuarioJson.password);
+		}
+		return usuario.getId();
+	}
+
+	@Override
+	public void actualizarPassword(UsuarioJson usuarioJson) throws UsuarioNoExisteException, PasswordInvalidoException {
+		try {
+			Usuario usuario = this.get(usuarioJson.id);
+			Validacion.validarPassword(usuarioJson.password);
+			usuario.setPassword(usuarioJson.password);
+			this.update(usuario);
+		} catch (ObjectNotFoundinDBException e) {
+			throw new UsuarioNoExisteException();
+		}
+		
+		
 	}
 	
 	

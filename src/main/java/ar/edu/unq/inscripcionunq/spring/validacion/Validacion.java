@@ -197,13 +197,20 @@ public class Validacion {
 
 	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, PasswordInvalidoException {
 	   emailValido(usuario.getEmail());
-	   passwordValido(usuario.getPassword());
+	   validarPassword(usuario.getPassword());
 		
 	}
 
-	private static void passwordValido(String password) throws PasswordInvalidoException {
+	public static void validarPassword(String password) throws PasswordInvalidoException {
 		if(stringVacio(password)) {
 			throw new PasswordInvalidoException();
+		}
+		
+	}
+
+	public static void validarEmail(String email) throws EmailInvalidoException {
+		if(!esEmailValido(email)) {
+			throw new EmailInvalidoException();
 		}
 		
 	}

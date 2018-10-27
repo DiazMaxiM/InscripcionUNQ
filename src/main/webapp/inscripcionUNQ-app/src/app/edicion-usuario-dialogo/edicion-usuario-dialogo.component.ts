@@ -16,6 +16,7 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
 
     form: FormGroup;
     tipoPeriodos: string[] = [];
+    idUsuario;
 
 
     constructor(
@@ -26,12 +27,11 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
     }
     ngOnInit() {
         this.crearFormularioUsuario();
-
+        this.idUsuario = localStorage.getItem('idUsuario');
     }
 
     crearFormularioUsuario() {
         this.form = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
             password: [null, [Validators.required]],
             repassword: [null, [Validators.required]]
           }, {validator: this.checkIfMatchingPasswords('password', 'repassword')});
@@ -49,17 +49,20 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
 
     guardar() {
         if (this.form.valid) {
-             const { email, password} = this.form.value;
-            const usuario = new Usuario(email,password);
-            this.crearUsuario(usuario);
+             const {password} = this.form.value;
+            const usuario = new Usuario();
+            usuario.id = this.idUsuario;
+            usuario.password = password;
+            this.actualizarPassword(usuario);
         } else {
             this.utilesService.validateAllFormFields(this.form);
         }
     }
 
 
-    crearUsuario(usuario: Usuario) {
-       this.restService.crearNuevoUsuario(usuario).subscribe((res: Response) => {
+    actualizarPassword(usuario: Usuario) {
+        console.log(usuario);
+       this.restService.actualizarPassword(usuario).subscribe((res: Response) => {
         this.dialogRef.close(AppMensajes.OK);
       },
       (err) => {

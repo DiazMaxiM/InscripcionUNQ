@@ -107,7 +107,7 @@ import { usuarioLogueadoService } from './usuario-logueado.service';
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
-  EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent, 
+  EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
   EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent]
 })
 export class AppModule { }

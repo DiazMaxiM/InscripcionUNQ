@@ -186,4 +186,8 @@ export class RestService {
   actualizarIncidencia(incidencia: IncidenciaEstado) {
     return this.httpClient.post('/api/actualizar-incidencia/', incidencia, { headers });
   }
+  
+  actualizarPassword(usuario: Usuario) {
+    return this.httpClient.post('/api/usuarios/actualizarPassword', usuario, { headers });
+  }
 }
