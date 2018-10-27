@@ -30,46 +30,25 @@ export class MateriasComponent implements OnInit {
     this.restService.getMaterias().subscribe(materias => {
       this.materias = materias;
     },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      });
+    (err: HttpErrorResponse) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
   }
 
   abrirDialogoParaLaCreacionDeMateria() {
     const dialogRef = this.crearConfiguracionDialogoParaMateria();
 
     dialogRef.afterClosed().subscribe( val => {
-      if ( val != undefined) {
-        this.crearNuevaMateria(val);
-      }
-    });
-  }
-
-  crearNuevaMateria(materia: Materia) {
-    this.restService.agregarNuevaMateria(materia)
-    .subscribe(res => {
-     const mensaje = 'Se creó la nueva materia con exito';
-      this.utilesService.mostrarMensaje(mensaje);
-      this.getMaterias();
-    },
-    (err: HttpErrorResponse) => {
-      this.utilesService.mostrarMensajeDeError(err);
+			this.getMaterias();
     });
   }
 
   abrirDialogoParaEdicionDeMateria(materia: Materia) {
     const dialogRef = this.crearConfiguracionDialogoParaMateria(materia);
     dialogRef.afterClosed().subscribe( val => {
-      if (val != undefined) {
-        this.actualizarMateriaSeleccionada(val, materia.id);
-      }
-    });
-}
-
-  actualizarMateriaSeleccionada(materia: Materia, idMateria) {
-    materia.id = idMateria;
-    this.actualizarMateria(materia);
-  }
+			this.getMaterias();
+		});
+	}
 
   actualizarMateria(materia) {
     this.restService.actualizarInformacionMateria(materia)
@@ -78,9 +57,9 @@ export class MateriasComponent implements OnInit {
         this.utilesService.mostrarMensaje(mensaje);
         this.getMaterias();
       },
-        (err: HttpErrorResponse) => {
-          this.utilesService.mostrarMensajeDeError(err);
-        });
+      (err: HttpErrorResponse) => {
+        this.utilesService.mostrarMensajeDeError(err);
+      });
   }
 
   crearConfiguracionDialogoParaMateria(materia?) {
