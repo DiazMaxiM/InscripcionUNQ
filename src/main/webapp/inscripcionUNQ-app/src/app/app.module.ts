@@ -54,7 +54,8 @@ import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-inci
 import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
 import { AltaUsuarioDialogoComponent } from './alta-usuario-dialogo/alta-usuario-dialogo.component';
 import { usuarioLogueadoService } from './usuario-logueado.service';
-
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,7 +89,8 @@ import { usuarioLogueadoService } from './usuario-logueado.service';
     IncidenciasComponent,
     ModificacionDeIncidenciaDialogoComponent,
     EdicionUsuarioDialogoComponent,
-    AltaUsuarioDialogoComponent
+    AltaUsuarioDialogoComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +104,7 @@ import { usuarioLogueadoService } from './usuario-logueado.service';
     NgbModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
-    UtilesService, usuarioLogueadoService],
+    UtilesService, usuarioLogueadoService, AuthService],
   bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,

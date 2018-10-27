@@ -10,3 +10,11 @@ button{
 	margin: auto;
 	display: block;
 }
+
+.marginBoton{
+	margin: 10px;
+}
+
+.custom {
+    width: 30% !important;
+}
