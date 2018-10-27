@@ -3,8 +3,8 @@ import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import { Usuario } from '../autenticacion/usuario.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
-import { UsuarioDialogoComponent } from '../usuario-dialogo/usuario-dialogo.component';
 import { AppMensajes } from '../app-mensajes.model';
+import { AltaUsuarioDialogoComponent } from '../alta-usuario-dialogo/alta-usuario-dialogo.component';
 
 
 @Component({
@@ -36,11 +36,8 @@ export class UsuariosComponent implements OnInit{
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = false;
         dialogConfig.width = '400px';
-        dialogConfig.height = '400px';
-        dialogConfig.data = {
-        usuario: usuario
-      };
-      const dialogRef = this.dialog.open(UsuarioDialogoComponent,
+        dialogConfig.height = '250px';
+      const dialogRef = this.dialog.open(AltaUsuarioDialogoComponent,
             dialogConfig);
       return dialogRef;
     }
@@ -48,7 +45,6 @@ export class UsuariosComponent implements OnInit{
     abrirDialogoParaCreacionDeUsuario(){
       const dialogRef = this.crearConfiguracionDialogoParaUsuario();
       dialogRef.afterClosed().subscribe(res => {
-        console.log(res);
         if (AppMensajes.OK == res) {
           this.utilesService.mostrarMensaje(AppMensajes.CREACION_USUARIO_EXITOSO);
           this.getUsuarios();

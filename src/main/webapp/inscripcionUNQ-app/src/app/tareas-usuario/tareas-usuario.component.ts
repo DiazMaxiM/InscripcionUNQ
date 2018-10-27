@@ -1,9 +1,8 @@
-import { Component} from '@angular/core';
+import { Component, Output, OnInit, EventEmitter} from '@angular/core';
 import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import { AppRutas } from '../app-rutas.model';
-import { Equivalencia } from '../equivalencias/equivalencia.model';
-import { Usuario } from '../autenticacion/usuario.model';
+import { usuarioLogueadoService } from '../usuario-logueado.service';
 
 
 @Component({
@@ -11,11 +10,17 @@ import { Usuario } from '../autenticacion/usuario.model';
   templateUrl: './tareas-usuario.component.html',
   styleUrls: ['./tareas-usuario.component.css']
 })
-export class TareasUsuarioComponent {
+export class TareasUsuarioComponent implements OnInit{
+
   constructor(
     private restService: RestService,
-    private utilesService: UtilesService
+    private utilesService: UtilesService,
+    private usuarioLogueado: usuarioLogueadoService
   ) {}
+
+  ngOnInit() {
+    this.usuarioLogueado.notificarUsuarioLoguedado();
+  }
 
   irACarreras() {
     this.restService.getCarreras().subscribe(carreras => {

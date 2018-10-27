@@ -1,12 +1,5 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -20,7 +13,6 @@ public class Usuario extends BaseEntity{
 	@Column(unique = true)
 	private String email; 
 	private String password;
-	private SecretKey clave;
 	
 	public Usuario() {
 		super();
@@ -49,29 +41,9 @@ public class Usuario extends BaseEntity{
 	}
 
 	public void validarPassword(String password) throws PasswordInvalidoException, EncryptionDecryptionAESException {
-		this.decodificarPassword();
 		if (!this.password.equals(password)) {
 			throw new PasswordInvalidoException();
 		};
 	}
 	
-	public void codificarPassword() throws EncryptionDecryptionAESException {
-		try {
-			String passwordOriginal = this.password;
-			this.clave = EncryptionDecryptionAES.generarClave();
-			this.password = EncryptionDecryptionAES.encrypt(passwordOriginal, this.clave);
-		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
-				| NoSuchPaddingException e) {
-			throw new EncryptionDecryptionAESException();
-		}
-	}
-	
-	public void decodificarPassword() throws EncryptionDecryptionAESException {
-		try {
-			this.password = EncryptionDecryptionAES.decrypt(this.password, this.clave);
-		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
-				| NoSuchPaddingException e) {
-			throw new EncryptionDecryptionAESException();
-		}
-	}
 }

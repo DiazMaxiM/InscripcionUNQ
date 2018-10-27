@@ -5,6 +5,7 @@ import { Usuario } from './usuario.model';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import {UtilesService} from '../utiles.service';
+import { LocationStrategy } from '@angular/common';
 
 @Component({
   selector: 'app-login-usuario',
@@ -36,7 +37,8 @@ export class LoginUsuarioComponent implements OnInit {
         const { email, password} = this.loginVerificationForm.value;
         const usuario = new Usuario(email, password);
         this.restService.ingresarUsuario(usuario)
-          .subscribe(res => {
+          .subscribe(idUsuario => {
+            localStorage.setItem('idUsuario', JSON.stringify(idUsuario));
              this.utilesService.irA('tareas-usuario');
            },
            (err: HttpErrorResponse) => {

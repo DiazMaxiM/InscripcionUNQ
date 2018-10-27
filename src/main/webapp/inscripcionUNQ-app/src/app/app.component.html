@@ -7,6 +7,10 @@
 			class="material-icons boton-incidencia" title="Notificar incidencia">
 			notification_important
 			</i>
+			<i [hidden]="!hayUsuarioLogueado" (click)="abrirDialogoParaModificacionDePassword()" 
+			class="material-icons boton-incidencia" title="Editar password">
+			account_circle
+			</i>
 		</div>
 	</div>
 </mat-toolbar>

@@ -1,20 +1,8 @@
-<h2 mat-dialog-title>Usuario</h2>
+<h2 mat-dialog-title>Modificación de contraseña</h2>
 <mat-dialog-content [formGroup]="form">
-    <mat-form-field>
-    <input matInput
-    placeholder="Correo electrónico"
-    formControlName="email"
-    type="email" required>
-    <mat-error *ngIf="form.get('email').hasError('required')">
-      Campo obligatorio
-    </mat-error>
-    <mat-error *ngIf="form.get('email').hasError('email')">
-      La dirección ingresada no corresponde a un correo electrónico válido
-    </mat-error>
-  </mat-form-field>
   <mat-form-field>
     <input matInput
-    placeholder="Contraseña"
+    placeholder="Contraseña nueva"
     formControlName="password"
     type="password" required>
     <mat-error *ngIf="form.get('password').hasError('required')">

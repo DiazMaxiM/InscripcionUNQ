@@ -7,31 +7,31 @@ import { Usuario } from '../autenticacion/usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 
 @Component({
-    selector: 'app-usuario-dialogo',
-    templateUrl: './usuario-dialogo.component.html',
+    selector: 'app-edicion-usuario-dialogo',
+    templateUrl: './edicion-usuario-dialogo.component.html',
     styleUrls: ['../dialogo-abm.component.css']
 })
 
-export class UsuarioDialogoComponent implements OnInit {
+export class EdicionUsuarioDialogoComponent implements OnInit {
 
     form: FormGroup;
     tipoPeriodos: string[] = [];
+    idUsuario;
 
 
     constructor(
         private fb: FormBuilder,
         private utilesService: UtilesService,
-        private dialogRef: MatDialogRef<UsuarioDialogoComponent>,
+        private dialogRef: MatDialogRef<EdicionUsuarioDialogoComponent>,
         private restService: RestService ) {
     }
     ngOnInit() {
         this.crearFormularioUsuario();
-
+        this.idUsuario = localStorage.getItem('idUsuario');
     }
 
     crearFormularioUsuario() {
         this.form = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
             password: [null, [Validators.required]],
             repassword: [null, [Validators.required]]
           }, {validator: this.checkIfMatchingPasswords('password', 'repassword')});
@@ -49,17 +49,20 @@ export class UsuarioDialogoComponent implements OnInit {
 
     guardar() {
         if (this.form.valid) {
-             const { email, password} = this.form.value;
-            const usuario = new Usuario(email,password);
-            this.crearUsuario(usuario);
+             const {password} = this.form.value;
+            const usuario = new Usuario();
+            usuario.id = this.idUsuario;
+            usuario.password = password;
+            this.actualizarPassword(usuario);
         } else {
             this.utilesService.validateAllFormFields(this.form);
         }
     }
 
 
-    crearUsuario(usuario: Usuario) {
-       this.restService.crearNuevoUsuario(usuario).subscribe((res: Response) => {
+    actualizarPassword(usuario: Usuario) {
+        console.log(usuario);
+       this.restService.actualizarPassword(usuario).subscribe((res: Response) => {
         this.dialogRef.close(AppMensajes.OK);
       },
       (err) => {
