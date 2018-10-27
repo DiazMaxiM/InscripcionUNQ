@@ -14,6 +14,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTooltipModule} from '@angular/material';
+import {MatMenuModule} from '@angular/material/menu';
 
 const modules = [
   MatInputModule,
@@ -31,7 +32,8 @@ const modules = [
   MatProgressSpinnerModule,
   MatSlideToggleModule,
   MatAutocompleteModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatMenuModule
 ];
 
 @NgModule({
