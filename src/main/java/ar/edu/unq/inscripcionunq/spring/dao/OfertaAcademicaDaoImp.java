@@ -33,5 +33,14 @@ public class OfertaAcademicaDaoImp extends GenericDaoImp<OfertaAcademica> implem
 				.setParameter("idOferta", idOferta)
 				.getResultList();
 	}
+	
+	@Override
+	public OfertaAcademica getOfertaPorNombre(String nombre) {
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		return (OfertaAcademica) session.createQuery("from OfertaAcademica as oferta where oferta.nombre  = :nombre")
+				.setParameter("nombre", nombre)
+			    .uniqueResult();
+	}
 
 }

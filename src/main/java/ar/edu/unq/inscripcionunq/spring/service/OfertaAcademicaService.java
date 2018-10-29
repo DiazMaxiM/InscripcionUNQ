@@ -7,6 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
@@ -18,9 +19,9 @@ public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
 
 	List<OfertaAcademicaJson> getOfertasAcademicasJson();
 
-	void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException;
+	void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, ErrorAlGenerarCodigoException;
 
-	void actualizarOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, OfertaNoExisteException;
+	void actualizarOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, OfertaNoExisteException, ErrorAlGenerarCodigoException;
 
 	List<ComisionCompletaJson> getComisionesEnOferta(String idOferta);
 	

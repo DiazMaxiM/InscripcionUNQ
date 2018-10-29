@@ -18,6 +18,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
@@ -42,7 +43,7 @@ public class OfertaAcademicaController {
 		try {
 			ofertaAcademicaServiceImpl.crearOferta(ofertaJson);
 		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException
-				| NombreInvalidoException e) {
+				| NombreInvalidoException | ErrorAlGenerarCodigoException e) {
 			
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
@@ -50,12 +51,13 @@ public class OfertaAcademicaController {
 
 	}
 	
+	
 	@PostMapping("/ofertas-academicas/actualizarOferta/")
 	public ResponseEntity actualizarOferta(@RequestBody OfertaAcademicaJson ofertaJson) {
 		try {
 			ofertaAcademicaServiceImpl.actualizarOferta(ofertaJson);
 		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException
-				| NombreInvalidoException |OfertaNoExisteException e) {
+				| NombreInvalidoException |OfertaNoExisteException | ErrorAlGenerarCodigoException e) {
 			
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
