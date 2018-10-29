@@ -17,7 +17,7 @@ public class AcademicOfferTest {
 	public void setUp() throws Exception {
 		Carrera carrera = Mockito.mock(Carrera.class);
 		Periodo periodo = Mockito.mock(Periodo.class);
-		ofertaAcademica = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", carrera,periodo);
+		ofertaAcademica = new OfertaAcademica("Oferta Academica TPI 2 semestre 2018", carrera,periodo);
 	}
 	
 	@Test

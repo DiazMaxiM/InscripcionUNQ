@@ -335,8 +335,8 @@ public class CargaInicialDeDatosController {
 		Periodo periodo2 = new Periodo(2018, 1, TipoPeriodo.CUATRIMESTRAL);
 		periodoServiceImp.save(periodo2);
 
-		OfertaAcademica acc1 = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi, periodo1);
-		OfertaAcademica acc2 = new OfertaAcademica("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds,
+		OfertaAcademica acc1 = new OfertaAcademica("Oferta Academica TPI 2 semestre 2018", tpi, periodo1);
+		OfertaAcademica acc2 = new OfertaAcademica("Oferta Academica LIDS 2 semestre 2018", lds,
 				periodo2);
 
 		Comision commMate1 = new Comision("Mate1 C1", materiaServiceImp.get(mate1), 30, periodo1);

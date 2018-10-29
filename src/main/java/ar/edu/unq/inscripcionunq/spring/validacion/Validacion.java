@@ -97,11 +97,17 @@ public class Validacion {
 	}
 
 	public static void validarOfertaAcademica(OfertaAcademica oferta) throws DescripcionInvalidaException, 
-	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
+	 EstadoInvalidoException, CodigoInvalidoException {
 		descripcionValida(oferta.getDescripcion());
-		nombreValido(oferta.getNombre());
 		estadoValido(oferta.getEstado());
 		validarCarrera(oferta.getCarrera());
+		validarCodigoInvalido(oferta.getCarrera().getCodigo(), oferta.getPeriodo().getCodigo());
+	}
+
+	private static void validarCodigoInvalido(String codigoCarrera, String codigoPeriodo) throws CodigoInvalidoException {
+		if(stringVacio(codigoCarrera) || stringVacio(codigoPeriodo)){
+			throw new CodigoInvalidoException();
+		}
 	}
 	
 	private static void horarioValido(String horario) throws HorarioInvalidoException {
