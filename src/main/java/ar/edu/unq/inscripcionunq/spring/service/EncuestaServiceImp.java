@@ -1,11 +1,14 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
@@ -75,6 +78,12 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			estudiante.agregarRegistroComisiones(comision);
 		}
 		studentServiceImp.update(estudiante);
+	}
+
+	@Override
+	public List<EncuestaJson> getEncuestaJson() {
+		List<Encuesta> encuestas = this.list();
+		return new ArrayList<EncuestaJson>();
 	}
 
 }

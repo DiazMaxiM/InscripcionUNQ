@@ -11,6 +11,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailEx
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
@@ -20,9 +21,9 @@ public interface UsuarioService extends GenericService<Usuario>{
 
 	void eliminarUsuario(String idUsuario) throws UsuarioNoExisteException, IdNumberFormatException;
 
-	List<UsuarioJson> getUsuariosJson();
-
-	Long ingresarUsuario(UsuarioJson usuarioJson) throws ObjectNotFoundinDBException, PasswordInvalidoException, EncryptionDecryptionAESException;
+	UsuarioJson ingresarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, PasswordInvalidoException, EncryptionDecryptionAESException;
 
 	void actualizarPassword(UsuarioJson usuarioJson) throws UsuarioNoExisteException, PasswordInvalidoException;
+
+	List<UsuarioJson> getUsuariosSegunPerfil(String perfil) throws PerfilInvalidoException;
 }

@@ -1,8 +1,22 @@
 <h5 class="titulo">ABM Usuarios</h5>
 <div align="center">
-  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDeUsuario()">Nuevo Usuario</button>
+  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDeUsuario()">Nuevo Administrador</button>
 </div>
-<div *ngIf="mostrarUsuarios" class="table-responsive">
+<div class="container-buscador">
+	<mat-form-field>
+		<mat-select placeholder="Perfil" (selectionChange)="perfilSeleccionado($event.value)">
+			<mat-option *ngFor="let perfil of perfiles" [value]="perfil">
+				{{perfil}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
+<div class="container-buscador">
+	<mat-form-field>
+			<input matInput [(ngModel)]="usuarioBuscado" placeholder="Buscar usuario"> 
+</mat-form-field>
+</div>
+<div class="table-responsive">
     <table class="table table-hover table-borderless">
       <thead>
         <tr>
@@ -10,7 +24,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios">
+        <tr *ngFor="let usuario of usuarios| filtroBusqueda: {email: usuarioBuscado}; let i=index;">
+					<td style="width: 5%; display: none">{{i +1}}</td>
           <td>{{ usuario.email }}</td>
           <td>
             <i class="material-icons edit-icon" (click)="eliminarUsuario(usuario)"

@@ -1,0 +1,36 @@
+<form [formGroup]="loginVerificationForm" class="row justify-content-md-center" (ngSubmit)="onSubmit()">
+	<div class="row justify-content-md-center">
+		<mat-form-field class="col-sm-12 col">
+			<input matInput
+			placeholder="Correo electrónico"
+			formControlName="email"
+			type="email"
+			id="email" required>
+			<mat-error *ngIf="loginVerificationForm.get('email').hasError('required')">
+				Campo obligatorio
+			</mat-error>
+			<mat-error *ngIf="loginVerificationForm.get('email').hasError('email')">
+				La dirección ingresada no corresponde a un correo electrónico válido
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="col-sm-12 col">
+			<input matInput
+			placeholder="Contraseña"
+			formControlName="password"
+			type="password"
+			id="password" required>
+			<mat-error *ngIf="loginVerificationForm.get('password').hasError('required')">
+				Campo obligatorio
+			</mat-error>
+		</mat-form-field>
+  <div class="col-12 marginBoton">
+    <button class="btn btn-danger btn-block" type="submit" mat-fab color="primary">Ingresar</button>
+	</div>
+	<div *ngIf="!auth.isAuthenticated()" class="col-12">
+    <button (click)="auth.login()" class="btn  btn-danger btn-block"  mat-fab color="primary">
+        <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+      Ingresar con Google
+    </button>
+</div>
+</div>
+</form>

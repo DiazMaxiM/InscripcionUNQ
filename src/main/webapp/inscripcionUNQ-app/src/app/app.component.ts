@@ -5,7 +5,7 @@ import {HttpErrorResponse } from '@angular/common/http';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { usuarioLogueadoService } from './usuario-logueado.service';
+import { UsuarioLogueadoService } from './usuario-logueado.service';
 import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
 import { AppMensajes } from './app-mensajes.model';
 
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     private restService: RestService,
     private utilesService: UtilesService,
     private dialog: MatDialog,
-    private usuarioLogueado: usuarioLogueadoService
+    private usuarioLogueado: UsuarioLogueadoService
 ) { }
 
 ngOnInit() {
@@ -82,11 +82,6 @@ ngAfterViewInit() {
     dialogConfig.height = '300px';
     const dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent,
             dialogConfig);
-    dialogRef.afterClosed().subscribe(res => {
-      if (AppMensajes.OK == res) {
-          this.utilesService.mostrarMensaje(AppMensajes.MODIFICACION_PASSWORD_EXITOSO);
-      }
-  });
 }
 
 salir(){

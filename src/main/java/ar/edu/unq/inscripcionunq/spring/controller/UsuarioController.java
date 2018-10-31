@@ -18,10 +18,13 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.service.UsuarioService;
 
 @RestController
@@ -31,23 +34,22 @@ public class UsuarioController {
 	private UsuarioService usuarioServiceImp;
 	
 	@PostMapping("/usuarios/ingresoUsuario")
-	public ResponseEntity ingresoUsuario(@RequestBody UsuarioJson usuarioJson){
+	public ResponseEntity ingresARUsuario(@RequestBody UsuarioJson usuarioJson){
+			
 		try {
 			return ResponseEntity.ok().body(usuarioServiceImp.ingresarUsuario(usuarioJson));
-		} catch (ObjectNotFoundinDBException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-					.body(new ExceptionJson(new UsuarioNoExisteException()));
-		} catch (PasswordInvalidoException e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-					.body(new ExceptionJson(new PasswordInvalidoException()));
-		} catch (EncryptionDecryptionAESException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		} 
+		} catch (UsuarioNoExisteException | PasswordInvalidoException | EncryptionDecryptionAESException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 	}
 	
-	@GetMapping("/usuarios")
-	public ResponseEntity<List> getPeridos() {
-		return ResponseEntity.ok().body(usuarioServiceImp.getUsuariosJson());
+	@GetMapping("/usuarios/{perfil}")
+	public ResponseEntity getUsuario(@PathVariable String perfil) {
+		try {
+			return ResponseEntity.ok().body(usuarioServiceImp.getUsuariosSegunPerfil(perfil));
+		} catch (PerfilInvalidoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 	}
 	
 	@PutMapping("/usuarios/nuevoUsuario")
@@ -83,6 +85,11 @@ public class UsuarioController {
 			}
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/tipoPerfiles")
+	public ResponseEntity getTiposPerfiles() {
+		return ResponseEntity.ok().body(TipoPerfil.values());
 	}
 
 }

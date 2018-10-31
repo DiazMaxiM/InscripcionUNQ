@@ -10,6 +10,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity(name = "Encuesta")
@@ -23,14 +24,17 @@ public class Encuesta extends BaseEntity {
 	private List<Estudiante> estudiantes = new ArrayList<Estudiante>();
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Periodo periodo;
 
 	public Encuesta() {
 	}
 
-	public Encuesta(String nombre, LocalDateTime horaComienzo, LocalDateTime horaFin) {
+	public Encuesta(String nombre, LocalDateTime horaComienzo, LocalDateTime horaFin, Periodo periodo) {
 		this.nombre = nombre;
 		this.horaComienzo = horaComienzo;
 		this.horaFin = horaFin;
+		this.periodo = periodo;
 	}
 
 	public void agregarOfertaAcademica(OfertaAcademica ofertaAcademica) {
@@ -68,6 +72,14 @@ public class Encuesta extends BaseEntity {
 
 	public List<Estudiante> getEstudiantes() {
 		return estudiantes;
+	}
+	
+	public void setPeriodo(Periodo periodo) {
+		this.periodo = periodo;
+	}
+	
+	public Periodo getPeriodo() {
+		return periodo;
 	}
 
 }

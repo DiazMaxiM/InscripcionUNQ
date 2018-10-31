@@ -15,7 +15,7 @@ import { AppMensajes } from '../app-mensajes.model';
 export class EdicionUsuarioDialogoComponent implements OnInit {
 	form: FormGroup;
 	tipoPeriodos: string[] = [];
-	idUsuario;
+	usuario: Usuario;
 
 	constructor(
 		private fb: FormBuilder,
@@ -26,7 +26,7 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
 
 	ngOnInit() {
 		this.crearFormularioUsuario();
-		this.idUsuario = localStorage.getItem('idUsuario');
+		this.usuario = JSON.parse(localStorage.getItem('usuario'));
 	}
 
 	crearFormularioUsuario() {
@@ -50,7 +50,7 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
 		if (this.form.valid) {
 			const { password } = this.form.value;
 			const usuario = new Usuario();
-			usuario.id = this.idUsuario;
+			usuario.id = this.usuario.id;
 			usuario.password = password;
 			this.actualizarPassword(usuario);
 		} else {
@@ -59,8 +59,10 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
 	}
 
 	actualizarPassword(usuario: Usuario) {
+		console.log(usuario);
 		this.restService.actualizarPassword(usuario).subscribe((res: Response) => {
-			this.dialogRef.close(AppMensajes.OK);
+			this.utilesService.mostrarMensaje(AppMensajes.MODIFICACION_PASSWORD_EXITOSO);
+			this.cerrar();
 		},
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);

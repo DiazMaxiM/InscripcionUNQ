@@ -4,6 +4,7 @@ import { RestService } from '../rest.service';
 import { Estudiante } from './estudiante.model';
 import {UtilesService} from '../utiles.service';
 import {HttpErrorResponse } from '@angular/common/http';
+import { Usuario } from '../autenticacion/usuario.model';
 
 @Component({
   selector: 'app-informacion-estudiante',
@@ -20,11 +21,11 @@ export class InformacionEstudianteComponent implements OnInit {
 
   informacionEstudianteForm: FormGroup;
   idEstudiante: string;
-  dniEstudiante: string;
+  usuario: Usuario;
   idEncuestaActual: string;
 
 ngOnInit() {
-    this.dniEstudiante = localStorage.getItem('dniEstudiante');
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.idEncuestaActual = localStorage.getItem('idEncuestaActual');
     this.getInformacionEstudiante();
     this.crearFormularioEstudiante();
@@ -39,7 +40,7 @@ crearFormularioEstudiante() {
   }
 
   getInformacionEstudiante() {
-    this.restService.getInformacionEstudiante(this.dniEstudiante, this.idEncuestaActual)
+    this.restService.getInformacionEstudiante(this.usuario.dni, this.idEncuestaActual)
     .subscribe(data =>
       this.insertarInformacionEstudianteEnFormulario(data)
     );
@@ -58,7 +59,7 @@ insertarInformacionEstudianteEnFormulario(estudiante) {
 onSubmit() {
   if (this.informacionEstudianteForm.valid) {
     const { nombres, apellidos, email} = this.informacionEstudianteForm.value;
-    const studentData = new Estudiante(this.dniEstudiante, nombres, apellidos, email, this.idEstudiante);
+    const studentData = new Estudiante(this.usuario.dni, nombres, apellidos, email, this.idEstudiante);
     this.restService.actualizarInformacionEstudiante(studentData)
       .subscribe(res => {
         const mensaje = 'Los datos fueron actualizados con exito';

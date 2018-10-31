@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
+import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
 import ar.edu.unq.inscripcionunq.spring.dao.UsuarioDao;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
@@ -18,8 +19,11 @@ import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailEx
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Mail;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
@@ -29,6 +33,8 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
     
 	@Autowired
 	private UsuarioDao usuarioDao;
+	@Autowired
+	private EncuestaDao encuestaDao;
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
@@ -36,6 +42,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 		Validacion.validarEmail(usuarioJson.email);
 		String password =  RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
 		Usuario usuario = new Usuario(usuarioJson.email, password);
+		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
 		try {
 			this.save(usuario);
 			enviarMail(usuario);
@@ -64,21 +71,19 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 		
 	}
 
-	@Override
 	public List<UsuarioJson> getUsuariosJson() {
 		List <Usuario> usuarios = this.list();
 		return usuarios.stream().map(u -> new UsuarioJson(u)).collect(Collectors.toList());
 	}
 
 	@Override
-	public Long ingresarUsuario(UsuarioJson usuarioJson) throws ObjectNotFoundinDBException, PasswordInvalidoException, EncryptionDecryptionAESException {
+	public UsuarioJson ingresarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, PasswordInvalidoException, EncryptionDecryptionAESException{
 		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(usuarioJson.email);
 		if (usuario == null) {
-			throw new ObjectNotFoundinDBException();
-		}else {
-		   usuario.validarPassword(usuarioJson.password);
+			usuario = crearUsuarioDesdeEstudiante(usuarioJson.email);
 		}
-		return usuario.getId();
+		usuario.validarPassword(usuarioJson.password);
+		return new UsuarioJson(usuario);
 	}
 
 	@Override
@@ -95,6 +100,23 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 		
 	}
 	
+	private Usuario crearUsuarioDesdeEstudiante(String email) throws UsuarioNoExisteException {
+		Estudiante estudiante = encuestaDao.getDatosDeUsuarioDesdeEncuesta(email);
+		Usuario usuario;
+		usuario = new Usuario(email,estudiante.getDni());
+		usuario.setDni(estudiante.getDni());
+		usuario.agregarPerfil(TipoPerfil.ESTUDIANTE);
+		this.save(usuario);	
+		return usuario;
+	}
+
+	@Override
+	public List<UsuarioJson> getUsuariosSegunPerfil(String perfil) throws PerfilInvalidoException {
+		Validacion.validarPerfil(perfil);
+		TipoPerfil tipoPerfil = TipoPerfil.valueOf(perfil);
+		List <Usuario> usuarios = usuarioDao.obtenerUsuariosConPerfil(tipoPerfil);
+		return usuarios.stream().map(u -> new UsuarioJson(u)).collect(Collectors.toList());
+	}
 	
 			
 
