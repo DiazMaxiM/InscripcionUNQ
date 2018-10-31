@@ -18,6 +18,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
@@ -26,6 +27,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Horario;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
@@ -217,6 +219,13 @@ public class Validacion {
 	public static void validarEmail(String email) throws EmailInvalidoException {
 		if(!esEmailValido(email)) {
 			throw new EmailInvalidoException();
+		}
+		
+	}
+
+	public static void validarPerfil(String perfil) throws PerfilInvalidoException {
+		if(!TipoPerfil.contains(perfil)){
+			throw new PerfilInvalidoException();
 		}
 		
 	}

@@ -80,5 +80,11 @@ public class EncuestaController {
 		}
 		return ResponseEntity.ok().body(null);
 	}
+	
+	@GetMapping("/encuestas")
+	public ResponseEntity<List<EncuestaJson>> encuestas(){
+		return ResponseEntity.ok().body(encuestaServiceImp.getEncuestaJson());
+
+	}
 
 }

@@ -5,6 +5,8 @@ import { Usuario } from '../autenticacion/usuario.model';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { AppMensajes } from '../app-mensajes.model';
 import { AltaUsuarioDialogoComponent } from '../alta-usuario-dialogo/alta-usuario-dialogo.component';
+import { FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -14,23 +16,29 @@ import { AltaUsuarioDialogoComponent } from '../alta-usuario-dialogo/alta-usuari
 })
 export class UsuariosComponent implements OnInit{
 
-  mostrarUsuarios;
+	perfiles: String[];
 
-   usuarios: Usuario[];
+	 usuarios: Usuario[];
+	 usuarioBuscado: string;
     constructor(
       private restService: RestService,
       private utilesService: UtilesService,
       private dialog: MatDialog
     ) {}
 
-    ngOnInit() {
-      this.usuarios = JSON.parse(localStorage.getItem('usuarios'));
-      this.hayUsuariosParaMostrar();
-    }
+		ngOnInit() {
+      this.getPerfiles();
+		}
 
-    hayUsuariosParaMostrar() {
-      this.mostrarUsuarios = this.usuarios.length > 0;
-    }
+		getPerfiles() {
+			this.restService.getTipoPerfiles().subscribe(perfiles => {
+				this.perfiles = perfiles;
+			},
+				(err) => {
+					this.utilesService.mostrarMensajeDeError(err);
+				});
+		}
+
     crearConfiguracionDialogoParaUsuario(usuario?) {
       const dialogConfig = new  MatDialogConfig();
         dialogConfig.disableClose = true;
@@ -45,17 +53,13 @@ export class UsuariosComponent implements OnInit{
     abrirDialogoParaCreacionDeUsuario(){
       const dialogRef = this.crearConfiguracionDialogoParaUsuario();
       dialogRef.afterClosed().subscribe(res => {
-        if (AppMensajes.OK == res) {
-          this.utilesService.mostrarMensaje(AppMensajes.CREACION_USUARIO_EXITOSO);
-          this.getUsuarios();
-        }
       });
     }
 
-    getUsuarios() {
-      this.restService.getUsuarios().subscribe(usuarios => {
-        this.usuarios = usuarios;
-        this.hayUsuariosParaMostrar();
+    getUsuariosSegunPerfil(perfil) {
+      this.restService.getUsuarios(perfil).subscribe(usuarios => {
+				this.usuarios = usuarios;
+				console.log(usuarios);
       },
       (err) => {
           this.utilesService.mostrarMensajeDeError(err);
@@ -75,12 +79,15 @@ export class UsuariosComponent implements OnInit{
     eliminar(usuario) {
       this.restService.eliminarUsuario(usuario.id).subscribe(res => {
         this.utilesService.mostrarMensaje(AppMensajes.ELIMINACION_USUARIO_EXITOSO);
-        this.getUsuarios();
       },
       (err) => {
           this.utilesService.mostrarMensajeDeError(err);
       });
-    }
+		}
+		
+		perfilSeleccionado(perfil) {
+			this.getUsuariosSegunPerfil(perfil);
+		}
 
 
 }

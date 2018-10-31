@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
@@ -21,4 +22,7 @@ public interface EncuestaService extends GenericService<Encuesta> {
 			StudentNotExistenException, CommissionNotExistenException, VariasComisionesDeUnaMateriaException;
 
 	public Boolean puedeGenerarPDF(String dni, Long id);
+
+	public List<EncuestaJson> getEncuestaJson();
+
 }

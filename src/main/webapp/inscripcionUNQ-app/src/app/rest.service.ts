@@ -20,10 +20,10 @@ export class RestService {
   constructor(private httpClient: HttpClient) {}
 
   getEncuestasVigentes(idEstudiante: number) {
-    return this.httpClient.get('/api/poll/user/' + idEstudiante);
+    return this.httpClient.get<Array<any>>('/api/poll/user/' + idEstudiante);
   }
 
-  getInformacionEstudiante(dniEstudiante: string, idEncuestaActual: string) {
+  getInformacionEstudiante(dniEstudiante: number, idEncuestaActual: string) {
     return this.httpClient.get('/api/poll/userData/' + dniEstudiante + '/' + idEncuestaActual);
   }
 
@@ -163,8 +163,8 @@ export class RestService {
     return this.httpClient.post('/api/equivalencia', equivalencia, { headers });
   }
 
-  getUsuarios() {
-    return this.httpClient.get<Array<Usuario>>('/api/usuarios');
+  getUsuarios(perfil: string) {
+    return this.httpClient.get<Array<Usuario>>('/api/usuarios/' + perfil);
   }
 
   crearNuevoUsuario(usuario: Usuario) {
@@ -189,5 +189,13 @@ export class RestService {
   
   actualizarPassword(usuario: Usuario) {
     return this.httpClient.post('/api/usuarios/actualizarPassword', usuario, { headers });
-  }
+	}
+	
+	getEncuestas() {
+    return this.httpClient.get('/api/encuestas');
+	}
+	
+	getTipoPerfiles() {
+		return this.httpClient.get<Array<String>>('/api/tipoPerfiles');
+	}
 }

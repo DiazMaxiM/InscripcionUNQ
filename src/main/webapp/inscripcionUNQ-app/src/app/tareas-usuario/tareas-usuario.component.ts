@@ -1,8 +1,7 @@
-import { Component, Output, OnInit, EventEmitter} from '@angular/core';
+import { Component} from '@angular/core';
 import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import { AppRutas } from '../app-rutas.model';
-import { usuarioLogueadoService } from '../usuario-logueado.service';
 
 
 @Component({
@@ -10,17 +9,12 @@ import { usuarioLogueadoService } from '../usuario-logueado.service';
   templateUrl: './tareas-usuario.component.html',
   styleUrls: ['./tareas-usuario.component.css']
 })
-export class TareasUsuarioComponent implements OnInit{
+export class TareasUsuarioComponent{
 
   constructor(
     private restService: RestService,
-    private utilesService: UtilesService,
-    private usuarioLogueado: usuarioLogueadoService
+    private utilesService: UtilesService
   ) {}
-
-  ngOnInit() {
-    this.usuarioLogueado.notificarUsuarioLoguedado();
-  }
 
   irACarreras() {
     this.restService.getCarreras().subscribe(carreras => {
@@ -77,19 +71,24 @@ export class TareasUsuarioComponent implements OnInit{
   }
 
   irAUsuarios() {
-    this.restService.getUsuarios().subscribe(usuarios => {
-      localStorage.setItem('usuarios', JSON.stringify(usuarios));
       this.utilesService.irA('usuarios');
-    },
-    (err) => {
-      this.utilesService.mostrarMensajeDeError(err);
-    });
-  }
+		
+	}
 
   irAIncidencias(){
     this.restService.getIncidencias().subscribe(incidencias => {
       localStorage.setItem('incidencias', JSON.stringify(incidencias));
       this.utilesService.irA('incidencias');
+    },
+    (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
+}
+
+irAEncuestas() {
+    this.restService.getEncuestas().subscribe(encuestas => {
+      localStorage.setItem('encuestas', JSON.stringify(encuestas));
+      this.utilesService.irA('encuestas');
     },
     (err) => {
       this.utilesService.mostrarMensajeDeError(err);

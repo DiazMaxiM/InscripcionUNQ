@@ -1,7 +1,13 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
@@ -13,6 +19,10 @@ public class Usuario extends BaseEntity{
 	@Column(unique = true)
 	private String email; 
 	private String password;
+	private String dni; 
+    @ElementCollection(targetClass=TipoPerfil.class)
+    @Enumerated(EnumType.STRING) 
+	private List<TipoPerfil> perfiles = new ArrayList<>();
 	
 	public Usuario() {
 		super();
@@ -35,6 +45,14 @@ public class Usuario extends BaseEntity{
 	public String getPassword() {
 		return password;
 	}
+	
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 
 	public void setPassword(String password) {
 		this.password = password;
@@ -44,6 +62,18 @@ public class Usuario extends BaseEntity{
 		if (!this.password.equals(password)) {
 			throw new PasswordInvalidoException();
 		};
+	}
+	
+	public void agregarPerfil(TipoPerfil perfil) {
+		this.perfiles.add(perfil);
+	}
+
+	public List<TipoPerfil> getPerfiles() {
+		return perfiles;
+	}
+
+	public void setPerfiles(List<TipoPerfil> perfiles) {
+		this.perfiles = perfiles;
 	}
 	
 }

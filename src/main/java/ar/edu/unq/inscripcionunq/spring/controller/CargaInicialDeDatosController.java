@@ -22,6 +22,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
@@ -563,9 +564,8 @@ public class CargaInicialDeDatosController {
 		Long idAcamicOffer2 = ofertaAcademicaServiceImp.save(acc2);
 
 		Encuesta poll = new Encuesta("Encuesta segundo semestre 2018", LocalDateTime.of(2018, 8, 25, 00, 00),
-				LocalDateTime.of(2018, 12, 1, 00, 00));
+				LocalDateTime.of(2018, 12, 1, 00, 00),periodo1);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
-		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer2));
 
 		Long idEncuesta = encuestaServiceImp.save(poll);
 
@@ -579,6 +579,7 @@ public class CargaInicialDeDatosController {
 		}
 
 		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
+		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
 		usuarioServiceImp.save(usuario);
 
 		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");

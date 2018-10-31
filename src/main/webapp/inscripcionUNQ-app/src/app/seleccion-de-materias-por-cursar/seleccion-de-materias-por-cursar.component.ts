@@ -158,6 +158,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 			comisiones.push(comisionSeleccionada);
 		}
 		this.utilesService.activarDialogoCargando();
+		console.log(this.idEstudiante);
 		this.restService.enviarComisionesSeleccionadas(this.idEstudiante, comisiones).subscribe(data => {
 			this.utilesService.desactivarDialogoCargandoYRedireccionar('encuesta-finalizada');
 		},

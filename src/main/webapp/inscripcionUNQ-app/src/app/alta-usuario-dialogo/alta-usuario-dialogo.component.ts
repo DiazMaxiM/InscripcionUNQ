@@ -47,7 +47,8 @@ export class AltaUsuarioDialogoComponent implements OnInit {
 
     crearUsuario(usuario: Usuario) {
        this.restService.crearNuevoUsuario(usuario).subscribe((res: Response) => {
-        this.dialogRef.close(AppMensajes.OK);
+				this.utilesService.mostrarMensaje(AppMensajes.CREACION_USUARIO_EXITOSO);
+        this.cerrar();
       },
       (err) => {
           this.utilesService.mostrarMensajeDeError(err);

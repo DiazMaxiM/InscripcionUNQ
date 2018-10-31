@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
+import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
@@ -19,7 +20,8 @@ public class PollTest {
 	public void setUp() throws Exception {
 		start = start.of(2018, 8, 25, 00, 00);
 		end = end.of(2018, 12, 1, 00, 00);
-		poll = new Encuesta("Encuesta segundo semestre 2018", start, end);
+		Periodo periodo = Mockito.mock(Periodo.class);
+		poll = new Encuesta("Encuesta segundo semestre 2018", start, end, periodo);
 	}
 
 	@Test

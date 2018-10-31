@@ -9,7 +9,7 @@ export class AppMensajes {
     public static CREACION_USUARIO_EXITOSO = 'El usuario fue creado con exito';
     public static ELIMINACION_USUARIO_EXITOSO = 'El usuario fue eliminado con éxito';
     public static ELIMINACION_COMISION_EXITOSA = 'La comisión seleccionada fue eliminada con éxito';
-		public static OK = 200;
     public static MODIFICACION_PASSWORD_EXITOSO = 'La contraseña fue modificada con exito';
-
- }
+		public static ADMINSTRADOR = 'ADMINISTRADOR';
+		public static ESTUDIANTE = 'ESTUDIANTE';
+ }  

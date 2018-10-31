@@ -1,0 +1,32 @@
+<h5 class="titulo">ABM Encuestas</h5>
+<div align="center">
+	<button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaAltaOModificacionEncuesta()">Nueva Encuesta</button>
+</div>
+<div class="container-buscador">
+	<mat-form-field>
+			<input matInput [(ngModel)]="encuestaBuscada" placeholder="Buscar encuesta"> 
+</mat-form-field> 
+</div>
+<div class="table-responsive">
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Fecha de Inicio</th>
+				<th>Fecha de Fin</th>
+				<th>Período</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada, nombrePeriodo: encuestaBuscada}; let i=index;">
+				<td style="width: 5%; display: none">{{i +1}}</td>
+				<td>{{ encuesta.nombre }}</td>
+				<td>{{ encuesta.horaComienzo.dayOfMonth | number:'2.0' }}/{{ encuesta.horaComienzo.monthValue | number:'2.0' }}/{{ encuesta.horaComienzo.year}}</td>
+				<td>{{ encuesta.horaFin.dayOfMonth | number:'2.0'}}/{{ encuesta.horaFin.monthValue | number:'2.0'}}/{{ encuesta.horaFin.year}}</td>
+				<td>{{ encuesta.nombrePeriodo }}</td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)">edit</i></td>
+			</tr>
+		 <mat-divider></mat-divider>
+		</tbody>
+	</table>
+ </div> 
