@@ -16,6 +16,8 @@ import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 public class Usuario extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
+	private String nombre;
+	private String apellido;
 	@Column(unique = true)
 	private String email; 
 	private String password;
@@ -28,10 +30,11 @@ public class Usuario extends BaseEntity{
 		super();
 	}
 	
-	public Usuario(String email, String password){
+	public Usuario(String nombre, String apellido, String email){
 		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
 		this.email = email;
-		this.password = password;
 	}
 
 	public String getEmail() {
@@ -74,6 +77,28 @@ public class Usuario extends BaseEntity{
 
 	public void setPerfiles(List<TipoPerfil> perfiles) {
 		this.perfiles = perfiles;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public void actualizarDatos(Usuario usuarioActualizado) {
+		this.setNombre(usuarioActualizado.getNombre());
+		this.setApellido(usuarioActualizado.getApellido());
+		this.setEmail(usuarioActualizado.getEmail());
 	}
 	
 }

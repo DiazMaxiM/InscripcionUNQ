@@ -578,7 +578,8 @@ public class CargaInicialDeDatosController {
 			e.printStackTrace();
 		}
 
-		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
+		Usuario usuario = new Usuario("Rosali", "Zaracho","zaracho.rosali@gmail.com");
+		usuario.setPassword("123");
 		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
 		usuarioServiceImp.save(usuario);
 

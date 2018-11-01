@@ -57,6 +57,7 @@ import { AuthService } from './auth/auth.service';
 import { CallbackComponent } from './callback/callback.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';
+import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.co
     AltaUsuarioDialogoComponent,
 		CallbackComponent,
 		EncuestasComponent,
-		EncuestaDialogoComponent
+		EncuestaDialogoComponent,
+		ActalizacionPerfilesDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +115,6 @@ import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.co
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
   EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
-  EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent]
+  EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent]
 })
 export class AppModule { }

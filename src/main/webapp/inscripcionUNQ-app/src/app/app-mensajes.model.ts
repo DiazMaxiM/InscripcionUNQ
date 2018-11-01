@@ -12,4 +12,6 @@ export class AppMensajes {
     public static MODIFICACION_PASSWORD_EXITOSO = 'La contraseña fue modificada con exito';
 		public static ADMINSTRADOR = 'ADMINISTRADOR';
 		public static ESTUDIANTE = 'ESTUDIANTE';
+		public static ACTUALIZACION_USUARIO_EXITOSO = 'El usuario fue actualizado con exito';
+		public static MODIFICACION_PERFIL_EXITOSO = 'El perfil del usuario fue actualizado con exito';
  }  

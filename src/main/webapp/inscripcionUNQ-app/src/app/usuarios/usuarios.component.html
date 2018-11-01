@@ -1,33 +1,42 @@
 <h5 class="titulo">ABM Usuarios</h5>
-<div align="center">
-  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDeUsuario()">Nuevo Administrador</button>
+<div *ngIf="perfilActual == 'ADMINISTRADOR'" align="center">
+  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaAltaModificacionDeUsuario()">Nuevo Administrador</button>
 </div>
 <div class="container-buscador">
 	<mat-form-field>
-		<mat-select placeholder="Perfil" (selectionChange)="perfilSeleccionado($event.value)">
+		<mat-select placeholder="Perfil" [(value)]="perfilActual" (selectionChange)="perfilSeleccionado($event.value)">
 			<mat-option *ngFor="let perfil of perfiles" [value]="perfil">
 				{{perfil}}
 			</mat-option>
 		</mat-select>
 	</mat-form-field>
 </div>
-<div class="container-buscador">
-	<mat-form-field>
-			<input matInput [(ngModel)]="usuarioBuscado" placeholder="Buscar usuario"> 
-</mat-form-field>
-</div>
-<div class="table-responsive">
+<div *ngIf="mostrarUsuarios" class="table-responsive">
+		<div class="container-buscador">
+				<mat-form-field>
+						<input matInput [(ngModel)]="usuarioBuscado" placeholder="Buscar usuario"> 
+			</mat-form-field>
+			</div>
     <table class="table table-hover table-borderless">
       <thead>
         <tr>
+					<th>Nombres</th>
+					<th>Apellidos</th>
           <th>Email</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios| filtroBusqueda: {email: usuarioBuscado}; let i=index;">
+        <tr *ngFor="let usuario of usuarios| filtroBusqueda: {nombre: usuarioBuscado, apellido:usuarioBuscado, email: usuarioBuscado}; let i=index;">
 					<td style="width: 5%; display: none">{{i +1}}</td>
-          <td>{{ usuario.email }}</td>
-          <td>
+					<td>{{ usuario.nombre }}</td> 
+					<td>{{ usuario.apellido }}</td>
+					<td>{{ usuario.email }}</td>
+					<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaModificacionDeUsuario(usuario)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
+					<td>
+						<i class="material-icons edit-icon" (click)="abrirDialogoParaActualizacionPerfil(usuario)" title="Actalizar perfiles">account_circle
+						</i>
+					</td>
+					<td>
             <i class="material-icons edit-icon" (click)="eliminarUsuario(usuario)"
             data-toggle="tooltip" 
             data-placement="top" title="Eliminar">delete</i>

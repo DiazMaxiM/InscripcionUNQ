@@ -198,4 +198,11 @@ export class UtilesService {
 		}
 		return true;
 	}
+
+	ordenarString(lista) {
+		const listaOrdenada = lista.sort(function (a, b) {
+			return (a).localeCompare(b);
+	});
+		return listaOrdenada;
+	}
 }

@@ -15,6 +15,8 @@ import { UsuarioLogueadoService } from '../usuario-logueado.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
+	perfiles: String[];
+	seleccionaPerfil;
 
   constructor(
 		private formBuilder: FormBuilder,
@@ -28,6 +30,7 @@ export class LoginComponent implements OnInit{
 
 	ngOnInit() {
 		this.crearLoginFormGroup();
+		this.getPerfiles();
 	}
 
 crearLoginFormGroup() {
@@ -40,7 +43,8 @@ crearLoginFormGroup() {
 	onSubmit() {
 		if (this.loginVerificationForm.valid) {
 			const { email, password} = this.loginVerificationForm.value;
-			const usuario = new Usuario(email, password);
+			const usuario = new Usuario(email);
+			usuario.password = password;
 			this.restService.ingresarUsuario(usuario)
 				.subscribe(infoUsuario => {
 					this.mostrarPantallaSegunPerfil(infoUsuario);
@@ -55,17 +59,34 @@ crearLoginFormGroup() {
 		this.usuarioLogueado.notificarUsuarioLoguedado();
 		localStorage.setItem('usuario', JSON.stringify(usuario));
 		if(usuario.perfiles.length > 1){
-      // mostrar dialofo seleccion oerfil;
+      this.seleccionaPerfil = true;
 		} else {
 			const perfil = usuario.perfiles[0];
-			if (AppMensajes.ESTUDIANTE ==  perfil) {
-				this.utilesService.irA(AppRutas.ENCUESTAS_VIGENTES);
-			} else if (AppMensajes.ADMINSTRADOR ==  perfil) {
-				this.utilesService.irA(AppRutas.TAREAS_USUARIO);
-			}
+			this.irASegunPerfil(perfil);
 		}
 	}
 
+	getPerfiles() {
+		this.restService.getTipoPerfiles().subscribe(perfiles => {
+			this.perfiles = this.utilesService.ordenarString(perfiles);
+		},
+			(err) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			});
+	}
+
+	irASegunPerfil(perfil: String) {
+		if (AppMensajes.ESTUDIANTE ==  perfil) {
+			this.utilesService.irA(AppRutas.ENCUESTAS_VIGENTES);
+		} else if (AppMensajes.ADMINSTRADOR ==  perfil) {
+			this.utilesService.irA(AppRutas.TAREAS_USUARIO);
+		}
+
+	}
+
+	perfilSeleccionado(perfil) {
+	  this.irASegunPerfil(perfil);
+	}
 
 
 }

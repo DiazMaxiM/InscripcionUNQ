@@ -4,15 +4,20 @@ export class Usuario {
     password?: string;
 		id?: string;
 		dni?: number;
-    perfiles?: string[];
+		perfiles?: string[];
+		nombre?: string;
+		apellido?: string;
 
   constructor(
-
-    email?: string,
+		email?: string,
+		nombre?: string,
+		apellido?: string,
     password?: string,
 		id?: string,
 		
   ) {
+		this.nombre = nombre;
+		this.apellido= apellido;
     this.email = email;
     this.password = password;
     this.id = id;

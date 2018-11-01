@@ -1,5 +1,6 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,16 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
 import ar.edu.unq.inscripcionunq.spring.dao.UsuarioDao;
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Mail;
+import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
@@ -38,11 +43,13 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, ExisteUsuarioConElMismoEmailException,EncryptionDecryptionAESException, EmailException {
-		Validacion.validarEmail(usuarioJson.email);
+	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, EmailException, ExisteUsuarioConElMismoEmailException{
+		
 		String password =  RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
-		Usuario usuario = new Usuario(usuarioJson.email, password);
+		Usuario usuario = this.mapearUsuarioDesdeJson(usuarioJson);
+		usuario.setPassword(password);
 		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
+		Validacion.validarUsuario(usuario);
 		try {
 			this.save(usuario);
 			enviarMail(usuario);
@@ -69,11 +76,6 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 				throw new UsuarioNoExisteException();
 			}
 		
-	}
-
-	public List<UsuarioJson> getUsuariosJson() {
-		List <Usuario> usuarios = this.list();
-		return usuarios.stream().map(u -> new UsuarioJson(u)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -103,7 +105,8 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	private Usuario crearUsuarioDesdeEstudiante(String email) throws UsuarioNoExisteException {
 		Estudiante estudiante = encuestaDao.getDatosDeUsuarioDesdeEncuesta(email);
 		Usuario usuario;
-		usuario = new Usuario(email,estudiante.getDni());
+		usuario = new Usuario(estudiante.getNombre(),estudiante.getApellido(),email);
+	    usuario.setPassword(estudiante.getDni());
 		usuario.setDni(estudiante.getDni());
 		usuario.agregarPerfil(TipoPerfil.ESTUDIANTE);
 		this.save(usuario);	
@@ -116,6 +119,70 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 		TipoPerfil tipoPerfil = TipoPerfil.valueOf(perfil);
 		List <Usuario> usuarios = usuarioDao.obtenerUsuariosConPerfil(tipoPerfil);
 		return usuarios.stream().map(u -> new UsuarioJson(u)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void actualizarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, IdNumberFormatException, ExisteUsuarioConElMismoEmailException {
+		
+		Usuario usuarioActualizado = this.mapearUsuarioDesdeJson(usuarioJson);
+		Validacion.validarUsuario(usuarioActualizado);
+		try {
+			Usuario usuarioOriginal = this.get(usuarioJson.id);
+			
+			if(!usuarioOriginal.getEmail().equals(usuarioActualizado.getEmail())) {
+				this.validarSiExisteUsuarioConMismoEmail(usuarioActualizado.getEmail());
+			}
+			usuarioOriginal.actualizarDatos(usuarioActualizado);
+			this.save(usuarioOriginal);
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} catch (ObjectNotFoundinDBException e) {
+			throw new UsuarioNoExisteException();
+		}
+		
+	}
+
+	private void validarSiExisteUsuarioConMismoEmail(String email) throws ExisteUsuarioConElMismoEmailException {
+		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(email);
+		if (usuario == null) {
+			try {
+				encuestaDao.getDatosDeUsuarioDesdeEncuesta(email);
+				throw new ExisteUsuarioConElMismoEmailException();
+			} catch (UsuarioNoExisteException e) {
+				
+			}
+		}else {
+			throw new ExisteUsuarioConElMismoEmailException();
+		}
+		
+	}
+
+	private Usuario mapearUsuarioDesdeJson(UsuarioJson usuarioJson) {
+		return new Usuario(usuarioJson.nombre,usuarioJson.apellido,usuarioJson.email);
+	}
+
+	@Override
+	public void actualizarPerfiles(String idUsuario, List<String> perfiles) throws PerfilInvalidoException, IdNumberFormatException, UsuarioNoExisteException {
+		Validacion.validarPerfiles(perfiles);
+		try {
+			Usuario usuario = this.get(new Long(idUsuario));
+			List<TipoPerfil> perfilesActual = crearListaDePerfiles(perfiles);
+			usuario.setPerfiles(perfilesActual);
+			this.save(usuario);
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} catch (ObjectNotFoundinDBException e) {
+			throw new UsuarioNoExisteException();
+		}
+		
+	}
+
+	private List<TipoPerfil> crearListaDePerfiles(List<String> perfiles) {
+		List<TipoPerfil> perfilesActual = new ArrayList<>();
+		for(String perfil : perfiles) {
+			perfilesActual.add(TipoPerfil.valueOf(perfil));
+		}
+		return perfilesActual;
 	}
 	
 			
