@@ -1,5 +1,26 @@
 <h2 mat-dialog-title>Usuario</h2>
 <mat-dialog-content [formGroup]="form">
+	  <mat-form-field class="full-width">
+				<input
+					matInput
+					type="text"
+					placeholder="Nombres"
+					formControlName="nombres"
+					id="nombres" required>
+					<mat-error *ngIf="form.get('nombres').hasError('required')">
+						Campo obligatorio
+					</mat-error>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<input
+					matInput
+					placeholder="Apellidos"
+					formControlName="apellidos"
+					id="apellidos" required>
+					<mat-error *ngIf="form.get('apellidos').hasError('required')">
+						Campo obligatorio
+					</mat-error>
+			</mat-form-field>
     <mat-form-field>
     <input matInput
     placeholder="Correo electrónico"

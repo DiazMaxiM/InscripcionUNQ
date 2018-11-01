@@ -6,6 +6,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material';
 import { AppMensajes } from '../app-mensajes.model';
 import { AltaUsuarioDialogoComponent } from '../alta-usuario-dialogo/alta-usuario-dialogo.component';
 import { FormControl } from '@angular/forms';
+import { ActalizacionPerfilesDialogoComponent } from '../actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
 
 
 
@@ -20,6 +21,9 @@ export class UsuariosComponent implements OnInit{
 
 	 usuarios: Usuario[];
 	 usuarioBuscado: string;
+	 mostrarUsuarios;
+	 perfilActual;
+
     constructor(
       private restService: RestService,
       private utilesService: UtilesService,
@@ -27,7 +31,8 @@ export class UsuariosComponent implements OnInit{
     ) {}
 
 		ngOnInit() {
-      this.getPerfiles();
+			this.perfilSeleccionado('ADMINISTRADOR');
+			this.getPerfiles();
 		}
 
 		getPerfiles() {
@@ -39,27 +44,31 @@ export class UsuariosComponent implements OnInit{
 				});
 		}
 
-    crearConfiguracionDialogoParaUsuario(usuario?) {
+    crearConfiguracionDialogoParaUsuario(usuario?: Usuario) {
       const dialogConfig = new  MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = false;
-        dialogConfig.width = '400px';
-        dialogConfig.height = '250px';
+        dialogConfig.width = '600px';
+				dialogConfig.height = '400px';
+				dialogConfig.data = {
+					usuario: usuario
+				};
       const dialogRef = this.dialog.open(AltaUsuarioDialogoComponent,
             dialogConfig);
       return dialogRef;
     }
 
-    abrirDialogoParaCreacionDeUsuario(){
-      const dialogRef = this.crearConfiguracionDialogoParaUsuario();
+		abrirDialogoParaAltaModificacionDeUsuario(usuario?: Usuario){
+      const dialogRef = this.crearConfiguracionDialogoParaUsuario(usuario);
       dialogRef.afterClosed().subscribe(res => {
+				this.getUsuariosSegunPerfil();
       });
     }
 
-    getUsuariosSegunPerfil(perfil) {
-      this.restService.getUsuarios(perfil).subscribe(usuarios => {
+    getUsuariosSegunPerfil() {
+      this.restService.getUsuarios(this.perfilActual).subscribe(usuarios => {
 				this.usuarios = usuarios;
-				console.log(usuarios);
+				this.mostrarUsuarios = this.usuarios.length > 0;
       },
       (err) => {
           this.utilesService.mostrarMensajeDeError(err);
@@ -78,7 +87,8 @@ export class UsuariosComponent implements OnInit{
 
     eliminar(usuario) {
       this.restService.eliminarUsuario(usuario.id).subscribe(res => {
-        this.utilesService.mostrarMensaje(AppMensajes.ELIMINACION_USUARIO_EXITOSO);
+				this.utilesService.mostrarMensaje(AppMensajes.ELIMINACION_USUARIO_EXITOSO);
+				this.getUsuariosSegunPerfil();
       },
       (err) => {
           this.utilesService.mostrarMensajeDeError(err);
@@ -86,8 +96,30 @@ export class UsuariosComponent implements OnInit{
 		}
 		
 		perfilSeleccionado(perfil) {
-			this.getUsuariosSegunPerfil(perfil);
+			this.perfilActual = perfil;
+			this.getUsuariosSegunPerfil();
 		}
+
+		abrirDialogoParaActualizacionPerfil(usuario){
+			const dialogRef = this.crearConfiguracionDialogoParaPerfil(usuario);
+      dialogRef.afterClosed().subscribe(res => {
+				this.getUsuariosSegunPerfil();
+      });
+		}
+
+		crearConfiguracionDialogoParaPerfil(usuario: Usuario) {
+      const dialogConfig = new  MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = false;
+        dialogConfig.width = '600px';
+				dialogConfig.height = '400px';
+				dialogConfig.data = {
+					usuario: usuario
+				};
+      const dialogRef = this.dialog.open(ActalizacionPerfilesDialogoComponent,
+            dialogConfig);
+      return dialogRef;
+    }
 
 
 }

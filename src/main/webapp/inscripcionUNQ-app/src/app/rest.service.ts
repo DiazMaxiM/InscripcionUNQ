@@ -198,4 +198,12 @@ export class RestService {
 	getTipoPerfiles() {
 		return this.httpClient.get<Array<String>>('/api/tipoPerfiles');
 	}
+
+	actualizarUsuario(usuario: Usuario) {
+    return this.httpClient.post('/api/usuarios/actualizarUsuario', usuario, { headers });
+	}
+	
+	actualizarPerfiles(idUsuario: string, perfiles) {
+    return this.httpClient.post('/api/usuarios/actualizarPerfiles/' + idUsuario, perfiles, {headers});
+  }
 }

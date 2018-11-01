@@ -26,7 +26,7 @@ export class EncuestasDisponiblesComponent implements OnInit {
 		this.restService.getEncuestasVigentes(this.usuario.dni).subscribe(encuestas => {
 			this.encuestas = encuestas;
       if (this.encuestas.length == 0) {
-        const mensaje = 'No se encontraron encuestas para el DNI ingresado';
+        const mensaje = 'No se encontraron encuestas para el email ingresado';
 				this.utilesService.mostrarMensajeYSalir(mensaje);
 	
 		}

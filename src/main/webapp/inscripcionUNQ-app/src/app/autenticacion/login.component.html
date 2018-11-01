@@ -1,4 +1,4 @@
-<form [formGroup]="loginVerificationForm" class="row justify-content-md-center" (ngSubmit)="onSubmit()">
+<form *ngIf="!seleccionaPerfil" [formGroup]="loginVerificationForm" class="row justify-content-md-center" (ngSubmit)="onSubmit()">
 	<div class="row justify-content-md-center">
 		<mat-form-field class="col-sm-12 col">
 			<input matInput
@@ -34,3 +34,16 @@
 </div>
 </div>
 </form>
+
+<div *ngIf="seleccionaPerfil" align="center">
+		<h5>Seleccione el perfil que desea utilizar</h5>
+		<div class="row justify-content-md-center">
+			<mat-form-field>
+				<mat-select placeholder="Perfil" (selectionChange)="perfilSeleccionado($event.value)">
+					<mat-option *ngFor="let perfil of perfiles" [value]="perfil">
+						{{perfil}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+</div>

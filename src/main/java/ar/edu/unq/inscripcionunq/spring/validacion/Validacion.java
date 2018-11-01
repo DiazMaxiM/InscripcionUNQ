@@ -203,10 +203,10 @@ public class Validacion {
 		
 	}
 
-	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, PasswordInvalidoException {
-	   emailValido(usuario.getEmail());
-	   validarPassword(usuario.getPassword());
-		
+	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException {
+	   validarEmail(usuario.getEmail());
+	   nombreValido(usuario.getNombre());
+	   apellidoValido(usuario.getApellido());
 	}
 
 	public static void validarPassword(String password) throws PasswordInvalidoException {
@@ -226,6 +226,13 @@ public class Validacion {
 	public static void validarPerfil(String perfil) throws PerfilInvalidoException {
 		if(!TipoPerfil.contains(perfil)){
 			throw new PerfilInvalidoException();
+		}
+		
+	}
+
+	public static void validarPerfiles(List<String> perfiles) throws PerfilInvalidoException {
+		for(String perfil : perfiles) {
+			validarPerfil(perfil);
 		}
 		
 	}
