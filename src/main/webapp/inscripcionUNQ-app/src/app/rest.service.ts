@@ -11,6 +11,7 @@ import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
 import { Equivalencia } from './equivalencias/equivalencia.model';
+import { Encuesta } from './encuesta-dialogo/encuesta.model';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -192,7 +193,7 @@ export class RestService {
 	}
 	
 	getEncuestas() {
-    return this.httpClient.get('/api/encuestas');
+    return this.httpClient.get<Array<any>>('/api/encuestas');
 	}
 	
 	getTipoPerfiles() {
@@ -205,5 +206,22 @@ export class RestService {
 	
 	actualizarPerfiles(idUsuario: string, perfiles) {
     return this.httpClient.post('/api/usuarios/actualizarPerfiles/' + idUsuario, perfiles, {headers});
+	}
+
+	crearEncuesta(encuesta: Encuesta) {
+    return this.httpClient.put('/api/encuestas/nuevaEncuesta', encuesta, { headers });
+	}
+	
+	actualizarEncuesta(encuesta: Encuesta) {
+    return this.httpClient.post('/api/encuestas/actualizarEncuesta', encuesta, { headers });
+	}
+	
+	getOfertasEnPeriodo(idPeriodo) {
+    return this.httpClient.get<Array<OfertaAcademica>>('/api/oferta-academica/ofertasEnPeriodo/' + idPeriodo );
+	}
+	
+	actualizarOfertasDeEncuesta(idEncuesta: number, ofertasSeleccionadas) {
+    return this.httpClient.post('/api/encuestas/asociarOfertasParaEncuesta/' + idEncuesta, ofertasSeleccionadas, {headers});
   }
+
 }

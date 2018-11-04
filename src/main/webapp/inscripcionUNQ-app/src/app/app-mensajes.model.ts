@@ -14,4 +14,8 @@ export class AppMensajes {
 		public static ESTUDIANTE = 'ESTUDIANTE';
 		public static ACTUALIZACION_USUARIO_EXITOSO = 'El usuario fue actualizado con exito';
 		public static MODIFICACION_PERFIL_EXITOSO = 'El perfil del usuario fue actualizado con exito';
+		public static ACTUALIZACION_ENCUESTA_EXITOS0 = 'Los datos de la encuesta fueron actualizado con exito';
+		public static CREACION_ENCUESTA_EXITOSO = 'La encuesta fue creada con exito';
+		public static ACTUALIZACION_OFERTAS_DE_ENCUESTA_EXITOS0 = 'Se asociaron las ofertas académicas oara la encuesta con exito';
+		public static N0_HAY_OFERTAS_EN_PERIODO = 'No se encontraron ofertas académicas para el período ';
  }  

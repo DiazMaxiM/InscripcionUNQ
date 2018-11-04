@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.dao;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
@@ -41,6 +42,14 @@ public class OfertaAcademicaDaoImp extends GenericDaoImp<OfertaAcademica> implem
 		return (OfertaAcademica) session.createQuery("from OfertaAcademica as oferta where oferta.nombre  = :nombre")
 				.setParameter("nombre", nombre)
 			    .uniqueResult();
+	}
+
+	@Override
+	public List<OfertaAcademica> getOfertasParaPeriodo(Long idPeriodo) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Query<OfertaAcademica> query = session.createQuery("from OfertaAcademica o where o.periodo.id = :idPeriodo");
+		query.setParameter("idPeriodo", idPeriodo);
+		return query.getResultList();
 	}
 
 }

@@ -13,6 +13,8 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 
 public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
@@ -28,4 +30,6 @@ public interface OfertaAcademicaService extends GenericService<OfertaAcademica>{
 	void quitarComisionDeOferta(String idComision, String idOferta) throws ObjectNotFoundinDBException, IdNumberFormatException;
 
 	void actualizarComisiones(String idOferta, List<IdJson> idsJson) throws IdNumberFormatException;
+
+	List<OfertaAcademicaJson> getOfertasJsonEnPeriodo(String idPeriodo) throws IdNumberFormatException,PeriodoInvalidoException;
 }
