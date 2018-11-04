@@ -26,6 +26,11 @@ export class EncuestaDialogoComponent implements OnInit {
 	periodoControl = new FormControl();
 	encuestaSeleccionada: Encuesta;
 	ofertas: OfertaAcademica[];
+	seleccionaOfertasAcademicas;
+	ofertasSeleccionados: OfertaAcademica[]= [];
+	nuevaEncuesta: Encuesta;
+	modificaPeriodo;
+	
 
 	constructor(
 		private fb: FormBuilder,
@@ -69,6 +74,7 @@ export class EncuestaDialogoComponent implements OnInit {
 					'horarioComienzo': this.encuestaSeleccionada.fechaComienzo.horario,
 					'horarioFinalizacion': this.encuestaSeleccionada.fechaFin.horario
 				});
+				this.modificaPeriodo = true;
 			}
 		}
 
@@ -151,11 +157,18 @@ export class EncuestaDialogoComponent implements OnInit {
 			if(this.encuestaSeleccionada != null){
 				this.actualizarEncuesta(encuesta);
 			} else {
-				this.nuevaEncuesta(encuesta);
+				this.crearNuevaEncuesta(encuesta);
 			}
 		}
 
-		nuevaEncuesta(encuesta) {
+		crearNuevaEncuesta(encuesta) {
+			this.seleccionaOfertasAcademicas = true;
+			this.nuevaEncuesta = encuesta;
+			this.getOfertasEnPeriodo(encuesta);
+			
+		}
+
+		guardarNuevaEncuesta(encuesta){
 			this.restService.crearEncuesta(encuesta).subscribe(rest => {
 				this.utilesService.mostrarMensaje(AppMensajes.CREACION_ENCUESTA_EXITOSO);
 				this.cerrar();
@@ -163,7 +176,37 @@ export class EncuestaDialogoComponent implements OnInit {
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
 			});
-			
+		}
+
+		getOfertasEnPeriodo(encuesta) {
+			this.restService.getOfertasEnPeriodo(encuesta.periodo.id).subscribe(ofertas => {
+				this.guardarOfertas(ofertas, encuesta);
+			},
+				(err) => {
+					this.utilesService.mostrarMensajeDeError(err);
+				});
+		}
+	
+		guardarOfertas(ofertas: OfertaAcademica[], encuesta) {
+			if(ofertas.length == 0){
+				this.utilesService.mostrarMensaje(AppMensajes.N0_HAY_OFERTAS_EN_PERIODO + encuesta.periodo.codigo);
+				this.seleccionaOfertasAcademicas = false;
+			} else {
+				this.ofertas = ofertas;
+			}
+	
+		}
+
+		onChange(oferta, $event) {
+			if ($event.checked) {
+				this.ofertasSeleccionados.push(oferta);
+			} else {
+					this.ofertasSeleccionados.forEach(ofertaSeleccionada => {
+							if (ofertaSeleccionada.id == oferta.id) {
+									this.ofertasSeleccionados.splice(this.ofertasSeleccionados.indexOf(ofertaSeleccionada), 1);
+							}
+					});
+			}
 		}
 
 		actualizarEncuesta(encuesta: Encuesta) {
@@ -198,5 +241,19 @@ export class EncuestaDialogoComponent implements OnInit {
 		 return nuevaFecha;
 
 	 }
+
+	 atras(){
+		 this.seleccionaOfertasAcademicas = false;
+		 this.ofertasSeleccionados = [];
+	 }
+
+	 enviarEncuesta() {
+    if(this.ofertasSeleccionados.length == 0){
+      this.utilesService.mostrarMensaje('Debe seleccionar al menos una oferta académica');
+    } else {
+			this.nuevaEncuesta.ofertasAcademicas = this.ofertasSeleccionados;
+			this.guardarNuevaEncuesta(this.nuevaEncuesta);
+    }
+	}
 
 	}

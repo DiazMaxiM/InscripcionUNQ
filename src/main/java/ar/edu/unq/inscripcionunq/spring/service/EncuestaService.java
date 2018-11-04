@@ -7,6 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -29,9 +30,9 @@ public interface EncuestaService extends GenericService<Encuesta> {
 
 	public List<EncuestaSistemaJson> getEncuestaJson();
 
-	public void crearNuevaEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException, ConexionWebServiceException, EncuestaNoExisteException;
+	public void crearNuevaEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException, ConexionWebServiceException, EncuestaNoExisteException, OfertaNoExisteException, ExisteEncuestaConMismoNombreException;
 
-	public void actualizarEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException, EncuestaNoExisteException;
+	public void actualizarEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException, EncuestaNoExisteException, ExisteEncuestaConMismoNombreException;
 
 	public void asociarOfertasParaEncuesta(String idEncuesta, List<IdJson> idsJson) throws IdNumberFormatException, EncuestaNoExisteException, OfertaNoExisteException;
 

@@ -25,6 +25,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -96,7 +97,7 @@ public class EncuestaController {
 	public ResponseEntity agregarNuevaEncuesta(@RequestBody EncuestaSistemaJson encuestaJson) {
 		try {
 			encuestaServiceImp.crearNuevaEncuesta(encuestaJson);
-		} catch (IdNumberFormatException | PeriodoInvalidoException | ConexionWebServiceException | EncuestaNoExisteException e) {
+		} catch (IdNumberFormatException | PeriodoInvalidoException | ConexionWebServiceException | EncuestaNoExisteException | OfertaNoExisteException | ExisteEncuestaConMismoNombreException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		
@@ -108,7 +109,7 @@ public class EncuestaController {
 	public ResponseEntity actualizarEncuesta(@RequestBody EncuestaSistemaJson encuestaJson) {
 		try {
 			encuestaServiceImp.actualizarEncuesta(encuestaJson);
-		} catch (IdNumberFormatException | PeriodoInvalidoException | EncuestaNoExisteException e) {
+		} catch (IdNumberFormatException | PeriodoInvalidoException | EncuestaNoExisteException | ExisteEncuestaConMismoNombreException e) {
 	    	return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		
