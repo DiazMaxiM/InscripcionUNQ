@@ -14,6 +14,8 @@ public class EncuestaSistemaJson {
 	public PeriodoJson periodo;
 	public List<OfertaAcademicaJson> ofertasAcademicas;
 	public Long id;
+	public int nroEstudiantes;
+	public int nroOfertas;
 
     public EncuestaSistemaJson(Encuesta encuesta) {
 		this.id = encuesta.getId();
@@ -22,7 +24,8 @@ public class EncuestaSistemaJson {
 		this.fechaFin = new FechaJson(encuesta.getHoraFin());
 		this.periodo = new PeriodoJson(encuesta.getPeriodo());
 		this.ofertasAcademicas = this.armarOfertasJson(encuesta.getOfertasAcademicas());
-		
+		this.nroEstudiantes = encuesta.getEstudiantes().size();
+		this.nroOfertas = encuesta.getOfertasAcademicas().size();
 	}
     
     private List<OfertaAcademicaJson> armarOfertasJson(List<OfertaAcademica> ofertas) {

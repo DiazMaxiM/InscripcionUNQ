@@ -1,4 +1,4 @@
-	Paso 1: Información de la encuesta
+<div *ngIf="!seleccionaOfertasAcademicas">
 	<div [formGroup]="form">
       <div class="form-row">
       <mat-form-field class="col-md-12">
@@ -7,7 +7,7 @@
           Campo obligatorio
         </mat-error> 
 			</mat-form-field>
-			<mat-form-field class="col-md-12">
+			<mat-form-field *ngIf="!modificaPeriodo" class="col-md-12">
 				<input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
 				<mat-autocomplete #autoPeriodo="matAutocomplete">
 				<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo">
@@ -56,4 +56,45 @@
     <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
       Guardar
     </button>
+</div>
+</div>
+<div *ngIf="seleccionaOfertasAcademicas">
+		Ofertas académicas disponibles
+		<div class="container-buscador">
+				<mat-form-field>
+						<input matInput [(ngModel)]="ofertaBuscada" placeholder="Buscar oferta"> 
+			</mat-form-field> 
+		</div>
+		<div class="table-responsive">
+				<table class="table table-hover">
+						<thead>
+								<tr>
+										<th>Nombre</th>
+										<th>Descripción</th>
+										<th>Carrera</th>
+								</tr>
+						</thead>
+						<tbody>
+								<tr *ngFor="let oferta of ofertas | filtroBusqueda: {nombre: ofertaBuscada, descripcion: ofertaBuscada}; let i=index;">
+										<td style="width: 5%; display: none">{{i +1}}</td>
+										<td>{{ oferta.nombre }}</td>
+										<td>{{ oferta.descripcion}}</td>
+										<td>{{ oferta.carrera.codigo}}</td>
+										<td>
+												<mat-checkbox (change)="onChange(oferta,$event)" 
+												color="warn"></mat-checkbox>
+										</td>
+								</tr>
+								<mat-divider></mat-divider>
+						</tbody>
+				</table>
+		</div>
+		<div align="end">
+				<button class="btn mat-button" mat-fab color="primary" (click)="atras()">
+					Atrás
+				</button>
+				<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="enviarEncuesta()">
+					Crear Encuesta
+				</button>
+		</div>
 </div>

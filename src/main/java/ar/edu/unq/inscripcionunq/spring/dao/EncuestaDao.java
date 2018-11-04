@@ -12,4 +12,6 @@ public interface EncuestaDao extends GenericDao<Encuesta> {
 
 	Estudiante getDatosDeUsuarioParaEncuesta(String dni, Long idEncuesta) throws UserInPollNotFoundException;
     Estudiante getDatosDeUsuarioDesdeEncuesta(String email) throws UsuarioNoExisteException;
+
+	Encuesta getEncuestaConNombre(String nombre);
 }

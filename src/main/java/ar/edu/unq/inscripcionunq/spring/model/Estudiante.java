@@ -30,13 +30,13 @@ public class Estudiante extends BaseEntity {
 	private TypeStatus estado = TypeStatus.ENABLED;
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.TRUE)
-	private List<Carrera> carrerasInscripto = new ArrayList<Carrera>();
+	private List<Carrera> carrerasInscripto = new ArrayList<>();
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.TRUE)
-	private List<Materia> materiasAprobadas = new ArrayList<Materia>();
+	private List<Materia> materiasAprobadas = new ArrayList<>();
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.TRUE)
-	private List<Comision> registroComisiones = new ArrayList<Comision>();
+	private List<Comision> registroComisiones = new ArrayList<>();
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Encuesta encuesta;

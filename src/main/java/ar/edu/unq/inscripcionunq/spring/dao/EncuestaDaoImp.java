@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
@@ -51,5 +52,12 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 			throw new UsuarioNoExisteException();
 		}
 		return query.getResultList().get(0);
+	}
+
+	@Override
+	public Encuesta getEncuestaConNombre(String nombre) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (Encuesta) session.createQuery("from Encuesta where nombre = :nombre").setParameter("nombre", nombre)
+				.uniqueResult();
 	}
 }

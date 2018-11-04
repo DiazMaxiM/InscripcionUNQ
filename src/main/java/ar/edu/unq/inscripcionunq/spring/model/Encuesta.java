@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,15 +14,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity(name = "Encuesta")
 public class Encuesta extends BaseEntity {
+	@Column(unique = true)
 	private String nombre;
 	private LocalDateTime horaComienzo;
 	private LocalDateTime horaFin;
 	@ManyToMany(fetch = FetchType.LAZY)
-	private List<OfertaAcademica> ofertasAcademicas = new ArrayList<OfertaAcademica>();
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	private List<OfertaAcademica> ofertasAcademicas = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Estudiante> estudiantes = new ArrayList<Estudiante>();
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	private List<Estudiante> estudiantes = new ArrayList<>();
 	@Enumerated(EnumType.STRING)
 	private TypeStatus estado = TypeStatus.ENABLED;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -90,10 +97,6 @@ public class Encuesta extends BaseEntity {
 		this.nombre = encuesta.getNombre();
 		this.horaComienzo = encuesta.getHoraComienzo();
 		this.horaFin = encuesta.getHoraFin();	
-		if(!this.periodo.getCodigo().equals(encuesta.getPeriodo().getCodigo())) {
-			this.ofertasAcademicas = new ArrayList<>();
-			this.periodo = encuesta.getPeriodo();
-		}
 	}
 
 }

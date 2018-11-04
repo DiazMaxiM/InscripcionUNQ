@@ -15,6 +15,8 @@
 				<th>Fecha de Inicio</th>
 				<th>Fecha de Fin</th>
 				<th>Período</th>
+				<th>Nro de ofertas asociadas</th>
+				<th>Nro de alumnos</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -24,6 +26,8 @@
 				<td>{{ encuesta.fechaComienzo.dia | number:'2.0' }}/{{ encuesta.fechaComienzo.mes | number:'2.0' }}/{{ encuesta.fechaComienzo.anho}} {{ encuesta.fechaComienzo.horario.hour  | number:'2.0'}}:{{ encuesta.fechaComienzo.horario.minute  | number:'2.0'}}</td>
 				<td>{{ encuesta.fechaFin.dia | number:'2.0' }}/{{ encuesta.fechaFin.mes | number:'2.0' }}/{{ encuesta.fechaFin.anho}} {{ encuesta.fechaFin.horario.hour  | number:'2.0'}}:{{ encuesta.fechaFin.horario.minute  | number:'2.0'}}</td>
 				<td>{{ encuesta.periodo.codigo }}</td>
+				<td>{{ encuesta.nroOfertas}}</td>
+				<td>{{ encuesta.nroEstudiantes}}</td>
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)">edit</i></td>
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip" data-placement="top" title="Ofertas académica">list</i></td>
 			</tr>
