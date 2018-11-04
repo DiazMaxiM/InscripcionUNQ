@@ -1,6 +1,8 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
+import ar.edu.unq.inscripcionunq.spring.model.EnvioMailsMasivos;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
 @Service
@@ -75,6 +78,27 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			estudiante.agregarRegistroComisiones(comision);
 		}
 		studentServiceImp.update(estudiante);
+	}
+
+	@Override
+	public void notificarALosEstudianteCambioComision(Long idComision) throws CommissionNotExistenException {
+		try {
+			Comision comision = this.commissionServiceImp.get(idComision);
+		} catch (ObjectNotFoundinDBException e1) {
+			throw new CommissionNotExistenException();
+		}
+		List<Encuesta> encuestas = ((EncuestaDao) genericDao).getEncuestasDeUnaComision(idComision);
+		List<String> mailsParaNotificar = new ArrayList<String>();
+		for (Encuesta encuesta : encuestas) {
+			mailsParaNotificar.addAll(encuesta.getEstudiantes().stream()
+					.filter(estudiante -> !estudiante.getRegistroComisiones().isEmpty()).map(e -> e.getEmail())
+					.collect(Collectors.toList()));
+		}
+		EnvioMailsMasivos mails = new EnvioMailsMasivos();
+		mails.setAsunto("Cambio de Comision");
+		mails.setEmails(mailsParaNotificar);
+		mails.setMensaje("Cambio la comision");
+		mails.run();
 	}
 
 }

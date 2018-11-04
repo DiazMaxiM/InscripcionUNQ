@@ -21,4 +21,6 @@ public interface EncuestaService extends GenericService<Encuesta> {
 			StudentNotExistenException, CommissionNotExistenException, VariasComisionesDeUnaMateriaException;
 
 	public Boolean puedeGenerarPDF(String dni, Long id);
+
+	public void notificarALosEstudianteCambioComision(Long id) throws CommissionNotExistenException;
 }

@@ -25,12 +25,16 @@ import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.service.ComisionService;
+import ar.edu.unq.inscripcionunq.spring.service.EncuestaService;
 
 @RestController
 public class ComisionController {
 
 	@Autowired
 	private ComisionService comisionServiceImp;
+
+	@Autowired
+	private EncuestaService encuestaServiceImp;
 
 	@GetMapping("/commission/subject/poll/{idMateria}/{idEncuesta}")
 	public ResponseEntity<List<ComisionJson>> comisionesParaMateriasEnEncuesta(@PathVariable String idMateria,
@@ -39,45 +43,50 @@ public class ComisionController {
 
 		return ResponseEntity.ok().body(comisiones);
 	}
-	
+
 	@GetMapping("/comisiones/comisionesEnPeriodo/{idPeriodo}")
 	public ResponseEntity<List<ComisionCompletaJson>> getComisiones(@PathVariable String idPeriodo) {
 		List<ComisionCompletaJson> comisiones = comisionServiceImp.getComisionesEnPeriodo(idPeriodo);
 
 		return ResponseEntity.ok().body(comisiones);
 	}
-	
+
 	@GetMapping("/dias")
 	public ResponseEntity getDias() {
 		return ResponseEntity.ok().body(TypeDay.values());
 	}
-	
+
 	@PutMapping("/comision/nuevaComision")
 	public ResponseEntity agregarNuevaComision(@RequestBody ComisionCompletaJson comisionJson) {
 		try {
 			comisionServiceImp.crearNuevaComision(comisionJson);
 		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
 				| ComisionSinHorariosException e) {
-			
+
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 
 	}
-	
+
 	@PostMapping("/comision/editarComision")
 	public ResponseEntity editarComision(@RequestBody ComisionCompletaJson comisionJson) {
 		try {
 			comisionServiceImp.editarComision(comisionJson);
 		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
 				| ComisionSinHorariosException | CommissionNotExistenException e) {
-			
+
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		try {
+			encuestaServiceImp.notificarALosEstudianteCambioComision(comisionJson.id);
+		} catch (CommissionNotExistenException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 
 	}
-	
+
 	@DeleteMapping("/comision/eliminarComision/{idComision}")
 	public ResponseEntity eliminarComision(@PathVariable String idComision) {
 		try {

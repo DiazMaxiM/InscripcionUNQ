@@ -1,6 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
@@ -49,7 +50,7 @@ public class Mail {
 		return instance;
 	}
 
-	public void send(String to, String subject, String mensagge) throws EmailException {
+	public void sendConAdjunto(String to, String subject, String mensagge) throws EmailException {
 
 		File fileScreenshot = new File(file);
 		EmailAttachment attachment = new EmailAttachment();
@@ -60,6 +61,15 @@ public class Mail {
 
 		mail.attach(attachment);
 		mail.addTo(to);
+		mail.setSubject(subject);
+		mail.setMsg(mensagge);
+		mail.send();
+	}
+
+	public void sendMasivo(List<String> tos, String subject, String mensagge) throws EmailException {
+		for (String to : tos) {
+			mail.addTo(to);
+		}
 		mail.setSubject(subject);
 		mail.setMsg(mensagge);
 		mail.send();

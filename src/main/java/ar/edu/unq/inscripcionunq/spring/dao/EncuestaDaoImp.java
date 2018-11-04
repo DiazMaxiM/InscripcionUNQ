@@ -21,8 +21,8 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 
 	public List<Encuesta> getTodasLasEncuestasActivasParaDni(String dni) {
 		Session session = this.sessionFactory.getCurrentSession();
-		return session.createQuery("select p from Encuesta p join p.estudiantes s where s.dni=:dni ").setParameter("dni", dni)
-				.getResultList();
+		return session.createQuery("select p from Encuesta p join p.estudiantes s where s.dni=:dni ")
+				.setParameter("dni", dni).getResultList();
 	}
 
 	@Override
@@ -37,5 +37,14 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 			throw new UserInPollNotFoundException();
 		}
 		return query.getResultList().get(0);
+	}
+
+	@Override
+	public List<Encuesta> getEncuestasDeUnaComision(Long idComision) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return session
+				.createQuery(
+						"select e from Encuesta e join e.ofertasAcademicas oa join oa.comisiones c where c.id=:id ")
+				.setParameter("id", idComision).getResultList();
 	}
 }
