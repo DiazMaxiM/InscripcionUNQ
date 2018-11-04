@@ -8,8 +8,10 @@ import { Materia } from './materias/materia.model';
 import { OfertaAcademica } from './oferta-academica/oferta-academica.model';
 import { Periodo } from './periodos/periodo.model';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
+import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
 import { Equivalencia } from './equivalencias/equivalencia.model';
+import { Encuesta } from './encuesta-dialogo/encuesta.model';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -19,10 +21,10 @@ export class RestService {
   constructor(private httpClient: HttpClient) {}
 
   getEncuestasVigentes(idEstudiante: number) {
-    return this.httpClient.get('/api/poll/user/' + idEstudiante);
+    return this.httpClient.get<Array<any>>('/api/poll/user/' + idEstudiante);
   }
 
-  getInformacionEstudiante(dniEstudiante: string, idEncuestaActual: string) {
+  getInformacionEstudiante(dniEstudiante: number, idEncuestaActual: string) {
     return this.httpClient.get('/api/poll/userData/' + dniEstudiante + '/' + idEncuestaActual);
   }
 
@@ -51,7 +53,7 @@ export class RestService {
   }
 
   ingresarUsuario(usuario: Usuario) {
-    return this.httpClient.post('/api/encuesta/ingresoUsuario', usuario, { headers });
+    return this.httpClient.post('/api/usuarios/ingresoUsuario', usuario, { headers });
   }
 
   getCarreras() {
@@ -106,6 +108,10 @@ export class RestService {
     return this.httpClient.get<Array<string>>('/api/tipoPeriodos');
   }
 
+  getCantidadPeriodos(idPeriodo: string) {
+    return this.httpClient.get<number>('/api/cantidadPeriodos/' + idPeriodo);
+  }
+
   quitarComisionDeOferta(idComision: string, idOferta: string){
     return this.httpClient.delete('api/oferta-academica/eliminarComision/' + idComision + '/' + idOferta);
   }
@@ -157,4 +163,65 @@ export class RestService {
   actualizarEquivalencia(equivalencia: Equivalencia) {
     return this.httpClient.post('/api/equivalencia', equivalencia, { headers });
   }
+
+  getUsuarios(perfil: string) {
+    return this.httpClient.get<Array<Usuario>>('/api/usuarios/' + perfil);
+  }
+
+  crearNuevoUsuario(usuario: Usuario) {
+    return this.httpClient.put('/api/usuarios/nuevoUsuario', usuario, { headers });
+  }
+
+  eliminarUsuario(idUsuario: number) {
+    return this.httpClient.delete('/api/usuarios/eliminarUsuario/' + idUsuario);
+  }
+
+  getIncidencias() {
+    return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
+  }
+
+  getTipoEstadoIncidencias() {
+    return this.httpClient.get<Array<String>>('/api/tipoEstadosIncidencias');
+  }
+  
+  actualizarIncidencia(incidencia: IncidenciaEstado) {
+    return this.httpClient.post('/api/actualizar-incidencia/', incidencia, { headers });
+  }
+  
+  actualizarPassword(usuario: Usuario) {
+    return this.httpClient.post('/api/usuarios/actualizarPassword', usuario, { headers });
+	}
+	
+	getEncuestas() {
+    return this.httpClient.get<Array<any>>('/api/encuestas');
+	}
+	
+	getTipoPerfiles() {
+		return this.httpClient.get<Array<String>>('/api/tipoPerfiles');
+	}
+
+	actualizarUsuario(usuario: Usuario) {
+    return this.httpClient.post('/api/usuarios/actualizarUsuario', usuario, { headers });
+	}
+	
+	actualizarPerfiles(idUsuario: string, perfiles) {
+    return this.httpClient.post('/api/usuarios/actualizarPerfiles/' + idUsuario, perfiles, {headers});
+	}
+
+	crearEncuesta(encuesta: Encuesta) {
+    return this.httpClient.put('/api/encuestas/nuevaEncuesta', encuesta, { headers });
+	}
+	
+	actualizarEncuesta(encuesta: Encuesta) {
+    return this.httpClient.post('/api/encuestas/actualizarEncuesta', encuesta, { headers });
+	}
+	
+	getOfertasEnPeriodo(idPeriodo) {
+    return this.httpClient.get<Array<OfertaAcademica>>('/api/oferta-academica/ofertasEnPeriodo/' + idPeriodo );
+	}
+	
+	actualizarOfertasDeEncuesta(idEncuesta: number, ofertasSeleccionadas) {
+    return this.httpClient.post('/api/encuestas/asociarOfertasParaEncuesta/' + idEncuesta, ofertasSeleccionadas, {headers});
+  }
+
 }

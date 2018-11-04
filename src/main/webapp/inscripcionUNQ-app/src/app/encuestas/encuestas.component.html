@@ -1,0 +1,37 @@
+<h5 class="titulo">ABM Encuestas</h5>
+<div align="center">
+	<button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaAltaOModificacionEncuesta()">Nueva Encuesta</button>
+</div>
+<div class="container-buscador">
+	<mat-form-field>
+			<input matInput [(ngModel)]="encuestaBuscada" placeholder="Buscar encuesta"> 
+</mat-form-field> 
+</div>
+<div class="table-responsive">
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Fecha de Inicio</th>
+				<th>Fecha de Fin</th>
+				<th>Período</th>
+				<th>Nro de ofertas asociadas</th>
+				<th>Nro de alumnos</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada, codPeriodo: encuestaBuscada}; let i=index;">
+				<td style="width: 5%; display: none">{{i +1}}</td>
+				<td>{{ encuesta.nombre }}</td>
+				<td>{{ encuesta.fechaComienzo.dia | number:'2.0' }}/{{ encuesta.fechaComienzo.mes | number:'2.0' }}/{{ encuesta.fechaComienzo.anho}} {{ encuesta.fechaComienzo.horario.hour  | number:'2.0'}}:{{ encuesta.fechaComienzo.horario.minute  | number:'2.0'}}</td>
+				<td>{{ encuesta.fechaFin.dia | number:'2.0' }}/{{ encuesta.fechaFin.mes | number:'2.0' }}/{{ encuesta.fechaFin.anho}} {{ encuesta.fechaFin.horario.hour  | number:'2.0'}}:{{ encuesta.fechaFin.horario.minute  | number:'2.0'}}</td>
+				<td>{{ encuesta.periodo.codigo }}</td>
+				<td>{{ encuesta.nroOfertas}}</td>
+				<td>{{ encuesta.nroEstudiantes}}</td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)">edit</i></td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip" data-placement="top" title="Ofertas académica">list</i></td>
+			</tr>
+		 <mat-divider></mat-divider>
+		</tbody>
+	</table>
+ </div> 

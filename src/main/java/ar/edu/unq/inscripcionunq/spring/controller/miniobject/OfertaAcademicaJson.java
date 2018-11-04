@@ -12,8 +12,6 @@ public class OfertaAcademicaJson {
 	public CarreraJson carrera;
 	public Long nroComisionesCreadas;
 	public PeriodoJson periodo;
-    
-	
 
 	public OfertaAcademicaJson(OfertaAcademica oferta) {
 		super();
@@ -36,8 +34,4 @@ public class OfertaAcademicaJson {
 	public void setNroComisionesCreadas(Long nroComisionesCreadas) {
 		this.nroComisionesCreadas = nroComisionesCreadas;
 	}
-	
-	
-   
-
 }

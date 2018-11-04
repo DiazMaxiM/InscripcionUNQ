@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import 'hammerjs';
 
-import { LoginEstudianteComponent } from './autenticacion/login-estudiante.component';
+import { LoginComponent } from './autenticacion/login.component';
 import { InformacionEstudianteComponent } from './informacion-del-usuario/informacion-estudiante.component';
 import { SeleccionDeMateriasPorCursarComponent } from './seleccion-de-materias-por-cursar/seleccion-de-materias-por-cursar.component';
 import { RestService } from './rest.service';
@@ -22,13 +22,12 @@ import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aproba
 
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
 import { MatPaginatorI18n } from './spanish-paginator-intl';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 import { UtilesService } from './utiles.service';
 import { HttpClientModule} from '@angular/common/http';
 import { EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
-import { LoginUsuarioComponent } from './autenticacion/login-usuario.component';
 import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
 import { CarrerasComponent } from './carreras/carreras.component';
@@ -48,17 +47,30 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialogo/comisiones-de-oferta-dialogo.component';
 import { EquivalenciasComponent } from './equivalencias/equivalencias.component';
 import { EquivalenciaDialogoComponent } from './equivalencia-dialogo/equivalencia-dialogo.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { IncidenciasComponent } from './incidencias/incidencias.component';
+import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component';
+import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
+import { AltaUsuarioDialogoComponent } from './alta-usuario-dialogo/alta-usuario-dialogo.component';
+import { UsuarioLogueadoService } from './usuario-logueado.service';
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
+import { EncuestasComponent } from './encuestas/encuestas.component';
+import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';
+import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
+import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { MomentUtcDateAdapter } from './momentUtcDateAdapter';
+import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginEstudianteComponent,
+    LoginComponent,
     InformacionEstudianteComponent,
     FeedbackUsuarioDialogoComponent,
     SeleccionDeMateriasPorCursarComponent,
     SeleccionDeComisionDialogoComponent,
     EncuestaFinalizadaComponent,
-    LoginUsuarioComponent,
     TareasUsuarioComponent,
     EncuestasDisponiblesComponent,
     MateriasAprobadasComponent,
@@ -77,7 +89,17 @@ import { EquivalenciaDialogoComponent } from './equivalencia-dialogo/equivalenci
     ComisionDialogoComponent,
     ComisionesDeOfertaDialogoComponent,
     EquivalenciasComponent,
-    EquivalenciaDialogoComponent
+    EquivalenciaDialogoComponent,
+    UsuariosComponent,
+    IncidenciasComponent,
+    ModificacionDeIncidenciaDialogoComponent,
+    EdicionUsuarioDialogoComponent,
+    AltaUsuarioDialogoComponent,
+		CallbackComponent,
+		EncuestasComponent,
+		EncuestaDialogoComponent,
+		ActalizacionPerfilesDialogoComponent,
+		OfertasDeEncuestaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -88,14 +110,21 @@ import { EquivalenciaDialogoComponent } from './equivalencia-dialogo/equivalenci
     AppRoutingModule,
     MomentModule,
     HttpClientModule,
-    NgbModule
+		NgbModule,
+		MatMomentDateModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
-    UtilesService],
-  bootstrap: [AppComponent],
+		UtilesService, UsuarioLogueadoService, AuthService,
+		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+		],
+	bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
-  EquivalenciaDialogoComponent]
+  EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
+	EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent,
+	OfertasDeEncuestaDialogoComponent]
 })
 export class AppModule { }

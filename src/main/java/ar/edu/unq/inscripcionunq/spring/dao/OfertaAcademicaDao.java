@@ -11,5 +11,8 @@ public interface OfertaAcademicaDao extends GenericDao<OfertaAcademica>{
 	public Carrera getCarreraEnOferta(Long idOferta);
 
 	public List<Comision> getComisionesEnOferta(Long id);
-	
+
+	public OfertaAcademica getOfertaPorNombre(String nombre);
+
+	public List<OfertaAcademica> getOfertasParaPeriodo(Long idPeriodo);
 } 

@@ -54,3 +54,7 @@ h2{
 	border-radius: 50%; 
 	transform: scale(1.2);
 }
+
+.marginBoton{
+	margin: 10px;
+}

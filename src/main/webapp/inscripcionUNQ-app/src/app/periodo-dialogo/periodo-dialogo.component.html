@@ -1,52 +1,48 @@
 <h2 mat-dialog-title>Período</h2>
-
-
 <mat-dialog-content [formGroup]="form">
-
     <mat-form-field>
-
-        <input matInput
-                placeholder="Año"
-                type="number"
-               formControlName="anho" required>
-               <mat-error *ngIf="form.get('anho').hasError('required')">
+        <input matInput placeholder="Año" type="number" min="1989" max="{{anhoActual}}"
+            formControlName="anho" required>
+            <mat-error *ngIf="form.get('anho').hasError('required')">
                 Campo obligatorio
-              </mat-error>       
-
-    </mat-form-field>
-
-    <mat-form-field>
-        <input matInput
-        placeholder="Número"
-        type="number"
-       formControlName="numero" required>
-       <mat-error *ngIf="form.get('numero').hasError('required')">
-        Campo obligatorio
-      </mat-error>   
+            </mat-error>
+            <mat-error *ngIf="form.get('anho').hasError('min')">
+                Ingrese un año mayor a 1989
+            </mat-error>
+            <mat-error *ngIf="form.get('anho').hasError('max')">
+                Ingrese un año menor al elegido
+            </mat-error>
     </mat-form-field>
     <mat-form-field>
-            <mat-select placeholder="Tipo de Período" formControlName="tipoPeriodo" required>
-                    <mat-option>--</mat-option>
-                    <mat-option *ngFor="let periodo of tipoPeriodos" [value]="periodo">
-                      {{periodo}}
-                    </mat-option>
-                  </mat-select>
-      <mat-error *ngIf="form.get('tipoPeriodo').hasError('required') && form.get('tipoPeriodo').touched">
+        <mat-select   placeholder="Tipo de Período" formControlName="tipoPeriodo" required>
+            <mat-option>--</mat-option>
+                <mat-option  (onSelectionChange)="getNroPeriodos($event)" *ngFor="let periodo of tipoPeriodos" [value]="periodo">
+                    {{periodo}}
+                </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('tipoPeriodo').hasError('required') && form.get('tipoPeriodo').touched">
             Campo obligatorio
-    </mat-error>  
-</mat-form-field>
+        </mat-error>  
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select placeholder="Número" formControlName="numero" required>
+            <mat-option>--</mat-option>
+                <mat-option *ngFor="let numero of numeros" [value]="numero">
+                    {{numero}}
+                </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('numero').hasError('required')">
+            Campo obligatorio
+        </mat-error>   
+    </mat-form-field>
 </mat-dialog-content>
-
 <mat-dialog-actions align="end">
-
     <button class="btn  mat-button" mat-fab color="primary"
-            (click)="cerrar()">
+        (click)="cerrar()">
         Cancelar
     </button>
-
     <button class="btn btn-danger mat-button" mat-fab color="primary"
-            (click)="guardar()">
+        (click)="guardar()">
         Guardar
     </button>
-
 </mat-dialog-actions>

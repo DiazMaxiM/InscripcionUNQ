@@ -1,5 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import {UtilesService} from '../utiles.service';
+import { Usuario } from '../autenticacion/usuario.model';
+import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-encuestas-disponibles',
@@ -8,17 +10,28 @@ import {UtilesService} from '../utiles.service';
 })
 export class EncuestasDisponiblesComponent implements OnInit {
   constructor(
-  private utilesService: UtilesService
+	private utilesService: UtilesService,
+	private restService: RestService
 ) { }
-  encuestas: any[];
+	encuestas: any[];
+	encuestaBuscada: string;
+	usuario: Usuario;
 
   ngOnInit() {
-      this.encuestas = JSON.parse(localStorage.getItem('encuestasVigentes'));
+		this.usuario = JSON.parse(localStorage.getItem('usuario'));
+		this.getEncuestas();
+	}
+
+  getEncuestas() {
+		this.restService.getEncuestasVigentes(this.usuario.dni).subscribe(encuestas => {
+			this.encuestas = encuestas;
       if (this.encuestas.length == 0) {
-        const mensaje = 'No se encontraron encuestas para el DNI ingresado';
-        this.utilesService.mostrarMensajeYSalir(mensaje);
-      }
-  }
+        const mensaje = 'No se encontraron encuestas para el email ingresado';
+				this.utilesService.mostrarMensajeYSalir(mensaje);
+	
+		}
+	});
+}
 
   editarEncuesta(idEncuestaActual) {
       localStorage.setItem('idEncuestaActual', idEncuestaActual);

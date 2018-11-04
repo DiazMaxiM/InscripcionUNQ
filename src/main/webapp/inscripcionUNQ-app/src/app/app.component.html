@@ -7,6 +7,10 @@
 			class="material-icons boton-incidencia" title="Notificar incidencia">
 			notification_important
 			</i>
+			<i [hidden]="!hayUsuarioLogueado"  [matMenuTriggerFor]="menu"
+			class="material-icons boton-incidencia" title="Editar password">
+			account_circle
+			</i>
 		</div>
 	</div>
 </mat-toolbar>
@@ -14,3 +18,7 @@
 	<h2 class="h5">Encuesta de preinscripción CPI</h2>
 	<router-outlet></router-outlet>
 </div>
+<mat-menu #menu="matMenu">
+		<button mat-menu-item (click)="abrirDialogoParaModificacionDePassword()"> Modificar contraseña</button>
+		<button mat-menu-item (click)="salir()">Salir</button>
+</mat-menu>

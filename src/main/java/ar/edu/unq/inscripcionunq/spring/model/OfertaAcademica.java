@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,13 +18,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "OfertaAcademica")
 public class OfertaAcademica extends BaseEntity {
-	
+	@Column(unique = true)
 	private String nombre;
 	private String descripcion;
 	@Enumerated(EnumType.STRING)
@@ -36,8 +38,8 @@ public class OfertaAcademica extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Periodo periodo;
 
-	public OfertaAcademica(String nombre, String descripcion, Carrera carrera, Periodo periodo) {
-		this.nombre = nombre;
+	public OfertaAcademica(String descripcion, Carrera carrera, Periodo periodo) {
+		this.nombre = this.armarNombreDeOferta(carrera, periodo);
 		this.descripcion = descripcion;
 		this.carrera = carrera;
 		this.periodo = periodo;
@@ -92,14 +94,18 @@ public class OfertaAcademica extends BaseEntity {
 		this.carrera = carrera;
 	}
 
-
-	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException, 
-	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
+	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException, NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException, ErrorAlGenerarCodigoException{
 		Validacion.validarOfertaAcademica(ofertaRecibida);
-		setNombre(ofertaRecibida.getNombre());
+		setNombre(this.armarNombreDeOferta(ofertaRecibida.getCarrera(), ofertaRecibida.getPeriodo()));
 		setDescripcion(ofertaRecibida.getDescripcion());
 		setCarrera(ofertaRecibida.getCarrera());
 		setEstado(ofertaRecibida.getEstado());
+		setPeriodo(ofertaRecibida.getPeriodo());
+	}
+	
+	public String armarNombreDeOferta(Carrera carrera, Periodo periodo) {
+		return "OA" + "-" + carrera.getCodigo() + "-" + 
+				periodo.getCodigo();
 	}
 	
 	public void eliminarComision(Comision comision) {

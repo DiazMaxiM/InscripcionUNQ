@@ -10,3 +10,8 @@ textarea {
  .estado{
      padding-left: 15px;
  }
+
+
+.edit-icon:hover{
+	cursor: pointer;
+}

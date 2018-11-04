@@ -2,7 +2,6 @@ import { Component} from '@angular/core';
 import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import { AppRutas } from '../app-rutas.model';
-import { Equivalencia } from '../equivalencias/equivalencia.model';
 
 
 @Component({
@@ -10,7 +9,8 @@ import { Equivalencia } from '../equivalencias/equivalencia.model';
   templateUrl: './tareas-usuario.component.html',
   styleUrls: ['./tareas-usuario.component.css']
 })
-export class TareasUsuarioComponent {
+export class TareasUsuarioComponent{
+
   constructor(
     private restService: RestService,
     private utilesService: UtilesService
@@ -64,6 +64,31 @@ export class TareasUsuarioComponent {
     this.restService.getEquivalencias().subscribe(equivalencias => {
       localStorage.setItem('equivalencias', JSON.stringify(equivalencias));
       this.utilesService.irA('equivalencias');
+    },
+    (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
+  }
+
+  irAUsuarios() {
+      this.utilesService.irA('usuarios');
+		
+	}
+
+  irAIncidencias(){
+    this.restService.getIncidencias().subscribe(incidencias => {
+      localStorage.setItem('incidencias', JSON.stringify(incidencias));
+      this.utilesService.irA('incidencias');
+    },
+    (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
+}
+
+irAEncuestas() {
+    this.restService.getEncuestas().subscribe(encuestas => {
+      localStorage.setItem('encuestas', JSON.stringify(encuestas));
+      this.utilesService.irA('encuestas');
     },
     (err) => {
       this.utilesService.mostrarMensajeDeError(err);

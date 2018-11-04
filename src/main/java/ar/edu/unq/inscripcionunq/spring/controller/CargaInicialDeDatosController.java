@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
@@ -21,6 +22,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
@@ -62,7 +64,7 @@ public class CargaInicialDeDatosController {
 
 	@RequestMapping(value = "loadData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void loadData() throws ObjectNotFoundinDBException {
+	public void loadData() throws ObjectNotFoundinDBException, EncryptionDecryptionAESException {
 		Carrera tpi = new Carrera("P", "Tecnicatura Universitaria en Programacion Informatica");
 		Carrera lds = new Carrera("W", "Licenciatura en Informatica");
 		long aa = carreraServiceImp.save(tpi);
@@ -334,8 +336,8 @@ public class CargaInicialDeDatosController {
 		Periodo periodo2 = new Periodo(2018, 1, TipoPeriodo.CUATRIMESTRAL);
 		periodoServiceImp.save(periodo2);
 
-		OfertaAcademica acc1 = new OfertaAcademica("OA-P-S2-18", "Oferta Academica TPI 2 semestre 2018", tpi, periodo1);
-		OfertaAcademica acc2 = new OfertaAcademica("OA-W-S2-18", "Oferta Academica LIDS 2 semestre 2018", lds,
+		OfertaAcademica acc1 = new OfertaAcademica("Oferta Academica TPI 2 semestre 2018", tpi, periodo1);
+		OfertaAcademica acc2 = new OfertaAcademica("Oferta Academica LIDS 2 semestre 2018", lds,
 				periodo2);
 
 		Comision commMate1 = new Comision("Mate1 C1", materiaServiceImp.get(mate1), 30, periodo1);
@@ -562,9 +564,8 @@ public class CargaInicialDeDatosController {
 		Long idAcamicOffer2 = ofertaAcademicaServiceImp.save(acc2);
 
 		Encuesta poll = new Encuesta("Encuesta segundo semestre 2018", LocalDateTime.of(2018, 8, 25, 00, 00),
-				LocalDateTime.of(2018, 12, 1, 00, 00));
+				LocalDateTime.of(2018, 12, 1, 00, 00),periodo1);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
-		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer2));
 
 		Long idEncuesta = encuestaServiceImp.save(poll);
 
@@ -577,7 +578,9 @@ public class CargaInicialDeDatosController {
 			e.printStackTrace();
 		}
 
-		Usuario usuario = new Usuario("zaracho.rosali@gmail.com", "123");
+		Usuario usuario = new Usuario("Rosali", "Zaracho","zaracho.rosali@gmail.com");
+		usuario.setPassword("123");
+		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
 		usuarioServiceImp.save(usuario);
 
 		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");

@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
+import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
@@ -46,5 +47,25 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 				.createQuery(
 						"select e from Encuesta e join e.ofertasAcademicas oa join oa.comisiones c where c.id=:id ")
 				.setParameter("id", idComision).getResultList();
+	}
+
+	@Override
+	public Estudiante getDatosDeUsuarioDesdeEncuesta(String email) throws UsuarioNoExisteException {
+		Session session = this.sessionFactory.getCurrentSession();
+		Query<Estudiante> query = session.createQuery(
+				"select estudiante from Encuesta as encuesta inner join encuesta.estudiantes estudiante where estudiante.email=:email");
+		query.setParameter("email", email);
+		List<Estudiante> results = query.getResultList();
+		if (results.isEmpty()) {
+			throw new UsuarioNoExisteException();
+		}
+		return query.getResultList().get(0);
+	}
+
+	@Override
+	public Encuesta getEncuestaConNombre(String nombre) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (Encuesta) session.createQuery("from Encuesta where nombre = :nombre").setParameter("nombre", nombre)
+				.uniqueResult();
 	}
 }

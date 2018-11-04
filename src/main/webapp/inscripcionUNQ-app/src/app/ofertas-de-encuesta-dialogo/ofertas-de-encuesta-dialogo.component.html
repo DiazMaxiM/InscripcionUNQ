@@ -1,0 +1,39 @@
+<h1 class="h5">Ofertas académicas asociadas</h1>
+<div class="container-buscador">
+    <mat-form-field>
+        <input matInput [(ngModel)]="ofertaBuscada" placeholder="Buscar oferta"> 
+  </mat-form-field> 
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Carrera</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let oferta of ofertas | filtroBusqueda: {nombre: ofertaBuscada, descripcion: ofertaBuscada}; let i=index;">
+                <td style="width: 5%; display: none">{{i +1}}</td>
+                <td>{{ oferta.nombre }}</td>
+								<td>{{ oferta.descripcion}}</td>
+								<td>{{ oferta.carrera.codigo}}</td>
+                <td>
+                    <mat-checkbox [checked]='verificarSeleccion(oferta)' 
+                    (change)="onChange(oferta,$event)" 
+                    color="warn"></mat-checkbox>
+                </td>
+            </tr>
+            <mat-divider></mat-divider>
+        </tbody>
+    </table>
+</div>
+<div align="end">
+    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+      Cerrar
+    </button>
+    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+      Guardar
+    </button>
+</div>

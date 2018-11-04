@@ -8,6 +8,7 @@ export class Comision {
     cupo?: string;
     periodo?: Periodo;
     materia?: Materia;
+    nombreMateria?: string;
 
 
     constructor(
@@ -16,12 +17,14 @@ export class Comision {
       periodo?: Periodo,
       materia?: Materia,
       idComision?: number,
+      nombreMateria?: string
     ) {
       this.id = idComision;
       this.nombre = nombre;
       this.cupo = cupo;
       this.periodo = periodo;
       this.materia = materia;
+      this.nombreMateria = nombreMateria;
     }
 
     agregarHorario(horario) {

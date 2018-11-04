@@ -1,16 +1,16 @@
 <h5 class="titulo">ABM Comisiones</h5>
 <div align="center">
-        <button class="btn btn-danger" mat-fab color="primary" 
-        (click)= "abrirDialogoComision()">Nueva comisión</button>
+    <button class="btn btn-danger" mat-fab color="primary" 
+    (click)= "abrirDialogoComision()">Nueva comisión</button>
 </div>
 <div class="container-buscador">
     <mat-form-field>
-            <input type="text" placeholder="Seleccione período" [formControl]="periodoControl" matInput [matAutocomplete]="autoPeriodo">
-             <mat-autocomplete #autoPeriodo="matAutocomplete">
-              <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado($event, periodo)">
+        <input type="text" placeholder="Seleccione período" [formControl]="periodoControl" matInput [matAutocomplete]="autoPeriodo">
+        <mat-autocomplete #autoPeriodo="matAutocomplete">
+            <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado($event, periodo)">
                 {{periodo.codigo}}
-              </mat-option>
-              </mat-autocomplete>
+            </mat-option>
+        </mat-autocomplete>
     </mat-form-field>
 </div>
 <div *ngIf="mostrarComisiones" class="table-responsive">
@@ -33,7 +33,7 @@
                 <tr *ngFor="let comision of comisiones | filtroBusqueda: {nombre: comisionBuscada, nombreMateria: comisionBuscada}; let i=index;">
                     <td style="width: 5%; display: none">{{i +1}}</td>
                     <td>{{ comision.nombre }}</td>
-                    <td>{{ comision.materia.nombre }}</td>
+                    <td>{{ comision.nombreMateria }}</td>
                     <td>{{ comision.cupo }}</td>
                     <td>
                         <tr *ngFor="let horario of comision.horarioJson">

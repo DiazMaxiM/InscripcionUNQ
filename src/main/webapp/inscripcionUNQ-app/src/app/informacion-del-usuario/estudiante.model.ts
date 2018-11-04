@@ -3,10 +3,10 @@ export class Estudiante {
   email: string;
   nombre: string;
   apellido: string;
-  dni: string;
+  dni: number;
   id: string;
   constructor(
-    dni: string,
+    dni: number,
     nombre: string,
     apellido: string,
     email: string,

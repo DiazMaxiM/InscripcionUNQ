@@ -17,6 +17,8 @@ import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
@@ -25,8 +27,10 @@ import ar.edu.unq.inscripcionunq.spring.model.Horario;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
 public class Validacion {
 	
@@ -95,11 +99,17 @@ public class Validacion {
 	}
 
 	public static void validarOfertaAcademica(OfertaAcademica oferta) throws DescripcionInvalidaException, 
-	NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException {
+	 EstadoInvalidoException, CodigoInvalidoException {
 		descripcionValida(oferta.getDescripcion());
-		nombreValido(oferta.getNombre());
 		estadoValido(oferta.getEstado());
 		validarCarrera(oferta.getCarrera());
+		validarCodigoInvalido(oferta.getCarrera().getCodigo(), oferta.getPeriodo().getCodigo());
+	}
+
+	private static void validarCodigoInvalido(String codigoCarrera, String codigoPeriodo) throws CodigoInvalidoException {
+		if(stringVacio(codigoCarrera) || stringVacio(codigoPeriodo)){
+			throw new CodigoInvalidoException();
+		}
 	}
 	
 	private static void horarioValido(String horario) throws HorarioInvalidoException {
@@ -146,7 +156,7 @@ public class Validacion {
 	}
 	
 	private static boolean esNumeroValido(Integer numero) {
-		return numero != null || numero instanceof Integer;
+		return numero != null || numero instanceof Integer && numero > 0;
 	}
 
 	private static void anoValido(Integer anho) throws AnhoInvalidoException {
@@ -180,7 +190,7 @@ public class Validacion {
 	}
 
 	private static void horariosValidos(List<Horario> horarios) throws ComisionSinHorariosException {
-		if(horarios.size() == 0) {
+		if(horarios.isEmpty()) {
 			throw new ComisionSinHorariosException();
 		}
 		
@@ -189,6 +199,40 @@ public class Validacion {
 	private static void cupoValido(Integer cupo) throws CupoInvalidoException {
 		if(!esNumeroValido(cupo)) {
 			throw new CupoInvalidoException();
+		}
+		
+	}
+
+	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException {
+	   validarEmail(usuario.getEmail());
+	   nombreValido(usuario.getNombre());
+	   apellidoValido(usuario.getApellido());
+	}
+
+	public static void validarPassword(String password) throws PasswordInvalidoException {
+		if(stringVacio(password)) {
+			throw new PasswordInvalidoException();
+		}
+		
+	}
+
+	public static void validarEmail(String email) throws EmailInvalidoException {
+		if(!esEmailValido(email)) {
+			throw new EmailInvalidoException();
+		}
+		
+	}
+
+	public static void validarPerfil(String perfil) throws PerfilInvalidoException {
+		if(!TipoPerfil.contains(perfil)){
+			throw new PerfilInvalidoException();
+		}
+		
+	}
+
+	public static void validarPerfiles(List<String> perfiles) throws PerfilInvalidoException {
+		for(String perfil : perfiles) {
+			validarPerfil(perfil);
 		}
 		
 	}
