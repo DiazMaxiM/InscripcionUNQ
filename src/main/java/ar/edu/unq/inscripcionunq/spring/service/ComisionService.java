@@ -21,10 +21,15 @@ public interface ComisionService extends GenericService<Comision> {
 
 	List<ComisionCompletaJson> getComisionesEnPeriodo(String idPeriodo);
 
-	void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException;
+	void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException,
+			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException;
 
-	void editarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException;
+	void editarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException,
+			NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException;
 
 	void eliminarComision(String idComision) throws IdNumberFormatException, CommissionNotExistenException;
+
+	Long clonarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException,
+			NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException;
 
 }

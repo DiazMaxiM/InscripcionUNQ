@@ -33,10 +33,10 @@ import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 public class ComisionServiceImp extends GenericServiceImp<Comision> implements ComisionService {
 	@Autowired
 	private ComisionDao comisionDaoImp;
-	
+
 	@Autowired
 	private MateriaDao materiaDaoImp;
-	
+
 	@Autowired
 	private PeriodoDao periodoDaoImp;
 
@@ -45,7 +45,7 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 
 		List<Comision> comisiones = comisionDaoImp.getComisionParaMateriaEnEncuesta(new Long(idMateria),
 				new Long(idEncuesta));
-		
+
 		return comisiones.stream().map(commission -> new ComisionJson(commission)).collect(Collectors.toList());
 	}
 
@@ -61,31 +61,35 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 		return crearComisionesJson(comisiones);
 	}
 
-	private List<ComisionCompletaJson> crearComisionesJson(List<Comision> comisiones){
+	private List<ComisionCompletaJson> crearComisionesJson(List<Comision> comisiones) {
 		return comisiones.stream().map(commission -> new ComisionCompletaJson(commission)).collect(Collectors.toList());
 	}
 
 	@Override
-	public void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
+	public void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException,
+			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
 		Comision comision = armarComisionDesdeJson(comisionJson);
 		this.save(comision);
-		
+
 	}
 
-	private Comision armarComisionDesdeJson(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
+	private Comision armarComisionDesdeJson(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException,
+			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
 		Materia materia = materiaDaoImp.get(comisionJson.materia.id);
 		Periodo periodo = periodoDaoImp.get(comisionJson.periodo.id);
 		Comision comision = new Comision(comisionJson.nombre, materia, comisionJson.cupo, periodo);
 		for (HorarioJson horario : comisionJson.horarioJson) {
 			LocalTime horaInicio = LocalTime.of(horario.horaComienzo.hour, horario.horaComienzo.minute);
-			comision.agregarHorarios(horario.dia, horaInicio ,horario.duracion);
+			comision.agregarHorarios(horario.dia, horaInicio, horario.duracion);
 		}
 		Validacion.validarComision(comision);
 		return comision;
 	}
 
 	@Override
-	public void editarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException {
+	public void editarComision(ComisionCompletaJson comisionJson)
+			throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException,
+			ComisionSinHorariosException, CommissionNotExistenException {
 		try {
 			Comision comision = this.get(comisionJson.id);
 			Comision comisionEditada = armarComisionDesdeJson(comisionJson);
@@ -93,22 +97,42 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 			this.save(comision);
 		} catch (ObjectNotFoundinDBException e) {
 			throw new CommissionNotExistenException();
-			
+
 		}
-		
+
 	}
 
 	@Override
 	public void eliminarComision(String idComision) throws IdNumberFormatException, CommissionNotExistenException {
 		try {
-		   Comision comision = this.get(new Long(idComision));
-		   this.delete(comision);
-		} catch (NumberFormatException e) { 
+			Comision comision = this.get(new Long(idComision));
+			this.delete(comision);
+		} catch (NumberFormatException e) {
 			throw new IdNumberFormatException();
 		} catch (ObjectNotFoundinDBException e) {
 			throw new CommissionNotExistenException();
 		}
-			
+
+	}
+
+	@Override
+	public Long clonarComision(ComisionCompletaJson comisionJson)
+			throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException,
+			ComisionSinHorariosException, CommissionNotExistenException {
+		Comision comisionClonada;
+		try {
+			Comision comision = this.get(comisionJson.id);
+			Periodo periodo = periodoDaoImp.get(comisionJson.periodo.id);
+			if (periodo.equals(comision.getPeriodo())) {
+				comisionClonada = comision.clonar();
+			} else {
+				comisionClonada = comision.clonar(periodo);
+			}
+		} catch (ObjectNotFoundinDBException e) {
+			throw new CommissionNotExistenException();
+		}
+
+		return comisionDaoImp.save(comisionClonada);
 	}
 
 }

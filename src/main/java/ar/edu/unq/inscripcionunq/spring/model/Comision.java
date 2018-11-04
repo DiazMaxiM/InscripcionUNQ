@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
-
 @Entity(name = "Comision")
 public class Comision extends BaseEntity {
 	private String nombre;
@@ -41,8 +40,7 @@ public class Comision extends BaseEntity {
 	}
 
 	public void agregarHorarios(TypeDay dia, LocalTime horaComienzo, Float cantidadDeHoras) {
-		List<Horario> horariosR = horarios.stream().filter(d -> d.getDia().equals(dia))
-				.collect(Collectors.toList());
+		List<Horario> horariosR = horarios.stream().filter(d -> d.getDia().equals(dia)).collect(Collectors.toList());
 		if (horariosR.isEmpty()) {
 			horarios.add(new Horario(dia, horaComienzo, cantidadDeHoras));
 		}
@@ -62,7 +60,7 @@ public class Comision extends BaseEntity {
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public TypeStatus getEstado() {
 		return estado;
 	}
@@ -74,7 +72,7 @@ public class Comision extends BaseEntity {
 		}
 		return textoHorarios;
 	}
-	
+
 	public Integer getCupo() {
 		return cupo;
 	}
@@ -82,7 +80,7 @@ public class Comision extends BaseEntity {
 	public void setCupo(Integer cupo) {
 		this.cupo = cupo;
 	}
-	
+
 	public Periodo getPeriodo() {
 		return periodo;
 	}
@@ -97,6 +95,30 @@ public class Comision extends BaseEntity {
 		this.cupo = comisionEditada.getCupo();
 		this.materia = comisionEditada.getMateria();
 		this.periodo = comisionEditada.getPeriodo();
-		
+
+	}
+
+	public Comision clonar() {
+		Comision comisionClonada = new Comision();
+		comisionClonada.nombre = this.nombre.concat(" COPIA");
+		comisionClonada.cupo = this.cupo;
+
+		List<Horario> horariosClonados = new ArrayList<Horario>();
+		for (Horario horario : horarios) {
+			horariosClonados.add(horario.clonar());
+		}
+
+		comisionClonada.horarios = horariosClonados;
+		comisionClonada.materia = this.materia;
+		comisionClonada.estado = this.estado;
+		comisionClonada.periodo = this.periodo;
+		return comisionClonada;
+	}
+
+	public Comision clonar(Periodo periodo) {
+		Comision comision = this.clonar();
+		comision.periodo = periodo;
+		comision.nombre = this.nombre;
+		return comision;
 	}
 }

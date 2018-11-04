@@ -25,9 +25,10 @@ public class Horario extends BaseEntity {
 	}
 
 	public String toString() {
-		return dia.toString() + " " + horaComienzo.format(DateTimeFormatter.ofPattern("HH:mm")).toString() 
-				+ " a " + horaComienzo.plusMinutes((long) (cantidadDeHoras * 60 - 1))
-				.format(DateTimeFormatter.ofPattern("HH:mm")).toString() + " ";
+		return dia.toString() + " " + horaComienzo.format(DateTimeFormatter.ofPattern("HH:mm")).toString() + " a "
+				+ horaComienzo.plusMinutes((long) (cantidadDeHoras * 60 - 1))
+						.format(DateTimeFormatter.ofPattern("HH:mm")).toString()
+				+ " ";
 	}
 
 	public TypeDay getDia() {
@@ -48,6 +49,10 @@ public class Horario extends BaseEntity {
 
 	private void setCantidadDeHoras(Float cantidadDeHoras) {
 		this.cantidadDeHoras = cantidadDeHoras;
+	}
+
+	public Horario clonar() {
+		return new Horario(this.dia, this.horaComienzo, this.cantidadDeHoras);
 	}
 
 }

@@ -87,6 +87,20 @@ public class ComisionController {
 
 	}
 
+	@PostMapping("/comision/clonarComision")
+	public ResponseEntity clonarComision(@RequestBody ComisionCompletaJson comisionJson) {
+		Long id;
+		try {
+			id = comisionServiceImp.clonarComision(comisionJson);
+		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
+				| ComisionSinHorariosException | CommissionNotExistenException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+
+		return ResponseEntity.ok().body(id);
+
+	}
+
 	@DeleteMapping("/comision/eliminarComision/{idComision}")
 	public ResponseEntity eliminarComision(@PathVariable String idComision) {
 		try {
