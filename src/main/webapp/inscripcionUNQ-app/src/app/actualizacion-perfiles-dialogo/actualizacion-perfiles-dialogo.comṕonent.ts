@@ -1,14 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Comision } from '../comisiones-de-oferta/comision.model';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AppRutas } from '../app-rutas.model';
 import { DataDialogo } from '../alta-usuario-dialogo/data-dialogo.model';
 import { Usuario } from '../autenticacion/usuario.model';
-import { identity } from 'rxjs';
 import { AppMensajes } from '../app-mensajes.model';
 
 @Component({

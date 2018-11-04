@@ -62,6 +62,10 @@ public class Encuesta extends BaseEntity {
 		return horaFin;
 	}
 
+	public void setOfertasAcademicas(List<OfertaAcademica> ofertasAcademicas) {
+		this.ofertasAcademicas = ofertasAcademicas;
+	}
+
 	public TypeStatus getEstado() {
 		return estado;
 	}
@@ -80,6 +84,16 @@ public class Encuesta extends BaseEntity {
 	
 	public Periodo getPeriodo() {
 		return periodo;
+	}
+
+	public void actualizarDatos(Encuesta encuesta) {
+		this.nombre = encuesta.getNombre();
+		this.horaComienzo = encuesta.getHoraComienzo();
+		this.horaFin = encuesta.getHoraFin();	
+		if(!this.periodo.getCodigo().equals(encuesta.getPeriodo().getCodigo())) {
+			this.ofertasAcademicas = new ArrayList<>();
+			this.periodo = encuesta.getPeriodo();
+		}
 	}
 
 }

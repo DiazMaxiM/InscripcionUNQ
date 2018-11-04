@@ -18,13 +18,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada, nombrePeriodo: encuestaBuscada}; let i=index;">
+			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada, codPeriodo: encuestaBuscada}; let i=index;">
 				<td style="width: 5%; display: none">{{i +1}}</td>
 				<td>{{ encuesta.nombre }}</td>
-				<td>{{ encuesta.horaComienzo.dayOfMonth | number:'2.0' }}/{{ encuesta.horaComienzo.monthValue | number:'2.0' }}/{{ encuesta.horaComienzo.year}}</td>
-				<td>{{ encuesta.horaFin.dayOfMonth | number:'2.0'}}/{{ encuesta.horaFin.monthValue | number:'2.0'}}/{{ encuesta.horaFin.year}}</td>
-				<td>{{ encuesta.nombrePeriodo }}</td>
+				<td>{{ encuesta.fechaComienzo.dia | number:'2.0' }}/{{ encuesta.fechaComienzo.mes | number:'2.0' }}/{{ encuesta.fechaComienzo.anho}} {{ encuesta.fechaComienzo.horario.hour  | number:'2.0'}}:{{ encuesta.fechaComienzo.horario.minute  | number:'2.0'}}</td>
+				<td>{{ encuesta.fechaFin.dia | number:'2.0' }}/{{ encuesta.fechaFin.mes | number:'2.0' }}/{{ encuesta.fechaFin.anho}} {{ encuesta.fechaFin.horario.hour  | number:'2.0'}}:{{ encuesta.fechaFin.horario.minute  | number:'2.0'}}</td>
+				<td>{{ encuesta.periodo.codigo }}</td>
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)">edit</i></td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip" data-placement="top" title="Ofertas académica">list</i></td>
 			</tr>
 		 <mat-divider></mat-divider>
 		</tbody>

@@ -15,6 +15,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTooltipModule} from '@angular/material';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 const modules = [
   MatInputModule,
@@ -33,7 +34,8 @@ const modules = [
   MatSlideToggleModule,
   MatAutocompleteModule,
   MatTooltipModule,
-  MatMenuModule
+	MatMenuModule,
+	MatDatepickerModule
 ];
 
 @NgModule({

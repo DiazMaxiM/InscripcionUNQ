@@ -22,7 +22,7 @@ import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aproba
 
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
 import { MatPaginatorI18n } from './spanish-paginator-intl';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 import { UtilesService } from './utiles.service';
@@ -58,6 +58,9 @@ import { CallbackComponent } from './callback/callback.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';
 import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
+import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { MomentUtcDateAdapter } from './momentUtcDateAdapter';
+import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +98,8 @@ import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-d
 		CallbackComponent,
 		EncuestasComponent,
 		EncuestaDialogoComponent,
-		ActalizacionPerfilesDialogoComponent
+		ActalizacionPerfilesDialogoComponent,
+		OfertasDeEncuestaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -106,15 +110,21 @@ import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-d
     AppRoutingModule,
     MomentModule,
     HttpClientModule,
-    NgbModule
+		NgbModule,
+		MatMomentDateModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
-    UtilesService, UsuarioLogueadoService, AuthService],
-  bootstrap: [AppComponent],
+		UtilesService, UsuarioLogueadoService, AuthService,
+		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+		],
+	bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
   CarreraDialogoComponent, OfertaAcademicaDialogoComponent, ModificacionDeMateriaDialogoComponent,
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
   EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
-  EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent]
+	EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent,
+	OfertasDeEncuestaDialogoComponent]
 })
 export class AppModule { }

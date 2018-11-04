@@ -24,6 +24,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.service.OfertaAcademicaService;
 
 @RestController
@@ -88,5 +89,14 @@ public class OfertaAcademicaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().body(null);
+	}
+	
+	@GetMapping("/oferta-academica/ofertasEnPeriodo/{idPeriodo}")
+	public ResponseEntity getOfertasEnPeriodo(@PathVariable String idPeriodo) {
+		try {
+			return ResponseEntity.ok().body(ofertaAcademicaServiceImpl.getOfertasJsonEnPeriodo(idPeriodo));
+		} catch (IdNumberFormatException | PeriodoInvalidoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 	}
 }

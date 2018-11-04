@@ -24,11 +24,14 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Service
@@ -153,6 +156,24 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 			oferta.setComisiones(comisiones);
 		}
 		ofertaAcademicaDaoImp.update(oferta);
+	}
+
+	@Override
+	public List<OfertaAcademicaJson> getOfertasJsonEnPeriodo(String idPeriodo) throws IdNumberFormatException, PeriodoInvalidoException {
+		Periodo periodo;
+		try {
+		  periodo = periodoDaoImp.get(new Long(idPeriodo));
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		} 
+		
+		if(periodo == null) {
+			throw new PeriodoInvalidoException();
+		}
+		
+		List<OfertaAcademica> ofertas = ofertaAcademicaDaoImp.getOfertasParaPeriodo(periodo.getId());
+		return ofertas.stream().map(o -> new OfertaAcademicaJson(o)).collect(Collectors.toList());
+		
 	}
 
 }
