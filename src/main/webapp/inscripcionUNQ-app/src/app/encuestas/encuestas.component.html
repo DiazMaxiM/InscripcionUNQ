@@ -17,6 +17,8 @@
 				<th>Período</th>
 				<th>Nro de ofertas asociadas</th>
 				<th>Nro de alumnos</th>
+				<th>Nro de alumnos que completaron la encuesta</th>
+				<th>Opciones</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,6 +30,7 @@
 				<td>{{ encuesta.periodo.codigo }}</td>
 				<td>{{ encuesta.nroOfertas}}</td>
 				<td>{{ encuesta.nroEstudiantes}}</td>
+				<td>{{ encuesta.nroDeAlumnosQueCompletaronEncuesta}}</td>
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)">edit</i></td>
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip" data-placement="top" title="Ofertas académica">list</i></td>
 			</tr>
