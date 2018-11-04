@@ -1,9 +1,6 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
-<<<<<<< HEAD
-=======
 import java.time.LocalDateTime;
->>>>>>> 7a71a3edc8d803e8d908b3173701e8dc59667092
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +48,6 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 	private WebService webService;
 	@Autowired
 	private EncuestaDao encuestaDaoImp;
-
 
 	@Override
 	@Transactional
@@ -122,29 +118,32 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		mails.setMensaje("Cambio la comision");
 		mails.run();
 	}
+
 	public List<EncuestaSistemaJson> getEncuestaJson() {
 		List<Encuesta> encuestas = this.list();
 		return encuestas.stream().map(m -> new EncuestaSistemaJson(m)).collect(Collectors.toList());
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void crearNuevaEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException, ConexionWebServiceException, EncuestaNoExisteException, OfertaNoExisteException, ExisteEncuestaConMismoNombreException {
+	public void crearNuevaEncuesta(EncuestaSistemaJson encuestaJson)
+			throws IdNumberFormatException, PeriodoInvalidoException, ConexionWebServiceException,
+			EncuestaNoExisteException, OfertaNoExisteException, ExisteEncuestaConMismoNombreException {
 		Encuesta encuesta = this.mapearEncuestaDesdeJson(encuestaJson);
 		List<OfertaAcademica> ofertasParaEncuesta = this.mapearOfertasDesdeJson(encuestaJson.ofertasAcademicas);
 		encuesta.setOfertasAcademicas(ofertasParaEncuesta);
 		try {
 			this.save(encuesta);
 		} catch (ConstraintViolationException e) {
-		    throw new ExisteEncuestaConMismoNombreException();
+			throw new ExisteEncuestaConMismoNombreException();
 		}
-		
+
 		webService.importarEstudiantes(encuesta.getId());
-		
-		
+
 	}
 
-	private Encuesta mapearEncuestaDesdeJson(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException {
+	private Encuesta mapearEncuestaDesdeJson(EncuestaSistemaJson encuestaJson)
+			throws IdNumberFormatException, PeriodoInvalidoException {
 		Periodo periodo;
 		try {
 			periodo = periodoServiceImp.get(encuestaJson.periodo.id);
@@ -154,17 +153,21 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			throw new PeriodoInvalidoException();
 
 		}
-		LocalDateTime horaComienzo = LocalDateTime.of(encuestaJson.fechaComienzo.anho, encuestaJson.fechaComienzo.mes, encuestaJson.fechaComienzo.dia, encuestaJson.fechaComienzo.horario.hour, encuestaJson.fechaComienzo.horario.minute);
-		LocalDateTime horaFin =LocalDateTime.of(encuestaJson.fechaFin.anho, encuestaJson.fechaFin.mes, encuestaJson.fechaFin.dia, encuestaJson.fechaFin.horario.hour, encuestaJson.fechaFin.horario.minute);
-		return  new Encuesta(encuestaJson.nombre,horaComienzo, horaFin, periodo);
+		LocalDateTime horaComienzo = LocalDateTime.of(encuestaJson.fechaComienzo.anho, encuestaJson.fechaComienzo.mes,
+				encuestaJson.fechaComienzo.dia, encuestaJson.fechaComienzo.horario.hour,
+				encuestaJson.fechaComienzo.horario.minute);
+		LocalDateTime horaFin = LocalDateTime.of(encuestaJson.fechaFin.anho, encuestaJson.fechaFin.mes,
+				encuestaJson.fechaFin.dia, encuestaJson.fechaFin.horario.hour, encuestaJson.fechaFin.horario.minute);
+		return new Encuesta(encuestaJson.nombre, horaComienzo, horaFin, periodo);
 	}
 
 	@Override
-	public void actualizarEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException, PeriodoInvalidoException, EncuestaNoExisteException, ExisteEncuestaConMismoNombreException {
+	public void actualizarEncuesta(EncuestaSistemaJson encuestaJson) throws IdNumberFormatException,
+			PeriodoInvalidoException, EncuestaNoExisteException, ExisteEncuestaConMismoNombreException {
 		Encuesta encuestaActualizada = this.mapearEncuestaDesdeJson(encuestaJson);
 		try {
 			Encuesta encuestaOriginal = this.get(encuestaJson.id);
-			if(!encuestaOriginal.getNombre().equals(encuestaActualizada.getNombre())) {
+			if (!encuestaOriginal.getNombre().equals(encuestaActualizada.getNombre())) {
 				validarSiExisteEncuestaConNombre(encuestaActualizada.getNombre());
 			}
 			encuestaOriginal.actualizarDatos(encuestaActualizada);
@@ -179,16 +182,17 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 
 	private void validarSiExisteEncuestaConNombre(String nombre) throws ExisteEncuestaConMismoNombreException {
 		Encuesta encuesta = encuestaDaoImp.getEncuestaConNombre(nombre);
-		if(encuesta != null) {
+		if (encuesta != null) {
 			throw new ExisteEncuestaConMismoNombreException();
 		}
-		
+
 	}
 
 	@Override
-	public void asociarOfertasParaEncuesta(String idEncuesta, List<IdJson> idsJson) throws IdNumberFormatException, EncuestaNoExisteException, OfertaNoExisteException {
+	public void asociarOfertasParaEncuesta(String idEncuesta, List<IdJson> idsJson)
+			throws IdNumberFormatException, EncuestaNoExisteException, OfertaNoExisteException {
 		Encuesta encuesta;
-		List <OfertaAcademica> ofertas = new ArrayList <>();
+		List<OfertaAcademica> ofertas = new ArrayList<>();
 		try {
 			encuesta = this.get(new Long(idEncuesta));
 		} catch (NumberFormatException e) {
@@ -203,14 +207,15 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 				throw new IdNumberFormatException();
 			} catch (ObjectNotFoundinDBException e) {
 				throw new OfertaNoExisteException();
-			} 
+			}
 			encuesta.setOfertasAcademicas(ofertas);
 		}
 		this.save(encuesta);
 	}
-	
-	private List<OfertaAcademica> mapearOfertasDesdeJson(List<OfertaAcademicaJson> ofertasAcademicas) throws IdNumberFormatException, OfertaNoExisteException {
-		List <OfertaAcademica> ofertas = new ArrayList <>();
+
+	private List<OfertaAcademica> mapearOfertasDesdeJson(List<OfertaAcademicaJson> ofertasAcademicas)
+			throws IdNumberFormatException, OfertaNoExisteException {
+		List<OfertaAcademica> ofertas = new ArrayList<>();
 		for (OfertaAcademicaJson oferta : ofertasAcademicas) {
 			try {
 				ofertas.add(ofertaServiceImp.get(new Long(oferta.id)));
@@ -218,7 +223,7 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 				throw new IdNumberFormatException();
 			} catch (ObjectNotFoundinDBException e) {
 				throw new OfertaNoExisteException();
-			} 
+			}
 		}
 		return ofertas;
 	}

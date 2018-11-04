@@ -68,6 +68,13 @@ public class Mail {
 		mail.send();
 	}
 
+	public void send(String to, String subject, String mensagge) throws EmailException {
+		mail.addTo(to);
+		mail.setSubject(subject);
+		mail.setMsg(mensagge);
+		mail.send();
+	}
+
 	public void sendMasivo(List<String> tos, String subject, String mensagge) throws EmailException {
 		for (String to : tos) {
 			mail.addTo(to);
