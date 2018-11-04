@@ -16,6 +16,7 @@ public class EncuestaSistemaJson {
 	public Long id;
 	public int nroEstudiantes;
 	public int nroOfertas;
+	public Number nroDeAlumnosQueCompletaronEncuesta;
 
     public EncuestaSistemaJson(Encuesta encuesta) {
 		this.id = encuesta.getId();

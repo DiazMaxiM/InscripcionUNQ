@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -34,8 +35,8 @@ public class Estudiante extends BaseEntity {
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Materia> materiasAprobadas = new ArrayList<>();
-	@ManyToMany
-	@LazyCollection(LazyCollectionOption.TRUE)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.EXTRA)
 	private List<Comision> registroComisiones = new ArrayList<>();
 	@ManyToOne
 	@LazyCollection(LazyCollectionOption.TRUE)
