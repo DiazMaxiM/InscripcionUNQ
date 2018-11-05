@@ -5,6 +5,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { OfertaAcademica } from "./oferta-academica.model";
 import { OfertaAcademicaDialogoComponent } from "../oferta-academica-dialogo/oferta-academica.dialogo.component";
+import { SeleccionDePeriodoDialogoComponent } from "../seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component";
 
 @Component({
   selector: "app-oferta-academica",
@@ -109,5 +110,41 @@ export class ofertaAcademicaComponent implements OnInit {
         this.utilesService.mostrarMensajeDeError(err);
       }
     );
-  }
+	}
+
+	crearConfiguracionDialogoParaSeleccionDePeriodo() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = "400px";
+    dialogConfig.height = "200px";
+
+    const dialogRef = this.dialog.open(
+      SeleccionDePeriodoDialogoComponent,
+      dialogConfig
+		);
+		return dialogRef;
+	}
+	
+	abrirDialogoParaSeleccionDePeriodo(idOferta) {
+
+		const dialogRef = this.crearConfiguracionDialogoParaSeleccionDePeriodo();
+    dialogRef.afterClosed().subscribe(idPeriodo => {
+			 if (idPeriodo != null) {
+				 this.clonarOferta(idPeriodo, idOferta);
+			 }
+    });
+	}
+
+	clonarOferta(idPeriodo, idOferta) {
+		this.restService.clonarOferta(idPeriodo, idOferta).subscribe(
+      res => {
+        this.getOfertas();
+      },
+      (err: HttpErrorResponse) => {
+        this.utilesService.mostrarMensajeDeError(err);
+      }
+    );
+	}
 }

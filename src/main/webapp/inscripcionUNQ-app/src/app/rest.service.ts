@@ -222,6 +222,10 @@ export class RestService {
 	
 	actualizarOfertasDeEncuesta(idEncuesta: number, ofertasSeleccionadas) {
     return this.httpClient.post('/api/encuestas/asociarOfertasParaEncuesta/' + idEncuesta, ofertasSeleccionadas, {headers});
+	}
+
+	clonarOferta(idPeriodo, idOferta) {
+    return this.httpClient.put('/api/ofertas-academicas/clonarOferta/' + idOferta + '/' + idPeriodo, { headers });
   }
 
 }
