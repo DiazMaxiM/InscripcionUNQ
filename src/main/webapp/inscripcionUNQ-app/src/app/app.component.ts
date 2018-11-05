@@ -7,7 +7,6 @@ import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dial
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { UsuarioLogueadoService } from './usuario-logueado.service';
 import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
-import { AppMensajes } from './app-mensajes.model';
 
 @Component({
   selector: 'app-root',

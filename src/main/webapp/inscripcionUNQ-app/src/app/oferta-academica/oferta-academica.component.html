@@ -11,7 +11,7 @@
           <th>Estado</th>
           <th>Carrera</th>
           <th>Período</th>
-          <th>Comisiones</th>
+					<th>Comisiones</th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +26,8 @@
           <td>{{ oferta.carrera.codigo}}</td>
           <td>{{ oferta.periodo.codigo}}</td>
           <td>{{ oferta.nroComisionesCreadas}}</td>
-          <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeOferta(oferta)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
+					<td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeOferta(oferta)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
+					<td><i class="material-icons edit-icon" (click)="abrirDialogoParaSeleccionDePeriodo(oferta.id)" data-toggle="tooltip" data-placement="top" title="Clonar">file_copy</i></td>
           <td><i class="material-icons edit-icon" (click)="irAComisiones(oferta)" data-toggle="tooltip" data-placement="top" title="Comisiones">list</i></td>
         </tr>
        <mat-divider></mat-divider>
