@@ -68,4 +68,14 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 		return (Encuesta) session.createQuery("from Encuesta where nombre = :nombre").setParameter("nombre", nombre)
 				.uniqueResult();
 	}
+	
+	@Override
+	public Number nroDeAlumnosQueCompletaronEncuesta(Long id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (Number) session.createQuery("select count(estudiante) from Encuesta as encuesta inner join encuesta.estudiantes estudiante where encuesta.id=:idEncuesta and"
+				+ " size(estudiante.registroComisiones) > 0")
+				.setParameter("idEncuesta", id)
+				.list().get(0);
+	}
+	
 }

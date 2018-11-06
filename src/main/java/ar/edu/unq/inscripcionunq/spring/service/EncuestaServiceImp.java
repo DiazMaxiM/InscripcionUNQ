@@ -121,9 +121,16 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 
 	public List<EncuestaSistemaJson> getEncuestaJson() {
 		List<Encuesta> encuestas = this.list();
-		return encuestas.stream().map(m -> new EncuestaSistemaJson(m)).collect(Collectors.toList());
+		return encuestas.stream().map(m -> this.crearEncuestaJson(m)).collect(Collectors.toList());
 	}
-
+	
+	private EncuestaSistemaJson crearEncuestaJson(Encuesta encuesta){
+		Number nroDeAlumnos = this.encuestaDaoImp.nroDeAlumnosQueCompletaronEncuesta(encuesta.getId());
+		EncuestaSistemaJson encuestaSistemaJson = new EncuestaSistemaJson(encuesta);
+		encuestaSistemaJson.nroDeAlumnosQueCompletaronEncuesta = nroDeAlumnos;
+		return encuestaSistemaJson;
+	}
+	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void crearNuevaEncuesta(EncuestaSistemaJson encuestaJson)

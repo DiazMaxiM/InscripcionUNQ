@@ -17,4 +17,6 @@ public interface EncuestaDao extends GenericDao<Encuesta> {
 	List<Encuesta> getEncuestasDeUnaComision(Long idComision);
 
 	Encuesta getEncuestaConNombre(String nombre);
+
+	Number nroDeAlumnosQueCompletaronEncuesta(Long id);
 }

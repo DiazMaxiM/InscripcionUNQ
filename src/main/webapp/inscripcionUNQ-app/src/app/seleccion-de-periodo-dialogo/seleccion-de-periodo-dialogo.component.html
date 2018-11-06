@@ -1,0 +1,23 @@
+	<div [formGroup]="form">
+      <div class="form-row">
+			<mat-form-field class="col-md-12">
+				<input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
+				<mat-autocomplete #autoPeriodo="matAutocomplete">
+				<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo">
+						 {{periodo.codigo}}
+				</mat-option>
+				</mat-autocomplete>
+				<mat-error *ngIf="form.get('periodo').hasError('required')">
+								Campo obligatorio
+				</mat-error> 
+			 </mat-form-field>
+	</div>
+</div>
+<div  align="end">
+    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+      Cerrar
+    </button>
+    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+      Guardar
+    </button>
+</div>
