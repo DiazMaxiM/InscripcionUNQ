@@ -17,6 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.CopiaOfertaMismoPeriodoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
@@ -30,57 +31,57 @@ import ar.edu.unq.inscripcionunq.spring.service.OfertaAcademicaService;
 @RestController
 public class OfertaAcademicaController {
 
-	@Autowired 
+	@Autowired
 	OfertaAcademicaService ofertaAcademicaServiceImpl;
-	
+
 	@GetMapping("/ofertas-academicas")
 	public ResponseEntity<List> getOfertas() {
 		return ResponseEntity.ok().body(ofertaAcademicaServiceImpl.getOfertasAcademicasJson());
-		
+
 	}
-	
+
 	@PutMapping("/ofertas-academicas/crearOferta/")
 	public ResponseEntity crearNuevaOferta(@RequestBody OfertaAcademicaJson ofertaJson) {
 		try {
 			ofertaAcademicaServiceImpl.crearOferta(ofertaJson);
 		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException
 				| NombreInvalidoException | ErrorAlGenerarCodigoException e) {
-			
+
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 
 	}
-	
-	
+
 	@PostMapping("/ofertas-academicas/actualizarOferta/")
 	public ResponseEntity actualizarOferta(@RequestBody OfertaAcademicaJson ofertaJson) {
 		try {
 			ofertaAcademicaServiceImpl.actualizarOferta(ofertaJson);
 		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException
-				| NombreInvalidoException |OfertaNoExisteException | ErrorAlGenerarCodigoException e) {
-			
+				| NombreInvalidoException | OfertaNoExisteException | ErrorAlGenerarCodigoException e) {
+
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 
 	}
-	
+
 	@GetMapping("/oferta-academica/comisiones/{idOferta}")
 	public ResponseEntity getComisionesEnOferta(@PathVariable String idOferta) throws IdNumberFormatException {
 		return ResponseEntity.ok().body(ofertaAcademicaServiceImpl.getComisionesEnOferta(idOferta));
 	}
-	
+
 	@DeleteMapping("/oferta-academica/eliminarComision/{idComision}/{idOferta}")
-	public ResponseEntity quitarComisionDeOferta(@PathVariable String idComision, @PathVariable String idOferta) throws IdNumberFormatException {
+	public ResponseEntity quitarComisionDeOferta(@PathVariable String idComision, @PathVariable String idOferta)
+			throws IdNumberFormatException {
 		try {
 			ofertaAcademicaServiceImpl.quitarComisionDeOferta(idComision, idOferta);
-		} catch (ObjectNotFoundinDBException e) {			
+		} catch (ObjectNotFoundinDBException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@PostMapping("/oferta-academica/actualizar-comisiones/{idOferta}")
 	public ResponseEntity actualizarComisiones(@PathVariable String idOferta, @RequestBody List<IdJson> idsJson) {
 		try {
@@ -90,7 +91,7 @@ public class OfertaAcademicaController {
 		}
 		return ResponseEntity.ok().body(null);
 	}
-	
+
 	@GetMapping("/oferta-academica/ofertasEnPeriodo/{idPeriodo}")
 	public ResponseEntity getOfertasEnPeriodo(@PathVariable String idPeriodo) {
 		try {
@@ -98,5 +99,18 @@ public class OfertaAcademicaController {
 		} catch (IdNumberFormatException | PeriodoInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
+	}
+
+	@PostMapping("/oferta-academica/clonarOferta-academica")
+	public ResponseEntity clonarOfertaAcademica(@RequestBody OfertaAcademicaJson ofertaAcademicaJson) {
+		Long id;
+		try {
+			id = ofertaAcademicaServiceImpl.clonarOfertaAcademica(ofertaAcademicaJson);
+		} catch (CopiaOfertaMismoPeriodoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+
+		}
+		return ResponseEntity.ok().body(id);
+
 	}
 }

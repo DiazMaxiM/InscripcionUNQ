@@ -123,11 +123,7 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 		try {
 			Comision comision = this.get(comisionJson.id);
 			Periodo periodo = periodoDaoImp.get(comisionJson.periodo.id);
-			if (periodo.equals(comision.getPeriodo())) {
-				comisionClonada = comision.clonar();
-			} else {
-				comisionClonada = comision.clonar(periodo);
-			}
+			comisionClonada = comision.clonar(periodo);
 		} catch (ObjectNotFoundinDBException e) {
 			throw new CommissionNotExistenException();
 		}

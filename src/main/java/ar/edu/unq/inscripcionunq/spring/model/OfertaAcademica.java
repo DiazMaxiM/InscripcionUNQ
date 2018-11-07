@@ -51,9 +51,9 @@ public class OfertaAcademica extends BaseEntity {
 	public void agregarComision(Comision comision) {
 		this.comisiones.add(comision);
 	}
-	
+
 	@JsonIgnore
-	public List<Comision> getComisiones(){
+	public List<Comision> getComisiones() {
 		return comisiones;
 	}
 
@@ -84,7 +84,7 @@ public class OfertaAcademica extends BaseEntity {
 	public void setComisiones(List<Comision> comisiones) {
 		this.comisiones = comisiones;
 	}
-    
+
 	@JsonIgnore
 	public Carrera getCarrera() {
 		return carrera;
@@ -94,7 +94,8 @@ public class OfertaAcademica extends BaseEntity {
 		this.carrera = carrera;
 	}
 
-	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException, NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException, ErrorAlGenerarCodigoException{
+	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException,
+			NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException, ErrorAlGenerarCodigoException {
 		Validacion.validarOfertaAcademica(ofertaRecibida);
 		setNombre(this.armarNombreDeOferta(ofertaRecibida.getCarrera(), ofertaRecibida.getPeriodo()));
 		setDescripcion(ofertaRecibida.getDescripcion());
@@ -102,16 +103,15 @@ public class OfertaAcademica extends BaseEntity {
 		setEstado(ofertaRecibida.getEstado());
 		setPeriodo(ofertaRecibida.getPeriodo());
 	}
-	
+
 	public String armarNombreDeOferta(Carrera carrera, Periodo periodo) {
-		return "OA" + "-" + carrera.getCodigo() + "-" + 
-				periodo.getCodigo();
+		return "OA" + "-" + carrera.getCodigo() + "-" + periodo.getCodigo();
 	}
-	
+
 	public void eliminarComision(Comision comision) {
 		this.getComisiones().remove(comision);
 	}
-	
+
 	public Periodo getPeriodo() {
 		return periodo;
 	}

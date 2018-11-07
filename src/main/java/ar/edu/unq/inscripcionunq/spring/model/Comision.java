@@ -98,7 +98,7 @@ public class Comision extends BaseEntity {
 
 	}
 
-	public Comision clonar() {
+	private Comision clonar() {
 		Comision comisionClonada = new Comision();
 		comisionClonada.nombre = this.nombre.concat(" COPIA");
 		comisionClonada.cupo = this.cupo;
