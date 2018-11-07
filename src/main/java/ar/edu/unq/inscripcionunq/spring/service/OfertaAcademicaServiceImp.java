@@ -190,6 +190,9 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 		OfertaAcademica oferta;
 		oferta = ofertaAcademicaDaoImp.get(new Long(ofertaAcademicaJson.id));
 		Periodo periodo = periodoDaoImp.get(ofertaAcademicaJson.periodo.id);
+		if (oferta.getPeriodo().equals(periodo)) {
+			throw new CopiaOfertaMismoPeriodoException();
+		}
 		OfertaAcademica ofertaNueva = new OfertaAcademica(oferta.getDescripcion().concat(" COPIA"), oferta.getCarrera(),
 				periodo);
 
