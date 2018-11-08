@@ -15,6 +15,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
+import ar.edu.unq.inscripcionunq.spring.dao.EstudianteDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
@@ -26,17 +27,17 @@ import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Mail;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
-import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
 
 @Service
 @Transactional
-
 public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implements EstudianteService {
 
 	@Autowired
 	private MateriaDao materiaDaoImp;
 	@Autowired
 	private ComisionDao comisionDaoImp;
+	@Autowired
+	private EstudianteDao estudianteDaoImp;
 
 	@Override
 	public List<MateriaJson> materiasAprobadasDeUsuario(String idUsuario)
@@ -150,6 +151,10 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 		} catch (NumberFormatException e) {
 			throw new IdNumberFormatException();
 		}
+	}
+	
+	public Integer estudiantesPorComision(String idComision) {
+		return estudianteDaoImp.getNroEstudiantesPorComision(new Long(idComision));
 	}
 
 }

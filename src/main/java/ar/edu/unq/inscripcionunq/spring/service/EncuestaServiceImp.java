@@ -31,15 +31,17 @@ import ar.edu.unq.inscripcionunq.spring.model.EnvioMailsMasivos;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.model.Reporte;
+import ar.edu.unq.inscripcionunq.spring.model.TipoReporte;
 
 @Service
 @Transactional
 public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements EncuestaService {
 
 	@Autowired
-	EstudianteService studentServiceImp;
+	EstudianteService estudianteServiceImp;
 	@Autowired
-	ComisionService commissionServiceImp;
+	ComisionService comisionServiceImp;
 	@Autowired
 	PeriodoService periodoServiceImp;
 	@Autowired
@@ -57,15 +59,15 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 
 	@Override
 	@Transactional
-	public Estudiante getDatosDeUsuarioParaEncuesta(String dni, Long idPoll) throws UserInPollNotFoundException {
-		return ((EncuestaDao) genericDao).getDatosDeUsuarioParaEncuesta(dni, idPoll);
+	public Estudiante getDatosDeUsuarioParaEncuesta(String dni, Long idEncuesta) throws UserInPollNotFoundException {
+		return ((EncuestaDao) genericDao).getDatosDeUsuarioParaEncuesta(dni, idEncuesta);
 	}
 
 	@Override
 	@Transactional
-	public Boolean puedeGenerarPDF(String dni, Long idPoll) {
+	public Boolean puedeGenerarPDF(String dni, Long idEncuesta) {
 		try {
-			return !this.getDatosDeUsuarioParaEncuesta(dni, idPoll).getRegistroComisiones().isEmpty();
+			return !this.getDatosDeUsuarioParaEncuesta(dni, idEncuesta).getRegistroComisiones().isEmpty();
 		} catch (UserInPollNotFoundException e) {
 		}
 		return false;
@@ -76,7 +78,7 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			StudentNotExistenException, CommissionNotExistenException, VariasComisionesDeUnaMateriaException {
 		Estudiante estudiante;
 		try {
-			estudiante = studentServiceImp.get(new Long(id));
+			estudiante = estudianteServiceImp.get(new Long(id));
 		} catch (NumberFormatException e) {
 			throw new IdNumberFormatException();
 		} catch (ObjectNotFoundinDBException e) {
@@ -86,7 +88,7 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		for (IdJson idJson : idsJson) {
 			Comision comision;
 			try {
-				comision = commissionServiceImp.get(new Long(idJson.id));
+				comision = comisionServiceImp.get(new Long(idJson.id));
 			} catch (NumberFormatException e) {
 				throw new IdNumberFormatException();
 			} catch (ObjectNotFoundinDBException e) {
@@ -95,13 +97,13 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			}
 			estudiante.agregarRegistroComisiones(comision);
 		}
-		studentServiceImp.update(estudiante);
+		estudianteServiceImp.update(estudiante);
 	}
 
 	@Override
 	public void notificarALosEstudianteCambioComision(Long idComision) throws CommissionNotExistenException {
 		try {
-			Comision comision = this.commissionServiceImp.get(idComision);
+			Comision comision = this.comisionServiceImp.get(idComision);
 		} catch (ObjectNotFoundinDBException e1) {
 			throw new CommissionNotExistenException();
 		}
@@ -113,9 +115,9 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 					.collect(Collectors.toList()));
 		}
 		EnvioMailsMasivos mails = new EnvioMailsMasivos();
-		mails.setAsunto("Cambio de Comision");
+		mails.setAsunto("Cambio de comisión");
 		mails.setEmails(mailsParaNotificar);
-		mails.setMensaje("Cambio la comision");
+		mails.setMensaje("Cambió la comisión");
 		mails.run();
 	}
 
@@ -146,7 +148,6 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		}
 
 		webService.importarEstudiantes(encuesta.getId());
-
 	}
 
 	private Encuesta mapearEncuestaDesdeJson(EncuestaSistemaJson encuestaJson)
@@ -183,7 +184,6 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			throw new IdNumberFormatException();
 		} catch (ObjectNotFoundinDBException e) {
 			throw new EncuestaNoExisteException();
-
 		}
 	}
 
@@ -192,7 +192,6 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		if (encuesta != null) {
 			throw new ExisteEncuestaConMismoNombreException();
 		}
-
 	}
 
 	@Override
@@ -235,4 +234,30 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		return ofertas;
 	}
 
+	public Reporte getReporte(String idEncuesta, String tipoReporte) throws IdNumberFormatException {
+		Integer nroEstudiantes = 0;
+		List<String> comisiones = new ArrayList<String>();
+		
+		Encuesta encuesta = new Encuesta();
+		try {
+			encuesta = encuestaDaoImp.get(new Long(idEncuesta));
+			
+			for (OfertaAcademica oferta : encuesta.getOfertasAcademicas()) {
+	    		for (Comision comision : oferta.getComisiones()) {
+	    			nroEstudiantes = estudianteServiceImp.estudiantesPorComision(comision.getId().toString());
+	    			comisiones.add(new String(nroEstudiantes.toString()));
+				}
+			}
+		} catch (NumberFormatException e) {
+			throw new IdNumberFormatException();
+		}
+    
+		Reporte reporte = new Reporte(encuesta, comisiones, TipoReporte.valueOf(tipoReporte));
+		try {
+			reporte.generarReporte();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return reporte;
+	}
 }

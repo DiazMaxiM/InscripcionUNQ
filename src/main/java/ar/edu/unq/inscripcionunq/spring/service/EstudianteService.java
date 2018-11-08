@@ -29,5 +29,7 @@ public interface EstudianteService extends GenericService<Estudiante> {
 
 	public void enviarCertificado(String idEstudiante) throws StudentNotExistenException, DocumentException,
 			IdNumberFormatException, EmailException, CertificadoException;
+	
+	public Integer estudiantesPorComision(String idComision);
 
 }

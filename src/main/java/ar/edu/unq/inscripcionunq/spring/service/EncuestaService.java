@@ -16,6 +16,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.Reporte;
 
 public interface EncuestaService extends GenericService<Encuesta> {
 
@@ -41,5 +42,7 @@ public interface EncuestaService extends GenericService<Encuesta> {
 
 	public void asociarOfertasParaEncuesta(String idEncuesta, List<IdJson> idsJson)
 			throws IdNumberFormatException, EncuestaNoExisteException, OfertaNoExisteException;
+	
+	public Reporte getReporte(String idEncuesta, String tipoEncuesta) throws IdNumberFormatException;
 
 }
