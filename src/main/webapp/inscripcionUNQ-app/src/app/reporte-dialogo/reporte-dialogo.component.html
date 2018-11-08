@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Reportes de encuesta</h2>
+<mat-dialog-content [formGroup]="form">
+	<mat-form-field>
+		<mat-select placeholder="Tipo de reporte" formControlName="tipoReporte" required>
+			<mat-option>Elija un tipo de reporte</mat-option>
+			<mat-option *ngFor="let reporte of tipoReporte" [value]="reporte.id">
+				{{reporte.descripcion}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-error *ngIf="form.get('tipoReporte').hasError('required') && form.get('tipoReporte').touched">
+		Campo obligatorio
+	</mat-error>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">Cancelar</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" [disabled]="form.invalid" (click)="descargarReporte()">Descargar</button>
+</mat-dialog-actions>

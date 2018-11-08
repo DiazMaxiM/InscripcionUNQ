@@ -226,6 +226,13 @@ export class RestService {
 
 	clonarOferta(idPeriodo, idOferta) {
     return this.httpClient.put('/api/ofertas-academicas/clonarOferta/' + idOferta + '/' + idPeriodo, { headers });
+	}
+	
+	getTiposReporte(){
+		return this.httpClient.get<Array<string>>('/api/tiposReporte');
+	}
+	getReporte(idEncuesta, tipoEncuesta) {
+    return this.httpClient.get('/api/generarReporte/' + idEncuesta + '/' + tipoEncuesta, { responseType: 'blob'});
   }
 
 }

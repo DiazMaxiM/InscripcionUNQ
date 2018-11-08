@@ -1,10 +1,11 @@
 import { Component, OnInit} from '@angular/core';
-import {UtilesService} from '../utiles.service';
+import { UtilesService } from '../utiles.service';
 import { EncuestaDialogoComponent } from '../encuesta-dialogo/encuesta-dialogo.component';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { RestService } from '../rest.service';
 import { Encuesta } from '../encuesta-dialogo/encuesta.model';
 import { OfertasDeEncuestaDialogoComponent } from '../ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
+import { ReporteDialogoComponent } from '../reporte-dialogo/reporte-dialogo.component';
 
 @Component({
   selector: 'app-encuestas',
@@ -75,5 +76,26 @@ export class EncuestasComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(val => {
 			this.getEncuestas();
 		});
+	}
+
+	abrirDialogoParaDescargarReporte(encuesta: Encuesta){
+		const dialogRef = this.crearConfiguracionDialogoParaReporte(encuesta);
+		dialogRef.afterClosed().subscribe(val => {
+			this.getEncuestas();
+		});
+	}
+
+	crearConfiguracionDialogoParaReporte(encuesta?) {
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = false;
+		dialogConfig.width = 'auto';
+		dialogConfig.height = 'auto';
+		dialogConfig.data = {
+			encuesta: encuesta
+		};
+		const dialogRef = this.dialog.open(ReporteDialogoComponent,
+			dialogConfig);
+		return dialogRef;
 	}
 }
