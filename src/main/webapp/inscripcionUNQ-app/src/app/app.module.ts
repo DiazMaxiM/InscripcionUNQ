@@ -62,6 +62,7 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-
 import { MomentUtcDateAdapter } from './momentUtcDateAdapter';
 import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';
+import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialo
 		EncuestaDialogoComponent,
 		ActalizacionPerfilesDialogoComponent,
 		OfertasDeEncuestaDialogoComponent,
-		SeleccionDePeriodoDialogoComponent
+		SeleccionDePeriodoDialogoComponent,
+		ReporteDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -127,6 +129,6 @@ import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialo
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
   EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
 	EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent,
-	OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent]
+	OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent, ReporteDialogoComponent]
 })
 export class AppModule { }

@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
+import ar.edu.unq.inscripcionunq.spring.model.Certificado;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.service.EncuestaService;
@@ -129,5 +132,24 @@ public class EncuestaController {
 
 	}
 	
+	@GetMapping("/generarReporte/{idEncuesta}/{tipoEncuesta}")
+	public ResponseEntity generarReporte(@PathVariable String idEncuesta, @PathVariable String tipoEncuesta) {
+		byte[] xlsBytes;
+		try {
+			
+			xlsBytes = encuestaServiceImp.getReporte(idEncuesta, tipoEncuesta).getBinaryPDF();
+		} catch (IdNumberFormatException  e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		
+		HttpHeaders encabezados = new HttpHeaders();
+		encabezados.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
+	
+		String nombreArchivo = "output.xls";
+		
+		encabezados.setContentDispositionFormData(nombreArchivo, nombreArchivo);
+		encabezados.setCacheControl("must-revalidate, post-check=0,pre-check=0");
+		return new ResponseEntity<>(xlsBytes, encabezados, HttpStatus.OK);
+	}
 
 }

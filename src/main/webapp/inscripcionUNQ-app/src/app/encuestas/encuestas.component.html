@@ -31,8 +31,9 @@
 				<td>{{ encuesta.nroOfertas}}</td>
 				<td>{{ encuesta.nroEstudiantes}}</td>
 				<td>{{ encuesta.nroDeAlumnosQueCompletaronEncuesta}}</td>
-				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)">edit</i></td>
-				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip" data-placement="top" title="Ofertas académica">list</i></td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEncuesta(encuesta)" data-toggle="tooltip" data-placement="top" title="Editar encuesta">edit</i></td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaDescargarReporte(encuesta)" data-toggle="tooltip" data-placement="top" title="Descargar reporte">cloud_download</i></td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip" data-placement="top" title="Ofertas académicas">list</i></td>
 			</tr>
 		 <mat-divider></mat-divider>
 		</tbody>
