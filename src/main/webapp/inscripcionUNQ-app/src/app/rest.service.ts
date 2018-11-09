@@ -224,8 +224,8 @@ export class RestService {
     return this.httpClient.post('/api/encuestas/asociarOfertasParaEncuesta/' + idEncuesta, ofertasSeleccionadas, {headers});
 	}
 
-	clonarOferta(idPeriodo, idOferta) {
-    return this.httpClient.put('/api/ofertas-academicas/clonarOferta/' + idOferta + '/' + idPeriodo, { headers });
+	clonarOferta(ofertaAcademica) {
+    return this.httpClient.post('/api/oferta-academica/clonarOferta-academica', ofertaAcademica, { headers });
 	}
 	
 	getTiposReporte(){
@@ -235,4 +235,7 @@ export class RestService {
     return this.httpClient.get('/api/generarReporte/' + idEncuesta + '/' + tipoEncuesta, { responseType: 'blob'});
   }
 
+	clonarComisiom(comision) {
+    return this.httpClient.post('/api/comision/clonarComision', comision, { headers });
+	}
 }

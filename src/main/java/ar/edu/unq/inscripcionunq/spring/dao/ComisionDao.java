@@ -12,4 +12,6 @@ public interface ComisionDao extends GenericDao<Comision> {
 
 	List<Comision> getComisionParaPeriodo(Long idPeriodo);
 
+	Comision obtenerComisionConNombreEnPeriodo(String nombre, Long id);
+
 }

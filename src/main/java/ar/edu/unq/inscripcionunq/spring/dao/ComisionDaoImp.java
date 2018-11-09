@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
@@ -48,9 +49,13 @@ public class ComisionDaoImp extends GenericDaoImp<Comision> implements ComisionD
 		return query.getResultList();
 	}
 	
-	@GetMapping("/dias")
-	public ResponseEntity getDias() {
-		return ResponseEntity.ok().body(TypeDay.values());
+	@Override
+	public Comision obtenerComisionConNombreEnPeriodo(String nombre, Long idPeriodo) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (Comision) session.createQuery("from Comision c where c.nombre = :nombre and c.periodo.id = :idPeriodo")
+				.setParameter("idPeriodo", idPeriodo)
+				.setParameter("nombre", nombre)
+				.uniqueResult();
 	}
 
 }

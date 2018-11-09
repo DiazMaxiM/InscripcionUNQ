@@ -7,6 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteComisionConMismoNombreParaElMismoPeriodoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
@@ -22,10 +23,10 @@ public interface ComisionService extends GenericService<Comision> {
 	List<ComisionCompletaJson> getComisionesEnPeriodo(String idPeriodo);
 
 	void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException,
-			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException;
+			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, ExisteComisionConMismoNombreParaElMismoPeriodoException;
 
 	void editarComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException, MateriaNoExisteException,
-			NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException;
+			NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, CommissionNotExistenException, ExisteComisionConMismoNombreParaElMismoPeriodoException;
 
 	void eliminarComision(String idComision) throws IdNumberFormatException, CommissionNotExistenException;
 

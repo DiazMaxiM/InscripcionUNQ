@@ -19,6 +19,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteComisionConMismoNombreParaElMismoPeriodoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
@@ -61,7 +62,7 @@ public class ComisionController {
 		try {
 			comisionServiceImp.crearNuevaComision(comisionJson);
 		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
-				| ComisionSinHorariosException e) {
+				| ComisionSinHorariosException | ExisteComisionConMismoNombreParaElMismoPeriodoException e) {
 
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
@@ -74,7 +75,7 @@ public class ComisionController {
 		try {
 			comisionServiceImp.editarComision(comisionJson);
 		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
-				| ComisionSinHorariosException | CommissionNotExistenException e) {
+				| ComisionSinHorariosException | CommissionNotExistenException | ExisteComisionConMismoNombreParaElMismoPeriodoException e) {
 
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}

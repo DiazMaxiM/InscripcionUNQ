@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { OfertaAcademica } from "./oferta-academica.model";
 import { OfertaAcademicaDialogoComponent } from "../oferta-academica-dialogo/oferta-academica.dialogo.component";
 import { SeleccionDePeriodoDialogoComponent } from "../seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component";
+import { Periodo } from "../periodos/periodo.model";
 
 @Component({
   selector: "app-oferta-academica",
@@ -138,8 +139,14 @@ export class ofertaAcademicaComponent implements OnInit {
 	}
 
 	clonarOferta(idPeriodo, idOferta) {
-		this.restService.clonarOferta(idPeriodo, idOferta).subscribe(
+		const oferta = new OfertaAcademica();
+		oferta.id = idOferta;
+		const periodo = new Periodo();
+		periodo.id = idPeriodo;
+		oferta.periodo = periodo;
+		this.restService.clonarOferta(oferta).subscribe(
       res => {
+				this.utilesService.mostrarMensaje('La oferta acádemica fue clonada con exito');
         this.getOfertas();
       },
       (err: HttpErrorResponse) => {

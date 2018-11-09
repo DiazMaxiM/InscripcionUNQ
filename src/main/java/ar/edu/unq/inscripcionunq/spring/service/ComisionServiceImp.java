@@ -17,6 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.dao.PeriodoDao;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ExisteComisionConMismoNombreParaElMismoPeriodoException;
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
@@ -67,12 +68,13 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 
 	@Override
 	public void crearNuevaComision(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException,
-			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
+			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException, ExisteComisionConMismoNombreParaElMismoPeriodoException {
 		Comision comision = armarComisionDesdeJson(comisionJson);
+        validarSiExisteNombreDeLaComisionEnPeriodo(comision);
 		this.save(comision);
 
 	}
-
+	
 	private Comision armarComisionDesdeJson(ComisionCompletaJson comisionJson) throws PeriodoInvalidoException,
 			MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
 		Materia materia = materiaDaoImp.get(comisionJson.materia.id);
@@ -89,10 +91,13 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 	@Override
 	public void editarComision(ComisionCompletaJson comisionJson)
 			throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException,
-			ComisionSinHorariosException, CommissionNotExistenException {
+			ComisionSinHorariosException, CommissionNotExistenException, ExisteComisionConMismoNombreParaElMismoPeriodoException {
 		try {
 			Comision comision = this.get(comisionJson.id);
 			Comision comisionEditada = armarComisionDesdeJson(comisionJson);
+			if(!comision.getNombre().equals(comisionEditada.getNombre())) {
+				validarSiExisteNombreDeLaComisionEnPeriodo(comision);
+			}
 			comision.modificarDatos(comisionEditada);
 			this.save(comision);
 		} catch (ObjectNotFoundinDBException e) {
@@ -130,5 +135,13 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 
 		return comisionDaoImp.save(comisionClonada);
 	}
+	
+	private void validarSiExisteNombreDeLaComisionEnPeriodo(Comision comision) throws ExisteComisionConMismoNombreParaElMismoPeriodoException {
+		Comision comisionConMismoNombre = comisionDaoImp.obtenerComisionConNombreEnPeriodo(comision.getNombre(),comision.getPeriodo().getId());
+		if(comisionConMismoNombre != null) {
+			throw new ExisteComisionConMismoNombreParaElMismoPeriodoException();
+		}
+	}
+
 
 }
