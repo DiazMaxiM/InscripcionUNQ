@@ -10,6 +10,8 @@ import { AppMensajes } from '../app-mensajes.model';
 import { MatOptionSelectionChange, MatDialogConfig, MatDialog } from '@angular/material';
 import { ComisionDialogoComponent } from '../comision-dialogo/comision-dialogo.component';
 import { Comision } from '../comisiones-de-oferta/comision.model';
+import { SeleccionDePeriodoDialogoComponent } from '../seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-comisiones',
@@ -169,4 +171,47 @@ export class ComisionesComponent implements OnInit {
 				this.utilesService.mostrarMensajeDeError(err);
 			});
 	}
+
+	crearConfiguracionDialogoParaSeleccionDePeriodo() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = false;
+    dialogConfig.width = "400px";
+    dialogConfig.height = "200px";
+
+    const dialogRef = this.dialog.open(
+      SeleccionDePeriodoDialogoComponent,
+      dialogConfig
+		);
+		return dialogRef;
+	}
+	
+	abrirDialogoParaSeleccionDePeriodo(idComision) {
+
+		const dialogRef = this.crearConfiguracionDialogoParaSeleccionDePeriodo();
+    dialogRef.afterClosed().subscribe(idPeriodo => {
+			 if (idPeriodo != null) {
+				 this.clonarComision(idPeriodo, idComision);
+			 }
+    });
+	}
+
+	clonarComision(idPeriodo, idComision) {
+		const comision = new Comision();
+		comision.id = idComision;
+		const periodo = new Periodo();
+		periodo.id = idPeriodo;
+	  comision.periodo = periodo;
+		this.restService.clonarComisiom(comision).subscribe(
+      res => {
+				this.utilesService.mostrarMensaje('La comisión fue clonada con exito');
+        this.getComisionesEnPeriodo(this.periodoActual);
+      },
+      (err: HttpErrorResponse) => {
+        this.utilesService.mostrarMensajeDeError(err);
+      }
+    );
+	}
+
 }
