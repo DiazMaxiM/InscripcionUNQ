@@ -235,24 +235,14 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 	}
 
 	public Reporte getReporte(String idEncuesta, String tipoReporte) throws IdNumberFormatException {
-		Integer nroEstudiantes = 0;
-		List<String> comisiones = new ArrayList<String>();
-		
 		Encuesta encuesta = new Encuesta();
 		try {
 			encuesta = encuestaDaoImp.get(new Long(idEncuesta));
-			
-			for (OfertaAcademica oferta : encuesta.getOfertasAcademicas()) {
-	    		for (Comision comision : oferta.getComisiones()) {
-	    			nroEstudiantes = estudianteServiceImp.estudiantesPorComision(comision.getId().toString());
-	    			comisiones.add(new String(nroEstudiantes.toString()));
-				}
-			}
 		} catch (NumberFormatException e) {
 			throw new IdNumberFormatException();
 		}
     
-		Reporte reporte = new Reporte(encuesta, comisiones, TipoReporte.valueOf(tipoReporte));
+		Reporte reporte = new Reporte(encuesta, TipoReporte.valueOf(tipoReporte));
 		try {
 			reporte.generarReporte();
 		} catch (Exception e) {
