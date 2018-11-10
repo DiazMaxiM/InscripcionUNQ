@@ -17,11 +17,13 @@ Facilitación del proceso de carga de datos de los alumnos en la encuesta de int
 mas información [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/Visi%C3%B3n)
 
 ## Entregas
-Prueba de concepto [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/04---Prueba-de-concepto)
+Prueba de concepto [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/03---Prueba-de-concepto)
 
-Entrega 1 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/05---Entrega-1)
+Entrega 1 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/04---Entrega-1)
 
-Entrega 2 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/Entrega-2)
+Entrega 2 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/05-Entrega-2)
+
+Entrega 3 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/06-Entrega-3)
 
 [![Build Status](https://travis-ci.org/DiazMaxiM/InscripcionUNQ.svg?branch=master)](https://travis-ci.org/DiazMaxiM/InscripcionUNQ)
 
