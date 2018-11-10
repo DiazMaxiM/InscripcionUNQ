@@ -19,7 +19,7 @@
 				</mat-error> 
 			 </mat-form-field>
 			 <mat-form-field class="col-md-6">
-				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker" placeholder="Fecha de comienzo" formControlName="fechaDeComienzo" required>
+				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker" placeholder="Fecha de comienzo" formControlName="fechaDeComienzo" required readonly>
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 				<mat-error *ngIf="form.get('fechaDeComienzo').hasError('required')">
@@ -27,7 +27,7 @@
 				</mat-error> 
 			</mat-form-field>
 			<mat-form-field class="col-md-6">
-				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker2" placeholder="Fecha de finalización" formControlName="fechaDeFinalizacion" required>
+				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker2" placeholder="Fecha de finalización" formControlName="fechaDeFinalizacion" required readonly>
 				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle >
 				<mat-datepicker #picker2></mat-datepicker>
 				<mat-error *ngIf="form.get('fechaDeFinalizacion').hasError('required')">
