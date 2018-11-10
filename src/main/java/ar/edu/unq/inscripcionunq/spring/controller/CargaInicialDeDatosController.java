@@ -454,7 +454,7 @@ public class CargaInicialDeDatosController {
 		long idcommobj12 = comisionServiceImp.save(commobj12);
 		acc1.agregarComision(comisionServiceImp.get(idcommobj12));
 
-		Comision commbd1 = new Comision("BD C1", materiaServiceImp.get(bd), 30, periodo1);
+		Comision commbd1 = new Comision("BD C1", materiaServiceImp.get(bd), 1, periodo1);
 		commbd1.agregarHorarios(TypeDay.LUNES, LocalTime.of(18, 00), 3f);
 		commbd1.agregarHorarios(TypeDay.JUEVES, LocalTime.of(18, 00), 3f);
 		long idcommbd1 = comisionServiceImp.save(commbd1);
@@ -589,7 +589,7 @@ public class CargaInicialDeDatosController {
 
 		
 		
-		Estudiante ingrid = new Estudiante("Ingrid", "Calderon", "12345678", "ingridgcalderon@gmail.com");
+		Estudiante ingrid = new Estudiante("Ingrid", "Calderon", "123", "ingridgcalderon@gmail.com");
 		ingrid.agregarInscripcionACarrera(tpi);
 		ingrid.agregarMateriaAprobada(materiaServiceImp.get(intro));
 		ingrid.agregarMateriaAprobada(materiaServiceImp.get(mate1));

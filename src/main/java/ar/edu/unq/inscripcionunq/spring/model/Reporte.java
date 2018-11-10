@@ -58,7 +58,6 @@ public class Reporte {
 		workbook.setSheetName(0, "Reporte");
 		CellStyle headerStyle = workbook.createCellStyle();
 		Font font = workbook.createFont();
-		//font.setFontName("Serif");
 		font.setBold(true);
 		headerStyle.setFont(font);
 		
@@ -83,12 +82,7 @@ public class Reporte {
 		
 		if (mergeCells != null) sheet.addMergedRegion(mergeCells);
 		
-
-	    
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
-	    /*for (int x = 0; x < sheet.getRow(0).getPhysicalNumberOfCells(); x++) {
-	        sheet.setColumnWidth(x, 20*256);
-	    }*/
 	    
 		workbook.write(outByteStream);
 		byte [] outArray = outByteStream.toByteArray();
@@ -107,11 +101,11 @@ public class Reporte {
     	for ( Estudiante estudiante : this.encuesta.getEstudiantes() ) {
 			boolean cupoDisponible = true;
 			linea = new ArrayList<String>();
-			linea.add(estudiante.getNombre());
+			linea.add(estudiante.getNombre() + " " + estudiante.getApellido());
 			linea.add(estudiante.getEmail());
 			
     		for (Comision comision : estudiante.getRegistroComisiones()) {
-    			if (comision.getCupo() < 1 ) cupoDisponible = false;
+    			if (comision.getCupo() < getNroDeInscriptoPorComision(this.encuesta, comision) ) cupoDisponible = false;
     			linea.add(comision.getNombre());
 			}
     		
@@ -138,7 +132,17 @@ public class Reporte {
         }
 		generarXls(headers, DATA, cellMerge);
     }
-
+	
+	public int getNroDeInscriptoPorComision(Encuesta encuesta, Comision comision) {
+		int inscriptos = 0;
+		
+		for (Estudiante estudiante : encuesta.getEstudiantes()) {
+			for (Comision comisionEstudiante : estudiante.getRegistroComisiones()) {
+				if (comisionEstudiante == comision) inscriptos++;
+			}
+		}   
+		return inscriptos;
+	}
 	
 	public void generarReporteAlumnosInscriptosPorComision() throws IOException{
 		DATA = new ArrayList<String[]>();
