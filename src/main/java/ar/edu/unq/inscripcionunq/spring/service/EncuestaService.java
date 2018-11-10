@@ -1,6 +1,9 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.transaction.SystemException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
@@ -11,6 +14,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreEx
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ReporteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
@@ -43,6 +47,6 @@ public interface EncuestaService extends GenericService<Encuesta> {
 	public void asociarOfertasParaEncuesta(String idEncuesta, List<IdJson> idsJson)
 			throws IdNumberFormatException, EncuestaNoExisteException, OfertaNoExisteException;
 	
-	public Reporte getReporte(String idEncuesta, String tipoEncuesta) throws IdNumberFormatException;
+	public Reporte getReporte(String idEncuesta, String tipoEncuesta) throws IdNumberFormatException,IOException;
 
 }

@@ -7,5 +7,4 @@ public class ReporteNoExisteException extends ExceptionGeneric implements Except
  	public ReporteNoExisteException() {
 		super(031, "Debe seleccionar un tipo de reporte válido");
 	}
-
 }

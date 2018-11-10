@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
@@ -18,6 +20,8 @@ import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
+import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
+import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
@@ -27,6 +31,7 @@ import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
+import ar.edu.unq.inscripcionunq.spring.service.IncidenciaServiceImp;
 import ar.edu.unq.inscripcionunq.spring.service.WebService;
 
 @RestController
@@ -58,6 +63,9 @@ public class CargaInicialDeDatosController {
 
 	@Autowired
 	private WebService webService;
+	
+	@Autowired
+	private GenericService<Materia> incidenciaServiceImp;
 
 	@Autowired
 	private GenericService<Equivalencia> equivalenciaServiceImp;
@@ -579,6 +587,18 @@ public class CargaInicialDeDatosController {
 				LocalDateTime.of(2018, 12, 1, 00, 00), periodo1);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
 
+		
+		
+		Estudiante ingrid = new Estudiante("Ingrid", "Calderon", "12345678", "ingridgcalderon@gmail.com");
+		ingrid.agregarInscripcionACarrera(tpi);
+		ingrid.agregarMateriaAprobada(materiaServiceImp.get(intro));
+		ingrid.agregarMateriaAprobada(materiaServiceImp.get(mate1));
+
+		poll.agregarEstudiante(ingrid);
+
+		
+		
+		
 		Long idEncuesta = encuestaServiceImp.save(poll);
 
 		Equivalencia equivalenciaSeg = new Equivalencia(materiaServiceImp.get(sI), materiaServiceImp.get(segInfo));
@@ -609,6 +629,8 @@ public class CargaInicialDeDatosController {
 
 		tipoIncidencia = new TipoIncidencia("La franja horaria no corresponde con mi promedio");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
+		
+		
 	}
 
 }
