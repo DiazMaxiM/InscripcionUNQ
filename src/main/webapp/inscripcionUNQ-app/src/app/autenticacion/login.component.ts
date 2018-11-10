@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit{
 
 	ngOnInit() {
 		this.crearLoginFormGroup();
-		this.getPerfiles();
 	}
 
 crearLoginFormGroup() {
@@ -59,20 +58,12 @@ crearLoginFormGroup() {
 		this.usuarioLogueado.notificarUsuarioLoguedado();
 		localStorage.setItem('usuario', JSON.stringify(usuario));
 		if(usuario.perfiles.length > 1){
-      this.seleccionaPerfil = true;
+			this.seleccionaPerfil = true;
+			this.perfiles = usuario.perfiles;
 		} else {
 			const perfil = usuario.perfiles[0];
 			this.irASegunPerfil(perfil);
 		}
-	}
-
-	getPerfiles() {
-		this.restService.getTipoPerfiles().subscribe(perfiles => {
-			this.perfiles = this.utilesService.ordenarString(perfiles);
-		},
-			(err) => {
-				this.utilesService.mostrarMensajeDeError(err);
-			});
 	}
 
 	irASegunPerfil(perfil: String) {

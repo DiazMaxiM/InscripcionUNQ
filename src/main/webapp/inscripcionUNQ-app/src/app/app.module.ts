@@ -58,7 +58,7 @@ import { CallbackComponent } from './callback/callback.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';
 import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
-import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MomentUtcDateAdapter } from './momentUtcDateAdapter';
 import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';
@@ -120,8 +120,8 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
 		UtilesService, UsuarioLogueadoService, AuthService,
 		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    { provide: DateAdapter, useClass: MomentUtcDateAdapter },
+		{provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
 		],
 	bootstrap: [AppComponent],
   entryComponents: [FeedbackUsuarioDialogoComponent, SeleccionDeComisionDialogoComponent,
@@ -131,4 +131,8 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
 	EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent,
 	OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent, ReporteDialogoComponent]
 })
-export class AppModule { }
+export class AppModule {
+	constructor(private adapter: DateAdapter<any>) {
+		this.adapter.setLocale('es');
+	}
+ }
