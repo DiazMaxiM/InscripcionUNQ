@@ -1,7 +1,10 @@
 package ar.edu.unq.inscripcionunq.spring.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.transaction.SystemException;
 
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreEx
 import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ReporteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
@@ -133,15 +137,15 @@ public class EncuestaController {
 	}
 	
 	@GetMapping("/generarReporte/{idEncuesta}/{tipoEncuesta}")
-	public ResponseEntity generarReporte(@PathVariable String idEncuesta, @PathVariable String tipoEncuesta) {
+	public ResponseEntity generarReporte(@PathVariable String idEncuesta, @PathVariable String tipoEncuesta) throws IOException {
 		byte[] xlsBytes;
 		try {
-			
 			xlsBytes = encuestaServiceImp.getReporte(idEncuesta, tipoEncuesta).getBinaryPDF();
 		} catch (IdNumberFormatException  e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+			// TODO Auto-generated catch block
+	    	return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
-		
+
 		HttpHeaders encabezados = new HttpHeaders();
 		encabezados.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
 	

@@ -5,6 +5,7 @@ import { UtilesService } from "../utiles.service";
 import { RestService } from "../rest.service";
 import { DataDialogo } from "./data-dialogo.model";
 import { Encuesta } from "../encuesta-dialogo/encuesta.model";
+import { httpFactory } from "@angular/http/src/http_module";
 
 @Component({
   selector: "app-reporte-dialogo",
@@ -56,7 +57,11 @@ export class ReporteDialogoComponent implements OnInit {
 			this.restService.getReporte(idEncuesta,tipoReporte).subscribe(data => {
 				this.descargar(data);
 				this.cerrar();
+			},
+			(err) => {
+				this.utilesService.mostrarMensaje('Sin datos para generar el reporte');
 			});
+			
 		} else {
 			this.utilesService.validateAllFormFields(this.form);
 		}

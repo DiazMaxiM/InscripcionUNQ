@@ -58,3 +58,7 @@ h2{
 .marginBoton{
 	margin: 10px;
 }
+
+.material-icons:hover{
+	cursor: pointer;
+}

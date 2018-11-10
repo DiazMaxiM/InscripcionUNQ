@@ -1,9 +1,12 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.transaction.SystemException;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ReporteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
 import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
@@ -234,7 +238,7 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		return ofertas;
 	}
 
-	public Reporte getReporte(String idEncuesta, String tipoReporte) throws IdNumberFormatException {
+	public Reporte getReporte(String idEncuesta, String tipoReporte) throws IdNumberFormatException,IOException {
 		Encuesta encuesta = new Encuesta();
 		try {
 			encuesta = encuestaDaoImp.get(new Long(idEncuesta));
@@ -243,11 +247,9 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		}
     
 		Reporte reporte = new Reporte(encuesta, TipoReporte.valueOf(tipoReporte));
-		try {
-			reporte.generarReporte();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
+		reporte.generarReporte();
+	
 		return reporte;
 	}
 }
