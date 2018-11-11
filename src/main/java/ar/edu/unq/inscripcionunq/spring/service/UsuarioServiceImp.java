@@ -122,7 +122,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	@Override
 	public void actualizarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, EmailInvalidoException, 
 	NombreInvalidoException, ApellidoInvalidoException, FormatoNumeroIdException, 
-	ExisteUsuarioConElMismoEmailException {
+	ExisteUsuarioConElMismoEmailException, DniInvalidoException {
 		Usuario usuarioActualizado = this.mapearUsuarioDesdeJson(usuarioJson);
 		Validacion.validarUsuario(usuarioActualizado);
 		try {

@@ -29,7 +29,7 @@ public interface UsuarioService extends GenericService<Usuario>{
 
 	List<UsuarioJson> getUsuariosSegunPerfil(String perfil) throws PerfilInvalidoException;
 
-	void actualizarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, FormatoNumeroIdException, ExisteUsuarioConElMismoEmailException;
+	void actualizarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, FormatoNumeroIdException, ExisteUsuarioConElMismoEmailException, DniInvalidoException;
 
 	void actualizarPerfiles(String idUsuario, List<String> perfiles) throws PerfilInvalidoException, FormatoNumeroIdException, UsuarioNoExisteException;
 }

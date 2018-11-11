@@ -93,7 +93,7 @@ public class UsuarioController {
 		try {
 			usuarioServiceImp.actualizarUsuario(usuarioJson);
 		} catch (UsuarioNoExisteException | EmailInvalidoException | NombreInvalidoException | ApellidoInvalidoException
-				| FormatoNumeroIdException | ExisteUsuarioConElMismoEmailException e) {
+				| FormatoNumeroIdException | ExisteUsuarioConElMismoEmailException | DniInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 			
