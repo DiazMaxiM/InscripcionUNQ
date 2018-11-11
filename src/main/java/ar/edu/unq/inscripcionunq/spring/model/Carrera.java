@@ -7,11 +7,12 @@ import javax.persistence.Enumerated;
 
 @Entity(name = "Carrera")
 public class Carrera extends BaseEntity {
+	
 	@Column(unique = true)
 	private String codigo;
 	private String descripcion;
 	@Enumerated(EnumType.STRING)
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 
 	public Carrera() {
 
@@ -22,11 +23,11 @@ public class Carrera extends BaseEntity {
 		this.setDescripcion(descripcion);
 	}
 
-	public TypeStatus getEstado() {
+	public TipoEstado getEstado() {
 		return this.estado;
 	}
 
-	public void setEstado(TypeStatus estado) {
+	public void setEstado(TipoEstado estado) {
 		this.estado = estado;
 	}
 
@@ -47,7 +48,7 @@ public class Carrera extends BaseEntity {
 	}
 
 	public void deshabilitar() {
-		this.setEstado(TypeStatus.DISABLED);
+		this.setEstado(TipoEstado.DISABLED);
 	}
 
 	public void actualizarInformacion(Carrera carreraRecibida){
@@ -55,5 +56,4 @@ public class Carrera extends BaseEntity {
 		this.setDescripcion(carreraRecibida.getDescripcion());
 		this.setEstado(carreraRecibida.getEstado());		
 	}
-
 }

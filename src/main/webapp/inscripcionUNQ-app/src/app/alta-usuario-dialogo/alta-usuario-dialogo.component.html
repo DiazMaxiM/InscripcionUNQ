@@ -1,46 +1,32 @@
 <h2 mat-dialog-title>Usuario</h2>
 <mat-dialog-content [formGroup]="form">
-	  <mat-form-field class="full-width">
-				<input
-					matInput
-					type="text"
-					placeholder="Nombres"
-					formControlName="nombres"
-					id="nombres" required>
-					<mat-error *ngIf="form.get('nombres').hasError('required')">
-						Campo obligatorio
-					</mat-error>
-			</mat-form-field>
-			<mat-form-field class="full-width">
-				<input
-					matInput
-					placeholder="Apellidos"
-					formControlName="apellidos"
-					id="apellidos" required>
-					<mat-error *ngIf="form.get('apellidos').hasError('required')">
-						Campo obligatorio
-					</mat-error>
-			</mat-form-field>
-    <mat-form-field>
-    <input matInput
-    placeholder="Correo electrónico"
-    formControlName="email"
-    type="email" required>
-    <mat-error *ngIf="form.get('email').hasError('required')">
-      Campo obligatorio
-    </mat-error>
-    <mat-error *ngIf="form.get('email').hasError('email')">
-      La dirección ingresada no corresponde a un correo electrónico válido
-    </mat-error>
-  </mat-form-field>
+	<mat-form-field class="full-width">
+		<input matInput type="text" placeholder="Nombres" formControlName="nombres" id="nombres" required>
+		<mat-error *ngIf="form.get('nombres').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field class="full-width">
+		<input matInput placeholder="Apellidos" formControlName="apellidos" id="apellidos" required>
+		<mat-error *ngIf="form.get('apellidos').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field>
+		<input matInput placeholder="E-mail" formControlName="email" type="email" required>
+		<mat-error *ngIf="form.get('email').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+		<mat-error *ngIf="form.get('email').hasError('email')">
+			La dirección de e-mail no es válida
+		</mat-error>
+	</mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button class="btn  mat-button" mat-fab color="primary"
-        (click)="cerrar()">
-        Cancelar
-    </button>
-    <button class="btn btn-danger mat-button" mat-fab color="primary"
-        (click)="guardar()">
-        Guardar
-    </button>
+	<button class="btn  mat-button" mat-fab color="primary" (click)="cerrar()">
+		Cancelar
+	</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+		Guardar
+	</button>
 </mat-dialog-actions>

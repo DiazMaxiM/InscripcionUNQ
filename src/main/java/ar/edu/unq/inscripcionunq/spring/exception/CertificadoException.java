@@ -5,6 +5,6 @@ public class CertificadoException extends ExceptionGeneric implements ExceptionS
 	private static final long serialVersionUID = 1L;
 
 	public CertificadoException() {
-		super(011, "Error al generar el Certificado");
+		super(011, "Error al generar el certificado");
 	}
 }

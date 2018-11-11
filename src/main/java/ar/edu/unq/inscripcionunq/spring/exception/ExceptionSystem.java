@@ -9,5 +9,4 @@ public interface ExceptionSystem {
 	public void setCode(Integer code);
 
 	public void setMsg(String msg);
-
 }

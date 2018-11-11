@@ -1,82 +1,95 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { UtilesService } from '../utiles.service';
-import { RestService } from '../rest.service';
-import { Periodo } from '../periodos/periodo.model';
+import { Component, OnInit } from "@angular/core";
+import { MatDialogRef } from "@angular/material";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { UtilesService } from "../utiles.service";
+import { RestService } from "../rest.service";
+import { Periodo } from "../periodos/periodo.model";
 
 @Component({
-	selector: 'app-periodo-dialogo',
-	templateUrl: './periodo-dialogo.component.html',
-	styleUrls: ['../dialogo-abm.component.css']
+  selector: "app-periodo-dialogo",
+  templateUrl: "./periodo-dialogo.component.html",
+  styleUrls: ["../dialogo-abm.component.css"]
 })
-
 export class PeriodoDialogoComponent implements OnInit {
-	form: FormGroup;
-	tipoPeriodos: string[] = [];
-	anhoActual: any = new Date();
-	periodo: Periodo = new Periodo();
-	numeros: number[] = [];
+  form: FormGroup;
+  tipoPeriodos: string[] = [];
+  anhoActual: any = new Date();
+  periodo: Periodo = new Periodo();
+  numeros: number[] = [];
 
-	constructor(
-		private fb: FormBuilder,
-		private utilesService: UtilesService,
-		private dialogRef: MatDialogRef<PeriodoDialogoComponent>,
-		private restService: RestService) {
-	}
+  constructor(
+    private fb: FormBuilder,
+    private utilesService: UtilesService,
+    private dialogRef: MatDialogRef<PeriodoDialogoComponent>,
+    private restService: RestService
+  ) {}
 
-	ngOnInit() {
-		this.anhoActual = this.anhoActual.getFullYear() + 5;
-		this.crearFormularioComision();
-		this.getTipoPeriodos();
-	}
+  ngOnInit() {
+    this.anhoActual = this.anhoActual.getFullYear() + 5;
+    this.crearFormularioComision();
+    this.getTipoPeriodos();
+  }
 
-	getTipoPeriodos() {
-		if (this.tipoPeriodos.length == 0) {
-			this.restService.getTipoPeriodos().subscribe(periodos => {
-				this.tipoPeriodos = periodos;
-			});
-		}
-	}
+  getTipoPeriodos() {
+    if (this.tipoPeriodos.length == 0) {
+      this.restService.getTipoPeriodos().subscribe(periodos => {
+        this.tipoPeriodos = periodos;
+      });
+    }
+  }
 
-	getNroPeriodos(event) {
-		if (event.isUserInput) {
-			this.restService.getCantidadPeriodos(event.source.value).subscribe(periodos => {
-				this.numeros = Array.from(new Array(periodos), (val, index) => index + 1);
-			});
-		}
-	}
+  getNroPeriodos(event) {
+    if (event.isUserInput) {
+      this.restService
+        .getCantidadPeriodos(event.source.value)
+        .subscribe(periodos => {
+          this.numeros = Array.from(
+            new Array(periodos),
+            (val, index) => index + 1
+          );
+        });
+    }
+  }
 
-	crearFormularioComision() {
-		this.form = this.fb.group({
-			anho: ['', [Validators.required, Validators.min(1989), Validators.max(this.anhoActual)]],
-			numero: ['', Validators.required],
-			tipoPeriodo: ['', Validators.required]
-		});
-	}
+  crearFormularioComision() {
+    this.form = this.fb.group({
+      anho: [
+        "",
+        [
+          Validators.required,
+          Validators.min(1989),
+          Validators.max(this.anhoActual)
+        ]
+      ],
+      numero: ["", Validators.required],
+      tipoPeriodo: ["", Validators.required]
+    });
+  }
 
-	guardar() {
-		if (this.form.valid) {
-			const { anho, numero, tipoPeriodo } = this.form.value;
-			const periodo = new Periodo(anho, numero, tipoPeriodo);
-			this.crearNuevoPeriodo(periodo);
-		} else {
-			this.utilesService.validateAllFormFields(this.form);
-		}
-	}
+  guardar() {
+    if (this.form.valid) {
+      const { anho, numero, tipoPeriodo } = this.form.value;
+      const periodo = new Periodo(anho, numero, tipoPeriodo);
+      this.crearNuevoPeriodo(periodo);
+    } else {
+      this.utilesService.validateAllFormFields(this.form);
+    }
+  }
 
-	crearNuevoPeriodo(periodo: Periodo) {
-		this.restService.crearNuevoPeriodo(periodo).subscribe(periodos => {
-			const mensaje = 'Se creó el nuevo período con éxito';
-			this.utilesService.mostrarMensaje(mensaje);
-			this.cerrar();
-		},
-			(err) => {
-				this.utilesService.mostrarMensajeDeError(err);
-			});
-	}
+  crearNuevoPeriodo(periodo: Periodo) {
+    this.restService.crearNuevoPeriodo(periodo).subscribe(
+      periodos => {
+        const mensaje = "Se creó el nuevo período con éxito";
+        this.utilesService.mostrarMensaje(mensaje);
+        this.cerrar();
+      },
+      err => {
+        this.utilesService.mostrarMensajeDeError(err);
+      }
+    );
+  }
 
-	cerrar() {
-		this.dialogRef.close();
-	}
+  cerrar() {
+    this.dialogRef.close();
+  }
 }

@@ -19,18 +19,18 @@ import ar.edu.unq.inscripcionunq.spring.dao.PeriodoDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CopiaOfertaMismoPeriodoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
-import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.GeneracionDeCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
-import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstado;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Service
@@ -39,10 +39,13 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 
 	@Autowired
 	OfertaAcademicaDao ofertaAcademicaDaoImp;
+	
 	@Autowired
 	CarreraDao carreraDaoImp;
+	
 	@Autowired
 	ComisionDao comisionImp;
+	
 	@Autowired
 	PeriodoDao periodoDaoImp;
 
@@ -63,18 +66,18 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 
 	@Override
 	public void crearOferta(OfertaAcademicaJson ofertaJson) throws DescripcionInvalidaException,
-			CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, ErrorAlGenerarCodigoException {
+			CodigoInvalidoException, EstadoInvalidoException, NombreInvalidoException, GeneracionDeCodigoException {
 		try {
 			OfertaAcademica oferta = this.armarOfertaDesdeJson(ofertaJson);
 			this.save(oferta);
 		} catch (ConstraintViolationException e) {
-			throw new ErrorAlGenerarCodigoException();
+			throw new GeneracionDeCodigoException();
 		}
 	}
 
 	private OfertaAcademica armarOfertaDesdeJson(OfertaAcademicaJson ofertaAcademicaJson)
 			throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException,
-			NombreInvalidoException, ErrorAlGenerarCodigoException {
+			NombreInvalidoException, GeneracionDeCodigoException {
 		Carrera carrera = carreraDaoImp.get(ofertaAcademicaJson.carrera.id);
 		Periodo periodo = periodoDaoImp.get(ofertaAcademicaJson.periodo.id);
 
@@ -84,24 +87,25 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 				.getOfertaPorNombre(oferta.armarNombreDeOferta(oferta.getCarrera(), oferta.getPeriodo()));
 
 		if (ofertaOriginal != null && ofertaOriginal.getId() != ofertaAcademicaJson.id) {
-			throw new ErrorAlGenerarCodigoException();
+			throw new GeneracionDeCodigoException();
 		}
 
-		TypeStatus estado = ofertaAcademicaJson.habilitada ? TypeStatus.ENABLED : TypeStatus.DISABLED;
+		TipoEstado estado = ofertaAcademicaJson.habilitada ? TipoEstado.ENABLED : TipoEstado.DISABLED;
 		oferta.setEstado(estado);
 		Validacion.validarOfertaAcademica(oferta);
+		
 		return oferta;
 	}
 
 	@Override
 	public void actualizarOferta(OfertaAcademicaJson ofertaJson)
 			throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException,
-			NombreInvalidoException, OfertaNoExisteException, ErrorAlGenerarCodigoException {
+			NombreInvalidoException, OfertaNoExisteException, GeneracionDeCodigoException {
 		OfertaAcademica ofertaRecibida = this.armarOfertaDesdeJson(ofertaJson);
 		OfertaAcademica ofertaActual = null;
 		try {
 			ofertaActual = this.get(ofertaJson.id);
-		} catch (ObjectNotFoundinDBException e) {
+		} catch (ObjectoNoEncontradoEnBDException e) {
 			throw new OfertaNoExisteException();
 		}
 		if (ofertaActual != null) {
@@ -111,12 +115,12 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 
 	private void actualizarInformacionDeOferta(OfertaAcademica ofertaActual, OfertaAcademica ofertaRecibida)
 			throws DescripcionInvalidaException, NombreInvalidoException, EstadoInvalidoException,
-			CodigoInvalidoException, ErrorAlGenerarCodigoException {
+			CodigoInvalidoException, GeneracionDeCodigoException {
 		ofertaActual.actualizarInformacion(ofertaRecibida);
 		try {
 			this.save(ofertaActual);
 		} catch (ConstraintViolationException e) {
-			throw new ErrorAlGenerarCodigoException();
+			throw new GeneracionDeCodigoException();
 		}
 
 	}
@@ -132,7 +136,7 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 
 	@Override
 	public void quitarComisionDeOferta(String idComision, String idOferta)
-			throws ObjectNotFoundinDBException, IdNumberFormatException {
+			throws ObjectoNoEncontradoEnBDException, FormatoNumeroIdException {
 		Long idOf = new Long(idOferta);
 		Long idCom = new Long(idComision);
 		try {
@@ -141,24 +145,24 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 			oferta.getComisiones().remove(comision);
 			this.save(oferta);
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
+			throw new FormatoNumeroIdException();
 		}
 	}
 
 	@Override
-	public void actualizarComisiones(String idOferta, List<IdJson> idsJson) throws IdNumberFormatException {
+	public void actualizarComisiones(String idOferta, List<IdJson> idsJson) throws FormatoNumeroIdException {
 		OfertaAcademica oferta;
 		List<Comision> comisiones = new ArrayList<Comision>();
 		try {
 			oferta = ofertaAcademicaDaoImp.get(new Long(idOferta));
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
+			throw new FormatoNumeroIdException();
 		}
 		for (IdJson idJson : idsJson) {
 			try {
 				comisiones.add(comisionImp.get(new Long(idJson.id)));
 			} catch (NumberFormatException e) {
-				throw new IdNumberFormatException();
+				throw new FormatoNumeroIdException();
 			}
 			oferta.setComisiones(comisiones);
 		}
@@ -167,12 +171,12 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 
 	@Override
 	public List<OfertaAcademicaJson> getOfertasJsonEnPeriodo(String idPeriodo)
-			throws IdNumberFormatException, PeriodoInvalidoException {
+			throws FormatoNumeroIdException, PeriodoInvalidoException {
 		Periodo periodo;
 		try {
 			periodo = periodoDaoImp.get(new Long(idPeriodo));
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
+			throw new FormatoNumeroIdException();
 		}
 
 		if (periodo == null) {
@@ -180,8 +184,8 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 		}
 
 		List<OfertaAcademica> ofertas = ofertaAcademicaDaoImp.getOfertasParaPeriodo(periodo.getId());
+		
 		return ofertas.stream().map(o -> new OfertaAcademicaJson(o)).collect(Collectors.toList());
-
 	}
 
 	@Override
@@ -212,10 +216,10 @@ public class OfertaAcademicaServiceImp extends GenericServiceImp<OfertaAcademica
 				Long idComision = comisionImp.save(comision.clonar(periodo));
 				ofertaNueva.agregarComision(comisionImp.get(idComision));
 			}
-
 		}
+		
 		Long id = ofertaAcademicaDaoImp.save(ofertaNueva);
+		
 		return id;
 	}
-
 }

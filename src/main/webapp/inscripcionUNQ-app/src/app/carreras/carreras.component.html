@@ -1,28 +1,28 @@
 <h5 class="titulo">ABM Carreras</h5>
 <div align="center">
-  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaLaCreacionDeCarrera()">Nueva carrera</button>
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoParaLaCreacionDeCarrera()">Nueva carrera</button>
 </div>
 <div class="table-responsive">
-    <table class="table table-hover table-borderless">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let carrera of carreras">
-          <td>{{ carrera.codigo }}</td>
-          <td>{{ carrera.descripcion}}</td>
-          <td>
-                <mat-slide-toggle
-                    [checked]="carrera.habilitada" (change)="cambiarEstado(carrera,$event)">
-                </mat-slide-toggle>
-          </td>
-          <td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
-        </tr>
-       <mat-divider></mat-divider>
-      </tbody>
-    </table>
-   </div>
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th>Código</th>
+				<th>Descripción</th>
+				<th>Estado</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let carrera of carreras">
+				<td>{{ carrera.codigo }}</td>
+				<td>{{ carrera.descripcion}}</td>
+				<td>
+					<mat-slide-toggle [checked]="carrera.habilitada" (change)="cambiarEstado(carrera,$event)">
+					</mat-slide-toggle>
+				</td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)" data-toggle="tooltip"
+					 data-placement="top" title="Editar">edit</i></td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
+</div>

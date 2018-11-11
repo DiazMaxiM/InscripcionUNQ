@@ -9,9 +9,9 @@ import { UtilesService } from '../utiles.service';
 import { DataDialogo } from './data-dialogo.model';
 
 @Component({
-    selector: 'app-modificacion-de-materia-dialogo',
-    templateUrl: './modificacion-de-materia-dialogo.component.html',
-    styleUrls: ['./modificacion-de-materia-dialogo.component.css']
+	selector: 'app-modificacion-de-materia-dialogo',
+	templateUrl: './modificacion-de-materia-dialogo.component.html',
+	styleUrls: ['./modificacion-de-materia-dialogo.component.css']
 })
 export class ModificacionDeMateriaDialogoComponent implements OnInit {
 	materia: Materia;
@@ -44,9 +44,9 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 		this.restService.getCarreras().subscribe(carreras => {
 			this.carreras = carreras;
 		},
-		(err: HttpErrorResponse) => {
-			this.utilesService.mostrarMensajeDeError(err);
-		});
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			});
 	}
 
 	crearFormularioMateria() {
@@ -108,9 +108,9 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 		if (this.carrerasSeleccionadas.length > 0) {
 			const { codigo, nombre, horas } = this.form.value;
 			const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas);
-			if(this.materia == null){
+			if (this.materia == null) {
 				this.crearNuevaMateria(materia);
-			} else{
+			} else {
 				this.actualizarMateriaSeleccionada(materia, this.materia.id);
 			}
 		} else {
@@ -131,21 +131,21 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 	}
 
 	actualizarMateriaSeleccionada(materia: Materia, idMateria) {
-    materia.id = idMateria;
-    this.actualizarMateria(materia);
-  }
+		materia.id = idMateria;
+		this.actualizarMateria(materia);
+	}
 
-  actualizarMateria(materia) {
-    this.restService.actualizarInformacionMateria(materia)
-      .subscribe(res => {
-        const mensaje = 'Los datos de la materia fueron actualizados con éxito';
+	actualizarMateria(materia) {
+		this.restService.actualizarInformacionMateria(materia)
+			.subscribe(res => {
+				const mensaje = 'Los datos de la materia fueron actualizados con éxito';
 				this.utilesService.mostrarMensaje(mensaje);
 				this.cerrar();
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      });
-  }
+			},
+				(err: HttpErrorResponse) => {
+					this.utilesService.mostrarMensajeDeError(err);
+				});
+	}
 
 	cerrar() {
 		this.dialogRef.close();

@@ -14,7 +14,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoEstadoIncidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
 
-
 @Service
 @Transactional
 public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implements IncidenciaService {
@@ -54,5 +53,4 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 		return this.getIncidencias().stream().map(incidencia -> new IncidenciaJson(incidencia))
 				.collect(Collectors.toList());
 	}
-
 }

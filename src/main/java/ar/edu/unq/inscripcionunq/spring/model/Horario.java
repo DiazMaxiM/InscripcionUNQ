@@ -9,12 +9,13 @@ import javax.persistence.Enumerated;
 
 @Entity(name = "Horario")
 public class Horario extends BaseEntity {
+	
 	@Enumerated(EnumType.STRING)
-	private TypeDay dia;
+	private TipoDia dia;
 	private LocalTime horaComienzo;
 	private Float cantidadDeHoras;
 
-	public Horario(TypeDay dia, LocalTime horaComienzo, Float cantidadDeHoras) {
+	public Horario(TipoDia dia, LocalTime horaComienzo, Float cantidadDeHoras) {
 		this.dia = dia;
 		this.setHoraComienzo(horaComienzo);
 		this.setCantidadDeHoras(cantidadDeHoras);
@@ -31,7 +32,7 @@ public class Horario extends BaseEntity {
 				+ " ";
 	}
 
-	public TypeDay getDia() {
+	public TipoDia getDia() {
 		return dia;
 	}
 
@@ -54,5 +55,4 @@ public class Horario extends BaseEntity {
 	public Horario clonar() {
 		return new Horario(this.dia, this.horaComienzo, this.cantidadDeHoras);
 	}
-
 }

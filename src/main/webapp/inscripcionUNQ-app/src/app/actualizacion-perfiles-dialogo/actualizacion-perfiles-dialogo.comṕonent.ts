@@ -7,9 +7,9 @@ import { Usuario } from '../autenticacion/usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 
 @Component({
-    selector: 'app-actualizacion-perfiles-dialogo',
-    templateUrl: './actualizacion-perfiles-dialogo.component.html',
-    styleUrls: ['../dialogo-abm.component.css']
+	selector: 'app-actualizacion-perfiles-dialogo',
+	templateUrl: './actualizacion-perfiles-dialogo.component.html',
+	styleUrls: ['../dialogo-abm.component.css']
 })
 
 export class ActalizacionPerfilesDialogoComponent implements OnInit {
@@ -17,19 +17,19 @@ export class ActalizacionPerfilesDialogoComponent implements OnInit {
 	perfilesSeleccionados: String[];
 	usuario: Usuario;
 
-  constructor(
-    private restService: RestService,
-    private utilesService: UtilesService,
-    private dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>,
+	constructor(
+		private restService: RestService,
+		private utilesService: UtilesService,
+		private dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-			this.usuario = data.usuario;
-			this.perfilesSeleccionados = this.usuario.perfiles;
-		}
-
-  ngOnInit() {
-    this.getPerfiles();
+		this.usuario = data.usuario;
+		this.perfilesSeleccionados = this.usuario.perfiles;
 	}
-	
+
+	ngOnInit() {
+		this.getPerfiles();
+	}
+
 	getPerfiles() {
 		this.restService.getTipoPerfiles().subscribe(perfiles => {
 			this.perfiles = this.utilesService.ordenarString(perfiles);
@@ -39,39 +39,37 @@ export class ActalizacionPerfilesDialogoComponent implements OnInit {
 			});
 	}
 
-  onChange(perfil, $event) {
-		console.log($event);
-    if ($event.checked) {
-      this.perfilesSeleccionados.push(perfil);
-    } else {
-        this.perfilesSeleccionados.forEach(perfilSeleccionado => {
-            if (perfilSeleccionado == perfil) {
-                this.perfilesSeleccionados.splice(this.perfilesSeleccionados.indexOf(perfilSeleccionado), 1);
-            }
-        });
+	onChange(perfil, $event) {
+		if ($event.checked) {
+			this.perfilesSeleccionados.push(perfil);
+		} else {
+			this.perfilesSeleccionados.forEach(perfilSeleccionado => {
+				if (perfilSeleccionado == perfil) {
+					this.perfilesSeleccionados.splice(this.perfilesSeleccionados.indexOf(perfilSeleccionado), 1);
+				}
+			});
 		}
 	}
 
 	verificarSeleccion(perfil) {
-    let perfilChecked = false;
-    this.perfilesSeleccionados.forEach(perfilSeleccionado => {
-        if (perfil == perfilSeleccionado) {
-            perfilChecked = true;
-        }
-    });
-    return perfilChecked;
-  }
-
-
-  guardar() {
-    if(this.perfilesSeleccionados.length == 0){
-      this.utilesService.mostrarMensaje('Debe seleccionar al menos un perfil')
-    } else {
-			 this.actualizarPerfiles();
-    }
+		let perfilChecked = false;
+		this.perfilesSeleccionados.forEach(perfilSeleccionado => {
+			if (perfil == perfilSeleccionado) {
+				perfilChecked = true;
+			}
+		});
+		return perfilChecked;
 	}
-	
-	actualizarPerfiles(){
+
+	guardar() {
+		if (this.perfilesSeleccionados.length == 0) {
+			this.utilesService.mostrarMensaje('Debe seleccionar un perfil')
+		} else {
+			this.actualizarPerfiles();
+		}
+	}
+
+	actualizarPerfiles() {
 		this.restService.actualizarPerfiles(this.usuario.id, this.perfilesSeleccionados).subscribe(res => {
 			this.utilesService.mostrarMensaje(AppMensajes.MODIFICACION_PERFIL_EXITOSO);
 			this.cerrar();
@@ -81,7 +79,7 @@ export class ActalizacionPerfilesDialogoComponent implements OnInit {
 			});
 	}
 
-  cerrar() {
-    this.dialogRef.close();
-  }
+	cerrar() {
+		this.dialogRef.close();
+	}
 }

@@ -9,133 +9,132 @@ import { SeleccionDePeriodoDialogoComponent } from "../seleccion-de-periodo-dial
 import { Periodo } from "../periodos/periodo.model";
 
 @Component({
-  selector: "app-oferta-academica",
-  templateUrl: "./oferta-academica.component.html",
-  styleUrls: ["../estilo-abm.component.css"]
+	selector: "app-oferta-academica",
+	templateUrl: "./oferta-academica.component.html",
+	styleUrls: ["../estilo-abm.component.css"]
 })
-export class ofertaAcademicaComponent implements OnInit {
-  ofertas: OfertaAcademica[];
+export class OfertaAcademicaComponent implements OnInit {
+	ofertas: OfertaAcademica[];
 
-  constructor(
-    private restService: RestService,
-    private utilesService: UtilesService,
-    private dialog: MatDialog
-  ) {}
+	constructor(
+		private restService: RestService,
+		private utilesService: UtilesService,
+		private dialog: MatDialog
+	) { }
 
-  ngOnInit() {
-    this.ofertas = JSON.parse(localStorage.getItem("ofertas"));
-  }
+	ngOnInit() {
+		this.ofertas = JSON.parse(localStorage.getItem("ofertas"));
+	}
 
-  getOfertas() {
-    this.restService.getOfertas().subscribe(
-      ofertas => {
-        this.ofertas = ofertas;
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      }
-    );
-  }
+	getOfertas() {
+		this.restService.getOfertas().subscribe(
+			ofertas => {
+				this.ofertas = ofertas;
+			},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
+	}
 
-  abrirDialogoParaCreacionDeOferta() {
-    const dialogRef = this.crearConfiguracionDialogoParaOferta();
-    dialogRef.afterClosed().subscribe(val => {
+	abrirDialogoParaCreacionDeOferta() {
+		const dialogRef = this.crearConfiguracionDialogoParaOferta();
+		dialogRef.afterClosed().subscribe(val => {
 			this.getOfertas();
-    });
-  }
+		});
+	}
 
-  crearConfiguracionDialogoParaOferta(oferta?) {
-    const dialogConfig = new MatDialogConfig();
+	crearConfiguracionDialogoParaOferta(oferta?) {
+		const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = "600px";
-    dialogConfig.height = "600px";
-    dialogConfig.data = {
-      oferta: oferta
-    };
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = false;
+		dialogConfig.width = "600px";
+		dialogConfig.height = "600px";
+		dialogConfig.data = {
+			oferta: oferta
+		};
 
-    const dialogRef = this.dialog.open(
-      OfertaAcademicaDialogoComponent,
-      dialogConfig
-    );
+		const dialogRef = this.dialog.open(
+			OfertaAcademicaDialogoComponent,
+			dialogConfig
+		);
 
-    return dialogRef;
-  }
+		return dialogRef;
+	}
 
-  abrirDialogoParaEdicionDeOferta(ofertaSeleccionada) {
-    const dialogRef = this.crearConfiguracionDialogoParaOferta(
-      ofertaSeleccionada
-    );
-    dialogRef.afterClosed().subscribe(val => {
+	abrirDialogoParaEdicionDeOferta(ofertaSeleccionada) {
+		const dialogRef = this.crearConfiguracionDialogoParaOferta(
+			ofertaSeleccionada
+		);
+		dialogRef.afterClosed().subscribe(val => {
 			this.getOfertas();
-    });
-  }
+		});
+	}
 
-  actualizarOfertaSeleccionada(oferta: OfertaAcademica, ofertaSeleccionada) {
-    oferta.id = ofertaSeleccionada.id;
-    oferta.nroComisionesCreadas = ofertaSeleccionada.nroComisionesCreadas;
-    this.actualizarOferta(oferta);
-  }
+	actualizarOfertaSeleccionada(oferta: OfertaAcademica, ofertaSeleccionada) {
+		oferta.id = ofertaSeleccionada.id;
+		oferta.nroComisionesCreadas = ofertaSeleccionada.nroComisionesCreadas;
+		this.actualizarOferta(oferta);
+	}
 
-  actualizarOferta(oferta) {
-    this.restService.actualizarInformacionDeOferta(oferta).subscribe(
-      res => {
-        const mensaje =
-          "Los datos de la oferta académica fueron actualizados con exito";
-        this.utilesService.mostrarMensaje(mensaje);
-        this.getOfertas();
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      }
-    );
-  }
+	actualizarOferta(oferta) {
+		this.restService.actualizarInformacionDeOferta(oferta).subscribe(
+			res => {
+				const mensaje =
+					"Los datos de la oferta académica fueron actualizados con exito";
+				this.utilesService.mostrarMensaje(mensaje);
+				this.getOfertas();
+			},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
+	}
 
-  cambiarEstado(oferta, evento) {
-    oferta.habilitada = evento.checked;
-    this.actualizarOferta(oferta);
-  }
+	cambiarEstado(oferta, evento) {
+		oferta.habilitada = evento.checked;
+		this.actualizarOferta(oferta);
+	}
 
-  irAComisiones(oferta: OfertaAcademica) {
-    this.restService.getComisionesDeOferta(oferta.id).subscribe(
-      comisiones => {
-        localStorage.setItem(
-          "comisiones-de-oferta",
-          JSON.stringify(comisiones)
-        );
-        localStorage.setItem("oferta-seleccionada", JSON.stringify(oferta));
-        this.utilesService.irA("comisiones-de-oferta");
-      },
-      err => {
-        this.utilesService.mostrarMensajeDeError(err);
-      }
-    );
+	irAComisiones(oferta: OfertaAcademica) {
+		this.restService.getComisionesDeOferta(oferta.id).subscribe(
+			comisiones => {
+				localStorage.setItem(
+					"comisiones-de-oferta",
+					JSON.stringify(comisiones)
+				);
+				localStorage.setItem("oferta-seleccionada", JSON.stringify(oferta));
+				this.utilesService.irA("comisiones-de-oferta");
+			},
+			err => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
 	}
 
 	crearConfiguracionDialogoParaSeleccionDePeriodo() {
-    const dialogConfig = new MatDialogConfig();
+		const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = "400px";
-    dialogConfig.height = "200px";
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = false;
+		dialogConfig.width = "400px";
+		dialogConfig.height = "200px";
 
-    const dialogRef = this.dialog.open(
-      SeleccionDePeriodoDialogoComponent,
-      dialogConfig
+		const dialogRef = this.dialog.open(
+			SeleccionDePeriodoDialogoComponent,
+			dialogConfig
 		);
 		return dialogRef;
 	}
-	
-	abrirDialogoParaSeleccionDePeriodo(idOferta) {
 
+	abrirDialogoParaSeleccionDePeriodo(idOferta) {
 		const dialogRef = this.crearConfiguracionDialogoParaSeleccionDePeriodo();
-    dialogRef.afterClosed().subscribe(idPeriodo => {
-			 if (idPeriodo != null) {
-				 this.clonarOferta(idPeriodo, idOferta);
-			 }
-    });
+		dialogRef.afterClosed().subscribe(idPeriodo => {
+			if (idPeriodo != null) {
+				this.clonarOferta(idPeriodo, idOferta);
+			}
+		});
 	}
 
 	clonarOferta(idPeriodo, idOferta) {
@@ -145,13 +144,13 @@ export class ofertaAcademicaComponent implements OnInit {
 		periodo.id = idPeriodo;
 		oferta.periodo = periodo;
 		this.restService.clonarOferta(oferta).subscribe(
-      res => {
-				this.utilesService.mostrarMensaje('La oferta acádemica fue clonada con exito');
-        this.getOfertas();
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      }
-    );
+			res => {
+				this.utilesService.mostrarMensaje('La oferta acádemica fue clonada con éxito');
+				this.getOfertas();
+			},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
 	}
 }

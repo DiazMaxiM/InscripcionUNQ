@@ -6,13 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.unq.inscripcionunq.spring.exception.UserInPollNotFoundException;
+import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
 @Repository
-
 public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaDao {
 
 	@Override
@@ -27,7 +26,7 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 	}
 
 	@Override
-	public Estudiante getDatosDeUsuarioParaEncuesta(String dni, Long idPoll) throws UserInPollNotFoundException {
+	public Estudiante getDatosDeUsuarioParaEncuesta(String dni, Long idPoll) throws NoExistenUsuariosEnEncuestaException {
 		Session session = this.sessionFactory.getCurrentSession();
 		Query<Estudiante> query = session.createQuery(
 				"select estudiante from Encuesta as encuesta inner join encuesta.estudiantes estudiante where encuesta.id=:idEncuesta and estudiante.dni=:dni  ");
@@ -35,7 +34,7 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 		query.setParameter("dni", dni);
 		List<Estudiante> results = query.getResultList();
 		if (results.isEmpty()) {
-			throw new UserInPollNotFoundException();
+			throw new NoExistenUsuariosEnEncuestaException();
 		}
 		return query.getResultList().get(0);
 	}
@@ -76,6 +75,5 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 				+ " size(estudiante.registroComisiones) > 0")
 				.setParameter("idEncuesta", id)
 				.list().get(0);
-	}
-	
+	}	
 }

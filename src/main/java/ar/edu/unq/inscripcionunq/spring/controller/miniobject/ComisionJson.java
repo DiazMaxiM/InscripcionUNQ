@@ -6,8 +6,8 @@ import java.util.List;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Horario;
 
-
 public class ComisionJson {
+	
 	public Long id;
 	public String nombre;
 	public List<HorarioJson> horarioJson = new ArrayList<>();
@@ -27,5 +27,4 @@ public class ComisionJson {
 		}
 		this.cupo = comision.getCupo();
 	}
-
 }

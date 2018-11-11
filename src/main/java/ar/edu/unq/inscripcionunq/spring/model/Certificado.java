@@ -27,6 +27,7 @@ import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 
 public class Certificado {
+	
 	private Estudiante estudiante;
 	private byte[] binaryPDFGenerate;
 	private String nombreArchivo;
@@ -77,7 +78,7 @@ public class Certificado {
 			documento.add(new Paragraph(" "));
 			documento.add(new Paragraph("DNI: " + estudiante.getDni()));
 			documento.add(new Paragraph("Estudiante: " + estudiante.getApellido() + " " + estudiante.getNombre()));
-			documento.add(new Paragraph("Mail: " + estudiante.getEmail()));
+			documento.add(new Paragraph("E-mail: " + estudiante.getEmail()));
 			documento.add(new Paragraph(" "));
 			PdfPTable table = new PdfPTable(3);
 			table.setPaddingTop(1f);
@@ -85,7 +86,7 @@ public class Certificado {
 			PdfPCell cell = new PdfPCell(new Phrase("Materia"));
 			cell.setBorder(Rectangle.BOX);
 			table.addCell(cell);
-			cell = new PdfPCell(new Phrase("Comision"));
+			cell = new PdfPCell(new Phrase("Comisión"));
 			cell.setBorder(Rectangle.BOX);
 			table.addCell(cell);
 			cell = new PdfPCell(new Phrase("Horarios"));
@@ -102,14 +103,12 @@ public class Certificado {
 				cell = new PdfPCell(new Phrase(comision.getHorariosString()));
 				cell.setBorder(Rectangle.BOX);
 				table.addCell(cell);
-
 			}
 
 			documento.add(table);
-
 			documento.close();
-
 			binaryPDFGenerate = byteArrayOutputStream.toByteArray();
+			
 		} catch (DocumentException | IOException e) {
 			throw new CertificadoException();
 		}
@@ -117,7 +116,5 @@ public class Certificado {
 
 	public void setEstudiante(Estudiante estudiante) {
 		this.estudiante = estudiante;
-
 	}
-
 }

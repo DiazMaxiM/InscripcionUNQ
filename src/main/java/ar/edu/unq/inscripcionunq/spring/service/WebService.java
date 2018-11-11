@@ -20,7 +20,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteWebServi
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
@@ -52,14 +52,13 @@ public class WebService {
 					.header("Content-Type", "application/json").header("cache-control", "no-cache").asString()
 					.getBody();
 		} catch (UnirestException e) {
-			// TODO Auto-generated catch block
 			throw new ConexionWebServiceException();
 		}
 		JsonElement mJson = new JsonParser().parse(response);
 		Encuesta encuesta = null;
 		try {
 			encuesta = encuestaServiceImp.get(idEncuesta);
-		} catch (ObjectNotFoundinDBException e) {
+		} catch (ObjectoNoEncontradoEnBDException e) {
 			throw new EncuestaNoExisteException();
 		}
 
@@ -89,7 +88,7 @@ public class WebService {
 				Materia materiaAprobada = materias.get(materiaWebServiceJson.codigo);
 				estudianteNuevo.agregarMateriaAprobada(materiaAprobada);
 				List<Materia> materiasEquivalentes = equivalencias.stream()
-						.filter(e -> e.isEquivalencia(materiaAprobada)).map(eq -> eq.getEquivalencia(materiaAprobada))
+						.filter(e -> e.esEquivalente(materiaAprobada)).map(eq -> eq.getEquivalencia(materiaAprobada))
 						.collect(Collectors.toList());
 				materiasEquivalentes.stream().forEach(mE -> estudianteNuevo.agregarMateriaAprobada(mE));
 			}

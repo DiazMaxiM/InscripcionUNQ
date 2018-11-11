@@ -16,11 +16,12 @@ public class Periodo extends BaseEntity {
 	private Integer anho;
 	private Integer numero;
 	@Enumerated(EnumType.STRING)
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 	@Enumerated(EnumType.STRING)
 	private TipoPeriodo duracion;
 	
 	public Periodo() {
+		
 	}
 
 	public Periodo(Integer anho, Integer numero, TipoPeriodo duracion) {
@@ -29,8 +30,6 @@ public class Periodo extends BaseEntity {
 		this.duracion = duracion;
 		this.generarCodigo();
 	}
-
-
 
 	public String getCodigo() {
 		return codigo;
@@ -44,17 +43,15 @@ public class Periodo extends BaseEntity {
 		return anho;
 	}
 
-
 	public void setAnho(Integer anho) {
 		this.anho = anho;
 	}
 
-
-	public TypeStatus getEstado() {
+	public TipoEstado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(TypeStatus estado) {
+	public void setEstado(TipoEstado estado) {
 		this.estado = estado;
 	}
 
@@ -62,23 +59,19 @@ public class Periodo extends BaseEntity {
 		return numero;
 	}
 
-
 	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 
-
 	public void generarCodigo() {
 		String codigoGenerado = TipoPeriodo.getCodigoPeriodo(this.duracion) +
 				this.numero + "-" + anho;
-		this.setCodigo(codigoGenerado);
-		
+		this.setCodigo(codigoGenerado);	
 	}	
-	
+
 	public TipoPeriodo getDuracion() {
 		return duracion;
 	}
-
 
 	public void setDuracion(TipoPeriodo duracion) {
 		this.duracion = duracion;

@@ -12,5 +12,4 @@ public interface MateriaDao extends GenericDao<Materia> {
 	Materia encontrarMateriaConElMismoCodigo(String codigo);
 	
 	List<Materia> getMateriasParaCarrera(Long idCarrera);
-
 }

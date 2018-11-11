@@ -22,13 +22,14 @@ import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "Estudiante")
 public class Estudiante extends BaseEntity {
+	
 	private String dni;
 	private String nombre;
 	private String apellido;
 	private String email;
 	private Boolean regularidad = true;
 	@Enumerated(EnumType.STRING)
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 	@ManyToMany
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private List<Carrera> carrerasInscripto = new ArrayList<>();
@@ -94,13 +95,13 @@ public class Estudiante extends BaseEntity {
 				|| estudiante.email != this.email;
 	}
 
-	public void update(Estudiante estudiante)
+	public void actualizarEstudiante(Estudiante estudiante)
 			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
             Validacion.validarEstudiante(estudiante);
-			this.dni = estudiante.dni;
-			this.email = estudiante.email;
-			this.apellido = estudiante.apellido;
-			this.nombre = estudiante.nombre;
+		this.dni = estudiante.dni;
+		this.email = estudiante.email;
+		this.apellido = estudiante.apellido;
+		this.nombre = estudiante.nombre;
 	}
 
 	public List<Carrera> getCarrerasInscripto() {

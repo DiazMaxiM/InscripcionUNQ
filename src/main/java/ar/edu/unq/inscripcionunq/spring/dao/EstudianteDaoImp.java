@@ -18,7 +18,7 @@ public class EstudianteDaoImp extends GenericDaoImp<Estudiante> implements Estud
 	}
 
 	@Override
-	public List<MateriaJson> materiasDesaprobadasConComisionesDisponiblesDeUsuario(Long idUser) {
+	public List<MateriaJson> materiasDesaprobadasConComisionesDisponiblesDeUsuario(Long idUsuario) {
 		return null;
 	}
 

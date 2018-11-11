@@ -5,6 +5,7 @@ import java.util.List;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 public class MateriaSistemaJson {
+	
 	public Long id;
 	public String codigo;
 	public String nombre;
@@ -21,7 +22,6 @@ public class MateriaSistemaJson {
         this.codigo = materia.getCodigo();
 		this.nombre = materia.getNombre();
 		this.horas = materia.getHoras();
-//		this.carreras = materia.getCarreras();
         this.estado = estado;
 	}
 
@@ -32,7 +32,5 @@ public class MateriaSistemaJson {
 		this.horas = horas;
 		this.carreras = carreras;
         this.estado = estado;
-	}
-
-	
+	}	
 }

@@ -2,19 +2,16 @@ package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
 public class Hora {
 
-	public int hour;
-	public int minute;
+	public int hora;
+	public int minutos;
 	
 	public Hora() {
+	
 	}
 
-	public Hora(int hour, int minute) {
+	public Hora(int hora, int minutos) {
 		super();
-		this.hour = hour;
-		this.minute = minute;
-	}
-	
-	
-	
-	
+		this.hora = hora;
+		this.minutos = minutos;
+	}	
 }

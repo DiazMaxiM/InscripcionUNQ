@@ -1,25 +1,24 @@
 <h5 class="titulo">ABM Incidencias</h5>
 <div class="table-responsive">
-    <table class="table table-hover table-borderless">
-      <thead>
-        <tr>
-          <th> Tipo de incidencia </th>
-          <th> Descripción </th>
-          <th> Estado </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let incidencia of incidencias">
-          <td> {{ incidencia.tipoIncidencia.descripcion }} </td>
-          <td> {{ incidencia.descripcion }} </td>
-          <td> {{incidencia.tipoEstadoIncidencia}}</td>
-          <td>
-            <i class="material-icons edit-icon" 
-            (click)="abrirDialogoParaEdicionDeIncidencia(incidencia)" 
-            data-toggle="tooltip" data-placement="top" title="Editar">edit</i>
-            </td>
-        </tr>
-       <mat-divider></mat-divider>
-      </tbody>
-    </table>
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th> Tipo de incidencia </th>
+				<th> Descripción </th>
+				<th> Estado </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let incidencia of incidencias">
+				<td> {{ incidencia.tipoIncidencia.descripcion }} </td>
+				<td> {{ incidencia.descripcion }} </td>
+				<td> {{incidencia.tipoEstadoIncidencia}}</td>
+				<td>
+					<i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeIncidencia(incidencia)" data-toggle="tooltip"
+					 data-placement="top" title="Editar">edit</i>
+				</td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
 </div>

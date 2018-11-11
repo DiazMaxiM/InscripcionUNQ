@@ -1,29 +1,26 @@
 <h1 class="h5">Asociar perfil</h1>
 <div class="table-responsive">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Tipo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let perfil of perfiles">
-								<td>{{ perfil }}</td>
-								<td>
-									<mat-checkbox [checked]='verificarSeleccion(perfil)' 
-									(change)="onChange(perfil,$event)" 
-									color="warn"></mat-checkbox>
-							</td>
-						</tr>
-
-        </tbody>
-    </table>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Tipo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let perfil of perfiles">
+				<td>{{ perfil }}</td>
+				<td>
+					<mat-checkbox [checked]='verificarSeleccion(perfil)' (change)="onChange(perfil,$event)" color="warn"></mat-checkbox>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div align="end">
-    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
-      Cerrar
-    </button>
-    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
-      Guardar
-    </button>
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+		Cerrar
+	</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+		Guardar
+	</button>
 </div>

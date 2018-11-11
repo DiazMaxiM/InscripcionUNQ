@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public enum TipoPerfil {
-   ESTUDIANTE, ADMINISTRADOR;
+   
+	ESTUDIANTE, 
+	ADMINISTRADOR;
 
 	private static final  Set<String> values = new HashSet<>(TipoPerfil.values().length);
 

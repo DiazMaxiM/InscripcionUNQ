@@ -17,14 +17,14 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionCompletaJs
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
-import ar.edu.unq.inscripcionunq.spring.exception.CommissionNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteComisionConMismoNombreParaElMismoPeriodoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
+import ar.edu.unq.inscripcionunq.spring.model.TipoDia;
 import ar.edu.unq.inscripcionunq.spring.service.ComisionService;
 import ar.edu.unq.inscripcionunq.spring.service.EncuestaService;
 
@@ -54,7 +54,7 @@ public class ComisionController {
 
 	@GetMapping("/dias")
 	public ResponseEntity getDias() {
-		return ResponseEntity.ok().body(TypeDay.values());
+		return ResponseEntity.ok().body(TipoDia.values());
 	}
 
 	@PutMapping("/comision/nuevaComision")
@@ -67,7 +67,6 @@ public class ComisionController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
-
 	}
 
 	@PostMapping("/comision/editarComision")
@@ -75,17 +74,16 @@ public class ComisionController {
 		try {
 			comisionServiceImp.editarComision(comisionJson);
 		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
-				| ComisionSinHorariosException | CommissionNotExistenException | ExisteComisionConMismoNombreParaElMismoPeriodoException e) {
+				| ComisionSinHorariosException | ComisionNoExisteException | ExisteComisionConMismoNombreParaElMismoPeriodoException e) {
 
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		try {
 			encuestaServiceImp.notificarALosEstudianteCambioComision(comisionJson.id);
-		} catch (CommissionNotExistenException e) {
+		} catch (ComisionNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
-
 	}
 
 	@PostMapping("/comision/clonarComision")
@@ -94,19 +92,18 @@ public class ComisionController {
 		try {
 			id = comisionServiceImp.clonarComision(comisionJson);
 		} catch (PeriodoInvalidoException | MateriaNoExisteException | NombreInvalidoException | CupoInvalidoException
-				| ComisionSinHorariosException | CommissionNotExistenException e) {
+				| ComisionSinHorariosException | ComisionNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 
 		return ResponseEntity.ok().body(id);
-
 	}
 
 	@DeleteMapping("/comision/eliminarComision/{idComision}")
 	public ResponseEntity eliminarComision(@PathVariable String idComision) {
 		try {
 			comisionServiceImp.eliminarComision(idComision);
-		} catch (IdNumberFormatException | CommissionNotExistenException e) {
+		} catch (FormatoNumeroIdException | ComisionNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();

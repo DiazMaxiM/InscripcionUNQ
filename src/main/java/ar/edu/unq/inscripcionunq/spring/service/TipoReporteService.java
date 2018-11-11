@@ -7,4 +7,5 @@ import ar.edu.unq.inscripcionunq.spring.model.TipoReporte;
 public interface TipoReporteService {
 
 	public List<TipoReporte> getTipoReportes();
+
 }

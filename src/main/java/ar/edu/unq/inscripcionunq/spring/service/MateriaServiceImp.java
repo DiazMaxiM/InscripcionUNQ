@@ -17,13 +17,13 @@ import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
-import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstado;
 
 @Service
 @Transactional
@@ -55,12 +55,12 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		});
 
 		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),
-				carrerasJson, TypeStatus.esEstadoHabiltado(materia.getEstado()));
+				carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()));
 
 	}
 
 	@Override
-	public void actualizarMateria(MateriaSistemaJson materiaJson) throws IdNumberFormatException,
+	public void actualizarMateria(MateriaSistemaJson materiaJson) throws FormatoNumeroIdException,
 			MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, CodigoInvalidoException,
 			NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
 		Materia materiaNueva = this.mapearMateriaDesdeJson(materiaJson);
@@ -69,8 +69,8 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		try {
 			materiaOriginal = this.get(materiaJson.id);
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
+			throw new FormatoNumeroIdException();
+		} catch (ObjectoNoEncontradoEnBDException e) {
 			throw new MateriaNoExisteException();
 		}
 
@@ -90,10 +90,10 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	}
 
 	private Materia mapearMateriaDesdeJson(MateriaSistemaJson materiaJson) {
-		TypeStatus estado = materiaJson.estado ? TypeStatus.ENABLED : TypeStatus.DISABLED;
+		TipoEstado estado = materiaJson.estado ? TipoEstado.ENABLED : TipoEstado.DISABLED;
 		List<Carrera> carreras = new ArrayList<>();
 		materiaJson.carreras.forEach((carreraJson) -> {
-			TypeStatus estadoCarrera = carreraJson.habilitada ? TypeStatus.ENABLED : TypeStatus.DISABLED;
+			TipoEstado estadoCarrera = carreraJson.habilitada ? TipoEstado.ENABLED : TipoEstado.DISABLED;
 			Carrera carrera = new Carrera(carreraJson.codigo, carreraJson.descripcion);
 			carrera.setEstado(estadoCarrera);
 			Carrera carreraOriginal = carreraDaoImp.get(carreraJson.id);
@@ -107,7 +107,7 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	@Override
 	public void agregarNuevaMateria(MateriaSistemaJson materiaJson)
 			throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException,
-			ExisteMateriaConElMismoCodigoException, IdNumberFormatException, MateriaNoExisteException {
+			ExisteMateriaConElMismoCodigoException, FormatoNumeroIdException, MateriaNoExisteException {
 		Materia nuevaMateria = this.mapearMateriaDesdeJson(materiaJson);
 		this.validarSiExisteMateriaConElMismoCodigo(nuevaMateria.getCodigo());
 		this.save(nuevaMateria);

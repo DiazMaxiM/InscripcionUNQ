@@ -7,5 +7,4 @@ import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
 public interface TipoIncidenciaDao extends GenericDao<TipoIncidencia> {
 
 	List<TipoIncidencia> getTipoIncidencias();
-
 }

@@ -9,8 +9,7 @@ import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
 @Repository
-public class UsuarioDaoImp extends GenericDaoImp<Usuario> implements UsuarioDao 
-{
+public class UsuarioDaoImp extends GenericDaoImp<Usuario> implements UsuarioDao {
 
 	@Override
 	protected Class<Usuario> getDomainClass() {		
@@ -33,6 +32,4 @@ public class UsuarioDaoImp extends GenericDaoImp<Usuario> implements UsuarioDao
 				.setParameter("perfil", perfil)
 				.getResultList();
 	}
-
-
 }

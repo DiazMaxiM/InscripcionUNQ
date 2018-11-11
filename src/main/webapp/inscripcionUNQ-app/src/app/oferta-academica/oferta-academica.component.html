@@ -1,36 +1,38 @@
 <h5 class="titulo">ABM Oferta Académica</h5>
 <div align="center">
-  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDeOferta()">Nueva Oferta</button>
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoParaCreacionDeOferta()">Nueva oferta</button>
 </div>
 <div class="table-responsive">
-    <table class="table table-hover table-borderless">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-          <th>Carrera</th>
-          <th>Período</th>
-					<th>Comisiones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let oferta of ofertas">
-          <td>{{ oferta.nombre }}</td>
-          <td>{{ oferta.descripcion}}</td>
-          <td>
-                <mat-slide-toggle
-                    [checked]="oferta.habilitada" (change)="cambiarEstado(oferta,$event)">
-                </mat-slide-toggle>
-          </td>
-          <td>{{ oferta.carrera.codigo}}</td>
-          <td>{{ oferta.periodo.codigo}}</td>
-          <td>{{ oferta.nroComisionesCreadas}}</td>
-					<td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeOferta(oferta)" data-toggle="tooltip" data-placement="top" title="Editar">edit</i></td>
-					<td><i class="material-icons edit-icon" (click)="abrirDialogoParaSeleccionDePeriodo(oferta.id)" data-toggle="tooltip" data-placement="top" title="Clonar">file_copy</i></td>
-          <td><i class="material-icons edit-icon" (click)="irAComisiones(oferta)" data-toggle="tooltip" data-placement="top" title="Comisiones">list</i></td>
-        </tr>
-       <mat-divider></mat-divider>
-      </tbody>
-    </table>
-   </div>
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Descripción</th>
+				<th>Estado</th>
+				<th>Carrera</th>
+				<th>Período</th>
+				<th>Comisiones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let oferta of ofertas">
+				<td>{{ oferta.nombre }}</td>
+				<td>{{ oferta.descripcion}}</td>
+				<td>
+					<mat-slide-toggle [checked]="oferta.habilitada" (change)="cambiarEstado(oferta,$event)">
+					</mat-slide-toggle>
+				</td>
+				<td>{{ oferta.carrera.codigo}}</td>
+				<td>{{ oferta.periodo.codigo}}</td>
+				<td>{{ oferta.nroComisionesCreadas}}</td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeOferta(oferta)" data-toggle="tooltip"
+					 data-placement="top" title="Editar">edit</i></td>
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaSeleccionDePeriodo(oferta.id)" data-toggle="tooltip"
+					 data-placement="top" title="Clonar">file_copy</i></td>
+				<td><i class="material-icons edit-icon" (click)="irAComisiones(oferta)" data-toggle="tooltip" data-placement="top"
+					 title="Comisiones">list</i></td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
+</div>

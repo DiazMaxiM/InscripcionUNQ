@@ -2,7 +2,6 @@ package ar.edu.unq.inscripcionunq.spring.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +29,6 @@ public class CarreraController {
 	@GetMapping("/carreras")
 	public ResponseEntity<List> getCarreras() {
 		return ResponseEntity.ok().body(carreraServiceImp.getCarrerasJson());
-		
 	}
 	
 	@PutMapping("/carreras/nuevaCarrera")
@@ -42,12 +40,10 @@ public class CarreraController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
-
 	}
 	
 	@PostMapping("/carreras/actualizarCarrera")
 	public ResponseEntity actualizarCarrera(@RequestBody CarreraJson carreraJson) {
-		
 		try {
 			carreraServiceImp.actualizarCarrera(carreraJson);
 		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException
@@ -55,7 +51,5 @@ public class CarreraController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
-
 	}
-
 }

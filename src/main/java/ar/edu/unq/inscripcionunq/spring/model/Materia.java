@@ -18,19 +18,15 @@ import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
-import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
-
 @Entity(name = "Materia")
 public class Materia extends BaseEntity {
+	
 	@Column(unique = true)
 	private String codigo;
 	private String nombre;
 	private Integer horas;
 	@Enumerated(EnumType.STRING)
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
 	private List<Carrera> carreras = new ArrayList<Carrera>();
 
@@ -41,7 +37,7 @@ public class Materia extends BaseEntity {
 		this.carreras = listaDeCarreras;
 	}
 
-    public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras, TypeStatus estado) {
+    public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras, TipoEstado estado) {
 		this.setCodigo(codigo);
 		this.setNombre(nombre);
 		this.setHoras(horas);
@@ -83,7 +79,7 @@ public class Materia extends BaseEntity {
 		return horas;
 	}
 
-	public TypeStatus getEstado() {
+	public TipoEstado getEstado() {
 		return estado;
 	}
 
@@ -99,7 +95,7 @@ public class Materia extends BaseEntity {
 		this.horas = horas;
 	}
 
-	private void setEstado(TypeStatus estado) {
+	private void setEstado(TipoEstado estado) {
 		this.estado = estado;
 	}
 
@@ -114,6 +110,6 @@ public class Materia extends BaseEntity {
 	}
 	
 	public void deshabilitar() {
-		setEstado(TypeStatus.DISABLED);
+		setEstado(TipoEstado.DISABLED);
 	}
 }

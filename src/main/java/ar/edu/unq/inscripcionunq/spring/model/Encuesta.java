@@ -19,6 +19,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity(name = "Encuesta")
 public class Encuesta extends BaseEntity {
+	
 	@Column(unique = true)
 	private String nombre;
 	private LocalDateTime horaComienzo;
@@ -30,11 +31,12 @@ public class Encuesta extends BaseEntity {
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	private List<Estudiante> estudiantes = new ArrayList<>();
 	@Enumerated(EnumType.STRING)
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Periodo periodo;
 
 	public Encuesta() {
+	
 	}
 
 	public Encuesta(String nombre, LocalDateTime horaComienzo, LocalDateTime horaFin, Periodo periodo) {
@@ -49,7 +51,7 @@ public class Encuesta extends BaseEntity {
 	}
 
 	public void deshabilitar() {
-		this.estado = TypeStatus.DISABLED;
+		this.estado = TipoEstado.DISABLED;
 	}
 
 	public void agregarEstudiante(Estudiante estudiante) {
@@ -73,7 +75,7 @@ public class Encuesta extends BaseEntity {
 		this.ofertasAcademicas = ofertasAcademicas;
 	}
 
-	public TypeStatus getEstado() {
+	public TipoEstado getEstado() {
 		return estado;
 	}
 
@@ -98,5 +100,4 @@ public class Encuesta extends BaseEntity {
 		this.horaComienzo = encuesta.getHoraComienzo();
 		this.horaFin = encuesta.getHoraFin();	
 	}
-
 }

@@ -16,7 +16,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson
 import ar.edu.unq.inscripcionunq.spring.service.IncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoIncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoEstadoIncidenciaService;
-import ar.edu.unq.inscripcionunq.spring.model.TipoEstadoIncidencia;
+
 @RestController
 public class IncidenciaController {
 
@@ -45,12 +45,14 @@ public class IncidenciaController {
 	@PutMapping("/tipoIncidencia")
 	public ResponseEntity agregarNuevoTipoIncidencia(@RequestBody TipoIncidenciaJson tipoIncidenciaJson) {
 		tipoIncidenciaServiceImp.agregarNuevoTipoIncidencia(tipoIncidenciaJson);
+		
 		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/tipoIncidencia")
 	public ResponseEntity actualizarTipoIncidencia(@RequestBody TipoIncidenciaJson tipoIncidenciaJson) {
 		tipoIncidenciaServiceImp.actualizarTipoIncidencia(tipoIncidenciaJson);
+		
 		return ResponseEntity.ok().build();
 	}
 
@@ -62,12 +64,14 @@ public class IncidenciaController {
 	@PutMapping("/incidencia")
 	public ResponseEntity agregarIncidencia(@RequestBody IncidenciaJson incidenciaJson) {
 		incidenciaServiceImp.agregarIncidencia(incidenciaJson);
+		
 		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/actualizar-incidencia")
 	public ResponseEntity actualizarIncidencia(@RequestBody IncidenciaJson incidenciaJson) {
 		incidenciaServiceImp.actualizarIncidencia(incidenciaJson);
+		
 		return ResponseEntity.ok().build();
 	}
 }

@@ -7,6 +7,4 @@ public class PasswordInvalidoException extends ExceptionGeneric implements Excep
 	public PasswordInvalidoException() {
 		super(002, "La contraseña es incorrecta. Vuelva a intentarlo");
 	}
-	
-
 }

@@ -7,7 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
 public interface EstudianteDao extends GenericDao<Estudiante> {
 
-	List<MateriaJson> materiasDesaprobadasConComisionesDisponiblesDeUsuario(Long idUser);
+	List<MateriaJson> materiasDesaprobadasConComisionesDisponiblesDeUsuario(Long idUsuario);
 
 	Integer getNroEstudiantesPorComision(Long idComision);
 }

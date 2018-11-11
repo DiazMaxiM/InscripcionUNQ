@@ -1,4 +1,5 @@
 package ar.edu.unq.inscripcionunq.spring.model;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class ValidadorMail {
 			attrs = ictx.getAttributes(hostName, new String[] { "A" });
 			attr = attrs.get("A");
 			if (attr == null)
-				throw new NamingException("No match for name '" + hostName + "'");
+				throw new NamingException("No hay coincidencia para el nombre '" + hostName + "'");
 		}
 		// Huzzah! we have machines to try. Return them as an array list
 		// NOTE: We SHOULD take the preference into account to be absolutely
@@ -100,16 +101,16 @@ public class ValidadorMail {
 				BufferedWriter wtr = new BufferedWriter(new OutputStreamWriter(skt.getOutputStream()));
 				res = hear(rdr);
 				if (res != 220)
-					throw new Exception("Invalid header");
+					throw new Exception("Encabezado inválido");
 				say(wtr, "EHLO orbaker.com");
 				res = hear(rdr);
 				if (res != 250)
-					throw new Exception("Not ESMTP");
+					throw new Exception("No ESMTP");
 				// validate the sender address
 				say(wtr, "MAIL FROM: <tim@orbaker.com>");
 				res = hear(rdr);
 				if (res != 250)
-					throw new Exception("Sender rejected");
+					throw new Exception("Remitente rechazado");
 				say(wtr, "RCPT TO: <" + address + ">");
 				res = hear(rdr);
 				// be polite
@@ -118,7 +119,7 @@ public class ValidadorMail {
 				say(wtr, "QUIT");
 				hear(rdr);
 				if (res != 250)
-					throw new Exception("Address is not valid!");
+					throw new Exception("Dirección de e-mail inválida");
 				valid = true;
 				rdr.close();
 				wtr.close();
@@ -132,5 +133,4 @@ public class ValidadorMail {
 		}
 		return false;
 	}
-
 }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EquivalenciaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EquivalenciaDao;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
@@ -18,6 +18,7 @@ public class EquivalenciaServiceImp extends GenericServiceImp<Equivalencia> impl
 
 	@Autowired
 	EquivalenciaDao equivalenciaDaoImp;
+	
 	@Autowired
 	MateriaService materiaServiceImp;
 
@@ -27,18 +28,17 @@ public class EquivalenciaServiceImp extends GenericServiceImp<Equivalencia> impl
 	}
 
 	@Override
-	public void agregarNuevaCarrera(EquivalenciaJson equivalenciaJson) throws ObjectNotFoundinDBException {
+	public void agregarNuevaCarrera(EquivalenciaJson equivalenciaJson) throws ObjectoNoEncontradoEnBDException {
 		Materia materiaOrigen = materiaServiceImp.get(equivalenciaJson.materiaOrigen.id);
 		Materia materiaDestino = materiaServiceImp.get(equivalenciaJson.materiaDestino.id);
 		equivalenciaDaoImp.save(new Equivalencia(materiaOrigen, materiaDestino));
 	}
 
 	@Override
-	public void actualizarEquivalencia(EquivalenciaJson equivalenciaJson) throws ObjectNotFoundinDBException {
+	public void actualizarEquivalencia(EquivalenciaJson equivalenciaJson) throws ObjectoNoEncontradoEnBDException {
 		Equivalencia equivalencia = equivalenciaDaoImp.get(equivalenciaJson.id);
 		equivalencia.setMateriaOrigen(materiaServiceImp.get(equivalenciaJson.materiaOrigen.id));
 		equivalencia.setMateriaDestino(materiaServiceImp.get(equivalenciaJson.materiaDestino.id));
 		equivalenciaDaoImp.update(equivalencia);
 	}
-
 }

@@ -1,5 +1,4 @@
 export class ComisionSeleccionada {
-
   idComision?: number;
   nombreDeLaComision?: string;
   horariosSeleccionados = [];
@@ -9,9 +8,7 @@ export class ComisionSeleccionada {
     idComision?: number,
     nombreDeLaComision?: string,
     idMateria?: number,
-
   ) {
-
     this.idComision = idComision;
     this.nombreDeLaComision = nombreDeLaComision;
     this.idMateria = idMateria;

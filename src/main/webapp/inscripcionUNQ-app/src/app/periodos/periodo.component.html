@@ -1,25 +1,25 @@
 <h5 class="titulo">ABM Períodos</h5>
 <div align="center">
-  <button class="btn btn-danger" mat-fab color="primary" (click)= "abrirDialogoParaCreacionDePeriodo()">Nuevo Período</button>
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoParaCreacionDePeriodo()">Nuevo período</button>
 </div>
 <div *ngIf="mostrarPeriodos" class="table-responsive">
-    <table class="table table-hover table-borderless">
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Año</th>
-          <th>Número</th>
-          <th>Tipo de Período</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let periodo of periodos">
-          <td>{{ periodo.codigo }}</td>
-          <td>{{ periodo.anho}}</td>
-          <td>{{ periodo.numero}}</td>
-          <td>{{ periodo.tipoPeriodo}}</td>
-        </tr>
-       <mat-divider></mat-divider>
-      </tbody>
-    </table>
-   </div>
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th>Código</th>
+				<th>Año</th>
+				<th>Número</th>
+				<th>Tipo de período</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let periodo of periodos">
+				<td>{{ periodo.codigo }}</td>
+				<td>{{ periodo.anho}}</td>
+				<td>{{ periodo.numero}}</td>
+				<td>{{ periodo.tipoPeriodo}}</td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
+</div>

@@ -18,18 +18,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
-import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.GeneracionDeCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "OfertaAcademica")
 public class OfertaAcademica extends BaseEntity {
+	
 	@Column(unique = true)
 	private String nombre;
 	private String descripcion;
 	@Enumerated(EnumType.STRING)
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	private List<Comision> comisiones = new ArrayList<>();
@@ -46,6 +47,7 @@ public class OfertaAcademica extends BaseEntity {
 	}
 
 	public OfertaAcademica() {
+		
 	}
 
 	public void agregarComision(Comision comision) {
@@ -73,11 +75,11 @@ public class OfertaAcademica extends BaseEntity {
 		this.descripcion = descripcion;
 	}
 
-	public TypeStatus getEstado() {
+	public TipoEstado getEstado() {
 		return estado;
 	}
 
-	public void setEstado(TypeStatus estado) {
+	public void setEstado(TipoEstado estado) {
 		this.estado = estado;
 	}
 
@@ -95,7 +97,7 @@ public class OfertaAcademica extends BaseEntity {
 	}
 
 	public void actualizarInformacion(OfertaAcademica ofertaRecibida) throws DescripcionInvalidaException,
-			NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException, ErrorAlGenerarCodigoException {
+			NombreInvalidoException, EstadoInvalidoException, CodigoInvalidoException, GeneracionDeCodigoException {
 		Validacion.validarOfertaAcademica(ofertaRecibida);
 		setNombre(this.armarNombreDeOferta(ofertaRecibida.getCarrera(), ofertaRecibida.getPeriodo()));
 		setDescripcion(ofertaRecibida.getDescripcion());
@@ -119,5 +121,4 @@ public class OfertaAcademica extends BaseEntity {
 	public void setPeriodo(Periodo periodo) {
 		this.periodo = periodo;
 	}
-
 }

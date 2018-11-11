@@ -22,5 +22,4 @@ public class ReporteController {
 		return ResponseEntity.ok().body(tipoReporteServiceImp.getTipoReportes().stream()
 				.map(tipoReporte -> new TipoReporteJson(tipoReporte)).collect(Collectors.toList()));
 	}
-
 }

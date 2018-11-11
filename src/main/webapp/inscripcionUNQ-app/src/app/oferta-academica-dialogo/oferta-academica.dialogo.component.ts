@@ -32,7 +32,7 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 		private restService: RestService,
 		private dialogRef: MatDialogRef<OfertaAcademicaDialogoComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-			this.ofertaSeleccionada = data.oferta;
+		this.ofertaSeleccionada = data.oferta;
 	}
 
 	ngOnInit() {
@@ -144,9 +144,9 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 			const periodoSeleccionado = this.utilesService.obtenerPeriodo(this.periodos, periodo);
 			const carreraSeleccionada = this.utilesService.obtenerCarrera(this.carreras, carrera);
 			const oferta = new OfertaAcademica(descripcion, this.checked, carreraSeleccionada, periodoSeleccionado);
-			if(this.ofertaSeleccionada == null){
+			if (this.ofertaSeleccionada == null) {
 				this.crearNuevaOferta(oferta);
-			} else{
+			} else {
 				this.actualizarOfertaSeleccionada(oferta, this.ofertaSeleccionada);
 			}
 		}
@@ -165,40 +165,40 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 	}
 
 	crearNuevaOferta(oferta: OfertaAcademica) {
-    this.restService.crearNuevaOferta(oferta).subscribe(
-      res => {
-        const mensaje = "Se creó la nueva oferta académica con éxito";
-        this.utilesService.mostrarMensaje(mensaje);
-        this.cerrar();
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      }
-    );
-	}
-	
-	actualizarOfertaSeleccionada(oferta: OfertaAcademica, ofertaSeleccionada) {
-    oferta.id = ofertaSeleccionada.id;
-    oferta.nroComisionesCreadas = ofertaSeleccionada.nroComisionesCreadas;
-    this.actualizarOferta(oferta);
-  }
-
-  actualizarOferta(oferta) {
-    this.restService.actualizarInformacionDeOferta(oferta).subscribe(
-      res => {
-        const mensaje =
-          "Los datos de la oferta académica fueron actualizados con éxito";
+		this.restService.crearNuevaOferta(oferta).subscribe(
+			res => {
+				const mensaje = "Se creó la nueva oferta académica con éxito";
 				this.utilesService.mostrarMensaje(mensaje);
 				this.cerrar();
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      }
-    );
-  }
+			},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
+	}
 
-  cambiarEstado(oferta, evento) {
-    oferta.habilitada = evento.checked;
-    this.actualizarOferta(oferta);
-  }
+	actualizarOfertaSeleccionada(oferta: OfertaAcademica, ofertaSeleccionada) {
+		oferta.id = ofertaSeleccionada.id;
+		oferta.nroComisionesCreadas = ofertaSeleccionada.nroComisionesCreadas;
+		this.actualizarOferta(oferta);
+	}
+
+	actualizarOferta(oferta) {
+		this.restService.actualizarInformacionDeOferta(oferta).subscribe(
+			res => {
+				const mensaje =
+					"Los datos de la oferta académica fueron actualizados con éxito";
+				this.utilesService.mostrarMensaje(mensaje);
+				this.cerrar();
+			},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
+	}
+
+	cambiarEstado(oferta, evento) {
+		oferta.habilitada = evento.checked;
+		this.actualizarOferta(oferta);
+	}
 }

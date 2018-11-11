@@ -5,8 +5,6 @@ public class UsuarioNoExisteException extends ExceptionGeneric implements Except
 	private static final long serialVersionUID = 1L;
 
 	public UsuarioNoExisteException() {
-		super(001, "No existe usuario en la aplicación");
-		
+		super(001, "No existe usuario en la aplicación");	
 	}
-
 }

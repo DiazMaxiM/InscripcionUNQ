@@ -13,6 +13,7 @@ public class Equivalencia extends BaseEntity {
 	private Materia materiaDestino;
 
 	public Equivalencia() {
+		
 	}
 
 	public Equivalencia(Materia materiaOrigen, Materia materiaDestino) {
@@ -20,7 +21,7 @@ public class Equivalencia extends BaseEntity {
 		this.materiaDestino = materiaDestino;
 	}
 
-	public Boolean isEquivalencia(Materia materia) {
+	public Boolean esEquivalente(Materia materia) {
 		return materiaOrigen.equals(materia) || materiaDestino.equals(materia);
 	}
 

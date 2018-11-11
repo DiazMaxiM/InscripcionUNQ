@@ -16,6 +16,7 @@ import ar.edu.unq.inscripcionunq.spring.model.BaseEntity;
 
 @Repository
 public abstract class GenericDaoImp<T> implements GenericDao<T> {
+	
 	@Autowired
 	protected SessionFactory sessionFactory;
 	protected Class<T> persistentClass = this.getDomainClass();
@@ -45,11 +46,7 @@ public abstract class GenericDaoImp<T> implements GenericDao<T> {
 		return query.getResultList();
 	}
 	
-	
 	public void delete(T object) {
 		sessionFactory.getCurrentSession().delete(object);
 	}
-	
-	
-
 }

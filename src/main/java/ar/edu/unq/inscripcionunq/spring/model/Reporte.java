@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.SystemException;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -14,16 +12,11 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import ar.edu.unq.inscripcionunq.spring.exception.ExceptionGeneric;
-import ar.edu.unq.inscripcionunq.spring.exception.ExceptionSystem;
 import ar.edu.unq.inscripcionunq.spring.exception.ReporteNoExisteException;
 
 public class Reporte {
+	
 	private Encuesta encuesta;
 	private TipoReporte tipoReporte;
 	private byte[] binaryXLSGenerate;
@@ -52,7 +45,6 @@ public class Reporte {
     }
 	
 	public void generarXls(String[] headers, List<String[]> data, CellRangeAddress mergeCells ) throws IOException{
-		
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();
 		workbook.setSheetName(0, "Reporte");
@@ -169,8 +161,8 @@ public class Reporte {
     	if (DATA.size() == 0) throw new IOException("Sin datos para generar el reporte");
     	
         String[] headers = new String[]{
-                "Nombre Oferta",
-                "Nombre Comision",
+                "Oferta",
+                "Comisión",
                 "Cupo",
                 "Nro de inscriptos"
         };

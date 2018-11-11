@@ -4,17 +4,11 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
-import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
-import ar.edu.unq.inscripcionunq.spring.model.TypeDay;
 
 @Repository
-
 public class ComisionDaoImp extends GenericDaoImp<Comision> implements ComisionDao {
 
 	@Override
@@ -57,5 +51,4 @@ public class ComisionDaoImp extends GenericDaoImp<Comision> implements ComisionD
 				.setParameter("nombre", nombre)
 				.uniqueResult();
 	}
-
 }
