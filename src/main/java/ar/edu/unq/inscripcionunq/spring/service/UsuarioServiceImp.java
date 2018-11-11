@@ -15,6 +15,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
 import ar.edu.unq.inscripcionunq.spring.dao.UsuarioDao;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DniInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncriptarDesencriptarAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
@@ -43,7 +44,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void crearUsuario(UsuarioJson usuarioJson) throws EmailInvalidoException, NombreInvalidoException, 
-	ApellidoInvalidoException, EmailException, ExisteUsuarioConElMismoEmailException{
+	ApellidoInvalidoException, EmailException, ExisteUsuarioConElMismoEmailException, DniInvalidoException{
 		String password =  RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
 		Usuario usuario = this.mapearUsuarioDesdeJson(usuarioJson);
 		usuario.setPassword(password);
@@ -101,9 +102,8 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	private Usuario crearUsuarioDesdeEstudiante(String email) throws UsuarioNoExisteException {
 		Estudiante estudiante = encuestaDao.getDatosDeUsuarioDesdeEncuesta(email);
 		Usuario usuario;
-		usuario = new Usuario(estudiante.getNombre(),estudiante.getApellido(),email);
+		usuario = new Usuario(estudiante.getNombre(),estudiante.getApellido(),email, estudiante.getDni());
 	    usuario.setPassword(estudiante.getDni());
-		usuario.setDni(estudiante.getDni());
 		usuario.agregarPerfil(TipoPerfil.ESTUDIANTE);
 		this.save(usuario);	
 		
@@ -122,7 +122,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	@Override
 	public void actualizarUsuario(UsuarioJson usuarioJson) throws UsuarioNoExisteException, EmailInvalidoException, 
 	NombreInvalidoException, ApellidoInvalidoException, FormatoNumeroIdException, 
-	ExisteUsuarioConElMismoEmailException {
+	ExisteUsuarioConElMismoEmailException, DniInvalidoException {
 		Usuario usuarioActualizado = this.mapearUsuarioDesdeJson(usuarioJson);
 		Validacion.validarUsuario(usuarioActualizado);
 		try {
@@ -154,7 +154,7 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	}
 
 	private Usuario mapearUsuarioDesdeJson(UsuarioJson usuarioJson) {
-		return new Usuario(usuarioJson.nombre,usuarioJson.apellido,usuarioJson.email);
+		return new Usuario(usuarioJson.nombre,usuarioJson.apellido,usuarioJson.email,usuarioJson.dni );
 	}
 
 	@Override

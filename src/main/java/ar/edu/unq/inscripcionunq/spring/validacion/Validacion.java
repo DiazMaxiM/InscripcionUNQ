@@ -11,6 +11,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionSinHorariosException;
 import ar.edu.unq.inscripcionunq.spring.exception.CupoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
+import ar.edu.unq.inscripcionunq.spring.exception.DniInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
@@ -195,10 +196,18 @@ public class Validacion {
 		}
 	}
 
-	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException {
+	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, DniInvalidoException {
 	   validarEmail(usuario.getEmail());
 	   nombreValido(usuario.getNombre());
 	   apellidoValido(usuario.getApellido());
+	   dniValido(usuario.getDni());
+	}
+
+	private static void dniValido(String dni) throws DniInvalidoException {
+		if(stringVacio(dni)) {
+			throw new DniInvalidoException();
+		}
+		
 	}
 
 	public static void validarPassword(String password) throws PasswordInvalidoException {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DniInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncriptarDesencriptarAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
@@ -53,10 +54,10 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/usuarios/nuevoUsuario")
-	public ResponseEntity nuevoUsuario(@RequestBody UsuarioJson usuarioJson){
+	public ResponseEntity nuevoUsuario(@RequestBody UsuarioJson usuarioJson) {
 		try {
 		  usuarioServiceImp.crearUsuario(usuarioJson);
-		} catch (EmailInvalidoException | ExisteUsuarioConElMismoEmailException |NombreInvalidoException | ApellidoInvalidoException e){
+		} catch (EmailInvalidoException | ExisteUsuarioConElMismoEmailException |NombreInvalidoException | ApellidoInvalidoException | DniInvalidoException e){
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 					.body(new ExceptionJson(e));
 		} catch (EmailException e) {
@@ -92,7 +93,7 @@ public class UsuarioController {
 		try {
 			usuarioServiceImp.actualizarUsuario(usuarioJson);
 		} catch (UsuarioNoExisteException | EmailInvalidoException | NombreInvalidoException | ApellidoInvalidoException
-				| FormatoNumeroIdException | ExisteUsuarioConElMismoEmailException e) {
+				| FormatoNumeroIdException | ExisteUsuarioConElMismoEmailException | DniInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 			

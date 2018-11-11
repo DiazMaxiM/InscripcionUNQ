@@ -30,11 +30,12 @@ public class Usuario extends BaseEntity{
 		super();
 	}
 	
-	public Usuario(String nombre, String apellido, String email){
+	public Usuario(String nombre, String apellido, String email, String dni){
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
+		this.dni = dni;
 	}
 
 	public String getEmail() {

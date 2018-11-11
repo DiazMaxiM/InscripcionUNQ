@@ -6,3 +6,12 @@
 .nextBtn{
 	flex: 1 1 auto;
 }
+
+.container-buscador {
+  display: flex;
+  flex-direction: column;
+}
+
+.boton-agregar{
+	margin-right: 10px;
+}

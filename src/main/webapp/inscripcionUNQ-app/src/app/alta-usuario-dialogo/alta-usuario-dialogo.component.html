@@ -12,6 +12,12 @@
 			Campo obligatorio
 		</mat-error>
 	</mat-form-field>
+	<mat-form-field class="full-width">
+		<input matInput placeholder="DNI" (keypress)="soloNumero($event)" formControlName="dni" required>
+		<mat-error *ngIf="form.get('dni').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
 	<mat-form-field>
 		<input matInput placeholder="E-mail" formControlName="email" type="email" required>
 		<mat-error *ngIf="form.get('email').hasError('required')">
