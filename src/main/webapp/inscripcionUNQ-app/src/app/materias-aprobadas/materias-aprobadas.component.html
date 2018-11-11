@@ -1,4 +1,10 @@
 <h6>Materias aprobadas</h6>
+<div class="container-buscador">
+	<mat-form-field>
+		<input matInput [(ngModel)]="materiaBuscada" placeholder="Buscar materia">
+	</mat-form-field>
+</div>
+<div *ngIf="!agregaMaterias">
 <div class="table-responsive">
  <table class="table table-hover table-borderless">
    <thead>
@@ -7,16 +13,40 @@
      </tr>
    </thead>
    <tbody>
-     <tr *ngFor="let materia of materiasEnPagina">
-       <td>{{materia.nombre}}</td>
+     <tr *ngFor="let materia of materiasAprobadas| filtroBusqueda: {nombre: materiaBuscada}; let i=index;">
+			<td style="width: 5%; display: none">{{i +1}}</td> 
+			<td>{{materia.nombre}}</td>
        <td><mat-checkbox [checked]='materia.aprobada' color="warn" (change)="seleccionarMateria(materia.id)"></mat-checkbox></td>
      </tr>
     <mat-divider></mat-divider>
    </tbody>
  </table>
-     <mat-paginator [length]="length" [pageSize]="pageSize" (page)="cambiarPagina($event)">
-     </mat-paginator>
 </div>
-<div>
-    <button class="btn btn-danger" (click)="actualizarMateriasAprobadas()" mat-fab color="primary">Siguiente</button>
+<div align="center">
+		<button class="btn btn-danger mat-button boton-agregar" (click)="mostrarAgregarMaterias()" mat-fab color="primary">Agregar materias</button>
+		<button class="btn btn-danger mat-button" (click)="actualizarMaterias()" mat-fab color="primary">Siguiente</button>
+</div>		
 </div>
+<div *ngIf="agregaMaterias">
+		<div class="table-responsive">
+		 <table class="table table-hover table-borderless">
+			 <thead>
+				 <tr>
+					 <th>Nombre</th>
+				 </tr>
+			 </thead>
+			 <tbody>
+				 <tr *ngFor="let materia of materias| filtroBusqueda: {nombre: materiaBuscada}; let i=index;">
+					<td style="width: 5%; display: none">{{i +1}}</td> 
+					<td>{{materia.nombre}}</td>
+					 <td><mat-checkbox [checked]='materia.aprobada' color="warn" (change)="agregarMateriaAprobada(materia.id)"></mat-checkbox></td>
+				 </tr>
+				<mat-divider></mat-divider>
+			 </tbody>
+		 </table>
+		</div>
+		<div align="center">
+				<button class="btn mat-button" (click)="ocultarAgregarMaterias()" mat-fab color="primary">Cancelar</button>
+				<button class="btn btn-danger mat-button " (click)="actualizarMateriasAprobadas()" mat-fab color="primary">Agregar</button>
+		</div>
+		</div>

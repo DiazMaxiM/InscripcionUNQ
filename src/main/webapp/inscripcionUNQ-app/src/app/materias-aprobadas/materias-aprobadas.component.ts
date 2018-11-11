@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RestService } from '../rest.service';
-import { PageEvent } from '@angular/material';
 import { MateriaEstudiante } from './materia-estudiante.model';
 import { UtilesService } from '../utiles.service';
 
@@ -11,14 +10,12 @@ import { UtilesService } from '../utiles.service';
 })
 export class MateriasAprobadasComponent implements OnInit {
 
-	materias: MateriaEstudiante[] = [];
-	materiasEnPagina = [];
+	materias: MateriaEstudiante[] = []
+	materiasAprobadas: MateriaEstudiante[] = [];
 	idEstudiante: string;
-	// MatPaginator Inputs
-	length = 0;
-	pageSize = 10;
-	// MatPaginator Output
-	pageEvent: PageEvent;
+	materiaBuscada;
+	agregaMaterias: boolean;
+	nuevasMateriasAprobadas:  MateriaEstudiante[] = [];
 
 	constructor(
 		private restService: RestService,
@@ -27,23 +24,22 @@ export class MateriasAprobadasComponent implements OnInit {
 
 	ngOnInit() {
 		this.idEstudiante = localStorage.getItem('idEstudiante');
-		this.getMateriasAprobadas();
+		this.getMaterias();
 	}
 
-	getMateriasAprobadas() {
+	getMaterias() {
 		this.restService.getMateriasAprobadas(this.idEstudiante)
-			.subscribe(subjects => {
-				this.materias = subjects;
-				this.length = this.materias.length;
-				this.materiasEnPagina = this.materias.slice(0, this.pageSize);
+			.subscribe(materias => {
+				 this.materiasAprobadas = materias.filter(materia => materia.aprobada);
+				 this.materias = materias.filter(materia => !materia.aprobada);
 			}, (err) => {
 				this.utilesService.mostrarMensajeDeError(err);
 			});
 	}
 
-	actualizarMateriasAprobadas() {
+	actualizarMaterias() {
 		this.utilesService.activarDialogoCargando();
-		this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.materias)
+		this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.materiasAprobadas)
 			.subscribe(res => {
 				this.utilesService.desactivarDialogoCargandoYRedireccionar('materias-por-cursar');
 			}, (err) => {
@@ -52,25 +48,53 @@ export class MateriasAprobadasComponent implements OnInit {
 	}
 
 	seleccionarMateria(id) {
-		const result = [];
-		for (const i in this.materias) {
-			if (this.materias[i].id == id) {
-				result.push({
-					'id': this.materias[i].id,
-					'codigo': this.materias[i].codigo,
-					'nombre': this.materias[i].nombre,
-					'aprobada': !this.materias[i].aprobada
-				});
-			} else {
-				result.push(this.materias[i]);
-			}
-		}
-		this.materias = result;
+		this.materiasAprobadas = this.actualizarListadoMateria(id, this.materiasAprobadas);
 	}
 
-	cambiarPagina(e) {
-		const firstCut = e.pageIndex * e.pageSize;
-		const secondCut = firstCut + e.pageSize;
-		this.materiasEnPagina = this.materias.slice(firstCut, secondCut);
+	mostrarAgregarMaterias() {
+		window.scroll(0,0);
+    this.agregaMaterias = true;
+	}
+	ocultarAgregarMaterias() {
+		window.scroll(0,0);
+		this.agregaMaterias = false;
+	}
+
+	agregarMateriaAprobada(id) {
+		this.materias = this.actualizarListadoMateria(id, this.materias);
+
+	}
+
+	actualizarListadoMateria(id, materias) {
+		const result = [];
+		for (const i in materias) {
+			if (materias[i].id == id) {
+				result.push({
+					'id': materias[i].id,
+					'codigo': materias[i].codigo,
+					'nombre': materias[i].nombre,
+					'aprobada': !materias[i].aprobada
+				});
+			} else {
+				result.push(materias[i]);
+			}
+		}
+		return result;
+	}
+
+	actualizarMateriasAprobadas() {
+		 const materiasAprobadas = this.materias.filter(materia => materia.aprobada);
+		 if(materiasAprobadas.length > 0){
+			materiasAprobadas.forEach(materia => this.agregarMateria(materia));
+			this.ocultarAgregarMaterias();
+		 } else {
+			 this.utilesService.mostrarMensaje('No ha seleccionado ninguna materia como aprobada');
+		 }
+	}
+
+	agregarMateria(materia) {
+		this.materiasAprobadas.push(materia);
+		const index = this.materias.indexOf(materia);
+    this.materias.splice(index, 1);
 	}
 }

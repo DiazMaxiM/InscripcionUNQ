@@ -35,6 +35,7 @@ export class AltaUsuarioDialogoComponent implements OnInit {
 		this.form = this.fb.group({
 			nombres: ['', Validators.required],
 			apellidos: ['', Validators.required],
+			dni: ['', Validators.required],
 			email: ['', [Validators.required, Validators.email]]
 		});
 	}
@@ -44,7 +45,8 @@ export class AltaUsuarioDialogoComponent implements OnInit {
 			this.form.setValue({
 				'nombres': this.usuario.nombre,
 				'apellidos': this.usuario.apellido,
-				'email': this.usuario.email
+				'email': this.usuario.email,
+				'dni': this.usuario.dni
 			});
 		}
 	}
@@ -89,5 +91,9 @@ export class AltaUsuarioDialogoComponent implements OnInit {
 
 	cerrar() {
 		this.dialogRef.close();
+	}
+
+	soloNumero(evento) {
+		return this.utilesService.soloNumero(evento);
 	}
 }

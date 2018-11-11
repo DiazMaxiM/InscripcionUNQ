@@ -6,6 +6,7 @@ import org.apache.commons.mail.EmailException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.DniInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncriptarDesencriptarAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
@@ -18,7 +19,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
 public interface UsuarioService extends GenericService<Usuario>{
    
-	void crearUsuario(UsuarioJson usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, EmailException, ExisteUsuarioConElMismoEmailException;
+	void crearUsuario(UsuarioJson usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException, EmailException, ExisteUsuarioConElMismoEmailException, DniInvalidoException;
 	
 	void eliminarUsuario(String idUsuario) throws UsuarioNoExisteException, FormatoNumeroIdException;
 
