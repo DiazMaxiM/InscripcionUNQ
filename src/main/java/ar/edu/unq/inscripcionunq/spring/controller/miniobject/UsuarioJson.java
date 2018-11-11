@@ -30,5 +30,4 @@ public class UsuarioJson {
 	public UsuarioJson() {
 		super();
 	}
-
 }

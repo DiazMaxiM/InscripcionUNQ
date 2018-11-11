@@ -33,9 +33,9 @@ export class ComisionDialogoComponent implements OnInit {
 	horarios = [];
 	horarioAEditar: HorarioComision;
 	mostrarGuardarComision = true;
-  periodoControl = new FormControl();
+	periodoControl = new FormControl();
 	comisiones: Comision[];
-  mostrarComisiones;
+	mostrarComisiones;
 
 	constructor(
 		private fb: FormBuilder,
@@ -43,8 +43,8 @@ export class ComisionDialogoComponent implements OnInit {
 		private dialogRef: MatDialogRef<ComisionDialogoComponent>,
 		private restService: RestService,
 		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-			this.comisionSeleccionada = data.comision;
-		}
+		this.comisionSeleccionada = data.comision;
+	}
 
 	ngOnInit() {
 		this.crearFormularioComision();
@@ -262,36 +262,36 @@ export class ComisionDialogoComponent implements OnInit {
 	}
 
 	guardarComision(comision: Comision) {
-    if(this.comisionSeleccionada != null ) {
-      this.guardarComisionModificada(comision);
-    } else {
-      this.guardarNuevaComision(comision);
+		if (this.comisionSeleccionada != null) {
+			this.guardarComisionModificada(comision);
+		} else {
+			this.guardarNuevaComision(comision);
 		}
-  }
+	}
 
-  guardarComisionModificada(comision: Comision) {
-    comision.id = this.comisionSeleccionada.id;
-    this.restService.actualizarInformacionDeComision(comision).subscribe(rest => {
+	guardarComisionModificada(comision: Comision) {
+		comision.id = this.comisionSeleccionada.id;
+		this.restService.actualizarInformacionDeComision(comision).subscribe(rest => {
 			const mensaje = 'Los datos de la comisión fueron actualizados con éxito';
 			this.utilesService.mostrarMensaje(mensaje);
 			this.cerrar();
-    },
-    (err) => {
-        this.utilesService.mostrarMensajeDeError(err);
-    });
-  }
+		},
+			(err) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			});
+	}
 
-  guardarNuevaComision(comision: Comision) {
-    this.restService.crearNuevaComision(comision).subscribe(rest => {
+	guardarNuevaComision(comision: Comision) {
+		this.restService.crearNuevaComision(comision).subscribe(rest => {
 			const mensaje = 'Se creó la nueva comisión con éxito';
 			this.utilesService.mostrarMensaje(mensaje);
 			this.cerrar();
-    },
-    (err) => {
-        this.utilesService.mostrarMensajeDeError(err);
-    });
+		},
+			(err) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			});
 	}
-	
+
 	getComisionesEnPeriodo(periodo) {
 		this.restService.getComisionesEnPeriodo(periodo.id).subscribe(comisiones => {
 			this.guardarComisiones(comisiones);
@@ -306,7 +306,6 @@ export class ComisionDialogoComponent implements OnInit {
 			this.utilesService.mostrarMensaje(AppMensajes.NO_SE_ENCONTRARON_COMISIONES_EN_PERIODO);
 			this.mostrarComisiones = false;
 			this.comisiones = [];
-
 		} else {
 			this.comisiones = this.utilesService.ordenarComisionesPorNombre(comisiones);
 			this.mostrarComisiones = true;

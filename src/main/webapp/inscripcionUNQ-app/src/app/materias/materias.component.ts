@@ -7,80 +7,80 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ModificacionDeMateriaDialogoComponent } from '../modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 
 @Component({
-  selector: 'app-materias',
-  templateUrl: './materias.component.html',
-  styleUrls: ['../estilo-abm.component.css']
+	selector: 'app-materias',
+	templateUrl: './materias.component.html',
+	styleUrls: ['../estilo-abm.component.css']
 })
 export class MateriasComponent implements OnInit {
-  materias: Materia[];
-  idMateria;
-  materiaBuscada: string;
+	materias: Materia[];
+	idMateria;
+	materiaBuscada: string;
 
-  constructor(
-    private restService: RestService,
-    private utilesService: UtilesService,
-    private dialog: MatDialog
-  ) { }
+	constructor(
+		private restService: RestService,
+		private utilesService: UtilesService,
+		private dialog: MatDialog
+	) { }
 
-  ngOnInit() {
-    this.materias = JSON.parse(localStorage.getItem('materias'));
-  }
+	ngOnInit() {
+		this.materias = JSON.parse(localStorage.getItem('materias'));
+	}
 
-  getMaterias() {
-    this.restService.getMaterias().subscribe(materias => {
-      this.materias = materias;
-    },
-    (err: HttpErrorResponse) => {
-      this.utilesService.mostrarMensajeDeError(err);
-    });
-  }
+	getMaterias() {
+		this.restService.getMaterias().subscribe(materias => {
+			this.materias = materias;
+		},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			});
+	}
 
-  abrirDialogoParaLaCreacionDeMateria() {
-    const dialogRef = this.crearConfiguracionDialogoParaMateria();
+	abrirDialogoParaLaCreacionDeMateria() {
+		const dialogRef = this.crearConfiguracionDialogoParaMateria();
 
-    dialogRef.afterClosed().subscribe( val => {
-			this.getMaterias();
-    });
-  }
-
-  abrirDialogoParaEdicionDeMateria(materia: Materia) {
-    const dialogRef = this.crearConfiguracionDialogoParaMateria(materia);
-    dialogRef.afterClosed().subscribe( val => {
+		dialogRef.afterClosed().subscribe(val => {
 			this.getMaterias();
 		});
 	}
 
-  actualizarMateria(materia) {
-    this.restService.actualizarInformacionMateria(materia)
-      .subscribe(res => {
-        const mensaje = 'Los datos de la materia fueron actualizados con éxito';
-        this.utilesService.mostrarMensaje(mensaje);
-        this.getMaterias();
-      },
-      (err: HttpErrorResponse) => {
-        this.utilesService.mostrarMensajeDeError(err);
-      });
-  }
+	abrirDialogoParaEdicionDeMateria(materia: Materia) {
+		const dialogRef = this.crearConfiguracionDialogoParaMateria(materia);
+		dialogRef.afterClosed().subscribe(val => {
+			this.getMaterias();
+		});
+	}
 
-  crearConfiguracionDialogoParaMateria(materia?) {
-    const dialogConfig = new  MatDialogConfig();
+	actualizarMateria(materia) {
+		this.restService.actualizarInformacionMateria(materia)
+			.subscribe(res => {
+				const mensaje = 'Los datos de la materia fueron actualizados con éxito';
+				this.utilesService.mostrarMensaje(mensaje);
+				this.getMaterias();
+			},
+				(err: HttpErrorResponse) => {
+					this.utilesService.mostrarMensajeDeError(err);
+				});
+	}
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = '600px';
-    dialogConfig.height = '450px';
-    dialogConfig.data = {
-      materia: materia
-    };
+	crearConfiguracionDialogoParaMateria(materia?) {
+		const dialogConfig = new MatDialogConfig();
 
-    const dialogRef = this.dialog.open(ModificacionDeMateriaDialogoComponent,
-            dialogConfig);
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = false;
+		dialogConfig.width = '600px';
+		dialogConfig.height = '450px';
+		dialogConfig.data = {
+			materia: materia
+		};
 
-    return dialogRef;
-  }
+		const dialogRef = this.dialog.open(ModificacionDeMateriaDialogoComponent,
+			dialogConfig);
 
-  cambiarEstado(materia: Materia, evento) {
-    materia.estado = evento.checked;
-    this.actualizarMateria(materia);
-  }
+		return dialogRef;
+	}
+
+	cambiarEstado(materia: Materia, evento) {
+		materia.estado = evento.checked;
+		this.actualizarMateria(materia);
+	}
 }

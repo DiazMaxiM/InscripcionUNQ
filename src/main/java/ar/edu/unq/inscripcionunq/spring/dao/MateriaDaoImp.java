@@ -47,5 +47,4 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 		query.setParameter("carreraId", idCarrera);
 		return query.getResultList();
 	}
-
 }

@@ -1,59 +1,58 @@
 <h5 class="titulo">ABM Comisiones</h5>
 <div align="center">
-    <button class="btn btn-danger" mat-fab color="primary" 
-    (click)= "abrirDialogoComision()">Nueva comisión</button>
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoComision()">Nueva comisión</button>
 </div>
 <div class="container-buscador">
-    <mat-form-field>
-        <input type="text" placeholder="Seleccione período" [formControl]="periodoControl" matInput [matAutocomplete]="autoPeriodo">
-        <mat-autocomplete #autoPeriodo="matAutocomplete">
-            <mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado($event, periodo)">
-                {{periodo.codigo}}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
+	<mat-form-field>
+		<input type="text" placeholder="Seleccione un período" [formControl]="periodoControl" matInput [matAutocomplete]="autoPeriodo">
+		<mat-autocomplete #autoPeriodo="matAutocomplete">
+			<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado($event, periodo)">
+				{{periodo.codigo}}
+			</mat-option>
+		</mat-autocomplete>
+	</mat-form-field>
 </div>
 <div *ngIf="mostrarComisiones" class="table-responsive">
-      <div class="container-buscador">
-            <mat-form-field>
-                    <input matInput [(ngModel)]="comisionBuscada" placeholder="Buscar comisión"> 
-             </mat-form-field> 
-      </div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Materia</th>
-                    <th>Cupo</th>
-                    <th>Horarios</th>
-                    <th>periodo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let comision of comisiones | filtroBusqueda: {nombre: comisionBuscada, nombreMateria: comisionBuscada}; let i=index;">
-                    <td style="width: 5%; display: none">{{i +1}}</td>
-                    <td>{{ comision.nombre }}</td>
-                    <td>{{ comision.nombreMateria }}</td>
-                    <td>{{ comision.cupo }}</td>
-                    <td>
-                        <tr *ngFor="let horario of comision.horarioJson">
-                                {{horario.dia}} de {{horario.horaComienzo.hour  | number:'2.0'}} : {{horario.horaComienzo.minute  | number:'2.0'}}  a  {{horario.horaFin.hour | number:'2.0'}} : {{horario.horaFin.minute | number:'2.0'}}
-                        </tr>
-                    </td>
-                    <td> {{ comision.periodo.codigo }}</td>
-                    <td>
-                        <i class="material-icons edit-icon" (click)="abrirDialogoComision(comision)"
-                        data-toggle="tooltip" 
-                        data-placement="top" title="Editar">edit</i>
-										</td>
-										<td><i class="material-icons edit-icon" (click)="abrirDialogoParaSeleccionDePeriodo(comision.id)" data-toggle="tooltip" data-placement="top" title="Clonar">file_copy</i></td>
-                    <td>
-                        <i class="material-icons edit-icon" (click)="eliminarComision(comision)"
-                        data-toggle="tooltip" 
-                        data-placement="top" title="Eliminar">delete</i>
-                    </td>
-                </tr>
-                <mat-divider></mat-divider>
-            </tbody>
-        </table>
+	<div class="container-buscador">
+		<mat-form-field>
+			<input matInput [(ngModel)]="comisionBuscada" placeholder="Buscar comisión">
+		</mat-form-field>
+	</div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Materia</th>
+				<th>Cupo</th>
+				<th>Horarios</th>
+				<th>Período</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let comision of comisiones | filtroBusqueda: {nombre: comisionBuscada, nombreMateria: comisionBuscada}; let i=index;">
+				<td style="width: 5%; display: none">{{i +1}}</td>
+				<td>{{ comision.nombre }}</td>
+				<td>{{ comision.nombreMateria }}</td>
+				<td>{{ comision.cupo }}</td>
+				<td>
+			<tr *ngFor="let horario of comision.horarioJson">
+				{{horario.dia}} de {{horario.horaComienzo.hora | number:'2.0'}} : {{horario.horaComienzo.minutos | number:'2.0'}} a
+				{{horario.horaFin.hora | number:'2.0'}} : {{horario.horaFin.minutos | number:'2.0'}}
+			</tr>
+			</td>
+			<td> {{ comision.periodo.codigo }}</td>
+			<td>
+				<i class="material-icons edit-icon" (click)="abrirDialogoComision(comision)" data-toggle="tooltip" data-placement="top"
+				 title="Editar">edit</i>
+			</td>
+			<td><i class="material-icons edit-icon" (click)="abrirDialogoParaSeleccionDePeriodo(comision.id)" data-toggle="tooltip"
+				 data-placement="top" title="Clonar">file_copy</i></td>
+			<td>
+				<i class="material-icons edit-icon" (click)="eliminarComision(comision)" data-toggle="tooltip" data-placement="top"
+				 title="Eliminar">delete</i>
+			</td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
 </div>

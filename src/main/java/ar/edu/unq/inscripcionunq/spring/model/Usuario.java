@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncriptarDesencriptarAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 
 @Entity(name = "Usuario")
@@ -61,10 +61,10 @@ public class Usuario extends BaseEntity{
 		this.password = password;
 	}
 
-	public void validarPassword(String password) throws PasswordInvalidoException, EncryptionDecryptionAESException {
+	public void validarPassword(String password) throws PasswordInvalidoException, EncriptarDesencriptarAESException {
 		if (!this.password.equals(password)) {
 			throw new PasswordInvalidoException();
-		};
+		}
 	}
 	
 	public void agregarPerfil(TipoPerfil perfil) {
@@ -99,6 +99,5 @@ public class Usuario extends BaseEntity{
 		this.setNombre(usuarioActualizado.getNombre());
 		this.setApellido(usuarioActualizado.getApellido());
 		this.setEmail(usuarioActualizado.getEmail());
-	}
-	
+	}	
 }

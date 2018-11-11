@@ -1,24 +1,26 @@
-.titulo{
-    text-align: center;
-    padding: 1%;
+.titulo {
+  text-align: center;
+  padding: 1%;
 }
 
 /deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
-    background-color: green;
+  background-color: green;
 }
-/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
-    background-color: white;
+/deep/
+  .mat-slide-toggle.mat-checked:not(.mat-disabled)
+  .mat-slide-toggle-thumb {
+  background-color: white;
 }
 
-.edit-icon:hover{
-	cursor: pointer;
+.edit-icon:hover {
+  cursor: pointer;
 }
 
 .container-buscador {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .container-buscador > * {
-    width: 50%;
-  }
+  display: flex;
+  flex-direction: column;
+}
+
+.container-buscador > * {
+  width: 50%;
+}

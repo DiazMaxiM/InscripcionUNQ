@@ -16,37 +16,33 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
-import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.service.EstudianteService;
-import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
 
 @RestController
 public class EstudianteController {
+	
 	@Autowired
-	private EstudianteService StudentServiceImp;
-
-	@Autowired
-	private MateriaService subjectServiceImp;
+	private EstudianteService estudianteServiceImp;
 
 	@PostMapping("/poll/userData")
-	public ResponseEntity updateUserData(@RequestBody EstudianteJson studentJson) throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
-		Estudiante studentRecived = new Estudiante(studentJson.nombre, studentJson.apellido, studentJson.dni, studentJson.email);
-		Estudiante student;
+	public ResponseEntity updateUserData(@RequestBody EstudianteJson estudianteJson) throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
+		Estudiante estudianteRecibido = new Estudiante(estudianteJson.nombre, estudianteJson.apellido, estudianteJson.dni, estudianteJson.email);
+		Estudiante estudiante;
 		try {
-			student = StudentServiceImp.get(studentJson.id);
-		} catch (ObjectNotFoundinDBException e) {
+			estudiante = estudianteServiceImp.get(estudianteJson.id);
+		} catch (ObjectoNoEncontradoEnBDException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-					.body(new ExceptionJson(new StudentNotExistenException()));
+					.body(new ExceptionJson(new EstudianteNoExisteException()));
 		}
-		if (student.estudianteCambio(studentRecived)) {
+		if (estudiante.estudianteCambio(estudianteRecibido)) {
 			try {
-				// crear una incidencia
-				student.update(studentRecived);
-				StudentServiceImp.update(student);
+				estudiante.actualizarEstudiante(estudianteRecibido);
+				estudianteServiceImp.update(estudiante);
 			} catch (NombreInvalidoException n) {
 				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
 						.body(new ExceptionJson(new NombreInvalidoException()));
@@ -61,33 +57,32 @@ public class EstudianteController {
 		return ResponseEntity.ok().body(null);
 	}
 
-	@GetMapping("/poll/userApprovedSubjects/{idUser}")
-	public ResponseEntity userApprovedSubjects(@PathVariable String idUser) {
+	@GetMapping("/poll/userApprovedSubjects/{idUsuario}")
+	public ResponseEntity userApprovedSubjects(@PathVariable String idUsuario) {
 		try {
-			return ResponseEntity.ok().body(StudentServiceImp.materiasAprobadasDeUsuario(idUser));
-		} catch (IdNumberFormatException | StudentNotExistenException e) {
+			return ResponseEntity.ok().body(estudianteServiceImp.materiasAprobadasDeUsuario(idUsuario));
+		} catch (FormatoNumeroIdException | EstudianteNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 	}
 
-	@PostMapping("/poll/userApprovedSubjects/{idUser}")
-	public ResponseEntity updateUserApprovedSubjects(@PathVariable String idUser,
-			@RequestBody List<MateriaJson> subjectsJson) {
+	@PostMapping("/poll/userApprovedSubjects/{idUsuario}")
+	public ResponseEntity updateUserApprovedSubjects(@PathVariable String idUsuario,
+			@RequestBody List<MateriaJson> materiasJson) {
 		try {
-			StudentServiceImp.actualizarMateriasAprobadasDeUsuario(idUser, subjectsJson);
-		} catch (IdNumberFormatException | StudentNotExistenException e) {
+			estudianteServiceImp.actualizarMateriasAprobadasDeUsuario(idUsuario, materiasJson);
+		} catch (FormatoNumeroIdException | EstudianteNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().body(null);
 	}
 
-	@GetMapping("/poll/userDisapprovedSubjectsWithCommissionAvailable/{idUser}")
-	public ResponseEntity userDisapprovedSubjectsWithCommissionAvailable(@PathVariable String idUser) {
+	@GetMapping("/poll/userDisapprovedSubjectsWithCommissionAvailable/{idUsuario}")
+	public ResponseEntity userDisapprovedSubjectsWithCommissionAvailable(@PathVariable String idUsuario) {
 		List<MateriaJson> a;
 		try {
-			return ResponseEntity.ok().body(StudentServiceImp.materiasDesaprobadasConComisionesDisponiblesDeUsuario(idUser));
-		} catch (IdNumberFormatException | StudentNotExistenException e) {
-			// TODO Auto-generated catch block
+			return ResponseEntity.ok().body(estudianteServiceImp.materiasDesaprobadasConComisionesDisponiblesDeUsuario(idUsuario));
+		} catch (FormatoNumeroIdException | EstudianteNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 	}

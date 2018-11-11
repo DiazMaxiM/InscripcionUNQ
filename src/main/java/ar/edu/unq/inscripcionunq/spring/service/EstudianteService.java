@@ -8,27 +8,27 @@ import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
-import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Certificado;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 
 public interface EstudianteService extends GenericService<Estudiante> {
 
 	List<MateriaJson> materiasAprobadasDeUsuario(String idUsuario)
-			throws IdNumberFormatException, StudentNotExistenException;
+			throws FormatoNumeroIdException, EstudianteNoExisteException;
 
 	void actualizarMateriasAprobadasDeUsuario(String idUsuario, List<MateriaJson> estudiantesJson)
-			throws IdNumberFormatException, StudentNotExistenException;
+			throws FormatoNumeroIdException, EstudianteNoExisteException;
 
 	List<MateriaJson> materiasDesaprobadasConComisionesDisponiblesDeUsuario(String idUsuario)
-			throws IdNumberFormatException, StudentNotExistenException;
+			throws FormatoNumeroIdException, EstudianteNoExisteException;
 
 	Certificado getCertificado(String idEstudiante)
-			throws StudentNotExistenException, DocumentException, IdNumberFormatException, CertificadoException;
+			throws EstudianteNoExisteException, DocumentException, FormatoNumeroIdException, CertificadoException;
 
-	public void enviarCertificado(String idEstudiante) throws StudentNotExistenException, DocumentException,
-			IdNumberFormatException, EmailException, CertificadoException;
+	public void enviarCertificado(String idEstudiante) throws EstudianteNoExisteException, DocumentException,
+			FormatoNumeroIdException, EmailException, CertificadoException;
 	
 	public Integer estudiantesPorComision(String idComision);
 

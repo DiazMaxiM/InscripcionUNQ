@@ -7,6 +7,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 public class MateriaJson {
+	
 	public Long id;
 	public String codigo;
 	public String nombre;
@@ -20,22 +21,21 @@ public class MateriaJson {
 
 	}
 
-	public MateriaJson(Materia materia, List<CarreraJson> carreras, Boolean bool) {
+	public MateriaJson(Materia materia, List<CarreraJson> carreras, Boolean aprobada) {
 		this.codigo = materia.getCodigo();
 		this.nombre = materia.getNombre();
-		this.aprobada = bool;
+		this.aprobada = aprobada;
 		this.id = materia.getId();
 		this.horas = materia.getHoras();
 		this.carreras = carreras;
 	}
 
-	public MateriaJson(Materia materia, boolean bool, List<Comision> collect) {
+	public MateriaJson(Materia materia, boolean aprobada, List<Comision> collect) {
 		this.codigo = materia.getCodigo();
 		this.nombre = materia.getNombre();
-		this.aprobada = bool;
+		this.aprobada = aprobada;
 		this.id = materia.getId();
 		this.horas = materia.getHoras();
-		//this.carreras = materia.getCarreras();
 		if (!collect.isEmpty()) {
 			this.setComisionInscripto(collect.get(0));
 		}
@@ -45,16 +45,13 @@ public class MateriaJson {
 		this.id = materia.getId();
 	}
 	
-
-	
-	
-
 	private void setComisionInscripto(Comision comision) {
 		this.comisionRegistrado = new ComisionJson(comision);
 	}
 
-	public MateriaJson agregarComisionJson(List<ComisionJson> commissionJson) {
-		comisionesJson.addAll(commissionJson);
+	public MateriaJson agregarComisionJson(List<ComisionJson> comisionJson) {
+		comisionesJson.addAll(comisionJson);
+		
 		return this;
 	}
 }

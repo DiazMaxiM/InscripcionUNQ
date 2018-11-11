@@ -1,28 +1,25 @@
 <h2 mat-dialog-title>Notificar incidencia</h2>
 <mat-dialog-content [formGroup]="form">
-    <mat-form-field>
-        <mat-select placeholder="Tipo de Incidencia" formControlName="tipoIncidencia" required>
-                <mat-option>Elija un tipo de incidencia</mat-option>
-                <mat-option *ngFor="let incidencia of tipoIncidencia" [value]="incidencia">
-                  {{incidencia.descripcion}}
-                </mat-option>
-              </mat-select>
-    </mat-form-field>
-    <mat-error *ngIf="form.get('tipoIncidencia').hasError('required') && form.get('tipoIncidencia').touched">
-        Campo obligatorio
-    </mat-error> 
-    <mat-form-field>
-        <textarea matInput placeholder="Descripción"
-            formControlName="descripcion" required>
+	<mat-form-field>
+		<mat-select placeholder="Tipo de incidencia" formControlName="tipoIncidencia" required>
+			<mat-option>Elija un tipo de incidencia</mat-option>
+			<mat-option *ngFor="let incidencia of tipoIncidencia" [value]="incidencia">
+				{{incidencia.descripcion}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<mat-error *ngIf="form.get('tipoIncidencia').hasError('required') && form.get('tipoIncidencia').touched">
+		Campo obligatorio
+	</mat-error>
+	<mat-form-field>
+		<textarea matInput placeholder="Descripción" formControlName="descripcion" required>
         </textarea>
-        <mat-error *ngIf="form.get('descripcion').hasError('required')">
-            Campo obligatorio
-        </mat-error> 
-    </mat-form-field> 
+		<mat-error *ngIf="form.get('descripcion').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button class="btn mat-button" mat-fab color="primary"
-            (click)="cerrar()">Cancelar</button>
-    <button class="btn btn-danger mat-button" mat-fab color="primary" [disabled]="form.invalid"
-            (click)="guardar()">Enviar</button>
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">Cancelar</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" [disabled]="form.invalid" (click)="guardar()">Enviar</button>
 </mat-dialog-actions>

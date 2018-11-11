@@ -6,32 +6,31 @@ import { DataDialogo } from '../encuesta-dialogo/data-dialogo.model';
 import { AppMensajes } from '../app-mensajes.model';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { Encuesta } from '../encuesta-dialogo/encuesta.model';
-import { of } from 'rxjs';
 
 @Component({
-    selector: 'app-ofertas-de-encuesta-dialogo',
-    templateUrl: './ofertas-de-encuesta-dialogo.component.html',
-    styleUrls: ['../dialogo-abm.component.css']
+	selector: 'app-ofertas-de-encuesta-dialogo',
+	templateUrl: './ofertas-de-encuesta-dialogo.component.html',
+	styleUrls: ['../dialogo-abm.component.css']
 })
 
 export class OfertasDeEncuestaDialogoComponent implements OnInit {
 	ofertas: OfertaAcademica[];
-	ofertasSeleccionados: OfertaAcademica[]= [];
+	ofertasSeleccionados: OfertaAcademica[] = [];
 	encuesta: Encuesta;
 
-  constructor(
-    private restService: RestService,
-    private utilesService: UtilesService,
-    private dialogRef: MatDialogRef<OfertasDeEncuestaDialogoComponent>,
+	constructor(
+		private restService: RestService,
+		private utilesService: UtilesService,
+		private dialogRef: MatDialogRef<OfertasDeEncuestaDialogoComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-			this.encuesta = data.encuesta;
-			this.ofertasSeleccionados = this.encuesta.ofertasAcademicas;
-		}
-
-  ngOnInit() {
-    this.getOfertasEnPeriodo();
+		this.encuesta = data.encuesta;
+		this.ofertasSeleccionados = this.encuesta.ofertasAcademicas;
 	}
-	
+
+	ngOnInit() {
+		this.getOfertasEnPeriodo();
+	}
+
 	getOfertasEnPeriodo() {
 		this.restService.getOfertasEnPeriodo(this.encuesta.periodo.id).subscribe(ofertas => {
 			this.guardarOfertas(ofertas);
@@ -42,47 +41,46 @@ export class OfertasDeEncuestaDialogoComponent implements OnInit {
 	}
 
 	guardarOfertas(ofertas: OfertaAcademica[]) {
-		if(ofertas.length == 0){
-			this.utilesService.mostrarMensaje(AppMensajes.N0_HAY_OFERTAS_EN_PERIODO+ this.encuesta.periodo.codigo);
+		if (ofertas.length == 0) {
+			this.utilesService.mostrarMensaje(AppMensajes.N0_HAY_OFERTAS_EN_PERIODO + this.encuesta.periodo.codigo);
 			this.cerrar();
-		}else{
+		} else {
 			this.ofertas = ofertas;
 		}
-
 	}
 
-  onChange(oferta, $event) {
-    if ($event.checked) {
-      this.ofertasSeleccionados.push(oferta);
-    } else {
-        this.ofertasSeleccionados.forEach(ofertaSeleccionada => {
-            if (ofertaSeleccionada.id == oferta.id) {
-                this.ofertasSeleccionados.splice(this.ofertasSeleccionados.indexOf(ofertaSeleccionada), 1);
-            }
-        });
+	onChange(oferta, $event) {
+		if ($event.checked) {
+			this.ofertasSeleccionados.push(oferta);
+		} else {
+			this.ofertasSeleccionados.forEach(ofertaSeleccionada => {
+				if (ofertaSeleccionada.id == oferta.id) {
+					this.ofertasSeleccionados.splice(this.ofertasSeleccionados.indexOf(ofertaSeleccionada), 1);
+				}
+			});
 		}
 	}
 
 	verificarSeleccion(oferta) {
-    let ofertaChecked = false;
-    this.ofertasSeleccionados.forEach(ofertaSeleccionada => {
-        if (oferta.id == ofertaSeleccionada.id) {
-            ofertaChecked = true;
-        }
-    });
-    return ofertaChecked;
-  }
-
-
-  guardar() {
-    if(this.ofertasSeleccionados.length == 0){
-      this.utilesService.mostrarMensaje('Debe seleccionar al menos una oferta académica');
-    } else {
-			 this.actualizarOfertasParaEncuesta();
-    }
+		let ofertaChecked = false;
+		this.ofertasSeleccionados.forEach(ofertaSeleccionada => {
+			if (oferta.id == ofertaSeleccionada.id) {
+				ofertaChecked = true;
+			}
+		});
+		return ofertaChecked;
 	}
-	
-	actualizarOfertasParaEncuesta(){
+
+
+	guardar() {
+		if (this.ofertasSeleccionados.length == 0) {
+			this.utilesService.mostrarMensaje('Debe seleccionar al menos una oferta académica');
+		} else {
+			this.actualizarOfertasParaEncuesta();
+		}
+	}
+
+	actualizarOfertasParaEncuesta() {
 		this.restService.actualizarOfertasDeEncuesta(this.encuesta.id, this.ofertasSeleccionados).subscribe(res => {
 			this.utilesService.mostrarMensaje(AppMensajes.ACTUALIZACION_OFERTAS_DE_ENCUESTA_EXITOS0);
 			this.cerrar();
@@ -92,7 +90,7 @@ export class OfertasDeEncuestaDialogoComponent implements OnInit {
 			});
 	}
 
-  cerrar() {
-    this.dialogRef.close();
-  }
+	cerrar() {
+		this.dialogRef.close();
+	}
 }

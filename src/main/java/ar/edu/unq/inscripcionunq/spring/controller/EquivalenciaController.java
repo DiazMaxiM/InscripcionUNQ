@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EquivalenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.service.EquivalenciaService;
 
 @RestController
@@ -27,30 +27,26 @@ public class EquivalenciaController {
 	public ResponseEntity<List> getEquivalencia() {
 		return ResponseEntity.ok().body(equivalenciaServiceImp.getEquivalencias().stream()
 				.map(equivalencia -> new EquivalenciaJson(equivalencia)).collect(Collectors.toList()));
-
 	}
 
 	@PutMapping("/equivalencia")
 	public ResponseEntity agregarEquivalencia(@RequestBody EquivalenciaJson equivalenciaJson) {
 		try {
 			equivalenciaServiceImp.agregarNuevaCarrera(equivalenciaJson);
-		} catch (ObjectNotFoundinDBException exception) {
+		} catch (ObjectoNoEncontradoEnBDException exception) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(exception));
 		}
 		return ResponseEntity.ok().build();
-
 	}
 
 	@PostMapping("/equivalencia")
 	public ResponseEntity actualizarEquivalencia(@RequestBody EquivalenciaJson equivalenciaJson) {
 		try {
 			equivalenciaServiceImp.actualizarEquivalencia(equivalenciaJson);
-		} catch (ObjectNotFoundinDBException exception) {
+		} catch (ObjectoNoEncontradoEnBDException exception) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(exception));
 
 		}
 		return ResponseEntity.ok().build();
-
 	}
-
 }

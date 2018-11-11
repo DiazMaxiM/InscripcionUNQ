@@ -1,7 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
-import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstado;
 
 public class CarreraJson {
 	
@@ -15,15 +15,10 @@ public class CarreraJson {
 		this.id = carrera.getId();
 		this.codigo = carrera.getCodigo();
 		this.descripcion = carrera.getDescripcion();
-		this.habilitada = TypeStatus.esEstadoHabiltado(carrera.getEstado());
+		this.habilitada = TipoEstado.esEstadoHabiltado(carrera.getEstado());
 	}
 
 	public CarreraJson() {
 		super();
 	}
-   
-	
-	
-
-
 }

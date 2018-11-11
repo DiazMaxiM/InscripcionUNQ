@@ -6,9 +6,8 @@ import javax.persistence.Entity;
 public class TipoIncidencia extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
 	private String descripcion;
-	private TypeStatus estado = TypeStatus.ENABLED;
+	private TipoEstado estado = TipoEstado.ENABLED;
 
 	public TipoIncidencia() {
 
@@ -19,20 +18,18 @@ public class TipoIncidencia extends BaseEntity {
 	}
 
 	public void desactivar() {
-		this.estado = TypeStatus.DISABLED;
+		this.estado = TipoEstado.DISABLED;
 	}
 
 	public void activar() {
-		this.estado = TypeStatus.ENABLED;
+		this.estado = TipoEstado.ENABLED;
 	}
 
 	public String getDescripcion() {
-
 		return this.descripcion;
 	}
 
-	public TypeStatus getEstado() {
-
+	public TipoEstado getEstado() {
 		return estado;
 	}
 
@@ -40,7 +37,7 @@ public class TipoIncidencia extends BaseEntity {
 		this.descripcion = descripcion;
 	}
 
-	public void setEstado(TypeStatus estado) {
+	public void setEstado(TipoEstado estado) {
 		this.estado = estado;
 	}
 }

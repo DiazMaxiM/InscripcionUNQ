@@ -15,9 +15,9 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteCarreraConElMismoCodigoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
-import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstado;
 import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Service
@@ -44,7 +44,6 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 		if (carrera != null) {
 			throw new ExisteCarreraConElMismoCodigoException();
 		}
-
 	}
 
 	@Override
@@ -54,16 +53,15 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 		try {
 			Carrera carreraActual = this.get(carreraJson.id);
 			this.actualizarInformacionDeLaCarrera(carreraActual, carreraRecibida);
-		} catch (ObjectNotFoundinDBException e) {
+		} catch (ObjectoNoEncontradoEnBDException e) {
 			throw new CarreraNoExisteException();
 		}
-
 	}
 
 	private Carrera armarCarreraDesdeJson(CarreraJson carreraJson)
 			throws DescripcionInvalidaException, CodigoInvalidoException, EstadoInvalidoException {
 		Carrera carrera = new Carrera(carreraJson.codigo, carreraJson.descripcion);
-		TypeStatus estado = carreraJson.habilitada ? TypeStatus.ENABLED : TypeStatus.DISABLED;
+		TipoEstado estado = carreraJson.habilitada ? TipoEstado.ENABLED : TipoEstado.DISABLED;
 		carrera.setEstado(estado);
 		Validacion.validarCarrera(carrera);
 		return carrera;
@@ -76,7 +74,6 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 		}
 		carreraActual.actualizarInformacion(carreraRecibida);
 		this.save(carreraActual);
-
 	}
 
 	@Override
@@ -87,8 +84,6 @@ public class CarreraServiceImp extends GenericServiceImp<Carrera> implements Car
 
 	@Override
 	public Carrera getCarreraPorCodigo(String codigo) {
-
 		return carreraDaoImp.encontrarCarreraConElMismoCodigo(codigo);
 	}
-
 }

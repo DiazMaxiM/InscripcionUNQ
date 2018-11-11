@@ -15,18 +15,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
-import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.UsuarioJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.EncryptionDecryptionAESException;
+import ar.edu.unq.inscripcionunq.spring.exception.EncriptarDesencriptarAESException;
 import ar.edu.unq.inscripcionunq.spring.exception.UsuarioNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
-import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteUsuarioConElMismoEmailException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PerfilInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.service.UsuarioService;
@@ -39,10 +36,9 @@ public class UsuarioController {
 	
 	@PostMapping("/usuarios/ingresoUsuario")
 	public ResponseEntity ingresarUsuario(@RequestBody UsuarioJson usuarioJson){
-			
 		try {
 			return ResponseEntity.ok().body(usuarioServiceImp.ingresarUsuario(usuarioJson));
-		} catch (UsuarioNoExisteException | PasswordInvalidoException | EncryptionDecryptionAESException e) {
+		} catch (UsuarioNoExisteException | PasswordInvalidoException | EncriptarDesencriptarAESException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 	}
@@ -74,7 +70,7 @@ public class UsuarioController {
 	public ResponseEntity eliminarUsuario(@PathVariable String idUsuario) {
 		try {
 			usuarioServiceImp.eliminarUsuario(idUsuario);
-		} catch (IdNumberFormatException | UsuarioNoExisteException e) {
+		} catch (FormatoNumeroIdException | UsuarioNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
@@ -82,39 +78,36 @@ public class UsuarioController {
 	
 	@PostMapping("/usuarios/actualizarPassword")
 	public ResponseEntity actualizarPassword(@RequestBody UsuarioJson usuarioJson){
-			try {
-				usuarioServiceImp.actualizarPassword(usuarioJson);
-			} catch (UsuarioNoExisteException | PasswordInvalidoException e) {
-				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-			}
+		try {
+			usuarioServiceImp.actualizarPassword(usuarioJson);
+		} catch (UsuarioNoExisteException | PasswordInvalidoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 		
 		return ResponseEntity.ok().build();
 	}
 	
 	@PostMapping("/usuarios/actualizarUsuario")
 	public ResponseEntity actualizarUsuario(@RequestBody UsuarioJson usuarioJson){
-	
 		try {
 			usuarioServiceImp.actualizarUsuario(usuarioJson);
 		} catch (UsuarioNoExisteException | EmailInvalidoException | NombreInvalidoException | ApellidoInvalidoException
-				| IdNumberFormatException | ExisteUsuarioConElMismoEmailException e) {
+				| FormatoNumeroIdException | ExisteUsuarioConElMismoEmailException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 			
 		return ResponseEntity.ok().build();
 	}
 	
-
 	@PostMapping("/usuarios/actualizarPerfiles/{idUsuario}")
 	public ResponseEntity actualizarComisiones(@PathVariable String idUsuario, @RequestBody List<String> perfiles) {
-	
-			try {
-				usuarioServiceImp.actualizarPerfiles(idUsuario, perfiles);
-			} catch (PerfilInvalidoException | IdNumberFormatException | UsuarioNoExisteException e) {
-				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
-			}
-			return ResponseEntity.ok().build();
-	
+		try {
+			usuarioServiceImp.actualizarPerfiles(idUsuario, perfiles);
+		} catch (PerfilInvalidoException | FormatoNumeroIdException | UsuarioNoExisteException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		
+		return ResponseEntity.ok().build();	
 	}
 	
 	@GetMapping("/tipoPerfiles")
@@ -123,5 +116,4 @@ public class UsuarioController {
 		Arrays.sort(perfiles);
 		return ResponseEntity.ok().body(perfiles);
 	}
-
 }

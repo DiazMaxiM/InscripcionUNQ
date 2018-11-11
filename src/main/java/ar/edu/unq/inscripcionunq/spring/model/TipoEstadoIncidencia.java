@@ -1,7 +1,10 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
 public enum TipoEstadoIncidencia {
-	ABIERTA("Abierta"), EN_PROCESO("En Proceso"), CERRADA("Cerrada");
+	
+	ABIERTA("Abierta"), 
+	EN_PROCESO("En Proceso"), 
+	CERRADA("Cerrada");
 
 	private final String estado;
 

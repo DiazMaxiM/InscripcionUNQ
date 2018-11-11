@@ -7,9 +7,9 @@ import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 
-public class Mail {
+public class Email {
 
-	private static Mail instance = null;
+	private static Email instance = null;
 	private MultiPartEmail mail = new MultiPartEmail();
 	private String file;
 
@@ -21,9 +21,8 @@ public class Mail {
 		this.file = file;
 	}
 
-	public Mail() throws EmailException {
+	public Email() throws EmailException {
 		mailConfiguration();
-
 	}
 
 	private void mailConfiguration() throws EmailException {
@@ -37,21 +36,19 @@ public class Mail {
 		mail.setFrom("MorfiYa2017@gmail.com");
 	}
 
-	public Mail(MultiPartEmail email) throws EmailException {
+	public Email(MultiPartEmail email) throws EmailException {
 		this.mail = email;
 		mailConfiguration();
-
 	}
 
-	public Mail getInstance() throws EmailException {
+	public Email getInstance() throws EmailException {
 		if (instance == null) {
-			instance = new Mail();
+			instance = new Email();
 		}
 		return instance;
 	}
 
 	public void sendConAdjunto(String to, String subject, String mensagge) throws EmailException {
-
 		if (file != null) {
 			File fileScreenshot = new File(file);
 			EmailAttachment attachment = new EmailAttachment();

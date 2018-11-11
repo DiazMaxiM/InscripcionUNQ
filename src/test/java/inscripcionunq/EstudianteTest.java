@@ -17,7 +17,8 @@ import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
-public class StudentTest {
+public class EstudianteTest {
+	
 	private Estudiante estudiante;
 
 	@Before
@@ -59,21 +60,21 @@ public class StudentTest {
 	public void testActualizarEstudianteConNombreVacioLanzaExcepcion()
 			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
 		Estudiante estudianteConCambios = new Estudiante("", "Martínez", "40111999", "ana.mh@gmail.com");
-		estudiante.update(estudianteConCambios);
+		estudiante.actualizarEstudiante(estudianteConCambios);
 	}
 
 	@Test(expected = ApellidoInvalidoException.class)
 	public void testActualizarEstudianteConApellidoVacioLanzaExcepcion()
 			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
 		Estudiante estudianteConCambios = new Estudiante("Ana", "", "40111999", "ana.mh@gmail.com");
-		estudiante.update(estudianteConCambios);
+		estudiante.actualizarEstudiante(estudianteConCambios);
 	}
 
 	@Test(expected = EmailInvalidoException.class)
 	public void testActualizarEstudianteConEmailInvalidoLanzaExcepcion()
 			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
 		Estudiante estudianteConCambios = new Estudiante("Ana", "Martínez", "40111999", "ana.mh@gmail");
-		estudiante.update(estudianteConCambios);
+		estudiante.actualizarEstudiante(estudianteConCambios);
 	}
 
 	@Test

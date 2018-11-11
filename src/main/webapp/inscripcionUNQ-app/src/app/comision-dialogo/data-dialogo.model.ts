@@ -1,7 +1,5 @@
-import { Comision } from '../comisiones-de-oferta/comision.model';
-
+import { Comision } from "../comisiones-de-oferta/comision.model";
 
 export interface DataDialogo {
-   comision: Comision;
-
+  comision: Comision;
 }

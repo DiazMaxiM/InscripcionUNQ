@@ -33,7 +33,7 @@ import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas
 import { CarrerasComponent } from './carreras/carreras.component';
 import { MateriasComponent } from './materias/materias.component';
 import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.component';
-import { ofertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
+import { OfertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
 import { OfertaAcademicaDialogoComponent } from './oferta-academica-dialogo/oferta-academica.dialogo.component';
 import { ModificacionDeMateriaDialogoComponent } from './modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
 import { ComisionesDeOfertaComponent } from './comisiones-de-oferta/comisiones-de-oferta.component';
@@ -79,7 +79,7 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
     CarrerasComponent,
     MateriasComponent,
     CarreraDialogoComponent,
-    ofertaAcademicaComponent,
+    OfertaAcademicaComponent,
     OfertaAcademicaDialogoComponent,
     ModificacionDeMateriaDialogoComponent,
     ComisionesDeOfertaComponent,

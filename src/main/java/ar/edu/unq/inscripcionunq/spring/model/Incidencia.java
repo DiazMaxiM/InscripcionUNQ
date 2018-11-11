@@ -14,6 +14,7 @@ public class Incidencia extends BaseEntity {
 	private TipoEstadoIncidencia tipoEstadoIncidencia;
 
 	public Incidencia() {
+	
 	}
 
 	public Incidencia(TipoIncidencia tipoIncidencia, String descripcion) {

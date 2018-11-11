@@ -1,35 +1,37 @@
 <h1 class="h5"> Equivalencia</h1>
 <mat-dialog-content>
-<div [formGroup]="form">
-    <mat-form-field>
-        <input type="text" placeholder="Materia Origen" formControlName="materiaOrigen" matInput [matAutocomplete]="autoOrigen" required>
-        <mat-autocomplete #autoOrigen="matAutocomplete">
-        <mat-option *ngFor="let materia of filtroMateriasOrigen | async" [value]="materia.nombre">
-            {{materia.nombre}}
-        </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="form.get('materiaOrigen').hasError('required')">
-                Campo obligatorio
-        </mat-error> 
-    </mat-form-field>
-    <mat-form-field>
-        <input type="text" placeholder="Materia Equivalente" formControlName="materiaDestino" matInput [matAutocomplete]="autoDestino" required>
-        <mat-autocomplete #autoDestino="matAutocomplete">
-        <mat-option *ngFor="let materia of filtroMateriasDestino | async" [value]="materia.nombre">
-            {{materia.nombre}}
-        </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="form.get('materiaDestino').hasError('required')">
-                Campo obligatorio
-        </mat-error> 
-    </mat-form-field>
-</div>
+	<div [formGroup]="form">
+		<mat-form-field>
+			<input type="text" placeholder="Materia origen" formControlName="materiaOrigen" matInput [matAutocomplete]="autoOrigen"
+			 required>
+			<mat-autocomplete #autoOrigen="matAutocomplete">
+				<mat-option *ngFor="let materia of filtroMateriasOrigen | async" [value]="materia.nombre">
+					{{materia.nombre}}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="form.get('materiaOrigen').hasError('required')">
+				Campo obligatorio
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<input type="text" placeholder="Materia equivalente" formControlName="materiaDestino" matInput [matAutocomplete]="autoDestino"
+			 required>
+			<mat-autocomplete #autoDestino="matAutocomplete">
+				<mat-option *ngFor="let materia of filtroMateriasDestino | async" [value]="materia.nombre">
+					{{materia.nombre}}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-error *ngIf="form.get('materiaDestino').hasError('required')">
+				Campo obligatorio
+			</mat-error>
+		</mat-form-field>
+	</div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-        <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
-          Cerrar
-        </button>
-        <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
-          Guardar
-        </button>
-</mat-dialog-actions>    
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+		Cerrar
+	</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+		Guardar
+	</button>
+</mat-dialog-actions>

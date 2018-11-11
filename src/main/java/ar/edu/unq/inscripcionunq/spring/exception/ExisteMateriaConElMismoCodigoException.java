@@ -7,5 +7,4 @@ public class ExisteMateriaConElMismoCodigoException extends ExceptionGeneric imp
 	public ExisteMateriaConElMismoCodigoException() {
 		super(016, "El código que quiere ingresar ya está siendo utilizado por otra materia");
 	}
-
 }

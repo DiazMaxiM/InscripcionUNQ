@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { EncuestaDialogoComponent } from '../encuesta-dialogo/encuesta-dialogo.component';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -8,26 +8,25 @@ import { OfertasDeEncuestaDialogoComponent } from '../ofertas-de-encuesta-dialog
 import { ReporteDialogoComponent } from '../reporte-dialogo/reporte-dialogo.component';
 
 @Component({
-  selector: 'app-encuestas',
-  templateUrl: './encuestas.component.html',
+	selector: 'app-encuestas',
+	templateUrl: './encuestas.component.html',
 	styleUrls: ['../estilo-abm.component.css']
 })
 
 export class EncuestasComponent implements OnInit {
-	
-  constructor(
-	private restService: RestService,
-	private utilesService: UtilesService,
-	private dialog: MatDialog
-) { }
-  encuestas: any[];
+	encuestas: any[];
 
-  ngOnInit() {
-      this.encuestas = JSON.parse(localStorage.getItem('encuestas'));
-  }
+	constructor(
+		private restService: RestService,
+		private utilesService: UtilesService,
+		private dialog: MatDialog
+	) { }
 
-	
-	abrirDialogoParaAltaOModificacionEncuesta(encuesta){
+	ngOnInit() {
+		this.encuestas = JSON.parse(localStorage.getItem('encuestas'));
+	}
+
+	abrirDialogoParaAltaOModificacionEncuesta(encuesta) {
 		const dialogRef = this.crearConfiguracionDialogoParaEncuesta(encuesta);
 		dialogRef.afterClosed().subscribe(val => {
 			this.getEncuestas();
@@ -78,7 +77,7 @@ export class EncuestasComponent implements OnInit {
 		});
 	}
 
-	abrirDialogoParaDescargarReporte(encuesta: Encuesta){
+	abrirDialogoParaDescargarReporte(encuesta: Encuesta) {
 		const dialogRef = this.crearConfiguracionDialogoParaReporte(encuesta);
 		dialogRef.afterClosed().subscribe(val => {
 			this.getEncuestas();

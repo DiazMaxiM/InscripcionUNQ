@@ -12,4 +12,5 @@ public interface TipoIncidenciaService extends GenericService<TipoIncidencia> {
 	public void agregarNuevoTipoIncidencia(TipoIncidenciaJson tipoIncidenciaJson);
 
 	public void actualizarTipoIncidencia(TipoIncidenciaJson tipoIncidenciaJson);
+
 }

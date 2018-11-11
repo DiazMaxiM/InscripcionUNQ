@@ -1,4 +1,3 @@
-
 package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.PeriodoJson;
 import ar.edu.unq.inscripcionunq.spring.exception.AnhoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.GeneracionDeCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoSePudoGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -23,7 +22,7 @@ public class PeriodoServiceImpl extends GenericServiceImp<Periodo> implements Pe
 	
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void crearPeriodo(PeriodoJson peridoJson) throws AnhoInvalidoException, NumeroInvalidoException, PeriodoInvalidoException, NoSePudoGenerarCodigoException, ErrorAlGenerarCodigoException {
+	public void crearPeriodo(PeriodoJson peridoJson) throws AnhoInvalidoException, NumeroInvalidoException, PeriodoInvalidoException, NoSePudoGenerarCodigoException, GeneracionDeCodigoException {
 		Periodo periodo = this.armarPeriodoDesdeJson(peridoJson);
 		if(StringUtils.isEmpty(periodo.getCodigo())) {
 		  	throw new NoSePudoGenerarCodigoException();
@@ -32,18 +31,18 @@ public class PeriodoServiceImpl extends GenericServiceImp<Periodo> implements Pe
 		try {
 			this.save(periodo);
 		} catch (ConstraintViolationException e) {
-		    throw new ErrorAlGenerarCodigoException();
+		    throw new GeneracionDeCodigoException();
 		}
-		
 	}
 
 	private Periodo armarPeriodoDesdeJson(PeriodoJson periodoJson) throws AnhoInvalidoException, NumeroInvalidoException, PeriodoInvalidoException {
 		TipoPeriodo tipoPeriodo = TipoPeriodo.valueOf(periodoJson.tipoPeriodo);
 		Periodo periodo = new Periodo(periodoJson.anho,periodoJson.numero,tipoPeriodo);
 		Validacion.validarPeriodo(periodo);
-		return periodo;
 		
+		return periodo;	
 	}
+	
 	@Transactional
 	@Override
 	public List<PeriodoJson> getPeriodosJson() {

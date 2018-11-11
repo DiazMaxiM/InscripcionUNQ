@@ -10,7 +10,8 @@ import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 
-public class AcademicOfferTest {
+public class OfertaAcademicaTest {
+	
 	private OfertaAcademica ofertaAcademica;
 	
 	@Before

@@ -14,7 +14,6 @@ public class FechaJson {
 		this.mes = horaComienzo.getMonthValue();
 		this.anho = horaComienzo.getYear();
 		this.horario = new Hora(horaComienzo.getHour(),horaComienzo.getMinute());
-		
 	}
 	
 	public FechaJson() {

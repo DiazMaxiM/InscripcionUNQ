@@ -11,5 +11,4 @@ public class EquivalenciaDaoImp extends GenericDaoImp<Equivalencia> implements E
 	protected Class<Equivalencia> getDomainClass() {
 		return Equivalencia.class;
 	}
-
 }

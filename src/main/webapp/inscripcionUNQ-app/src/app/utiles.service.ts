@@ -68,8 +68,8 @@ export class UtilesService {
 		date.setDate(fecha.dayOfMonth);
 		date.setMonth(fecha.monthValue - 1);
 		date.setFullYear(fecha.year);
-		date.setHours(fecha.hour);
-		date.setMinutes(fecha.minute);
+		date.setHours(fecha.hora);
+		date.setMinutes(fecha.minutos);
 		date.setSeconds(fecha.second);
 		return date;
 	}
@@ -81,7 +81,7 @@ export class UtilesService {
 
 	mostrarMensajeDeError(error: HttpErrorResponse) {
 		if (error.status >= 500) {
-			const mensaje = 'En este momento no se puede procesar la petición. Por favor vuelva a intentar más tarde';
+			const mensaje = 'En este momento no se puede procesar la petición. Por favor, vuelva a intentar más tarde';
 			this.mostrarMensajeYSalir(mensaje);
 		} else {
 			this.mostrarMensaje(error.error.msg);
@@ -89,7 +89,7 @@ export class UtilesService {
 	}
 
 	activarDialogoCargando() {
-		const mensaje = 'Procesado....';
+		const mensaje = 'Procesando...';
 		const dialogConfig = this.crearConfiguracionDelDialogo(mensaje, true);
 		const dialogRef = this.dialog.open(FeedbackUsuarioDialogoComponent,
 			dialogConfig);
@@ -120,8 +120,8 @@ export class UtilesService {
 
 	nuevoHorario(horario) {
 		const date = new Date();
-		date.setHours(horario.hour);
-		date.setMinutes(horario.minute);
+		date.setHours(horario.hora);
+		date.setMinutes(horario.minutos);
 		date.setSeconds(horario.second);
 		return date;
 	}

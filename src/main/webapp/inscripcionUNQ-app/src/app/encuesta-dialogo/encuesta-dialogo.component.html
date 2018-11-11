@@ -1,100 +1,102 @@
 <div *ngIf="!seleccionaOfertasAcademicas">
 	<div [formGroup]="form">
-      <div class="form-row">
-      <mat-form-field class="col-md-12">
-        <input matInput placeholder="Nombre" formControlName="nombre" required>
-        <mat-error *ngIf="form.get('nombre').hasError('required')">
-          Campo obligatorio
-        </mat-error> 
+		<div class="form-row">
+			<mat-form-field class="col-md-12">
+				<input matInput placeholder="Nombre" formControlName="nombre" required>
+				<mat-error *ngIf="form.get('nombre').hasError('required')">
+					Campo obligatorio
+				</mat-error>
 			</mat-form-field>
 			<mat-form-field *ngIf="!modificaPeriodo" class="col-md-12">
-				<input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
+				<input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo"
+				 required>
 				<mat-autocomplete #autoPeriodo="matAutocomplete">
-				<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo">
-						 {{periodo.codigo}}
-				</mat-option>
+					<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo">
+						{{periodo.codigo}}
+					</mat-option>
 				</mat-autocomplete>
 				<mat-error *ngIf="form.get('periodo').hasError('required')">
-								Campo obligatorio
-				</mat-error> 
-			 </mat-form-field>
-			 <mat-form-field class="col-md-6">
-				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker" placeholder="Fecha de comienzo" formControlName="fechaDeComienzo" required readonly>
+					Campo obligatorio
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field class="col-md-6">
+				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker" placeholder="Fecha de comienzo"
+				 formControlName="fechaDeComienzo" required readonly>
 				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 				<mat-datepicker #picker></mat-datepicker>
 				<mat-error *ngIf="form.get('fechaDeComienzo').hasError('required')">
 					Campo obligatorio
-				</mat-error> 
+				</mat-error>
 			</mat-form-field>
 			<mat-form-field class="col-md-6">
-				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker2" placeholder="Fecha de finalización" formControlName="fechaDeFinalizacion" required readonly>
-				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle >
+				<input (keypress)="keyDown($event)" matInput [matDatepicker]="picker2" placeholder="Fecha de finalización"
+				 formControlName="fechaDeFinalizacion" required readonly>
+				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
 				<mat-datepicker #picker2></mat-datepicker>
 				<mat-error *ngIf="form.get('fechaDeFinalizacion').hasError('required')">
 					Campo obligatorio
-				</mat-error> 
-				<mat-error 	*ngIf="form.get('fechaDeFinalizacion').hasError('notValid')">
+				</mat-error>
+				<mat-error *ngIf="form.get('fechaDeFinalizacion').hasError('notValid')">
 					La fecha de finalización debe ser mayor que la fecha de comienzo
-				</mat-error> 
+				</mat-error>
 			</mat-form-field>
-				<div class="col-md-6">
-						Horario de comienzo 
-						<ngb-timepicker (keypress)="soloNumero($event)" formControlName="horarioComienzo" required></ngb-timepicker>
-					 <mat-error *ngIf="form.get('horarioComienzo').hasError('required')">Campo obligatorio</mat-error>
-				</div>
-				<div class="col-md-6">
-						Horario de Finalizacion
-						<ngb-timepicker (keypress)="soloNumero($event)" formControlName="horarioFinalizacion" required></ngb-timepicker>
-					 <mat-error *ngIf="form.get('horarioFinalizacion').hasError('required')">Campo obligatorio</mat-error>
-				</div>
+			<div class="col-md-6">
+				Horario de comienzo
+				<ngb-timepicker (keypress)="soloNumero($event)" formControlName="horarioComienzo" required></ngb-timepicker>
+				<mat-error *ngIf="form.get('horarioComienzo').hasError('required')">Campo obligatorio</mat-error>
 			</div>
+			<div class="col-md-6">
+				Horario de finalización
+				<ngb-timepicker (keypress)="soloNumero($event)" formControlName="horarioFinalizacion" required></ngb-timepicker>
+				<mat-error *ngIf="form.get('horarioFinalizacion').hasError('required')">Campo obligatorio</mat-error>
+			</div>
+		</div>
 	</div>
-<div  align="end">
-    <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
-      Cerrar
-    </button>
-    <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
-      Guardar
-    </button>
-</div>
+	<div align="end">
+		<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+			Cerrar
+		</button>
+		<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+			Guardar
+		</button>
+	</div>
 </div>
 <div *ngIf="seleccionaOfertasAcademicas">
-		Ofertas académicas disponibles
-		<div class="container-buscador">
-				<mat-form-field>
-						<input matInput [(ngModel)]="ofertaBuscada" placeholder="Buscar oferta"> 
-			</mat-form-field> 
-		</div>
-		<div class="table-responsive">
-				<table class="table table-hover">
-						<thead>
-								<tr>
-										<th>Nombre</th>
-										<th>Descripción</th>
-										<th>Carrera</th>
-								</tr>
-						</thead>
-						<tbody>
-								<tr *ngFor="let oferta of ofertas | filtroBusqueda: {nombre: ofertaBuscada, descripcion: ofertaBuscada}; let i=index;">
-										<td style="width: 5%; display: none">{{i +1}}</td>
-										<td>{{ oferta.nombre }}</td>
-										<td>{{ oferta.descripcion}}</td>
-										<td>{{ oferta.carrera.codigo}}</td>
-										<td>
-												<mat-checkbox (change)="onChange(oferta,$event)" 
-												color="warn"></mat-checkbox>
-										</td>
-								</tr>
-								<mat-divider></mat-divider>
-						</tbody>
-				</table>
-		</div>
-		<div align="end">
-				<button class="btn mat-button" mat-fab color="primary" (click)="atras()">
-					Atrás
-				</button>
-				<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="enviarEncuesta()">
-					Crear Encuesta
-				</button>
-		</div>
+	Ofertas académicas disponibles
+	<div class="container-buscador">
+		<mat-form-field>
+			<input matInput [(ngModel)]="ofertaBuscada" placeholder="Buscar oferta">
+		</mat-form-field>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Descripción</th>
+					<th>Carrera</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let oferta of ofertas | filtroBusqueda: {nombre: ofertaBuscada, descripcion: ofertaBuscada}; let i=index;">
+					<td style="width: 5%; display: none">{{i +1}}</td>
+					<td>{{ oferta.nombre }}</td>
+					<td>{{ oferta.descripcion}}</td>
+					<td>{{ oferta.carrera.codigo}}</td>
+					<td>
+						<mat-checkbox (change)="onChange(oferta,$event)" color="warn"></mat-checkbox>
+					</td>
+				</tr>
+				<mat-divider></mat-divider>
+			</tbody>
+		</table>
+	</div>
+	<div align="end">
+		<button class="btn mat-button" mat-fab color="primary" (click)="atras()">
+			Atrás
+		</button>
+		<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="enviarEncuesta()">
+			Crear encuesta
+		</button>
+	</div>
 </div>

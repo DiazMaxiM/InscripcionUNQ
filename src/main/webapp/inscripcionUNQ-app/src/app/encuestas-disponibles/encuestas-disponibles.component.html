@@ -1,20 +1,22 @@
 <div class="table-responsive">
- <table class="table table-hover table-borderless">
-   <thead>
-     <tr>
-       <th>Nombre</th>
-       <th>Fecha de Inicio</th>
-       <th>Fecha de Fin</th>
-     </tr>
-   </thead>
-   <tbody>
-     <tr *ngFor="let encuesta of encuestas">
-       <td>{{ encuesta.nombre }}</td>
-       <td>{{ encuesta.horaComienzo.dayOfMonth | number:'2.0' }}/{{ encuesta.horaComienzo.monthValue | number:'2.0' }}/{{ encuesta.horaComienzo.year}}</td>
-       <td>{{ encuesta.horaFin.dayOfMonth | number:'2.0'}}/{{ encuesta.horaFin.monthValue | number:'2.0'}}/{{ encuesta.horaFin.year}}</td>
-       <td><i class="material-icons edit-icon" (click)="editarEncuesta(encuesta.id)">edit</i></td>
-     </tr>
-    <mat-divider></mat-divider>
-   </tbody>
- </table>
+	<table class="table table-hover table-borderless">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Fecha de inicio</th>
+				<th>Fecha de fin</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let encuesta of encuestas">
+				<td>{{ encuesta.nombre }}</td>
+				<td>{{ encuesta.horaComienzo.dayOfMonth | number:'2.0' }}/{{ encuesta.horaComienzo.monthValue | number:'2.0' }}/{{
+					encuesta.horaComienzo.year}}</td>
+				<td>{{ encuesta.horaFin.dayOfMonth | number:'2.0'}}/{{ encuesta.horaFin.monthValue | number:'2.0'}}/{{
+					encuesta.horaFin.year}}</td>
+				<td><i class="material-icons edit-icon" (click)="editarEncuesta(encuesta.id)">edit</i></td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
 </div>

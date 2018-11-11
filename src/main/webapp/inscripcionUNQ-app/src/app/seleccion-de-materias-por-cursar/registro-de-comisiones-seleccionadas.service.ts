@@ -5,89 +5,86 @@ import { ComisionSeleccionada } from '../seleccion-de-comision-dialogo/comision-
 @Injectable()
 export class RegistroDeComisionesSeleccionadasService {
 
-  private horariosOcupados = [];
+	private horariosOcupados = [];
 
-  constructor() {}
+	constructor() { }
 
-  crearRegistroDeComisionSeleccionada(idMateria, comision) {
-    const nuevoRegistro: ComisionSeleccionada = this.nuevoRegistro(idMateria, comision);
-    if (!this.hayHorariosSuperpuestos(nuevoRegistro.horariosSeleccionados)) {
-      for (const horario of nuevoRegistro.horariosSeleccionados) {
-      this.horariosOcupados.push(horario);
+	crearRegistroDeComisionSeleccionada(idMateria, comision) {
+		const nuevoRegistro: ComisionSeleccionada = this.nuevoRegistro(idMateria, comision);
+		if (!this.hayHorariosSuperpuestos(nuevoRegistro.horariosSeleccionados)) {
+			for (const horario of nuevoRegistro.horariosSeleccionados) {
+				this.horariosOcupados.push(horario);
+			}
+			return nuevoRegistro;
+		}
+		nuevoRegistro.horariosSeleccionados = [];
+		return nuevoRegistro;
+	}
 
-    }
-    return nuevoRegistro;
-  }
-  nuevoRegistro.horariosSeleccionados = [];
-  return nuevoRegistro;
-}
+	hayHorariosSuperpuestos(horariosPorOcupar) {
+		let haySuperposicion = false;
+		for (const horarioPorOcupar of horariosPorOcupar) {
+			for (const horarioOcupado of this.horariosEnElMismoDia(horarioPorOcupar)) {
+				haySuperposicion = haySuperposicion || this.esHorarioSuperpuesto(horarioOcupado, horarioPorOcupar);
+			}
+		}
+		return haySuperposicion;
+	}
 
-hayHorariosSuperpuestos(horariosPorOcupar) {
-   let haySuperposicion = false;
-    for (const horarioPorOcupar of horariosPorOcupar) {
-      for (const horarioOcupado of this.horariosEnElMismoDia(horarioPorOcupar)) {
-         haySuperposicion = haySuperposicion || this. esHorarioSuperpuesto(horarioOcupado, horarioPorOcupar);
-      }
-    }
-    return haySuperposicion;
+	horariosEnElMismoDia(horarioPorOcupar: Horario) {
+		return this.horariosOcupados.filter(horarioDeLaComision => horarioDeLaComision.dia == horarioPorOcupar.dia);
 
-}
+	}
 
-horariosEnElMismoDia(horarioPorOcupar: Horario) {
-  return this.horariosOcupados.filter(horarioDeLaComision => horarioDeLaComision.dia == horarioPorOcupar.dia);
+	public guardarHorario(horario: Horario) {
+		this.horariosOcupados.push(horario);
+	}
 
-}
+	public eliminarHorarios(horarios: Horario[]) {
+		for (const horario of horarios) {
+			const index = this.horariosOcupados.indexOf(horario);
+			this.horariosOcupados.splice(index, 1);
+		}
+	}
 
+	nuevoRegistro(idMateria, comision) {
+		const registro = new ComisionSeleccionada(comision.id, comision.nombre, idMateria);
+		for (const horario of comision.horarioJson) {
+			const horarioSeleccionado = this.crearHorario(horario);
+			registro.agregarHorario(horarioSeleccionado);
+		}
+		return registro;
+	}
 
-  public guardarHorario(horario: Horario) {
-    this.horariosOcupados.push(horario);
-  }
-  public eliminarHorarios(horarios: Horario[] ) {
-    for (const horario of horarios)  {
-        const index = this.horariosOcupados.indexOf(horario);
-        this.horariosOcupados.splice(index, 1);
-    }
-}
+	nuevoHorario(horario) {
+		const date = new Date();
+		date.setHours(horario.hora);
+		date.setMinutes(horario.minutos);
+		return date;
+	}
 
- nuevoRegistro(idMateria, comision) {
-   const registro = new ComisionSeleccionada(comision.id, comision.nombre, idMateria);
-   for (const horario of comision.horarioJson) {
-     const horarioSeleccionado = this.crearHorario(horario);
-     registro.agregarHorario(horarioSeleccionado);
-  }
-    return registro;
-  }
+	crearHorario(horario) {
+		const horaDeInicio = this.nuevoHorario(horario.horaComienzo);
+		const horaDeFin = this.nuevoHorario(horario.horaFin);
 
-nuevoHorario(horario) {
-  const date = new Date();
-  date.setHours(horario.hour);
-  date.setMinutes(horario.minute);
-  return date;
-}
+		return new Horario(horario.dia, horaDeInicio, horaDeFin);
+	}
 
-crearHorario(horario) {
-  const horaDeInicio = this.nuevoHorario(horario.horaComienzo);
-  const horaDeFin = this.nuevoHorario(horario.horaFin);
+	esHorarioSuperpuesto(horarioOcupado: Horario, horarioDeConsulta: Horario) {
+		let haySuperposicion = false;
 
-  return new Horario(horario.dia, horaDeInicio, horaDeFin);
-}
+		if (horarioOcupado.dia == horarioDeConsulta.dia) {
+			haySuperposicion = this.haySuperposicionEntreHorarios(horarioOcupado, horarioDeConsulta);
+		}
+		return haySuperposicion;
+	}
 
- esHorarioSuperpuesto(horarioOcupado: Horario, horarioDeConsulta: Horario) {
-  let haySuperposicion = false;
+	haySuperposicionEntreHorarios(horarioOcupado: Horario, horarioDeConsulta: Horario) {
+		return horarioOcupado.horarioDeComienzo <= horarioDeConsulta.horarioDeFinalizacion &&
+			horarioOcupado.horarioDeFinalizacion >= horarioDeConsulta.horarioDeComienzo;
+	}
 
-  if (horarioOcupado.dia == horarioDeConsulta.dia) {
-      haySuperposicion = this.haySuperposicionEntreHorarios(horarioOcupado, horarioDeConsulta);
-  }
-  return haySuperposicion;
-}
-
-haySuperposicionEntreHorarios(horarioOcupado: Horario, horarioDeConsulta: Horario) {
-  return horarioOcupado.horarioDeComienzo <= horarioDeConsulta.horarioDeFinalizacion &&
-  horarioOcupado.horarioDeFinalizacion >= horarioDeConsulta.horarioDeComienzo;
-}
-
-limpiarHorarios() {
-  this.horariosOcupados = [];
-}
-
+	limpiarHorarios() {
+		this.horariosOcupados = [];
+	}
 }

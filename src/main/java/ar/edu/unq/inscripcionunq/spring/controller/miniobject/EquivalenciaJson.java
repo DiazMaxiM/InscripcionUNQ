@@ -10,6 +10,7 @@ public class EquivalenciaJson {
 	public MateriaJson materiaDestino;
 
 	public EquivalenciaJson() {
+	
 	}
 
 	public EquivalenciaJson(Equivalencia equivalencia) {

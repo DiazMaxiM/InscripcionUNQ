@@ -30,6 +30,4 @@ public class ComisionCompletaJson extends ComisionJson{
 		this.cupo = comision.getCupo();
 		this.periodo = new PeriodoJson(comision.getPeriodo());
 	}
-
-
 }

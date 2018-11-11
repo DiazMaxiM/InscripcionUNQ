@@ -19,5 +19,4 @@ public class CarreraDaoImp extends GenericDaoImp<Carrera> implements CarreraDao 
 		return (Carrera) session.createQuery("from Carrera where codigo = :codigo").setParameter("codigo", codigo)
 				.uniqueResult();
 	}
-
 }

@@ -18,14 +18,14 @@ import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.EstudianteDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
-import ar.edu.unq.inscripcionunq.spring.exception.StudentNotExistenException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Certificado;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
-import ar.edu.unq.inscripcionunq.spring.model.Mail;
+import ar.edu.unq.inscripcionunq.spring.model.Email;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 @Service
@@ -34,21 +34,23 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 
 	@Autowired
 	private MateriaDao materiaDaoImp;
+	
 	@Autowired
 	private ComisionDao comisionDaoImp;
+	
 	@Autowired
 	private EstudianteDao estudianteDaoImp;
 
 	@Override
 	public List<MateriaJson> materiasAprobadasDeUsuario(String idUsuario)
-			throws IdNumberFormatException, StudentNotExistenException {
+			throws FormatoNumeroIdException, EstudianteNoExisteException {
 		Estudiante estudiante;
 		try {
 			estudiante = this.get(new Long(idUsuario));
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new StudentNotExistenException();
+			throw new FormatoNumeroIdException();
+		} catch (ObjectoNoEncontradoEnBDException e) {
+			throw new EstudianteNoExisteException();
 		}
 		List<Carrera> carreras = estudiante.getCarrerasInscripto();
 		List<Materia> materias = materiaDaoImp.getMateriasParaCarreras(carreras);
@@ -61,22 +63,20 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 
 	@Override
 	public void actualizarMateriasAprobadasDeUsuario(String idUsuario, List<MateriaJson> estudiantesJson)
-			throws IdNumberFormatException, StudentNotExistenException {
+			throws FormatoNumeroIdException, EstudianteNoExisteException {
 		Estudiante estudiante;
 		try {
 			estudiante = this.get(new Long(idUsuario));
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new StudentNotExistenException();
+			throw new FormatoNumeroIdException();
+		} catch (ObjectoNoEncontradoEnBDException e) {
+			throw new EstudianteNoExisteException();
 		}
 		List<MateriaJson> materiasAprobadas = estudiantesJson.stream().filter(estudianteJson -> estudianteJson.aprobada)
 				.collect(Collectors.toList());
 		if (!((int) materiasAprobadas.size() == estudiante.getMateriasAprobadas().size()
 				&& estudiante.getMateriasAprobadas().containsAll(
 						materiasAprobadas.stream().map(sA -> materiaDaoImp.get(sA.id)).collect(Collectors.toList())))) {
-			// crear incidencia
-			System.out.println("Crear incidencia");
 			List<Materia> nuevasMateriasAprobadas = materiasAprobadas.stream()
 					.map(subjectApproved -> materiaDaoImp.get(subjectApproved.id)).collect(Collectors.toList());
 			estudiante.setMateriasAprobadas(nuevasMateriasAprobadas);
@@ -85,14 +85,14 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 
 	@Override
 	public List<MateriaJson> materiasDesaprobadasConComisionesDisponiblesDeUsuario(String idUsuario)
-			throws IdNumberFormatException, StudentNotExistenException {
+			throws FormatoNumeroIdException, EstudianteNoExisteException {
 		Estudiante estudiante;
 		try {
 			estudiante = this.get(new Long(idUsuario));
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new StudentNotExistenException();
+			throw new FormatoNumeroIdException();
+		} catch (ObjectoNoEncontradoEnBDException e) {
+			throw new EstudianteNoExisteException();
 		}
 		Long idEncuesta = estudiante.getEncuesta().getId();
 		List<Comision> comisiones = comisionDaoImp.getTodasLasComisionesDeMateriaEnEncuesta(idEncuesta);
@@ -118,43 +118,42 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 	}
 
 	public Certificado getCertificado(String idEstudiante)
-			throws StudentNotExistenException, DocumentException, IdNumberFormatException, CertificadoException {
+			throws EstudianteNoExisteException, DocumentException, FormatoNumeroIdException, CertificadoException {
 		try {
 			Estudiante estudiante = this.get(new Long(idEstudiante));
 			Certificado certificado = new Certificado();
 			certificado.setEstudiante(estudiante);
 			certificado.generarPDF();
 			return certificado;
-		} catch (ObjectNotFoundinDBException e) {
-			throw new StudentNotExistenException();
+		} catch (ObjectoNoEncontradoEnBDException e) {
+			throw new EstudianteNoExisteException();
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
+			throw new FormatoNumeroIdException();
 		}
 	}
 
-	public void enviarCertificado(String idEstudiante) throws StudentNotExistenException, DocumentException,
-			IdNumberFormatException, EmailException, CertificadoException {
+	public void enviarCertificado(String idEstudiante) throws EstudianteNoExisteException, DocumentException,
+			FormatoNumeroIdException, EmailException, CertificadoException {
 		try {
 			Estudiante estudiante = this.get(new Long(idEstudiante));
 			Certificado certificado = new Certificado();
 			certificado.setEstudiante(estudiante);
 			certificado.setNombreArchivo(estudiante.getDni() + ".pdf");
 			certificado.generarPDF();
-			Mail mail = new Mail();
+			Email mail = new Email();
 			mail.setFile(estudiante.getDni() + ".pdf");
-			mail.sendConAdjunto(estudiante.getEmail(), "Certificado de PreInscripcion UNQ",
-					"Estimado. Te enviamos tu certificado de preInscripcion.");
+			mail.sendConAdjunto(estudiante.getEmail(), "Constancia de Preinscripción UNQ",
+					"Estimado: te enviamos tu constancia de preinscripción.");
 			File file = new File(estudiante.getDni() + ".pdf");
 			file.delete();
-		} catch (ObjectNotFoundinDBException e) {
-			throw new StudentNotExistenException();
+		} catch (ObjectoNoEncontradoEnBDException e) {
+			throw new EstudianteNoExisteException();
 		} catch (NumberFormatException e) {
-			throw new IdNumberFormatException();
+			throw new FormatoNumeroIdException();
 		}
 	}
 	
 	public Integer estudiantesPorComision(String idComision) {
 		return estudianteDaoImp.getNroEstudiantesPorComision(new Long(idComision));
 	}
-
 }

@@ -2,13 +2,13 @@ package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
 
-import ar.edu.unq.inscripcionunq.spring.exception.ObjectNotFoundinDBException;
+import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 
 public interface GenericService<T> {
 
 	Long save(T c);
 
-	T get(Long id) throws ObjectNotFoundinDBException;
+	T get(Long id) throws ObjectoNoEncontradoEnBDException;
 
 	List<T> list();
 

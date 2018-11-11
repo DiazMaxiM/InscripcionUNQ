@@ -1,17 +1,16 @@
 .mat-form-field {
-    display: block;
+  display: block;
 }
 
 textarea {
-    height: 100px;
-    resize: vertical;
+  height: 100px;
+  resize: vertical;
 }
 
- .estado{
-     padding-left: 15px;
- }
+.estado {
+  padding-left: 15px;
+}
 
-
-.edit-icon:hover{
-	cursor: pointer;
+.edit-icon:hover {
+  cursor: pointer;
 }

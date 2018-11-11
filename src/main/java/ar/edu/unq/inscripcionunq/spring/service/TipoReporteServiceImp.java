@@ -20,5 +20,4 @@ public class TipoReporteServiceImp implements TipoReporteService {
 		}
 		return tipoReportes;
 	}
-
 }

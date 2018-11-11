@@ -1,3 +1,3 @@
 export interface DataDialogo {
-   encuesta: any;
- }
+	encuesta: any;
+}

@@ -1,18 +1,13 @@
 <div class="generic-modal">
-  <h2 mat-dialog-title>{{mensaje}}</h2>
-  <mat-dialog-content>
-          <mat-progress-spinner *ngIf="cargando"
-          class="progress-spinner"
-          color="warn"
-          mode="indeterminate">
-          </mat-progress-spinner>
-  </mat-dialog-content>
-  <mat-dialog-actions *ngIf="!cargando && !confirmar " align="center">
-          <button class="btn btn-danger" mat-fab color="primary" (click)= "aceptar()">Aceptar</button>
-  </mat-dialog-actions>
-  <mat-dialog-actions *ngIf="confirmar" align="center">
-        <button class="btn mat-button" mat-fab color="primary" (click)= "cancelarAccion()">Cancelar</button>
-        <button class="btn btn-danger mat-button" mat-fab color="primary" (click)= "confirmarAccion()">Confirmar</button>
-  </mat-dialog-actions>
-              
-</div>
+	<h2 mat-dialog-title>{{mensaje}}</h2>
+	<mat-dialog-content>
+		<mat-progress-spinner *ngIf="cargando" class="progress-spinner" color="warn" mode="indeterminate">
+		</mat-progress-spinner>
+	</mat-dialog-content>
+	<mat-dialog-actions *ngIf="!cargando && !confirmar " align="center">
+		<button class="btn btn-danger" mat-fab color="primary" (click)="aceptar()">Aceptar</button>
+	</mat-dialog-actions>
+	<mat-dialog-actions *ngIf="confirmar" align="center">
+		<button class="btn mat-button" mat-fab color="primary" (click)="cancelarAccion()">Cancelar</button>
+		<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="confirmarAccion()">Confirmar</button>
+	</mat-dialog-actions>

@@ -7,5 +7,4 @@ public class ExisteCarreraConElMismoCodigoException extends ExceptionGeneric imp
 	public ExisteCarreraConElMismoCodigoException() {
 		super(014, "Actualmente existe otra carrera con el mismo código que quiere utilizar");
 	}
-
 }

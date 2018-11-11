@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.PeriodoJson;
 import ar.edu.unq.inscripcionunq.spring.exception.AnhoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.ErrorAlGenerarCodigoException;
+import ar.edu.unq.inscripcionunq.spring.exception.GeneracionDeCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoSePudoGenerarCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -25,24 +25,22 @@ import ar.edu.unq.inscripcionunq.spring.service.PeriodoService;
 public class PeriodoController {
 	
 	@Autowired
-	private PeriodoService periodioServiceImp;
-	
+	private PeriodoService periodoServiceImp;
 	
 	@GetMapping("/periodos")
 	public ResponseEntity<List> getPeridos() {
-		return ResponseEntity.ok().body(periodioServiceImp.getPeriodosJson());
+		return ResponseEntity.ok().body(periodoServiceImp.getPeriodosJson());
 	}
 	
 	@PutMapping("/periodos/crearPeriodo/")
 	public ResponseEntity crearNuevaOferta(@RequestBody PeriodoJson peridoJson) {
 		try {
-			periodioServiceImp.crearPeriodo(peridoJson);
+			periodoServiceImp.crearPeriodo(peridoJson);
 		} catch (AnhoInvalidoException | NumeroInvalidoException | PeriodoInvalidoException
-				| NoSePudoGenerarCodigoException | ErrorAlGenerarCodigoException e) {
+				| NoSePudoGenerarCodigoException | GeneracionDeCodigoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		} 
 		return ResponseEntity.ok().build();
-
 	}
 	
 	@GetMapping("/tipoPeriodos")
@@ -54,5 +52,4 @@ public class PeriodoController {
 	public ResponseEntity getcantidadPeriodos(@PathVariable String tipoPeriodo){
 		return ResponseEntity.ok().body(TipoPeriodo.getCantidadDePeriodo(tipoPeriodo));
 	}
-
 }

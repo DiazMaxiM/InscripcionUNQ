@@ -1,20 +1,20 @@
-form{
-	margin: auto;
+form {
+  margin: auto;
 }
 
-.btn{
-	background-color: #B3291C !important;
-	border-color: #B3291C !important;
+.btn {
+  background-color: #b3291c !important;
+  border-color: #b3291c !important;
 }
-button{
-	margin: auto;
-	display: block;
+button {
+  margin: auto;
+  display: block;
 }
 
-.marginBoton{
-	margin-bottom: 10px;
+.marginBoton {
+  margin-bottom: 10px;
 }
 
 .custom {
-    width: 30% !important;
+  width: 30% !important;
 }

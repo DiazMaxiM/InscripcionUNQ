@@ -10,6 +10,4 @@ public interface UsuarioDao extends GenericDao<Usuario> {
 	Usuario obtenerUsuarioDesdeEmail(String email);
 
 	List<Usuario> obtenerUsuariosConPerfil(TipoPerfil perfil);
-	
-
 }

@@ -21,52 +21,55 @@ import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.IdNumberFormatException;
+import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
 
 @RestController
 public class MateriaController {
+	
 	@Autowired
 	private MateriaService materiaServiceImp;
 
-	@GetMapping("/materias")
 	@Loggable
+	@GetMapping("/materias")
 	public ResponseEntity<List> getMaterias() {
 		return ResponseEntity.ok().body(materiaServiceImp.getMateriasJson());
 	}
 	
-	@PostMapping("/materias/modificarMateria")
 	@Loggable
+	@PostMapping("/materias/modificarMateria")
 	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws 
-	IdNumberFormatException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, 
+	FormatoNumeroIdException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, 
 	CodigoInvalidoException, NombreInvalidoException, EstadoInvalidoException, DescripcionInvalidaException, 
 	HorarioInvalidoException{
 		try {
 			materiaServiceImp.actualizarMateria(materiaJson);
-		} catch (IdNumberFormatException | MateriaNoExisteException | ExisteMateriaConElMismoCodigoException | 
+		} catch (FormatoNumeroIdException | MateriaNoExisteException | ExisteMateriaConElMismoCodigoException | 
 				CodigoInvalidoException | NombreInvalidoException | EstadoInvalidoException | DescripcionInvalidaException | 
 				HorarioInvalidoException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 	}
+	
 	@Loggable
 	@PutMapping("/materias/nuevaMateria")
 	public ResponseEntity agregarNuevaMateria(@RequestBody MateriaSistemaJson materiaJson)throws DescripcionInvalidaException,
-	CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, IdNumberFormatException, MateriaNoExisteException {
+	CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, FormatoNumeroIdException, MateriaNoExisteException {
 		try {
 			materiaServiceImp.agregarNuevaMateria(materiaJson);
 		} catch (DescripcionInvalidaException | CodigoInvalidoException | EstadoInvalidoException | 
-				ExisteMateriaConElMismoCodigoException | IdNumberFormatException | MateriaNoExisteException e) {
+				ExisteMateriaConElMismoCodigoException | FormatoNumeroIdException | MateriaNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		return ResponseEntity.ok().build();
 	}
+	
 	@Loggable
 	@GetMapping("/oferta-academica/materias/{idCarrera}")
-	public ResponseEntity getMateriasParaCarrera(@PathVariable String idCarrera) throws IdNumberFormatException {
+	public ResponseEntity getMateriasParaCarrera(@PathVariable String idCarrera) throws FormatoNumeroIdException {
 		return ResponseEntity.ok().body(materiaServiceImp.getMateriasParaCarrera(idCarrera));
 	}
 }

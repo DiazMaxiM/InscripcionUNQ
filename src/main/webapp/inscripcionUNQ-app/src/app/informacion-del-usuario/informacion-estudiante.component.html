@@ -1,43 +1,30 @@
 <div class="row justify-content-center">
-<div class="col-lg-6">
-  <h2 class="header h6">Verificación de datos personales</h2>
-  <form [formGroup]="informacionEstudianteForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="full-width">
-      <input
-        matInput
-        type="text"
-        placeholder="Nombres"
-        formControlName="nombres"
-        id="nombres" required>
-        <mat-error *ngIf="informacionEstudianteForm.get('nombres').hasError('required')">
-          Campo obligatorio
-        </mat-error>
-    </mat-form-field>
-    <mat-form-field class="full-width">
-      <input
-        matInput
-        placeholder="Apellidos"
-        formControlName="apellidos"
-        id="apellidos" required>
-        <mat-error *ngIf="informacionEstudianteForm.get('apellidos').hasError('required')">
-          Campo obligatorio
-        </mat-error>
-    </mat-form-field>
-    <mat-form-field class="full-width" required>
-      <input
-        matInput
-        placeholder="Correo electrónico"
-        formControlName="email"
-        id="email" required>
-        <mat-error *ngIf="informacionEstudianteForm.get('email').hasError('required')">
-          Campo obligatorio
-        </mat-error>
-        <mat-error *ngIf="informacionEstudianteForm.get('email').hasError('email')">
-          La dirección ingresada no corresponde a un correo electrónico válido
-        </mat-error>
-    </mat-form-field>
-    <div>
-      <button class="btn btn-danger" type="submit" mat-fab color="primary">Confirmar</button>
-    </div>
-  </form>
-</div>
+	<div class="col-lg-6">
+		<h2 class="header h6">Verificación de datos personales</h2>
+		<form [formGroup]="informacionEstudianteForm" (ngSubmit)="onSubmit()">
+			<mat-form-field class="full-width">
+				<input matInput type="text" placeholder="Nombres" formControlName="nombres" id="nombres" required>
+				<mat-error *ngIf="informacionEstudianteForm.get('nombres').hasError('required')">
+					Campo obligatorio
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field class="full-width">
+				<input matInput placeholder="Apellidos" formControlName="apellidos" id="apellidos" required>
+				<mat-error *ngIf="informacionEstudianteForm.get('apellidos').hasError('required')">
+					Campo obligatorio
+				</mat-error>
+			</mat-form-field>
+			<mat-form-field class="full-width" required>
+				<input matInput placeholder="Correo electrónico" formControlName="email" id="email" required>
+				<mat-error *ngIf="informacionEstudianteForm.get('email').hasError('required')">
+					Campo obligatorio
+				</mat-error>
+				<mat-error *ngIf="informacionEstudianteForm.get('email').hasError('email')">
+					La dirección ingresada no corresponde a un correo electrónico válido
+				</mat-error>
+			</mat-form-field>
+			<div>
+				<button class="btn btn-danger" type="submit" mat-fab color="primary">Confirmar</button>
+			</div>
+		</form>
+	</div>

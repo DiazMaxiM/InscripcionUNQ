@@ -7,5 +7,4 @@ public class NombreInvalidoException extends ExceptionGeneric implements Excepti
 	public NombreInvalidoException() {
 		super(004, "Ingresar un nombre válido");
 	}
-
 }

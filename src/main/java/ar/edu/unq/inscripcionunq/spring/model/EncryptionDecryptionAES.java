@@ -12,12 +12,11 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 public class EncryptionDecryptionAES {
+	
 	static Cipher cipher;
 
-
 	private EncryptionDecryptionAES() {
-		throw new IllegalStateException("EncryptionDecryptionAES class");
-		
+		throw new IllegalStateException("EncryptionDecryptionAES class");		
 	}
 	
 	private static void generarCipher() throws NoSuchAlgorithmException, NoSuchPaddingException {
@@ -30,8 +29,8 @@ public class EncryptionDecryptionAES {
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 		byte[] encryptedByte = cipher.doFinal(plainTextByte);
 		Base64.Encoder encoder = Base64.getEncoder();
+		
 		return encoder.encodeToString(encryptedByte);
-
 	}
 
 	public static String decrypt(String encryptedText, SecretKey secretKey) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException {
@@ -40,6 +39,7 @@ public class EncryptionDecryptionAES {
 		generarCipher();
 		cipher.init(Cipher.DECRYPT_MODE, secretKey);
 		byte[] decryptedByte = cipher.doFinal(encryptedTextByte);
+		
 		return  new String(decryptedByte);
 	}
 	
@@ -49,5 +49,4 @@ public class EncryptionDecryptionAES {
 		keyGenerator.init(128);
 		return keyGenerator.generateKey();
 	}
-	
 }

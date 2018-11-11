@@ -29,7 +29,7 @@ import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
-import ar.edu.unq.inscripcionunq.spring.model.TypeStatus;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstado;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 
 public class Validacion {
@@ -80,8 +80,8 @@ public class Validacion {
 		estadoValido(carrera.getEstado());
 	}
 
-	private static void estadoValido(TypeStatus estado) throws EstadoInvalidoException {
-		if(!TypeStatus.contains(estado.name())){
+	private static void estadoValido(TipoEstado estado) throws EstadoInvalidoException {
+		if(!TipoEstado.contains(estado.name())){
 			throw new EstadoInvalidoException();
 		}
 	}
@@ -145,14 +145,12 @@ public class Validacion {
 		if(!TipoPeriodo.contains(tipoṔeriodo.name())){
 			throw new PeriodoInvalidoException();
 		}
-		
 	}
 
 	private static void numeroValido(Integer numero) throws NumeroInvalidoException {
 		if(!esNumeroValido(numero)) {
 			throw new NumeroInvalidoException();
 		}
-		
 	}
 	
 	private static boolean esNumeroValido(Integer numero) {
@@ -163,7 +161,6 @@ public class Validacion {
 		if(!esNumeroValido(anho)) {
 			throw new AnhoInvalidoException();
 		}
-		
 	}
 
 	public static void validarComision(Comision comision) throws PeriodoInvalidoException, MateriaNoExisteException, NombreInvalidoException, CupoInvalidoException, ComisionSinHorariosException {
@@ -172,35 +169,30 @@ public class Validacion {
 	    nombreValido(comision.getNombre());
 	    cupoValido(comision.getCupo());
 	    horariosValidos(comision.getHorarios());
-		
 	}
 
 	private static void conPeriodo(Periodo periodo) throws PeriodoInvalidoException {
 		if(periodo == null) {
 			throw new PeriodoInvalidoException();
 		}
-		
 	}
 
 	private static void conMateria(Materia materia) throws MateriaNoExisteException {
 		if(materia == null) {
 			throw new MateriaNoExisteException();
 		}
-		
 	}
 
 	private static void horariosValidos(List<Horario> horarios) throws ComisionSinHorariosException {
 		if(horarios.isEmpty()) {
 			throw new ComisionSinHorariosException();
 		}
-		
 	}
 
 	private static void cupoValido(Integer cupo) throws CupoInvalidoException {
 		if(!esNumeroValido(cupo)) {
 			throw new CupoInvalidoException();
 		}
-		
 	}
 
 	public static void validarUsuario(Usuario usuario) throws EmailInvalidoException, NombreInvalidoException, ApellidoInvalidoException {
@@ -212,28 +204,24 @@ public class Validacion {
 	public static void validarPassword(String password) throws PasswordInvalidoException {
 		if(stringVacio(password)) {
 			throw new PasswordInvalidoException();
-		}
-		
+		}	
 	}
 
 	public static void validarEmail(String email) throws EmailInvalidoException {
 		if(!esEmailValido(email)) {
 			throw new EmailInvalidoException();
 		}
-		
 	}
 
 	public static void validarPerfil(String perfil) throws PerfilInvalidoException {
 		if(!TipoPerfil.contains(perfil)){
 			throw new PerfilInvalidoException();
 		}
-		
 	}
 
 	public static void validarPerfiles(List<String> perfiles) throws PerfilInvalidoException {
 		for(String perfil : perfiles) {
 			validarPerfil(perfil);
 		}
-		
 	}
 }

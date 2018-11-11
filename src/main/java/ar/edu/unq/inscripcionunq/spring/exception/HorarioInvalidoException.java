@@ -6,5 +6,5 @@ public class HorarioInvalidoException extends ExceptionGeneric implements Except
 
 	public HorarioInvalidoException() {
 		super(017, "Ingrese un horario válido");
-	}
+	} 
 }

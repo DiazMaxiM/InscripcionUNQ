@@ -9,7 +9,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 
-
 @Repository
 public class OfertaAcademicaDaoImp extends GenericDaoImp<OfertaAcademica> implements OfertaAcademicaDao {
 
@@ -51,5 +50,4 @@ public class OfertaAcademicaDaoImp extends GenericDaoImp<OfertaAcademica> implem
 		query.setParameter("idPeriodo", idPeriodo);
 		return query.getResultList();
 	}
-
 }

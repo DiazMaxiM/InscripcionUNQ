@@ -3,7 +3,6 @@ import { RestService } from '../rest.service';
 import {UtilesService} from '../utiles.service';
 import { AppRutas } from '../app-rutas.model';
 
-
 @Component({
   selector: 'app-tareas-usuario',
   templateUrl: './tareas-usuario.component.html',

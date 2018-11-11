@@ -5,7 +5,6 @@ public class EmailInvalidoException extends ExceptionGeneric implements Exceptio
 	private static final long serialVersionUID = 1L;
 
 	public EmailInvalidoException() {
-		super(006, "Ingresar un e-mail válido");
+		super(006, "Ingrese una dirección de e-mail válida");
 	}
-
 }
