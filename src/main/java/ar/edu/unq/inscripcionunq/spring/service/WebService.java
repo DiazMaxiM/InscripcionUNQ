@@ -48,7 +48,7 @@ public class WebService {
 	public void importarEstudiantes(Long idEncuesta) throws ConexionWebServiceException, EncuestaNoExisteException {
 		String response = null;
 		try {
-			response = Unirest.post("http://gastosfamiliares.esy.es/prueba.php")
+			response = Unirest.post("http://gastosfamiliares.esy.es/prueba2.json")
 					.header("Content-Type", "application/json").header("cache-control", "no-cache").asString()
 					.getBody();
 		} catch (UnirestException e) {
@@ -71,8 +71,9 @@ public class WebService {
 		Map<String, Carrera> carreras = new HashMap<String, Carrera>();
 
 		for (EstudianteWebServiceJson estudianteWebServiceJson : estudiantesWebServiceJson) {
-			Estudiante estudianteNuevo = new Estudiante(estudianteWebServiceJson.nombre,
-					estudianteWebServiceJson.apellido, estudianteWebServiceJson.dni, estudianteWebServiceJson.email);
+			Estudiante estudianteNuevo = new Estudiante(estudianteWebServiceJson.datos_personales.nombre,
+					estudianteWebServiceJson.datos_personales.apellido, estudianteWebServiceJson.datos_personales.dni,
+					estudianteWebServiceJson.datos_personales.email);
 			for (CarreraWebServiceJson carreraWebServiceJson : estudianteWebServiceJson.carreras) {
 				if (!carreras.containsKey(carreraWebServiceJson.codigo)) {
 					carreras.put(carreraWebServiceJson.codigo,
@@ -80,17 +81,19 @@ public class WebService {
 				}
 				estudianteNuevo.agregarInscripcionACarrera(carreras.get(carreraWebServiceJson.codigo));
 			}
-			for (MateriaWebServiceJson materiaWebServiceJson : estudianteWebServiceJson.materiasAprobadas) {
-				if (!materias.containsKey(materiaWebServiceJson.codigo)) {
-					materias.put(materiaWebServiceJson.codigo,
-							materiaServiceImp.getMateriaPorCodigo(materiaWebServiceJson.codigo));
+			for (MateriaWebServiceJson materiaWebServiceJson : estudianteWebServiceJson.cursadas) {
+				if (materiaWebServiceJson.materia.codigo != null) {
+					if (!materias.containsKey(materiaWebServiceJson.materia.getCodigoCerosAIzquierda())) {
+						materias.put(materiaWebServiceJson.materia.getCodigoCerosAIzquierda(), materiaServiceImp
+								.getMateriaPorCodigo(materiaWebServiceJson.materia.getCodigoCerosAIzquierda()));
+					}
+					Materia materiaAprobada = materias.get(materiaWebServiceJson.materia.getCodigoCerosAIzquierda());
+					estudianteNuevo.agregarMateriaAprobada(materiaAprobada);
+					List<Materia> materiasEquivalentes = equivalencias.stream()
+							.filter(e -> e.esEquivalente(materiaAprobada))
+							.map(eq -> eq.getEquivalencia(materiaAprobada)).collect(Collectors.toList());
+					materiasEquivalentes.stream().forEach(mE -> estudianteNuevo.agregarMateriaAprobada(mE));
 				}
-				Materia materiaAprobada = materias.get(materiaWebServiceJson.codigo);
-				estudianteNuevo.agregarMateriaAprobada(materiaAprobada);
-				List<Materia> materiasEquivalentes = equivalencias.stream()
-						.filter(e -> e.esEquivalente(materiaAprobada)).map(eq -> eq.getEquivalencia(materiaAprobada))
-						.collect(Collectors.toList());
-				materiasEquivalentes.stream().forEach(mE -> estudianteNuevo.agregarMateriaAprobada(mE));
 			}
 			encuesta.agregarEstudiante(estudianteNuevo);
 		}

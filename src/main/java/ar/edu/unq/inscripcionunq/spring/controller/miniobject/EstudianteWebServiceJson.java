@@ -4,11 +4,10 @@ import java.util.List;
 
 public class EstudianteWebServiceJson {
 
-	public String dni;
-	public String nombre;
-	public String apellido;
-	public String email;
-	public Boolean regularidad;
-	public List<MateriaWebServiceJson> materiasAprobadas;
+	public DatosPersonalesEstudianteWebServiceJson datos_personales;
+	public String legajo;
+	public Boolean es_regular;
+	public List<MateriaWebServiceJson> cursadas;
 	public List<CarreraWebServiceJson> carreras;
+	public String promedio;
 }

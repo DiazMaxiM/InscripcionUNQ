@@ -1,5 +1,6 @@
 package ar.edu.unq.inscripcionunq.spring.controller.miniobject;
 
 public class MateriaWebServiceJson {
-	public String codigo;
+	public DatosMateriaWebServiceJson materia;
+	public String nota;
 }
