@@ -92,8 +92,8 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 		try {
 			Comision comision = this.get(comisionJson.id);
 			Comision comisionEditada = armarComisionDesdeJson(comisionJson);
-			if(!comision.getNombre().equals(comisionEditada.getNombre())) {
-				validarSiExisteNombreDeLaComisionEnPeriodo(comision);
+			if(esComisionConDatosDiferentes(comision,comisionEditada)){
+				validarSiExisteNombreDeLaComisionEnPeriodo(comisionEditada);
 			}
 			comision.modificarDatos(comisionEditada);
 			this.save(comision);
@@ -101,7 +101,12 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 			throw new ComisionNoExisteException();
 		}
 	}
-
+	
+	private boolean esComisionConDatosDiferentes(Comision comision, Comision comisionEditada) {
+		return !comision.getNombre().equals(comisionEditada.getNombre())
+			   || !comision.getPeriodo().getCodigo().equals(comisionEditada.getPeriodo().getCodigo());
+	}
+	
 	@Override
 	public void eliminarComision(String idComision) throws FormatoNumeroIdException, ComisionNoExisteException {
 		try {
@@ -126,13 +131,21 @@ public class ComisionServiceImp extends GenericServiceImp<Comision> implements C
 		} catch (ObjectoNoEncontradoEnBDException e) {
 			throw new ComisionNoExisteException();
 		}
+		try {
+			validarSiExisteNombreDeLaComisionEnPeriodo(comisionClonada);
+		} catch (ExisteComisionConMismoNombreParaElMismoPeriodoException e) {
+           comisionClonada.setNombre(comisionClonada.getNombre().concat(" COPIA"));
+		}
 		return comisionDaoImp.save(comisionClonada);
 	}
 	
 	private void validarSiExisteNombreDeLaComisionEnPeriodo(Comision comision) throws ExisteComisionConMismoNombreParaElMismoPeriodoException {
-		Comision comisionConMismoNombre = comisionDaoImp.obtenerComisionConNombreEnPeriodo(comision.getNombre(),comision.getPeriodo().getId());
-		if(comisionConMismoNombre != null) {
+		if(existeComisionConMismoNombre(comision)){
 			throw new ExisteComisionConMismoNombreParaElMismoPeriodoException();
 		}
+	}
+	
+	private boolean existeComisionConMismoNombre(Comision comision) {
+		return comisionDaoImp.obtenerComisionConNombreEnPeriodo(comision.getNombre(),comision.getPeriodo().getId()) != null;
 	}
 }

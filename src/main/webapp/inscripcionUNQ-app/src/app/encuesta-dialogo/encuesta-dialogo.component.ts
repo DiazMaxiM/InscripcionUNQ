@@ -52,8 +52,8 @@ export class EncuestaDialogoComponent implements OnInit {
 			periodo: ['', Validators.required],
 			fechaDeComienzo: ['', Validators.required],
 			fechaDeFinalizacion: ['', Validators.required],
-			horarioComienzo: [{ hora: 0, minutos: 0 }, Validators.required],
-			horarioFinalizacion: [{ hora: 0, minutos: 0 }, Validators.required]
+			horarioComienzo: [{ hour: 0, minute: 0 }, Validators.required],
+			horarioFinalizacion: [{hour: 0, minute: 0}, Validators.required]
 		}, { validator: this.checkDates });
 	}
 
@@ -70,8 +70,8 @@ export class EncuestaDialogoComponent implements OnInit {
 				'periodo': this.encuestaSeleccionada.periodo.codigo,
 				'fechaDeComienzo': this.crearFecha(this.encuestaSeleccionada.fechaComienzo),
 				'fechaDeFinalizacion': this.crearFecha(this.encuestaSeleccionada.fechaFin),
-				'horarioComienzo': this.encuestaSeleccionada.fechaComienzo.horario,
-				'horarioFinalizacion': this.encuestaSeleccionada.fechaFin.horario
+				'horarioComienzo': this.utilesService.armarHorario(this.encuestaSeleccionada.fechaComienzo.horario),
+				'horarioFinalizacion': this.utilesService.armarHorario(this.encuestaSeleccionada.fechaFin.horario)
 			});
 			this.modificaPeriodo = true;
 		}

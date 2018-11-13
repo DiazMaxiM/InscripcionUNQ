@@ -116,12 +116,16 @@ public class Comision extends BaseEntity {
 		return comisionClonada;
 	}
 
-	public Comision clonar(Periodo periodo) {
+	public Comision clonar(Periodo periodo){
 		Comision comision = this.clonar();
 		comision.periodo = periodo;
 		if (!this.periodo.equals(periodo)) {
 			comision.nombre = this.nombre;
 		}
 		return comision;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 }
