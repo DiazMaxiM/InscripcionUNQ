@@ -205,4 +205,18 @@ export class UtilesService {
 	});
 		return listaOrdenada;
 	}
+
+	armarHorario(horario) {
+		return {
+			'hour': horario.hora,
+			'minute': horario.minutos
+		}
+	}
+
+	armarHorarioParaServidor(horario) {
+		return {
+			'hora': horario.hour,
+			'minutos': horario.minute
+		}
+	}
 }

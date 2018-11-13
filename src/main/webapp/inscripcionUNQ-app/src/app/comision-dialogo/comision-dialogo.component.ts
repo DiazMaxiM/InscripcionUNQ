@@ -12,6 +12,8 @@ import { Periodo } from '../periodos/periodo.model';
 import { AppRutas } from '../app-rutas.model';
 import { HorarioComision } from './horario-comision.model';
 import { AppMensajes } from '../app-mensajes.model';
+import { RegistroDeComisionesSeleccionadasService } from '../seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
+import { Horario } from '../seleccion-de-comision-dialogo/horario.model';
 
 @Component({
 	selector: 'app-comision-dialogo',
@@ -42,6 +44,7 @@ export class ComisionDialogoComponent implements OnInit {
 		private utilesService: UtilesService,
 		private dialogRef: MatDialogRef<ComisionDialogoComponent>,
 		private restService: RestService,
+		private controlHorarioService: RegistroDeComisionesSeleccionadasService,
 		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
 		this.comisionSeleccionada = data.comision;
 	}
@@ -160,13 +163,55 @@ export class ComisionDialogoComponent implements OnInit {
 	guardarHorario() {
 		if (this.formHorario.valid) {
 			const { dia, horarioComienzo, duracion } = this.formHorario.value;
-			this.agregarHorario(dia, horarioComienzo, duracion);
+			const hora = this.utilesService.armarHorarioParaServidor(horarioComienzo);
+			this.armarHorarioComision(dia, hora, duracion);
 			this.mostrarHorariosSeleccionados();
 			this.formHorario.reset();
 		} else {
 			this.utilesService.validateAllFormFields(this.formHorario);
 		}
 	}
+	
+	armarHorarioComision(dia, horarioComienzo, duracion) {
+		const horario = new HorarioComision(dia, horarioComienzo, duracion);
+		if (!this.esHorarioSuperpuesto(horario)) {
+		  this.agregarHorario(dia,horarioComienzo,duracion);
+		} else {
+			this.utilesService.mostrarMensaje('El horario que intenta agregar genera superposición horaria');
+		}
+	}
+
+	esHorarioSuperpuesto(horario) {
+		const horarios = this.horarios.filter(horarioDeLaComision => horarioDeLaComision.dia == horario.dia 
+			&& horarioDeLaComision != this.horarioAEditar);
+		let haySuperposicion = false;
+		for (const horarioOcupado of horarios) {
+				haySuperposicion = haySuperposicion || this.haySuperposicionHoraria(horarioOcupado, horario);
+		}
+		console.log(horarios);
+		return haySuperposicion;
+	}
+
+	haySuperposicionHoraria(horarioOcupado, horarioAOcupar) {
+		const dateHorarioAOcupar = this.armarHorario(horarioAOcupar);
+	  const dateHorarioOcupado = this.armarHorario(horarioOcupado);
+		return this.controlHorarioService.esHorarioSuperpuesto(dateHorarioOcupado, dateHorarioAOcupar);
+	}
+	
+	armarHorario(horario: HorarioComision) {
+		const horarioComienzo = this.controlHorarioService.nuevoHorario(horario.horaComienzo);
+		const horarioFinalizacion = this.armarHorarioFinalizacion(horario);
+		return new Horario(horario.dia, horarioComienzo, horarioFinalizacion, horario.duracion);
+	}
+
+	armarHorarioFinalizacion(horario: HorarioComision) {
+	 const nuevoHorario: Date = this.controlHorarioService.nuevoHorario(horario.horaComienzo);
+	 nuevoHorario.setHours(nuevoHorario.getHours() + horario.duracion);
+	 nuevoHorario.setMinutes(nuevoHorario.getMinutes() - 1);
+	 console.log(nuevoHorario);
+	 return nuevoHorario;
+	}
+
 
 	agregarHorario(dia, horarioComienzo, duracion) {
 		const horario = new HorarioComision(dia, horarioComienzo, duracion);
@@ -220,7 +265,7 @@ export class ComisionDialogoComponent implements OnInit {
 		this.formHorario.setValue({
 			'dia': horario.dia,
 			'duracion': horario.duracion,
-			'horarioComienzo': horario.horaComienzo,
+			'horarioComienzo': this.utilesService.armarHorario(horario.horaComienzo),
 		});
 		this.mostarFormularioHorarios();
 	}
