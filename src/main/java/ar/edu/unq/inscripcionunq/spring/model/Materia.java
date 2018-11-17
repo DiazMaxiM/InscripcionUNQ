@@ -25,30 +25,34 @@ public class Materia extends BaseEntity {
 	private String codigo;
 	private String nombre;
 	private Integer horas;
+	private Integer creditos;
 	@Enumerated(EnumType.STRING)
 	private TipoEstado estado = TipoEstado.ENABLED;
 	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-	private List<Carrera> carreras = new ArrayList<Carrera>();
+	private List<Carrera> carreras = new ArrayList<>();
 
-	public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras) {
+	public Materia(String codigo, String nombre, Integer horas, Integer creditos, List<Carrera> listaDeCarreras) {
 		this.setCodigo(codigo);
 		this.setNombre(nombre);
 		this.setHoras(horas);
 		this.carreras = listaDeCarreras;
+		this.creditos = creditos;
 	}
 
-    public Materia(String codigo, String nombre, Integer horas, List<Carrera> listaDeCarreras, TipoEstado estado) {
+    public Materia(String codigo, String nombre, Integer horas, Integer creditos, List<Carrera> listaDeCarreras, TipoEstado estado) {
 		this.setCodigo(codigo);
 		this.setNombre(nombre);
 		this.setHoras(horas);
 		this.carreras = listaDeCarreras;
         this.estado = estado; 
+        this.creditos = creditos;
 	}
 
-	public Materia(String codigo, String nombre, Integer hours) {
+	public Materia(String codigo, String nombre, Integer hours, Integer creditos) {
 		this.setCodigo(codigo);
 		this.setNombre(nombre);
 		this.setHoras(hours);
+		this.setCreditos(creditos);
 	}
 
 	public Materia() {
@@ -107,6 +111,15 @@ public class Materia extends BaseEntity {
 		this.horas = materia.horas;
 		this.carreras = materia.carreras;
         this.estado = materia.estado;
+        this.creditos = materia.creditos;
+	}
+	
+	public Integer getCreditos() {
+		return creditos;
+	}
+
+	public void setCreditos(Integer creditos) {
+		this.creditos = creditos;
 	}
 	
 	public void deshabilitar() {

@@ -18,12 +18,12 @@ public class MateriaTest {
 	@Before
 	public void setUp() throws Exception {
 		carreras = new ArrayList<Carrera>();
-		materia = new Materia("10", "TIP", 8, carreras);
+		materia = new Materia("10", "TIP", 8,12, carreras);
 	}
 	
 	@Test
 	public void crearMateriaConCodigo10NombreTIPCantHorasYVerificarCodigoNombreYEstado(){
-		Materia materiaB = new Materia("10", "TIP", 8);
+		Materia materiaB = new Materia("10", "TIP", 8,12);
 		
 		assertEquals("10", materiaB.getCodigo());
 		assertEquals("TIP", materiaB.getNombre());

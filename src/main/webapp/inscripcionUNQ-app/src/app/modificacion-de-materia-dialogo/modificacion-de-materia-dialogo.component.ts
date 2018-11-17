@@ -53,7 +53,8 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 		this.form = this.fb.group({
 			codigo: ['', Validators.required],
 			nombre: ['', Validators.required],
-			horas: ['', Validators.required]
+			horas: ['', Validators.required],
+			creditos: ['', Validators.required]
 		});
 	}
 
@@ -84,15 +85,10 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 			this.form.setValue({
 				'codigo': this.materia.codigo,
 				'nombre': this.materia.nombre,
-				'horas': this.materia.horas
+				'horas': this.materia.horas,
+				'creditos': this.materia.creditos
 			});
 			this.checked = this.materia.estado;
-		} else {
-			this.form.setValue({
-				'codigo': '',
-				'nombre': '',
-				'horas': ''
-			});
 		}
 	}
 
@@ -106,8 +102,8 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 
 	armarMateria() {
 		if (this.carrerasSeleccionadas.length > 0) {
-			const { codigo, nombre, horas } = this.form.value;
-			const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas);
+			const { codigo, nombre, horas, creditos } = this.form.value;
+			const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas, creditos);
 			if (this.materia == null) {
 				this.crearNuevaMateria(materia);
 			} else {
@@ -149,5 +145,9 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 
 	cerrar() {
 		this.dialogRef.close();
+	}
+
+	soloNumero(evento) {
+		return this.utilesService.soloNumero(evento);
 	}
 }

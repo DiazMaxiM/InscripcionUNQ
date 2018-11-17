@@ -21,8 +21,14 @@
 		</div>
 	</ng-container>
 	<mat-form-field>
-		<input matInput type="number" placeholder="Carga horaria" formControlName="horas" required>
+		<input matInput type="number"  (keypress)="soloNumero($event)" placeholder="Carga horaria" formControlName="horas" required>
 		<mat-error *ngIf="form.get('horas').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field>
+		<input matInput type="number"  (keypress)="soloNumero($event)" placeholder="Créditos" formControlName="creditos" required>
+		<mat-error *ngIf="form.get('creditos').hasError('required')">
 			Campo obligatorio
 		</mat-error>
 	</mat-form-field>

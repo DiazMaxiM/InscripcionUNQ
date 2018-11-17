@@ -5,6 +5,7 @@ export class Materia {
 	horas?: number;
 	estado: boolean;
 	carreras?: any;
+	creditos?: number;
 
 	constructor(
 		codigo?: number,
@@ -12,6 +13,7 @@ export class Materia {
 		carreras?: any,
 		estado?: boolean,
 		horas?: number,
+		creditos?: number,
 		id?: number
 	) {
 		this.codigo = codigo;
@@ -19,6 +21,7 @@ export class Materia {
 		this.carreras = carreras;
 		this.estado = estado;
 		this.horas = horas;
+		this.creditos = creditos;
 		this.id = id;
 	}
 }

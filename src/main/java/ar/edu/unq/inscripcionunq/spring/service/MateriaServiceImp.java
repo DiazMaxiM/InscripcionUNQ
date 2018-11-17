@@ -54,7 +54,7 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			carrerasJson.add(carreraJson);
 		});
 
-		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),
+		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),materia.getCreditos(),
 				carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()));
 
 	}
@@ -100,7 +100,7 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			carreraOriginal.actualizarInformacion(carrera);
 			carreras.add(carreraOriginal);
 		});
-		return new Materia(materiaJson.codigo, materiaJson.nombre, materiaJson.horas, carreras, estado);
+		return new Materia(materiaJson.codigo, materiaJson.nombre, materiaJson.horas,materiaJson.creditos,carreras, estado);
 
 	}
 
