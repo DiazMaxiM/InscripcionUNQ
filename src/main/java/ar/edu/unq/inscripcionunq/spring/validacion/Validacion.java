@@ -26,6 +26,7 @@ import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Horario;
+import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
@@ -239,6 +240,11 @@ public class Validacion {
 		if(materiaOrigen.equals(materiaDestino)) {
 			throw new MateriasEquivalentesException();
 		}
+		
+	}
+
+	public static void validarIncidencia(Incidencia incidencia) throws EmailInvalidoException {
+		validarEmail(incidencia.getEmailDelReportante());
 		
 	}
 }

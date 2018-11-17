@@ -5,6 +5,7 @@
 			<tr>
 				<th> Tipo de incidencia </th>
 				<th> Descripción </th>
+				<th> Email del reportante </th>
 				<th> Estado </th>
 			</tr>
 		</thead>
@@ -12,6 +13,7 @@
 			<tr *ngFor="let incidencia of incidencias">
 				<td> {{ incidencia.tipoIncidencia.descripcion }} </td>
 				<td> {{ incidencia.descripcion }} </td>
+				<td> {{incidencia.emailDelReportante}}</td>
 				<td> {{incidencia.tipoEstadoIncidencia}}</td>
 				<td>
 					<i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeIncidencia(incidencia)" data-toggle="tooltip"

@@ -11,15 +11,18 @@ public class Incidencia extends BaseEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	private TipoIncidencia tipoIncidencia;
 	private String descripcion;
+	private String emailDelReportante;
+
 	private TipoEstadoIncidencia tipoEstadoIncidencia;
 
 	public Incidencia() {
 	
 	}
 
-	public Incidencia(TipoIncidencia tipoIncidencia, String descripcion) {
+	public Incidencia(TipoIncidencia tipoIncidencia, String descripcion, String emailDelReportante) {
 		this.tipoIncidencia = tipoIncidencia;
 		this.descripcion = descripcion;
+		this.emailDelReportante = emailDelReportante;
 		this.tipoEstadoIncidencia = TipoEstadoIncidencia.ABIERTA;
 	} 
 
@@ -50,4 +53,14 @@ public class Incidencia extends BaseEntity {
 	public void setTipoEstadoIncidencia(TipoEstadoIncidencia tipoEstadoIncidencia) {
 		this.tipoEstadoIncidencia = tipoEstadoIncidencia;
 	}
+	
+	public String getEmailDelReportante() {
+		return emailDelReportante;
+	}
+
+	public void setEmailDelReportante(String emailDelReportante) {
+		this.emailDelReportante = emailDelReportante;
+	}
+	
+	
 }

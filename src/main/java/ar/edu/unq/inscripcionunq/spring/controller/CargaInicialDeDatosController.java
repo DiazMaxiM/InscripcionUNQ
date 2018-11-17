@@ -611,10 +611,11 @@ public class CargaInicialDeDatosController {
 		tipoIncidencia = new TipoIncidencia("Correccion de nombre y apellido");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
 
-		tipoIncidencia = new TipoIncidencia("No puedo cursar por problemas de horarios");
-		tipoIncidenciaServiceImp.save(tipoIncidencia);
-
 		tipoIncidencia = new TipoIncidencia("La franja horaria no corresponde con mi promedio");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
+		
+		tipoIncidencia = new TipoIncidencia("Otro");
+		tipoIncidenciaServiceImp.save(tipoIncidencia);
+
 	}
 }

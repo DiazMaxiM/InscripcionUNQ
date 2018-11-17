@@ -37,15 +37,18 @@ export class IncidenciaDialogoComponent implements OnInit {
 	crearFormularioIncidencia() {
 		this.form = this.fb.group({
 			tipoIncidencia: ['', Validators.required],
-			descripcion: ['', Validators.required]
+			descripcion: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email]]
 		});
 	}
 
 	guardar() {
 		if (this.form.valid) {
-			const { tipoIncidencia, descripcion } = this.form.value;
-			const incidencia = new Incidencia(tipoIncidencia, descripcion);
+			const { tipoIncidencia, descripcion, email } = this.form.value;
+			const incidencia = new Incidencia(tipoIncidencia, descripcion, email);
 			this.dialogRef.close(incidencia);
+		} else{
+       this.utilesService.validateAllFormFields(this.form);
 		}
 	}
 

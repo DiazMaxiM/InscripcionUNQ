@@ -18,8 +18,17 @@
 			Campo obligatorio
 		</mat-error>
 	</mat-form-field>
+	<mat-form-field>
+		<input matInput placeholder="Correo electrónico para respuesta" formControlName="email" type="email" id="email" required>
+		<mat-error *ngIf="form.get('email').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+		<mat-error *ngIf="form.get('email').hasError('email')">
+			La dirección de e-mail no es válida
+		</mat-error>
+	</mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
 	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">Cancelar</button>
-	<button class="btn btn-danger mat-button" mat-fab color="primary" [disabled]="form.invalid" (click)="guardar()">Enviar</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">Enviar</button>
 </mat-dialog-actions>

@@ -38,7 +38,8 @@ export class ModificacionDeIncidenciaDialogoComponent implements OnInit {
     this.form = this.fb.group({
       tipoIncidencia: ["", Validators.required],
       descripcion: ["", Validators.required],
-      tipoEstadoIncidencia: ["", Validators.required]
+			tipoEstadoIncidencia: ["", Validators.required],
+			emailDelReportante: ["", Validators.required]
     });
     this.getTipoEstadoIncidencia();
   }
@@ -47,8 +48,9 @@ export class ModificacionDeIncidenciaDialogoComponent implements OnInit {
     if (this.incidencia != null) {
       this.form.setValue({
         tipoIncidencia: this.incidencia.tipoIncidencia.descripcion,
-        descripcion: this.incidencia.descripcion,
-        tipoEstadoIncidencia: this.incidencia.tipoEstadoIncidencia
+				descripcion: this.incidencia.descripcion,
+				emailDelReportante: this.incidencia.emailDelReportante,
+				tipoEstadoIncidencia: this.incidencia.tipoEstadoIncidencia
       });
     }
   }
