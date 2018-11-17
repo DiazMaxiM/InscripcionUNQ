@@ -8,6 +8,7 @@ public class IncidenciaJson {
 	public String descripcion;
 	public TipoIncidenciaJson tipoIncidencia;
 	public String tipoEstadoIncidencia;
+	public String emailDelReportante;
 
 	public IncidenciaJson() {
 	
@@ -18,5 +19,6 @@ public class IncidenciaJson {
 		this.tipoIncidencia = new TipoIncidenciaJson(incidencia.getTipoIncidencia());
 		this.descripcion = incidencia.getDescripcion();
 		this.tipoEstadoIncidencia = incidencia.getTipoEstadoIncidencia().getEstado();
+		this.emailDelReportante = incidencia.getEmailDelReportante();
 	}
 }

@@ -63,6 +63,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	crearNuevaIncidencia(incidencia: Incidencia) {
+		console.log(incidencia);
 		this.restService.agregarIncidencia(incidencia)
 			.subscribe(res => {
 				const mensaje = 'Se envió con éxito la incidencia';

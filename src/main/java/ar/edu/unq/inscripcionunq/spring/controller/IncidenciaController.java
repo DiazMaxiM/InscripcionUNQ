@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.service.IncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoIncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoEstadoIncidenciaService;
@@ -63,7 +66,11 @@ public class IncidenciaController {
 
 	@PutMapping("/incidencia")
 	public ResponseEntity agregarIncidencia(@RequestBody IncidenciaJson incidenciaJson) {
-		incidenciaServiceImp.agregarIncidencia(incidenciaJson);
+		try {
+			incidenciaServiceImp.agregarIncidencia(incidenciaJson);
+		} catch (EmailInvalidoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 		
 		return ResponseEntity.ok().build();
 	}

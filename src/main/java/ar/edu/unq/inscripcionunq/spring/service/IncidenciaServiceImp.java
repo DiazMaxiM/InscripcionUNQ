@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.IncidenciaDao;
 import ar.edu.unq.inscripcionunq.spring.dao.TipoIncidenciaDao;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Incidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoEstadoIncidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Service
 @Transactional
@@ -30,9 +32,10 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 	}
 
 	@Override
-	public void agregarIncidencia(IncidenciaJson incidenciaJson) {
+	public void agregarIncidencia(IncidenciaJson incidenciaJson) throws EmailInvalidoException {
 		TipoIncidencia tipo = tipoIncidenciaDaoImp.get(incidenciaJson.tipoIncidencia.id);
-		Incidencia incidencia = new Incidencia(tipo, incidenciaJson.descripcion);
+		Incidencia incidencia = new Incidencia(tipo, incidenciaJson.descripcion, incidenciaJson.emailDelReportante);
+		Validacion.validarIncidencia(incidencia);
 		incidenciaDaoImp.save(incidencia);
 	}
 
