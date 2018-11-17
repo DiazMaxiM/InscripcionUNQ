@@ -5,7 +5,7 @@
 			<input type="text" placeholder="Materia origen" formControlName="materiaOrigen" matInput [matAutocomplete]="autoOrigen"
 			 required>
 			<mat-autocomplete #autoOrigen="matAutocomplete">
-				<mat-option *ngFor="let materia of filtroMateriasOrigen | async" [value]="materia.nombre">
+				<mat-option *ngFor="let materia of materiasOrigen  | filtroBusqueda: {nombre: materiaOrigen}; let i=index;" [value]="materia.nombre">
 					{{materia.nombre}}
 				</mat-option>
 			</mat-autocomplete>
@@ -17,7 +17,7 @@
 			<input type="text" placeholder="Materia equivalente" formControlName="materiaDestino" matInput [matAutocomplete]="autoDestino"
 			 required>
 			<mat-autocomplete #autoDestino="matAutocomplete">
-				<mat-option *ngFor="let materia of filtroMateriasDestino | async" [value]="materia.nombre">
+				<mat-option *ngFor="let materia of materiasDestino | filtroBusqueda: {nombre: materiaDestino}; let i=index;" [value]="materia.nombre">
 					{{materia.nombre}}
 				</mat-option>
 			</mat-autocomplete>

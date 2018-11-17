@@ -3,10 +3,8 @@ import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Materia } from '../materias/materia.model';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent } from '@angular/material';
 import { Equivalencia } from '../equivalencias/equivalencia.model';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DataDialogo } from './data-dialogo.model';
 import { AppMensajes } from '../app-mensajes.model';
@@ -20,10 +18,12 @@ import { AppRutas } from '../app-rutas.model';
 
 export class EquivalenciaDialogoComponent implements OnInit {
 	materias: Materia[];
-	filtroMateriasOrigen: Observable<Materia[]>;
-	filtroMateriasDestino: Observable<Materia[]>;
+	materiasOrigen: Materia[];
+	materiasDestino: Materia[];
 	form: FormGroup;
 	equivalencia: Equivalencia;
+	materiaOrigen;
+	materiaDestino;
 
 	constructor(
 		private utilesService: UtilesService,
@@ -37,7 +37,14 @@ export class EquivalenciaDialogoComponent implements OnInit {
 	ngOnInit() {
 		this.getMaterias();
 		this.crearFormularioEquivalencia();
-		this.insertarInformacionDeEquivalenciaEnFormulario();
+		this.form.controls['materiaOrigen'].valueChanges.subscribe((term: FormGroup) => {
+			this.materiaOrigen = term;
+			this.eliminarMateriaEnMateriasDestino(term);
+		});
+		this.form.controls['materiaDestino'].valueChanges.subscribe((term: FormGroup) => {
+			this.materiaDestino = term;
+			this.eliminarMateriaEnMateriasOrigen(term);
+		});
 	}
 
 	insertarInformacionDeEquivalenciaEnFormulario() {
@@ -71,34 +78,15 @@ export class EquivalenciaDialogoComponent implements OnInit {
 
 		} else {
 			this.materias = materias;
-			this.crearFiltroMateriasOrigen();
-			this.crearFiltroMateriasDestino();
+			this.materiasOrigen = materias;
+			this.materiasDestino = materias;
+			this.insertarInformacionDeEquivalenciaEnFormulario();
 		}
 	}
 
 	irATarerasUsuario(mensaje) {
 		this.cerrar();
 		this.utilesService.mostrarMensajeYRedireccionar(mensaje, AppRutas.TAREAS_USUARIO);
-	}
-
-	crearFiltroMateriasOrigen() {
-		this.filtroMateriasOrigen = this.form.controls['materiaOrigen'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarMaterias(val))
-		);
-	}
-
-	crearFiltroMateriasDestino() {
-		this.filtroMateriasDestino = this.form.controls['materiaDestino'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarMaterias(val))
-		);
-	}
-
-	filtrarMaterias(val: string): Materia[] {
-		return this.materias.filter(option => {
-			return option.nombre.toLowerCase().match(val.toLowerCase());
-		});
 	}
 
 	guardar() {
@@ -126,4 +114,20 @@ export class EquivalenciaDialogoComponent implements OnInit {
 	cerrar() {
 		this.dialogRef.close();
 	}
+
+	eliminarMateriaEnMateriasOrigen(materia) {
+		this.materiasOrigen = this.eliminarMateria(materia);
+	}
+
+	eliminarMateriaEnMateriasDestino(materia) {
+		this.materiasDestino = this.eliminarMateria(materia);
+	}
+
+	eliminarMateria(nombreMateria){
+		return this.materias.filter(materia => materia.nombre != nombreMateria);
+	}
+
+
+
+
 }
