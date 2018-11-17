@@ -3,7 +3,8 @@ package ar.edu.unq.inscripcionunq.spring.model;
 public enum TipoReporte {
 	
 	ALUMNOSPORCOMISION("Cantidad de alumnos inscriptos por comisión"), 
-	ALUMNOSSINPROBLEMASDECUPO("Lista de alumnos sin problemas de cupo");
+	ALUMNOSSINPROBLEMASDECUPO("Lista de alumnos sin problemas de cupo"),
+	REPORTEGENERAL("Reporte general de encuesta");
 
 	private final String descripcion;
 
