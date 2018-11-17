@@ -72,262 +72,262 @@ public class CargaInicialDeDatosController {
 		tpi = carreraServiceImp.get(aa);
 		lds = carreraServiceImp.get(carreraServiceImp.save(lds));
 
-		Materia matt = new Materia("00487", "Introducción a la Programación", 8);
+		Materia matt = new Materia("00487", "Introducción a la Programación", 8, 16);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long intro = materiaServiceImp.save(matt);
 
-		matt = new Materia("01032", "Organización de Computadoras", 6);
+		matt = new Materia("01032", "Organización de Computadoras", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long orga = materiaServiceImp.save(matt);
 
-		matt = new Materia("01033", "Matemática I", 8);
+		matt = new Materia("01033", "Matemática I", 8, 12 );
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long mate1 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01034", "Programación con Objetos I", 6);
+		matt = new Materia("01034", "Programación con Objetos I", 6, 16);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long obj1 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01315", "Parseo y Generación de Código", 6);
+		matt = new Materia("01315", "Parseo y Generación de Código", 6, 8);
 		matt.agregarCarrera(lds);
 		long pyGC = materiaServiceImp.save(matt);
 
-		matt = new Materia("01307", "Algoritmos", 6);
+		matt = new Materia("01307", "Algoritmos", 6, 12);
 		matt.agregarCarrera(lds);
 		long alg = materiaServiceImp.save(matt);
 
-		matt = new Materia("01318", "Análisis Estático de Programas y Herramientas Asociadas", 6);
+		matt = new Materia("01318", "Análisis Estático de Programas y Herramientas Asociadas", 6, 8);
 		matt.agregarCarrera(lds);
 		long aEPHA = materiaServiceImp.save(matt);
 
-		matt = new Materia("00054", "Análisis Matemático I", 6);
+		matt = new Materia("00054", "Análisis Matemático I", 6, 12);
 		matt.agregarCarrera(lds);
 		long aM1 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01314", "Arquitectura de computadoras", 6);
+		matt = new Materia("01314", "Arquitectura de computadoras", 6, 8);
 		matt.agregarCarrera(lds);
 		long arqC = materiaServiceImp.save(matt);
 
-		matt = new Materia("01310", "Arquitectura de Software I", 6);
+		matt = new Materia("01310", "Arquitectura de Software I", 6, 12);
 		matt.agregarCarrera(lds);
 		long arqS1 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01313", "Arquitectura de Software II", 6);
+		matt = new Materia("01313", "Arquitectura de Software II", 6, 12);
 		matt.agregarCarrera(lds);
 		long arqS2 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01316", "Aspectos Legales y Sociales", 6);
+		matt = new Materia("01316", "Aspectos Legales y Sociales", 6, 8);
 		matt.agregarCarrera(lds);
 		long aLyS = materiaServiceImp.save(matt);
 
-		matt = new Materia("01312", "Caracteristicas de Lenguajes de Programación", 6);
+		matt = new Materia("01312", "Caracteristicas de Lenguajes de Programación", 6, 8);
 		matt.agregarCarrera(lds);
 		long cLP = materiaServiceImp.save(matt);
 
-		matt = new Materia("01050", "Introducción a las Arquitecturas de Software", 8);
+		matt = new Materia("01050", "Introducción a las Arquitecturas de Software", 8, 8);
 		matt.agregarCarrera(tpi);
 		long iAS = materiaServiceImp.save(matt);
 
-		matt = new Materia("01056", "Introducción al Desarrollo de Videojuegos", 8);
+		matt = new Materia("01056", "Introducción al Desarrollo de Videojuegos", 8, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long iDV = materiaServiceImp.save(matt);
 
-		matt = new Materia("01035", "Bases de Datos", 8);
+		matt = new Materia("01035", "Bases de Datos", 8, 16);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long bd = materiaServiceImp.save(matt);
 
-		matt = new Materia("01308", "Ingeniería de Requerimientos", 8);
+		matt = new Materia("01308", "Ingeniería de Requerimientos", 4, 8);
 		matt.agregarCarrera(lds);
 		long ingR = materiaServiceImp.save(matt);
 
-		matt = new Materia("01048", "Bases de Datos II", 8);
+		matt = new Materia("01048", "Bases de Datos II", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long bd2 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01036", "Estructuras de Datos", 8);
+		matt = new Materia("01036", "Estructuras de Datos", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ed = materiaServiceImp.save(matt);
 
-		matt = new Materia("01055", "Herramientas declarativas en Programación", 8);
+		matt = new Materia("01055", "Herramientas declarativas en Programación",4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long hDP = materiaServiceImp.save(matt);
 
-		matt = new Materia("01304", "Gestión de Proyectos de desarrollo de Software", 8);
+		matt = new Materia("01304", "Gestión de Proyectos de desarrollo de Software", 4, 8);
 		matt.agregarCarrera(lds);
 		long gPDS = materiaServiceImp.save(matt);
 
-		matt = new Materia("01037", "Programación con Objetos II", 6);
+		matt = new Materia("01037", "Programación con Objetos II", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long obj2 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01038", "Redes de Computadoras", 6);
+		matt = new Materia("01038", "Redes de Computadoras", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long redes = materiaServiceImp.save(matt);
 
-		matt = new Materia("01039", "Sistemas Operativos", 4);
+		matt = new Materia("01039", "Sistemas Operativos", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long so = materiaServiceImp.save(matt);
 
-		matt = new Materia("00751", "Taller de Trabajo Intelectual", 4);
+		matt = new Materia("00751", "Taller de Trabajo Intelectual", 2, 4);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long tti = materiaServiceImp.save(matt);
 
-		matt = new Materia("00752", "Taller de Trabajo Universitario", 4);
+		matt = new Materia("00752", "Taller de Trabajo Universitario", 2, 4);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ttu = materiaServiceImp.save(matt);
 
-		matt = new Materia("01309", "Teoría de la Computación", 4);
+		matt = new Materia("01309", "Teoría de la Computación", 4, 8);
 		matt.agregarCarrera(lds);
 		long tC = materiaServiceImp.save(matt);
 
-		matt = new Materia("01060", "Trabajo de Inserción Profesional", 4);
+		matt = new Materia("01060", "Trabajo de Inserción Profesional", 4, 0);
 		matt.agregarCarrera(tpi);
 		long tip = materiaServiceImp.save(matt);
 
-		matt = new Materia("01040", "Programacion Concurrente", 4);
+		matt = new Materia("01040", "Programacion Concurrente", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long pc = materiaServiceImp.save(matt);
 
-		matt = new Materia("01041", "Matemática II", 4);
+		matt = new Materia("01041", "Matemática II", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long mate2 = materiaServiceImp.save(matt);
 
-		matt = new Materia("00842", "Matemática III", 4);
+		matt = new Materia("00842", "Matemática III", 4, 8);
 		matt.agregarCarrera(lds);
 		long mate3 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01042", "Elementos de Ingeniería de Software", 6);
+		matt = new Materia("01042", "Elementos de Ingeniería de Software", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ingS = materiaServiceImp.save(matt);
 
-		matt = new Materia("01043", "Construcción de Interfaces de Usuario", 6);
+		matt = new Materia("01043", "Construcción de Interfaces de Usuario", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long cIU = materiaServiceImp.save(matt);
 
-		matt = new Materia("01044", "Estrategias de Persistencia", 6);
+		matt = new Materia("01044", "Estrategias de Persistencia", 6, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ePers = materiaServiceImp.save(matt);
 
-		matt = new Materia("01057", "Derecho de Autor  y Derecho de Copia en la Era Digital", 6);
+		matt = new Materia("01057", "Derecho de Autor  y Derecho de Copia en la Era Digital", 6, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long dADCED = materiaServiceImp.save(matt);
 
-		matt = new Materia("01045", "Programación Funcional", 4);
+		matt = new Materia("01045", "Programación Funcional", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long pF = materiaServiceImp.save(matt);
 
-		matt = new Materia("01046", "Desarrollo de Aplicaciones", 6);
+		matt = new Materia("01046", "Desarrollo de Aplicaciones", 6, 12);
 		matt.agregarCarrera(tpi);
 		long desa = materiaServiceImp.save(matt);
 
-		matt = new Materia("01047", "Laboratorio de Sistemas Operativos y Redes", 4);
+		matt = new Materia("01047", "Laboratorio de Sistemas Operativos y Redes", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long labo = materiaServiceImp.save(matt);
 
-		matt = new Materia("90000", "Inglés I", 6);
+		matt = new Materia("90000", "Inglés I", 4, 4);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ingles1 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01306", "Lenguajes Formales y Autómatas", 6);
+		matt = new Materia("01306", "Lenguajes Formales y Autómatas", 4, 8);
 		matt.agregarCarrera(lds);
 		long lfa = materiaServiceImp.save(matt);
 
-		matt = new Materia("01302", "Lógica y Programación", 6);
+		matt = new Materia("01302", "Lógica y Programación", 6, 12);
 		matt.agregarCarrera(lds);
 		long lyp = materiaServiceImp.save(matt);
 
-		matt = new Materia("90028", "Inglés II ( P-W )", 6);
+		matt = new Materia("90028", "Inglés II ( P-W )", 4, 4);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ingles2 = materiaServiceImp.save(matt);
 
-		matt = new Materia("01052", "Introducción a la Bioinformática", 6);
+		matt = new Materia("01052", "Introducción a la Bioinformática", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long introBio = materiaServiceImp.save(matt);
 
-		matt = new Materia("01053", "Politicas Públicas en la Sociedad de la Información y la Era Digital", 6);
+		matt = new Materia("01053", "Politicas Públicas en la Sociedad de la Información y la Era Digital", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long ppsied = materiaServiceImp.save(matt);
 
-		matt = new Materia("01305", "Práctica del Desarrollo de Software", 6);
+		matt = new Materia("01305", "Práctica del Desarrollo de Software", 8, 12);
 		matt.agregarCarrera(lds);
 		long pds = materiaServiceImp.save(matt);
 
-		matt = new Materia("00604", "Probabilidad Y Estadística", 6);
+		matt = new Materia("00604", "Probabilidad Y Estadística", 6, 12);
 		matt.agregarCarrera(lds);
 		long probE = materiaServiceImp.save(matt);
 
-		matt = new Materia("01049", "Participación y Gestión en Proyectos de Software Libre", 6);
+		matt = new Materia("01049", "Participación y Gestión en Proyectos de Software Libre", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long pygsl = materiaServiceImp.save(matt);
 
-		matt = new Materia("01051", "Programación con Objetos III", 6);
+		matt = new Materia("01051", "Programación con Objetos III",4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long obj3 = materiaServiceImp.save(matt);
 
-		matt = new Materia("00646", "Seguridad Informática", 6);
+		matt = new Materia("00646", "Seguridad Informática", 4, 8);
 		matt.agregarCarrera(tpi);
 		long sI = materiaServiceImp.save(matt);
 
-		matt = new Materia("01328", "Seminario : Televisión Digital", 6);
+		matt = new Materia("01328", "Seminario : Televisión Digital", 4, 8);
 		matt.agregarCarrera(tpi);
 		long sTD = materiaServiceImp.save(matt);
 
-		matt = new Materia("01054", "Sistemas de Información Geográfica", 6);
+		matt = new Materia("01054", "Sistemas de Información Geográfica", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long sIG = materiaServiceImp.save(matt);
 
-		matt = new Materia("01311", "Sistemas Distribuidos", 6);
+		matt = new Materia("01311", "Sistemas Distribuidos", 4, 8);
 		matt.agregarCarrera(lds);
 		long sD = materiaServiceImp.save(matt);
 
-		matt = new Materia("01059", "Seminarios sobre  Herramientas ó Tecnicas Puntuales: Tecnología y Sociedad", 6);
+		matt = new Materia("01059", "Seminarios sobre  Herramientas ó Tecnicas Puntuales: Tecnología y Sociedad", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long tecSoc = materiaServiceImp.save(matt);
 
-		matt = new Materia("01303", "Seguridad de la Información", 6);
+		matt = new Materia("01303", "Seguridad de la Información", 4, 8);
 		matt.agregarCarrera(lds);
 		long segInfo = materiaServiceImp.save(matt);
 
-		matt = new Materia("01319", "Semántica de Lenguajes de Programación", 6);
+		matt = new Materia("01319", "Semántica de Lenguajes de Programación", 4, 8);
 		matt.agregarCarrera(lds);
 		long sLP = materiaServiceImp.save(matt);
 
-		matt = new Materia("01317", "Seminario final", 6);
+		matt = new Materia("01317", "Seminario final", 4, 0);
 		matt.agregarCarrera(lds);
 		long semF = materiaServiceImp.save(matt);
 
 		matt = new Materia("01058",
-				"Seminarios: Introducción a la Electrónica y Programación de Controladores con Arduino", 6);
+				"Seminarios: Introducción a la Electrónica y Programación de Controladores con Arduino", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long arduino = materiaServiceImp.save(matt);
@@ -591,15 +591,12 @@ public class CargaInicialDeDatosController {
 
 		Equivalencia equivalenciaSeg = new Equivalencia(materiaServiceImp.get(sI), materiaServiceImp.get(segInfo));
 		equivalenciaServiceImp.save(equivalenciaSeg);
-		try {
-			webService.importarEstudiantes(idEncuesta);
-		} catch (ConexionWebServiceException | EncuestaNoExisteException e) {
-			e.printStackTrace();
-		}
+  
 
 		Usuario usuario = new Usuario("Rosali", "Zaracho", "zaracho.rosali@gmail.com", "36214936");
 		usuario.setPassword("123");
 		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
+		usuario.agregarPerfil(TipoPerfil.ESTUDIANTE);
 		usuarioServiceImp.save(usuario);
 
 		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");

@@ -15,6 +15,7 @@
 				<th> Nombre </th>
 				<th> Carreras </th>
 				<th> Carga horaria </th>
+				<th> Créditos </th>
 				<th> Estado </th>
 			</tr>
 		</thead>
@@ -29,6 +30,7 @@
 			</tr>
 			</td>
 			<td> {{ materia.horas }} </td>
+			<td> {{ materia.creditos}} </td>
 			<td>
 				<mat-slide-toggle [checked]="materia.estado" (change)="cambiarEstado(materia,$event)">
 				</mat-slide-toggle>

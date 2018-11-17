@@ -12,6 +12,7 @@ public class MateriaSistemaJson {
     public Integer horas;
 	public boolean estado;
     public List<CarreraJson> carreras;
+    public Integer creditos;
 
 	public MateriaSistemaJson() {
 
@@ -23,14 +24,16 @@ public class MateriaSistemaJson {
 		this.nombre = materia.getNombre();
 		this.horas = materia.getHoras();
         this.estado = estado;
+        this.creditos = materia.getCreditos();
 	}
 
-     public MateriaSistemaJson(Long id, String codigo, String nombre, Integer horas, List<CarreraJson> carreras, boolean estado) {
+     public MateriaSistemaJson(Long id, String codigo, String nombre, Integer horas, Integer creditos, List<CarreraJson> carreras, boolean estado) {
 		this.id = id;
         this.codigo = codigo;
 		this.nombre = nombre;
 		this.horas = horas;
 		this.carreras = carreras;
         this.estado = estado;
+        this.creditos = creditos;
 	}	
 }
