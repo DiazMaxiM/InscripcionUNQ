@@ -16,6 +16,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriasEquivalentesException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NumeroInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.PasswordInvalidoException;
@@ -232,5 +233,12 @@ public class Validacion {
 		for(String perfil : perfiles) {
 			validarPerfil(perfil);
 		}
+	}
+
+	public static void validarEquivalencia(Materia materiaOrigen, Materia materiaDestino) throws MateriasEquivalentesException {
+		if(materiaOrigen.equals(materiaDestino)) {
+			throw new MateriasEquivalentesException();
+		}
+		
 	}
 }
