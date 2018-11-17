@@ -39,6 +39,9 @@ public class Reporte {
 	        case ALUMNOSSINPROBLEMASDECUPO: 
 	        	generarReporteAlumnosSinProblemasDeCupo();
 	        	break;
+	        case REPORTEGENERAL:
+	        	generarReporteGeneral();
+	        	break;
 	        default:
 	        	new ReporteNoExisteException();
     	}
@@ -47,7 +50,7 @@ public class Reporte {
 	public void generarXls(String[] headers, List<String[]> data, CellRangeAddress mergeCells ) throws IOException{
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFSheet sheet = workbook.createSheet();
-		workbook.setSheetName(0, "Reporte");
+		workbook.setSheetName(0, this.tipoReporte.getDescripcion());
 		CellStyle headerStyle = workbook.createCellStyle();
 		Font font = workbook.createFont();
 		font.setBold(true);
@@ -74,6 +77,7 @@ public class Reporte {
 		
 		if (mergeCells != null) sheet.addMergedRegion(mergeCells);
 		
+		
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 	    
 		workbook.write(outByteStream);
@@ -82,7 +86,6 @@ public class Reporte {
 		outByteStream.flush();
 		outByteStream.close();
 		workbook.close();
-
 	}
 	
 	public void generarReporteAlumnosSinProblemasDeCupo() throws IOException {
@@ -93,7 +96,8 @@ public class Reporte {
     	for ( Estudiante estudiante : this.encuesta.getEstudiantes() ) {
 			boolean cupoDisponible = true;
 			linea = new ArrayList<String>();
-			linea.add(estudiante.getNombre() + " " + estudiante.getApellido());
+			linea.add(estudiante.getNombre());
+			linea.add(estudiante.getApellido());
 			linea.add(estudiante.getEmail());
 			
     		for (Comision comision : estudiante.getRegistroComisiones()) {
@@ -113,14 +117,15 @@ public class Reporte {
     	
         String[] headers = new String[]{
 			"Nombre alumno",
+			"Apellido alumno",
 			"E-mail",
 			"Comisiones inscripto"
         };
         
         CellRangeAddress cellMerge = null;
         
-        if ( nro > 3 ){
-        	cellMerge = new CellRangeAddress(0,0,2,nro-1);
+        if ( nro > 4 ){
+        	cellMerge = new CellRangeAddress(0,0,3,nro-1);
         }
 		generarXls(headers, DATA, cellMerge);
     }
@@ -166,6 +171,48 @@ public class Reporte {
                 "Cupo",
                 "Nro de inscriptos"
         };
+        CellRangeAddress cellMerge = null;
+		this.generarXls(headers, DATA, cellMerge);
+	}
+	
+	public void generarReporteGeneral() throws IOException {
+		DATA = new ArrayList<String[]>();
+    	
+		List<String> linea = new ArrayList<String>();
+		linea.add("Nombre");
+		linea.add("Apellido");
+		linea.add("DNI");
+		linea.add("E-mail");
+		
+		List<Materia> columnasMaterias = new ArrayList<Materia>();
+		
+    	for (OfertaAcademica oferta : this.encuesta.getOfertasAcademicas()) {
+    		for (Comision comision : oferta.getComisiones()) {
+    			if(!columnasMaterias.contains(comision.getMateria())) {
+    				columnasMaterias.add(comision.getMateria());
+					linea.add(comision.getMateria().getNombre());
+    			}
+    		}
+    	} 
+		
+		String[] headers = linea.toArray(new String[linea.size()]);
+		String estadoMateria = new String();
+    	for (Estudiante estudiante : this.encuesta.getEstudiantes()) {
+			linea = new ArrayList<String>();
+			linea.add(estudiante.getNombre());
+			linea.add(estudiante.getApellido());
+			linea.add(estudiante.getDni());
+			linea.add(estudiante.getEmail());
+			
+			for (Materia columnaMateria : columnasMaterias) {
+				estadoMateria = " ";
+				for (Materia materiaAprobada : estudiante.getMateriasAprobadas()) {
+					if (materiaAprobada.equals(columnaMateria))estadoMateria = "Aprobada";
+				}
+				linea.add(estadoMateria);
+			}
+			DATA.add(linea.toArray(new String[linea.size()-1]));
+		}		
         CellRangeAddress cellMerge = null;
 		this.generarXls(headers, DATA, cellMerge);
 	}
