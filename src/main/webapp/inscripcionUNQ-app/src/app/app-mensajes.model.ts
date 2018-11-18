@@ -18,4 +18,6 @@ export class AppMensajes {
 	public static CREACION_ENCUESTA_EXITOSO = 'La encuesta fue creada con éxito';
 	public static ACTUALIZACION_OFERTAS_DE_ENCUESTA_EXITOS0 = 'Se asociaron las ofertas académicas para la encuesta con éxito';
 	public static N0_HAY_OFERTAS_EN_PERIODO = 'No se encontraron ofertas académicas para el período ';
+	public static CREACION_TIPO_INCIDENCIA_EXITOSO = 'El nuevo tipo de incidencia fue creado con éxito ';
+	public static ACTUALIZACION_TIPO_INCIDENCIA_EXITOSO = 'El tipo de incidencia fue actualizado con éxito';
 }  

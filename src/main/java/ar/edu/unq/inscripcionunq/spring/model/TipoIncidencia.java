@@ -1,11 +1,13 @@
 package ar.edu.unq.inscripcionunq.spring.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity(name = "TipoIncidencia")
 public class TipoIncidencia extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+	@Column(unique = true)
 	private String descripcion;
 	private TipoEstado estado = TipoEstado.ENABLED;
 

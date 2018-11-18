@@ -12,6 +12,7 @@ import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { Comision } from './comisiones-de-oferta/comision.model';
 import { Equivalencia } from './equivalencias/equivalencia.model';
 import { Encuesta } from './encuesta-dialogo/encuesta.model';
+import { TipoIncidencia } from './tipo-incidencia-dialogo/tipo-incidencia.model';
 
 const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
@@ -176,8 +177,8 @@ export class RestService {
     return this.httpClient.delete('/api/usuarios/eliminarUsuario/' + idUsuario);
   }
 
-  getIncidencias() {
-    return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
+  getIncidencias(idTipoIncidencia) {
+    return this.httpClient.get<Array<Incidencia>>('/api/incidencias/' + idTipoIncidencia);
   }
 
   getTipoEstadoIncidencias() {
@@ -238,4 +239,16 @@ export class RestService {
 	clonarComisiom(comision) {
     return this.httpClient.post('/api/comision/clonarComision', comision, { headers });
 	}
+
+	getTiposIncidencias(){
+		return this.httpClient.get<Array<TipoIncidencia>>('/api/tipoIncidencias');
+	}
+	
+	agregarTipoIncidencia(incidencia: TipoIncidencia){
+    return this.httpClient.put('/api/nuevoTipoIncidencia/', incidencia, {headers});
+	}
+	
+	actualizarTipoIncidencia(incidencia: TipoIncidencia){
+    return this.httpClient.post('/api/actualizarTipoIncidencia/', incidencia, {headers});
+  }
 }

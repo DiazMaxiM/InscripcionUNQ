@@ -24,3 +24,11 @@
 .container-buscador > * {
   width: 50%;
 }
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+::ng-deep .mat-tab-labels{
+	justify-content: center; /* align items in Main Axis */
+}

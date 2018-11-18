@@ -63,6 +63,8 @@ import { MomentUtcDateAdapter } from './momentUtcDateAdapter';
 import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';
 import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.component';
+import { TipoIncidenciaDialogoComponent } from './tipo-incidencia-dialogo/tipo-incidencia-dialogo.component';
+import { DialogosService } from './dialogos.service';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,8 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
 		ActalizacionPerfilesDialogoComponent,
 		OfertasDeEncuestaDialogoComponent,
 		SeleccionDePeriodoDialogoComponent,
-		ReporteDialogoComponent
+		ReporteDialogoComponent,
+		TipoIncidenciaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,7 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
 		MatMomentDateModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
-		UtilesService, UsuarioLogueadoService, AuthService,
+		UtilesService, UsuarioLogueadoService, AuthService, DialogosService,
 		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
 		{provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
@@ -129,7 +132,7 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
   EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
 	EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent,
-	OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent, ReporteDialogoComponent]
+	OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent, ReporteDialogoComponent, TipoIncidenciaDialogoComponent]
 })
 export class AppModule {
 	constructor(private adapter: DateAdapter<any>) {

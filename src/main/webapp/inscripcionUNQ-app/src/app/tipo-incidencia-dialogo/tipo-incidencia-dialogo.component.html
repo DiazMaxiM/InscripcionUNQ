@@ -1,0 +1,13 @@
+<mat-dialog-content [formGroup]="form">
+	<mat-form-field>
+		<textarea matInput placeholder="Descripción" formControlName="descripcion" required>
+        </textarea>
+		<mat-error *ngIf="form.get('descripcion').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">Cancelar</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">Aceptar</button>
+</mat-dialog-actions>

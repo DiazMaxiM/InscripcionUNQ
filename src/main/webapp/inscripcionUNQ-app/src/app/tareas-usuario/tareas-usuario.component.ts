@@ -71,17 +71,10 @@ export class TareasUsuarioComponent{
 
   irAUsuarios() {
       this.utilesService.irA('usuarios');
-		
 	}
 
   irAIncidencias(){
-    this.restService.getIncidencias().subscribe(incidencias => {
-      localStorage.setItem('incidencias', JSON.stringify(incidencias));
       this.utilesService.irA('incidencias');
-    },
-    (err) => {
-      this.utilesService.mostrarMensajeDeError(err);
-    });
 }
 
 irAEncuestas() {

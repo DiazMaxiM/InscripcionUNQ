@@ -229,7 +229,7 @@ export class EncuestaDialogoComponent implements OnInit {
 		nuevaFecha.dia = fecha.date;
 		nuevaFecha.mes = fecha.month + 1;
 		nuevaFecha.anho = fecha.year;
-		nuevaFecha.horario = horario;
+		nuevaFecha.horario = this.utilesService.armarHorarioParaServidor(horario);
 		return nuevaFecha;
 	}
 
