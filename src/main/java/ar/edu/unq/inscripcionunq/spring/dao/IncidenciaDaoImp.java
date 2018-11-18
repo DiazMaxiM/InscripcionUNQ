@@ -20,4 +20,12 @@ public class IncidenciaDaoImp extends GenericDaoImp<Incidencia> implements Incid
 		Session session = this.sessionFactory.getCurrentSession();
 		return (List<Incidencia>) session.createQuery("Select i from Incidencia i").getResultList();
 	}
+
+	@Override
+	public List<Incidencia> getIncidenciasDelTipo(Long idTipoIncidencia) {
+		Session session = this.sessionFactory.getCurrentSession();
+		return (List<Incidencia>) session.createQuery("from Incidencia i where i.tipoIncidencia.id = :idTipoIncidencia")
+				.setParameter("idTipoIncidencia", idTipoIncidencia)
+				.getResultList();
+	}
 }

@@ -16,6 +16,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTooltipModule} from '@angular/material';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTabsModule} from '@angular/material/tabs';
 
 const modules = [
   MatInputModule,
@@ -35,7 +36,8 @@ const modules = [
   MatAutocompleteModule,
   MatTooltipModule,
 	MatMenuModule,
-	MatDatepickerModule
+	MatDatepickerModule,
+	MatTabsModule
 ];
 
 @NgModule({

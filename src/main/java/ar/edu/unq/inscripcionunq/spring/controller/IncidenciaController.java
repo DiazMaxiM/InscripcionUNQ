@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.YaExisteTipoDeIncidenciaException;
 import ar.edu.unq.inscripcionunq.spring.service.IncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoIncidenciaService;
 import ar.edu.unq.inscripcionunq.spring.service.TipoEstadoIncidenciaService;
@@ -45,23 +47,32 @@ public class IncidenciaController {
 		.map(tipoIncidencia -> new String(tipoIncidencia.getEstado())).collect(Collectors.toList()));
 	}
 
-	@PutMapping("/tipoIncidencia")
+	@PutMapping("/nuevoTipoIncidencia")
 	public ResponseEntity agregarNuevoTipoIncidencia(@RequestBody TipoIncidenciaJson tipoIncidenciaJson) {
-		tipoIncidenciaServiceImp.agregarNuevoTipoIncidencia(tipoIncidenciaJson);
+		try {
+			tipoIncidenciaServiceImp.agregarNuevoTipoIncidencia(tipoIncidenciaJson);
+		} catch (YaExisteTipoDeIncidenciaException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+
+		}
 		
 		return ResponseEntity.ok().build();
 	}
 
-	@PostMapping("/tipoIncidencia")
+	@PostMapping("/actualizarTipoIncidencia")
 	public ResponseEntity actualizarTipoIncidencia(@RequestBody TipoIncidenciaJson tipoIncidenciaJson) {
-		tipoIncidenciaServiceImp.actualizarTipoIncidencia(tipoIncidenciaJson);
+		try {
+			tipoIncidenciaServiceImp.actualizarTipoIncidencia(tipoIncidenciaJson);
+		} catch (YaExisteTipoDeIncidenciaException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
 		
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/incidencias")
-	public ResponseEntity<List> getIncidencias() {
-		return ResponseEntity.ok().body(incidenciaServiceImp.getIncidenciasJson());
+	@GetMapping("/incidencias/{idTipoIncidencia}")
+	public ResponseEntity<List> getIncidencias(@PathVariable String idTipoIncidencia) {
+		return ResponseEntity.ok().body(incidenciaServiceImp.getIncidenciasJson(idTipoIncidencia));
 	}
 
 	@PutMapping("/incidencia")

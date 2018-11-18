@@ -52,8 +52,9 @@ public class IncidenciaServiceImp extends GenericServiceImp<Incidencia> implemen
 	}
 
 	@Override
-	public List<IncidenciaJson> getIncidenciasJson() {
-		return this.getIncidencias().stream().map(incidencia -> new IncidenciaJson(incidencia))
+	public List<IncidenciaJson> getIncidenciasJson(String idTipoIncidencia) {
+		List<Incidencia> incidencias = incidenciaDaoImp.getIncidenciasDelTipo(new Long(idTipoIncidencia));
+		return incidencias.stream().map(incidencia -> new IncidenciaJson(incidencia))
 				.collect(Collectors.toList());
 	}
 }

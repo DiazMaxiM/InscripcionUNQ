@@ -14,5 +14,5 @@ public interface IncidenciaService extends GenericService<Incidencia> {
 
 	public void actualizarIncidencia(IncidenciaJson incidencia);
 
-	public List<IncidenciaJson> getIncidenciasJson();
+	public List<IncidenciaJson> getIncidenciasJson(String idTipoIncidencia);
 }
