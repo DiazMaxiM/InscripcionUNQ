@@ -17,7 +17,7 @@
         required/>
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option
-          *ngFor="let materia of (filtroMaterias | async)"
+          *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaBuscada}; let i=index;"
           [value]="materia.nombre">
           {{ materia.nombre }}
         </mat-option>
@@ -50,7 +50,7 @@
         required/>
       <mat-autocomplete #autoPeriodo="matAutocomplete">
         <mat-option
-          *ngFor="let periodo of (filtroPeriodos | async)"
+          *ngFor="let periodo of periodos | filtroBusqueda: {codigo: periodoBuscado}; let i=index;"
           [value]="periodo.codigo">
           {{ periodo.codigo }}
         </mat-option>

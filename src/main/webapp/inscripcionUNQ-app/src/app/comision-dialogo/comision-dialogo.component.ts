@@ -4,8 +4,6 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { Comision } from '../comisiones-de-oferta/comision.model';
 import { UtilesService } from '../utiles.service';
 import { Materia } from '../materias/materia.model';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';
 import { AppRutas } from '../app-rutas.model';
@@ -25,18 +23,18 @@ export class ComisionDialogoComponent implements OnInit {
 	formHorario: FormGroup;
 	comisionSeleccionada: Comision;
 	materias: Materia[];
-	filtroMaterias: Observable<Materia[]>;
 	mostrarformularioParaHorarios = false;
 	mostrarTablaHorarios = false;
 	dias;
 	periodos: Periodo[];
-	filtroPeriodos: Observable<Periodo[]>;
 	horarios = [];
 	horarioAEditar: HorarioComision;
 	mostrarGuardarComision = true;
 	periodoControl = new FormControl();
 	comisiones: Comision[];
 	mostrarComisiones;
+	periodoBuscado;
+	materiaBuscada;
 
 	constructor(
 		private fb: FormBuilder,
@@ -53,6 +51,14 @@ export class ComisionDialogoComponent implements OnInit {
 		this.crearFormularioParaHorario();
 		this.getDias();
 		this.getPeriodos();
+		this.form.controls['periodo'].valueChanges.subscribe((term: FormGroup) => {
+			this.periodoBuscado = term;
+			
+		});
+		this.form.controls['materia'].valueChanges.subscribe((term: FormGroup) => {
+			this.materiaBuscada = term;
+			
+		});
 	}
 
 	getDias() {
@@ -61,23 +67,9 @@ export class ComisionDialogoComponent implements OnInit {
 		});
 	}
 
-	crearFiltroMaterias() {
-		this.filtroMaterias = this.form.controls['materia'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarMaterias(val))
-		);
-	}
-
-	filtrarMaterias(val: string): Materia[] {
-		return this.materias.filter(option => {
-			return option.nombre.toLowerCase().match(val.toLowerCase());
-		});
-	}
-
 	getMaterias() {
 		this.restService.getMaterias().subscribe(materias => {
 			this.materias = materias;
-			this.crearFiltroMaterias();
 		},
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
@@ -236,25 +228,11 @@ export class ComisionDialogoComponent implements OnInit {
 			this.irATarerasUsuario(mensaje);
 		}
 		this.periodos = periodos;
-		this.crearFiltroPeriodos();
 	}
 
 	irATarerasUsuario(mensaje) {
 		this.cerrar();
 		this.utilesService.mostrarMensajeYRedireccionar(mensaje, AppRutas.TAREAS_USUARIO);
-	}
-
-	crearFiltroPeriodos() {
-		this.filtroPeriodos = this.form.controls['periodo'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarPeriodo(val))
-		);
-	}
-
-	filtrarPeriodo(val: string): Periodo[] {
-		return this.periodos.filter(option => {
-			return option.codigo.toLowerCase().match(val.toLowerCase());
-		});
 	}
 
 	editarHorarip(horario: HorarioComision) {

@@ -21,10 +21,10 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 	ofertaSeleccionada: OfertaAcademica;
 	checked = true;
 	carreras: Carrera[];
-	filtroCarreras: Observable<Carrera[]>;
+	carreraBuscada;
 	periodos: Periodo[];
-	filtroPeriodos: Observable<Periodo[]>;
-
+	periodoBuscado;
+	
 	constructor(
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
@@ -37,33 +37,16 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 		this.insertarInformacionDeLaCarreraEnFormulario();
 		this.getCarreras();
 		this.getPeriodos();
-	}
-
-	crearFiltroCarreras() {
-		this.filtroCarreras = this.form.controls['carrera'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarCarrera(val))
-		);
-	}
-
-	crearFiltroPeriodos() {
-		this.filtroPeriodos = this.form.controls['periodo'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarPeriodo(val))
-		);
-	}
-
-	filtrarPeriodo(val: string): Periodo[] {
-		return this.periodos.filter(option => {
-			return option.codigo.toLowerCase().match(val.toLowerCase());
+		this.form.controls['periodo'].valueChanges.subscribe((term: FormGroup) => {
+			this.periodoBuscado = term;
+			
+		});
+		this.form.controls['carrera'].valueChanges.subscribe((term: FormGroup) => {
+			this.carreraBuscada = term;
+			
 		});
 	}
 
-	filtrarCarrera(val: string): Carrera[] {
-		return this.carreras.filter(option => {
-			return option.descripcion.toLowerCase().match(val.toLowerCase());
-		});
-	}
 
 	irATarerasUsuario(mensaje) {
 		this.cerrar();
@@ -76,7 +59,6 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 			this.irATarerasUsuario(mensaje);
 		}
 		this.carreras = carreras;
-		this.crearFiltroCarreras();
 	}
 
 	getCarreras() {
@@ -104,7 +86,6 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 			this.irATarerasUsuario(mensaje);
 		} else {
 			this.periodos = periodos;
-			this.crearFiltroPeriodos();
 		}
 	}
 

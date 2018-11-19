@@ -21,14 +21,13 @@ import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 export class EncuestaDialogoComponent implements OnInit {
 	form: FormGroup;
 	periodos: Periodo[];
-	filtroPeriodos: Observable<Periodo[]>;
-	periodoControl = new FormControl();
 	encuestaSeleccionada: Encuesta;
 	ofertas: OfertaAcademica[];
 	seleccionaOfertasAcademicas;
 	ofertasSeleccionados: OfertaAcademica[] = [];
 	nuevaEncuesta: Encuesta;
 	modificaPeriodo;
+	periodoBuscado;
 
 	constructor(
 		private fb: FormBuilder,
@@ -41,8 +40,11 @@ export class EncuestaDialogoComponent implements OnInit {
 		this.crearFormularioComision();
 		this.getPeriodos();
 		this.insertarInformacionDeLaEncuesta();
+		this.form.controls['periodo'].valueChanges.subscribe((term: FormGroup) => {
+			this.periodoBuscado = term;
+			
+		});
 	}
-
 	crearFormularioComision() {
 		this.form = this.fb.group({
 			nombre: ['', Validators.required],
@@ -105,20 +107,6 @@ export class EncuestaDialogoComponent implements OnInit {
 			const mensaje = 'No se encontraron períodos para la comisión';
 		}
 		this.periodos = periodos;
-		this.crearFiltroPeriodos();
-	}
-
-	crearFiltroPeriodos() {
-		this.filtroPeriodos = this.form.controls['periodo'].valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarPeriodo(val))
-		);
-	}
-
-	filtrarPeriodo(val: string): Periodo[] {
-		return this.periodos.filter(option => {
-			return option.codigo.toLowerCase().match(val.toLowerCase());
-		});
 	}
 
 	soloNumero(evento) {

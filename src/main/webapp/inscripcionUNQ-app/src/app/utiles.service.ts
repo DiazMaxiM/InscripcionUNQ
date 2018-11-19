@@ -177,9 +177,9 @@ export class UtilesService {
 		return periodos.find(periodo => periodo.codigo == codigoPeriodo);
 	}
 
-	carreraValida(carreras: Carrera[], codigoCarrera) {
-		const periodo = this.obtenerCarrera(carreras, codigoCarrera);
-		if (periodo == null) {
+	carreraValida(carreras: Carrera[], descripcionCarrera) {
+		const carrera = this.obtenerCarrera(carreras, descripcionCarrera);
+		if (carrera == null) {
 			this.mostrarMensaje(AppMensajes.NO_HAY_CARRERA_SELECCIONADA);
 			return false;
 		} else {
@@ -187,8 +187,8 @@ export class UtilesService {
 		}
 	}
 
-	obtenerCarrera(carreras: Carrera[], codigoCarrera) {
-		return carreras.find(carrera => carrera.codigo == codigoCarrera);
+	obtenerCarrera(carreras: Carrera[], descripcionCarrera) {
+		return carreras.find(carrera => carrera.descripcion == descripcionCarrera);
 	}
 
 	soloNumero(event): boolean {
