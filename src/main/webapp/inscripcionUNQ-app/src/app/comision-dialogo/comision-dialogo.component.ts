@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Comision } from '../comisiones-de-oferta/comision.model';
 import { UtilesService } from '../utiles.service';
-import { DataDialogo } from './data-dialogo.model';
 import { Materia } from '../materias/materia.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -44,9 +43,7 @@ export class ComisionDialogoComponent implements OnInit {
 		private utilesService: UtilesService,
 		private dialogRef: MatDialogRef<ComisionDialogoComponent>,
 		private restService: RestService,
-		private controlHorarioService: RegistroDeComisionesSeleccionadasService,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.comisionSeleccionada = data.comision;
+		private controlHorarioService: RegistroDeComisionesSeleccionadasService) {
 	}
 
 	ngOnInit() {

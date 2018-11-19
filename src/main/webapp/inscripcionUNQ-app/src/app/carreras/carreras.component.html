@@ -1,6 +1,6 @@
 <h5 class="titulo">ABM Carreras</h5>
 <div align="center">
-	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoParaLaCreacionDeCarrera()">Nueva carrera</button>
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoCarrera()">Nueva carrera</button>
 </div>
 <div class="table-responsive">
 	<table class="table table-hover table-borderless">
@@ -19,7 +19,7 @@
 					<mat-slide-toggle [checked]="carrera.habilitada" (change)="cambiarEstado(carrera,$event)">
 					</mat-slide-toggle>
 				</td>
-				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaEdicionDeCarrera(carrera)" data-toggle="tooltip"
+				<td><i class="material-icons edit-icon" (click)="abrirDialogoCarrera(carrera)" data-toggle="tooltip"
 					 data-placement="top" title="Editar">edit</i></td>
 			</tr>
 			<mat-divider></mat-divider>

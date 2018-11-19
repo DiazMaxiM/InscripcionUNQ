@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
@@ -9,7 +9,6 @@ import { AppMensajes } from '../app-mensajes.model';
 import { startWith, map } from 'rxjs/operators';
 import { Encuesta } from './encuesta.model';
 import { Fecha } from './fecha.model';
-import { DataDialogo } from './data-dialogo.model';
 import * as moment from 'moment';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 
@@ -35,9 +34,7 @@ export class EncuestaDialogoComponent implements OnInit {
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
 		private dialogRef: MatDialogRef<EncuestaDialogoComponent>,
-		private restService: RestService,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.encuestaSeleccionada = data.encuesta;
+		private restService: RestService) {
 	}
 
 	ngOnInit() {

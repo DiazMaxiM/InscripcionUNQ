@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -6,7 +6,6 @@ import { Materia } from '../materias/materia.model';
 import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent } from '@angular/material';
 import { Equivalencia } from '../equivalencias/equivalencia.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DataDialogo } from './data-dialogo.model';
 import { AppMensajes } from '../app-mensajes.model';
 import { AppRutas } from '../app-rutas.model';
 
@@ -29,9 +28,7 @@ export class EquivalenciaDialogoComponent implements OnInit {
 		private utilesService: UtilesService,
 		private restService: RestService,
 		private fb: FormBuilder,
-		private dialogRef: MatDialogRef<EquivalenciaDialogoComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.equivalencia = data.equivalencia;
+		private dialogRef: MatDialogRef<EquivalenciaDialogoComponent>) {
 	}
 
 	ngOnInit() {
@@ -103,7 +100,7 @@ export class EquivalenciaDialogoComponent implements OnInit {
 			const equivalencia = new Equivalencia();
 			equivalencia.materiaOrigen = this.utilesService.obtenerMateria(this.materias, materiaOrigen);
 			equivalencia.materiaDestino = this.utilesService.obtenerMateria(this.materias, materiaDestino);
-			this.dialogRef.close(equivalencia);
+			this.guardarEquivalencia(equivalencia);
 		}
 	}
 
@@ -127,6 +124,38 @@ export class EquivalenciaDialogoComponent implements OnInit {
 		return this.materias.filter(materia => materia.nombre != nombreMateria);
 	}
 
+	guardarEquivalencia(equivalencia) {
+		if (this.equivalencia == null) {
+			this.crearNuevaEquivalencia(equivalencia);
+		} else {
+			this.actualizarEquivalencia(equivalencia);
+		}
+
+	}
+	actualizarEquivalencia(equivalencia: Equivalencia) {
+		equivalencia.id = this.equivalencia.id;
+		this.restService.actualizarEquivalencia(equivalencia)
+			.subscribe(res => {
+				const mensaje = 'La equivalencia fue actualizada con éxito';
+				this.utilesService.mostrarMensaje(mensaje);
+				this.cerrar();
+			},
+				(err: HttpErrorResponse) => {
+					this.utilesService.mostrarMensajeDeError(err);
+				});
+	}
+
+	crearNuevaEquivalencia(equivalencia: Equivalencia) {
+		this.restService.agregarNuevaEquivalencia(equivalencia)
+			.subscribe(res => {
+				const mensaje = 'La nueva equivalencia se creó con éxito';
+				this.utilesService.mostrarMensaje(mensaje);
+				this.cerrar();
+			},
+				(err: HttpErrorResponse) => {
+					this.utilesService.mostrarMensajeDeError(err);
+				});
+	}
 
 
 

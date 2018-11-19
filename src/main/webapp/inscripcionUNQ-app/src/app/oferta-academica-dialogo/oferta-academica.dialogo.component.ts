@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MAT_DIALOG_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import {  MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { DataDialogo } from './data-dialogo.model';
 import { UtilesService } from '../utiles.service';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { Observable } from 'rxjs';
@@ -30,9 +29,7 @@ export class OfertaAcademicaDialogoComponent implements OnInit {
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
 		private restService: RestService,
-		private dialogRef: MatDialogRef<OfertaAcademicaDialogoComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.ofertaSeleccionada = data.oferta;
+		private dialogRef: MatDialogRef<OfertaAcademicaDialogoComponent>) {
 	}
 
 	ngOnInit() {

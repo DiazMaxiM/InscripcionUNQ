@@ -3,8 +3,7 @@ import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Carrera } from './carrera.model';
-import { CarreraDialogoComponent } from '../carrera-dialogo/carrera-dialogo.component';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DialogosService } from '../dialogos.service';
 
 @Component({
 	selector: 'app-carreras',
@@ -18,7 +17,7 @@ export class CarrerasComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog
+		private dialogosService: DialogosService,
 	) { }
 
 	ngOnInit() {
@@ -34,35 +33,13 @@ export class CarrerasComponent implements OnInit {
 			});
 	}
 
-	abrirDialogoParaLaCreacionDeCarrera() {
-		const dialogRef = this.crearConfiguracionDialogoParaCarrera();
-		dialogRef.afterClosed().subscribe(val => {
+	abrirDialogoCarrera(carrera?: Carrera) {
+		this.dialogosService
+		.abrirDialogoCarrera(carrera)
+		.subscribe(res => {
 			this.getCarreras();
 		});
-	}
 
-	abrirDialogoParaEdicionDeCarrera(carrera: Carrera) {
-		const dialogRef = this.crearConfiguracionDialogoParaCarrera(carrera);
-		dialogRef.afterClosed().subscribe(val => {
-			this.getCarreras();
-		});
-	}
-
-	crearConfiguracionDialogoParaCarrera(carrera?) {
-		const dialogConfig = new MatDialogConfig();
-
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '450px';
-		dialogConfig.data = {
-			carrera: carrera
-		};
-
-		const dialogRef = this.dialog.open(CarreraDialogoComponent,
-			dialogConfig);
-
-		return dialogRef;
 	}
 
 	actualizarCarrera(carrera) {

@@ -1,11 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit} from '@angular/core';
+import { MatDialogRef} from '@angular/material';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { Usuario } from '../autenticacion/usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
-import { DataDialogo } from './data-dialogo.model';
 
 @Component({
 	selector: 'app-alta-usuario-dialogo',
@@ -21,10 +20,7 @@ export class AltaUsuarioDialogoComponent implements OnInit {
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
 		private dialogRef: MatDialogRef<AltaUsuarioDialogoComponent>,
-		private restService: RestService,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.usuario = data.usuario;
-	}
+		private restService: RestService) {}
 
 	ngOnInit() {
 		this.crearFormularioUsuario();
@@ -53,8 +49,8 @@ export class AltaUsuarioDialogoComponent implements OnInit {
 
 	guardar() {
 		if (this.form.valid) {
-			const { nombres, apellidos, email } = this.form.value;
-			const usuario = new Usuario(email, nombres, apellidos);
+			const { nombres, apellidos, email, dni} = this.form.value;
+			const usuario = new Usuario(email, nombres, apellidos, dni);
 			if (this.usuario != null) {
 				this.actualizarUsuario(usuario);
 			} else {

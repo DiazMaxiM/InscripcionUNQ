@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { UtilesService } from "../utiles.service";
 import { RestService } from "../rest.service";
-import { DataDialogo } from "./data-dialogo.model";
 import { Encuesta } from "../encuesta-dialogo/encuesta.model";
 
 @Component({
@@ -20,11 +19,7 @@ export class ReporteDialogoComponent implements OnInit {
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
 		private restService: RestService,
-		private dialogRef: MatDialogRef<ReporteDialogoComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo
-	) {
-		this.encuesta = this.data.encuesta;
-	}
+		private dialogRef: MatDialogRef<ReporteDialogoComponent>) {}
 
 	ngOnInit() {
 		this.crearFormularioReporte();

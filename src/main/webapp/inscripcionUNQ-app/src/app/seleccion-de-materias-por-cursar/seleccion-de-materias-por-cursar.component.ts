@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatDialogConfig } from "@angular/material";
-import { SeleccionDeComisionDialogoComponent } from "../seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component";
 import { RestService } from "../rest.service";
 import { ComisionSeleccionada } from "../seleccion-de-comision-dialogo/comision-seleccionada.model";
 import { PageEvent } from "@angular/material";
@@ -8,6 +6,7 @@ import { MateriaEstudiante } from "../materias-aprobadas/materia-estudiante.mode
 import { RegistroDeComisionesSeleccionadasService } from "./registro-de-comisiones-seleccionadas.service";
 import { UtilesService } from "../utiles.service";
 import { Comision } from "../comisiones-de-oferta/comision.model";
+import { DialogosService } from "../dialogos.service";
 
 @Component({
   selector: "app-seleccion-de-materias-por-cursar",
@@ -26,9 +25,9 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private dialog: MatDialog,
     private registroComisionesService: RegistroDeComisionesSeleccionadasService,
-    private utilesService: UtilesService
+		private utilesService: UtilesService,
+		private dialogosService: DialogosService
   ) {}
 
   ngOnInit() {
@@ -124,19 +123,10 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   }
 
   abrirDialogoParaSeleccionarComision(materia) {
-    const dialogoConfig = new MatDialogConfig();
-    dialogoConfig.disableClose = true;
-    dialogoConfig.autoFocus = true;
-    dialogoConfig.data = {
-      materia: materia
-    };
-    const dialogRef = this.dialog.open(
-      SeleccionDeComisionDialogoComponent,
-      dialogoConfig
-    );
-    dialogRef.afterClosed().subscribe(registro => {
+    this.dialogosService.abrirDialogoParaSeleccionarComision(materia).subscribe(registro => {
       this.guardarRegistro(materia, registro);
-    });
+		});
+
   }
 
   deseleccionarMateria(materia) {

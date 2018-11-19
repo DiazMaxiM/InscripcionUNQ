@@ -3,7 +3,7 @@
 		<img src="https://ddhh.unq.edu.ar/wp-content/uploads/2017/04/Logo-UNQ-RGB.png" 
 		class="img-fluid logo col-lg-3 col-sm-12" alt="logo UNQ">
 		<div class="col-sm-1 d-flex justify-content-center align-items-center">
-			<i (click)="abrirDialogoParaLaCreacionDeIncidencia()" 
+			<i [hidden]="!muestraDialogoDeIncidencia" (click)="abrirDialogoParaLaCreacionDeIncidencia()" 
 			class="material-icons boton-incidencia" title="Notificar incidencia">
 			notification_important
 			</i>

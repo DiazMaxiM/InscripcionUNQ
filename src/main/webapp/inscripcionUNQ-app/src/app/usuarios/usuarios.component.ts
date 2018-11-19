@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 import { Usuario } from '../autenticacion/usuario.model';
-import { MatDialogConfig, MatDialog } from '@angular/material';
 import { AppMensajes } from '../app-mensajes.model';
-import { AltaUsuarioDialogoComponent } from '../alta-usuario-dialogo/alta-usuario-dialogo.component';
-import { ActalizacionPerfilesDialogoComponent } from '../actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
+import { DialogosService } from '../dialogos.service';
 
 @Component({
 	selector: 'app-periodo',
@@ -23,7 +21,7 @@ export class UsuariosComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog
+		private dialogosService: DialogosService
 	) { }
 
 	ngOnInit() {
@@ -40,23 +38,9 @@ export class UsuariosComponent implements OnInit {
 			});
 	}
 
-	crearConfiguracionDialogoParaUsuario(usuario?: Usuario) {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '400px';
-		dialogConfig.data = {
-			usuario: usuario
-		};
-		const dialogRef = this.dialog.open(AltaUsuarioDialogoComponent,
-			dialogConfig);
-		return dialogRef;
-	}
 
 	abrirDialogoParaAltaModificacionDeUsuario(usuario?: Usuario) {
-		const dialogRef = this.crearConfiguracionDialogoParaUsuario(usuario);
-		dialogRef.afterClosed().subscribe(res => {
+		this.dialogosService.abrirDialogoUsuario(usuario).subscribe(res => {
 			this.getUsuariosSegunPerfil();
 		});
 	}
@@ -97,23 +81,8 @@ export class UsuariosComponent implements OnInit {
 	}
 
 	abrirDialogoParaActualizacionPerfil(usuario) {
-		const dialogRef = this.crearConfiguracionDialogoParaPerfil(usuario);
-		dialogRef.afterClosed().subscribe(res => {
+		this.dialogosService.abrirDialogoPerfil(usuario).subscribe(res => {
 			this.getUsuariosSegunPerfil();
 		});
-	}
-
-	crearConfiguracionDialogoParaPerfil(usuario: Usuario) {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '400px';
-		dialogConfig.data = {
-			usuario: usuario
-		};
-		const dialogRef = this.dialog.open(ActalizacionPerfilesDialogoComponent,
-			dialogConfig);
-		return dialogRef;
 	}
 }

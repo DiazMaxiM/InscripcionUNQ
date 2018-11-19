@@ -11,6 +11,7 @@ export class Usuario {
 		email?: string,
 		nombre?: string,
 		apellido?: string,
+		dni?: number,
 		password?: string,
 		id?: string,
 	) {
@@ -18,6 +19,7 @@ export class Usuario {
 		this.apellido = apellido;
 		this.email = email;
 		this.password = password;
+		this.dni = dni;
 		this.id = id;
 	}
 }

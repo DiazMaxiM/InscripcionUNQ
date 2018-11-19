@@ -21,7 +21,7 @@ export class PeriodoDialogoComponent implements OnInit {
     private fb: FormBuilder,
     private utilesService: UtilesService,
     private dialogRef: MatDialogRef<PeriodoDialogoComponent>,
-    private restService: RestService
+		private restService: RestService
   ) {}
 
   ngOnInit() {

@@ -100,5 +100,6 @@ public class Usuario extends BaseEntity{
 		this.setNombre(usuarioActualizado.getNombre());
 		this.setApellido(usuarioActualizado.getApellido());
 		this.setEmail(usuarioActualizado.getEmail());
+		this.setDni(usuarioActualizado.getDni());
 	}	
 }

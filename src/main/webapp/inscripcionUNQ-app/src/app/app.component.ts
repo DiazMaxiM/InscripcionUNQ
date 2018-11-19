@@ -3,10 +3,10 @@ import { RestService } from './rest.service';
 import { UtilesService } from './utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
-import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
-import { MatDialog, MatDialogConfig } from '@angular/material';
 import { UsuarioLogueadoService } from './usuario-logueado.service';
-import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
+import { DialogosService } from './dialogos.service';
+import { Usuario } from './autenticacion/usuario.model';
+import { AppMensajes } from './app-mensajes.model';
 
 @Component({
 	selector: 'app-root',
@@ -17,53 +17,47 @@ export class AppComponent implements OnInit, AfterViewInit {
 	title = 'Inscripción UNQ';
 	incidencia: Incidencia;
 	hayUsuarioLogueado: boolean;
+	muestraDialogoDeIncidencia = true;
+	usuario: Usuario;
 
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog,
-		private usuarioLogueado: UsuarioLogueadoService
+		private usuarioLogueado: UsuarioLogueadoService,
+		private dialogosService: DialogosService
 	) { }
 
 	ngOnInit() {
 		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
+			this.usuario = JSON.parse(localStorage.getItem('usuario'));
 			this.hayUsuarioLogueado = res;
+			this.hayEstudianteLogueado();
+
 		});
+	}
+
+	hayEstudianteLogueado(){
+		if (this.usuario != null){
+			this.muestraDialogoDeIncidencia = this.usuario.perfiles.includes(AppMensajes.ESTUDIANTE);
+		}
 	}
 
 	ngAfterViewInit() {
 		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
 			this.hayUsuarioLogueado = res;
+			this.hayEstudianteLogueado();
 		});
 	}
 
 	abrirDialogoParaLaCreacionDeIncidencia() {
-		const dialogRef = this.crearConfiguracionDialogoParaIncidencia();
-		dialogRef.afterClosed().subscribe(val => {
+		this.dialogosService.abrirDialogoReporteIncidencia().subscribe(val => {
 			if (val != undefined) {
 				this.crearNuevaIncidencia(val);
 			}
 		});
 	}
 
-	crearConfiguracionDialogoParaIncidencia() {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '450px';
-		dialogConfig.data = {
-			incidencia: null
-		};
-
-		const dialogRef = this.dialog.open(IncidenciaDialogoComponent,
-			dialogConfig);
-
-		return dialogRef;
-	}
-
 	crearNuevaIncidencia(incidencia: Incidencia) {
-		console.log(incidencia);
 		this.restService.agregarIncidencia(incidencia)
 			.subscribe(res => {
 				const mensaje = 'Se envió con éxito la incidencia';
@@ -75,13 +69,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	abrirDialogoParaModificacionDePassword() {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '300px';
-		const dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent,
-			dialogConfig);
+    this.dialogosService.abrirDialogoModificacionPassword();
 	}
 
 	salir() {

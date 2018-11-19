@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 import { Comision } from './comision.model';
-import { MatDialogConfig, MatDialog } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
-import { ComisionesDeOfertaDialogoComponent } from '../comisiones-de-oferta-dialogo/comisiones-de-oferta-dialogo.component';
+import { DialogosService } from '../dialogos.service';
 
 @Component({
 	selector: 'app-comisiones-de-oferta',
@@ -23,7 +22,7 @@ export class ComisionesDeOfertaComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog
+		private dialogosService: DialogosService
 	) { }
 
 	ngOnInit() {
@@ -61,8 +60,9 @@ export class ComisionesDeOfertaComponent implements OnInit {
 	}
 
 	abrirDialogoComision() {
-		const dialogRef = this.crearConfiguracionDialogoParaComision();
-		dialogRef.afterClosed().subscribe(val => {
+		this.dialogosService
+		.abrirDialogoComisionesDeOferta()
+		.subscribe(val => {
 			if (val != undefined) {
 				this.actualizarComisiones(val);
 			}
@@ -78,21 +78,5 @@ export class ComisionesDeOfertaComponent implements OnInit {
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
 			});
-	}
-
-	crearConfiguracionDialogoParaComision() {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '450px';
-		dialogConfig.data = {
-			incidencia: null
-		};
-
-		const dialogRef = this.dialog.open(ComisionesDeOfertaDialogoComponent,
-			dialogConfig);
-
-		return dialogRef;
 	}
 }

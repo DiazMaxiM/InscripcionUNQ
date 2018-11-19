@@ -6,7 +6,6 @@ import { Carrera } from '../carreras/carrera.model';
 import { Materia } from '../materias/materia.model';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
-import { DataDialogo } from './data-dialogo.model';
 
 @Component({
 	selector: 'app-modificacion-de-materia-dialogo',
@@ -26,18 +25,17 @@ export class ModificacionDeMateriaDialogoComponent implements OnInit {
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
 		private restService: RestService,
-		private dialogRef: MatDialogRef<ModificacionDeMateriaDialogoComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.materia = data.materia;
-		if (data.materia != null) {
-			this.carrerasSeleccionadas = data.materia.carreras;
-		}
+		private dialogRef: MatDialogRef<ModificacionDeMateriaDialogoComponent>) {
 	}
 
 	ngOnInit() {
+		if (this.materia != null) {
+			this.carrerasSeleccionadas = this.materia.carreras;
+		}
 		this.getCarreras();
 		this.crearFormularioMateria();
 		this.insertarInformacionDeLaMateriaEnFormulario();
+
 	}
 
 	getCarreras() {

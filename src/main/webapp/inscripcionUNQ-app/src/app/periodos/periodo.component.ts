@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { RestService } from "../rest.service";
 import { UtilesService } from "../utiles.service";
 import { Periodo } from "./periodo.model";
-import { MatDialogConfig, MatDialog } from "@angular/material";
-import { PeriodoDialogoComponent } from "../periodo-dialogo/periodo-dialogo.component";
+import { DialogosService } from '../dialogos.service';
 
 @Component({
   selector: "app-periodo",
@@ -17,8 +16,8 @@ export class PeriodoComponent implements OnInit {
   constructor(
     private restService: RestService,
     private utilesService: UtilesService,
-    private dialog: MatDialog
-  ) {}
+		private dialogosService: DialogosService
+		) {}
 
   ngOnInit() {
     this.periodos = JSON.parse(localStorage.getItem("periodos"));
@@ -29,21 +28,13 @@ export class PeriodoComponent implements OnInit {
     this.mostrarPeriodos = this.periodos.length > 0;
   }
 
-  crearConfiguracionDialogoParaPeriodo() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = "600px";
-    dialogConfig.height = "450px";
-    const dialogRef = this.dialog.open(PeriodoDialogoComponent, dialogConfig);
-    return dialogRef;
-  }
 
   abrirDialogoParaCreacionDePeriodo() {
-    const dialogRef = this.crearConfiguracionDialogoParaPeriodo();
-    dialogRef.afterClosed().subscribe(val => {
-      this.getPeriodos();
-    });
+		this.dialogosService
+		.abrirDialogoPeriodo()
+		.subscribe(val => {
+			this.getPeriodos();
+		});
   }
 
   getPeriodos() {
