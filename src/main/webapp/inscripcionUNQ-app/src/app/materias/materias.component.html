@@ -25,9 +25,12 @@
 				<td> {{ materia.codigo }} </td>
 				<td> {{ materia.nombre }} </td>
 				<td>
-			<tr *ngFor="let carrera of materia.carreras">
-				{{ carrera.codigo }}
-			</tr>
+			<ng-container *ngFor="let carrera of materia.carreras">
+				<ng-template #tipContent>{{carrera.descripcion}}</ng-template>
+				<div class="carrera" [ngbTooltip]="tipContent" matTooltipPosition="after">
+					{{carrera.codigo}}
+				</div>
+			</ng-container>
 			</td>
 			<td> {{ materia.horas }} </td>
 			<td> {{ materia.creditos}} </td>
