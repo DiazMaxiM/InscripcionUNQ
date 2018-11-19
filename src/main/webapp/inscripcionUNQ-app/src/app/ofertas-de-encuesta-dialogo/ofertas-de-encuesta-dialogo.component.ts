@@ -1,11 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DataDialogo } from '../encuesta-dialogo/data-dialogo.model';
 import { AppMensajes } from '../app-mensajes.model';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { Encuesta } from '../encuesta-dialogo/encuesta.model';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
 	selector: 'app-ofertas-de-encuesta-dialogo',
@@ -21,10 +20,7 @@ export class OfertasDeEncuestaDialogoComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialogRef: MatDialogRef<OfertasDeEncuestaDialogoComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.encuesta = data.encuesta;
-		this.ofertasSeleccionados = this.encuesta.ofertasAcademicas;
+		private dialogRef: MatDialogRef<OfertasDeEncuestaDialogoComponent>) {
 	}
 
 	ngOnInit() {

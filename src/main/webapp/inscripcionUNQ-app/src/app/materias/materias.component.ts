@@ -3,8 +3,7 @@ import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Materia } from './materia.model';
-import { MatDialog, MatDialogConfig } from '@angular/material';
-import { ModificacionDeMateriaDialogoComponent } from '../modificacion-de-materia-dialogo/modificacion-de-materia-dialogo.component';
+import { DialogosService } from '../dialogos.service';
 
 @Component({
 	selector: 'app-materias',
@@ -19,8 +18,7 @@ export class MateriasComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog
-	) { }
+		private dialogosService: DialogosService) { }
 
 	ngOnInit() {
 		this.materias = JSON.parse(localStorage.getItem('materias'));
@@ -35,19 +33,14 @@ export class MateriasComponent implements OnInit {
 			});
 	}
 
-	abrirDialogoParaLaCreacionDeMateria() {
-		const dialogRef = this.crearConfiguracionDialogoParaMateria();
 
-		dialogRef.afterClosed().subscribe(val => {
+	abrirDialogoMateria(materia?: Materia) {
+		this.dialogosService
+		.abrirDialogoMateria(materia)
+		.subscribe(res => {
 			this.getMaterias();
 		});
-	}
-
-	abrirDialogoParaEdicionDeMateria(materia: Materia) {
-		const dialogRef = this.crearConfiguracionDialogoParaMateria(materia);
-		dialogRef.afterClosed().subscribe(val => {
-			this.getMaterias();
-		});
+		
 	}
 
 	actualizarMateria(materia) {
@@ -62,22 +55,6 @@ export class MateriasComponent implements OnInit {
 				});
 	}
 
-	crearConfiguracionDialogoParaMateria(materia?) {
-		const dialogConfig = new MatDialogConfig();
-
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '450px';
-		dialogConfig.data = {
-			materia: materia
-		};
-
-		const dialogRef = this.dialog.open(ModificacionDeMateriaDialogoComponent,
-			dialogConfig);
-
-		return dialogRef;
-	}
 
 	cambiarEstado(materia: Materia, evento) {
 		materia.estado = evento.checked;

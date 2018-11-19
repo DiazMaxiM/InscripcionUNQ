@@ -1,8 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Carrera } from '../carreras/carrera.model';
-import { DataDialogo } from './data-dialogo.model';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -21,9 +20,7 @@ export class CarreraDialogoComponent implements OnInit {
 		private fb: FormBuilder,
 		private utilesService: UtilesService,
 		private dialogRef: MatDialogRef<CarreraDialogoComponent>,
-		private restService: RestService,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.carrera = data.carrera;
+		private restService: RestService) {
 	}
 
 	ngOnInit() {

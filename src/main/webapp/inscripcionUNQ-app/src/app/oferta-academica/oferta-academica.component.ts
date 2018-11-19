@@ -2,11 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { RestService } from "../rest.service";
 import { UtilesService } from "../utiles.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import { MatDialog, MatDialogConfig } from "@angular/material";
 import { OfertaAcademica } from "./oferta-academica.model";
-import { OfertaAcademicaDialogoComponent } from "../oferta-academica-dialogo/oferta-academica.dialogo.component";
-import { SeleccionDePeriodoDialogoComponent } from "../seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component";
 import { Periodo } from "../periodos/periodo.model";
+import { DialogosService } from "../dialogos.service";
 
 @Component({
 	selector: "app-oferta-academica",
@@ -19,7 +17,7 @@ export class OfertaAcademicaComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog
+		private dialogosService: DialogosService,
 	) { }
 
 	ngOnInit() {
@@ -37,37 +35,10 @@ export class OfertaAcademicaComponent implements OnInit {
 		);
 	}
 
-	abrirDialogoParaCreacionDeOferta() {
-		const dialogRef = this.crearConfiguracionDialogoParaOferta();
-		dialogRef.afterClosed().subscribe(val => {
-			this.getOfertas();
-		});
-	}
-
-	crearConfiguracionDialogoParaOferta(oferta?) {
-		const dialogConfig = new MatDialogConfig();
-
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = "600px";
-		dialogConfig.height = "600px";
-		dialogConfig.data = {
-			oferta: oferta
-		};
-
-		const dialogRef = this.dialog.open(
-			OfertaAcademicaDialogoComponent,
-			dialogConfig
-		);
-
-		return dialogRef;
-	}
-
-	abrirDialogoParaEdicionDeOferta(ofertaSeleccionada) {
-		const dialogRef = this.crearConfiguracionDialogoParaOferta(
-			ofertaSeleccionada
-		);
-		dialogRef.afterClosed().subscribe(val => {
+	abrirDialogoParaOferta(ofertaSeleccionada?) {
+		this.dialogosService
+		.abrirDialogoOfertaAcademica(ofertaSeleccionada)
+		.subscribe(res => {
 			this.getOfertas();
 		});
 	}
@@ -113,24 +84,10 @@ export class OfertaAcademicaComponent implements OnInit {
 		);
 	}
 
-	crearConfiguracionDialogoParaSeleccionDePeriodo() {
-		const dialogConfig = new MatDialogConfig();
-
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = "400px";
-		dialogConfig.height = "200px";
-
-		const dialogRef = this.dialog.open(
-			SeleccionDePeriodoDialogoComponent,
-			dialogConfig
-		);
-		return dialogRef;
-	}
-
-	abrirDialogoParaSeleccionDePeriodo(idOferta) {
-		const dialogRef = this.crearConfiguracionDialogoParaSeleccionDePeriodo();
-		dialogRef.afterClosed().subscribe(idPeriodo => {
+	abrirDialogoParaSeleccionDePeriodo(idOferta){
+		this.dialogosService
+		.abrirDialogoSeleccionDePeriodo()
+		.subscribe(idPeriodo => {
 			if (idPeriodo != null) {
 				this.clonarOferta(idPeriodo, idOferta);
 			}

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
-import { MatDialog, MatDialogConfig, MatOptionSelectionChange } from '@angular/material';
+import { MatDialog, MatOptionSelectionChange } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IncidenciaEstado } from './incidencia-estado.model';
-import { ModificacionDeIncidenciaDialogoComponent } from '../modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component'
 import { TipoIncidencia } from '../tipo-incidencia-dialogo/tipo-incidencia.model';
 import { DialogosService } from '../dialogos.service';
 import { FormControl } from '@angular/forms';
@@ -90,30 +89,12 @@ export class IncidenciasComponent implements OnInit {
 	}
 
 	abrirDialogoParaEdicionDeIncidencia(incidencia: IncidenciaEstado) {
-		const dialogRef = this.crearConfiguracionDialogoParaIncidencia(incidencia);
-		dialogRef.afterClosed().subscribe(val => {
+		this.dialogosService.abrirDialogoEdicionDeIncidencia(incidencia).subscribe(val => {
 			if (val != undefined) {
 				this.cambiarEstado(val, incidencia);
 				this.getIncidenciasDelTipo(this.tipoDeIncidenciaActual);
 			}
 		});
-	}
-
-	crearConfiguracionDialogoParaIncidencia(incidencia?) {
-		const dialogConfig = new MatDialogConfig();
-
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '450px';
-		dialogConfig.data = {
-			incidencia: incidencia
-		};
-
-		const dialogRef = this.dialog.open(ModificacionDeIncidenciaDialogoComponent,
-			dialogConfig);
-
-		return dialogRef;
 	}
 
 	abrirDialogoTipoIncidencia(tipoIncidencia) {
@@ -125,7 +106,6 @@ export class IncidenciasComponent implements OnInit {
 }
 
 incidenciaSeleccionada(event: MatOptionSelectionChange, tipoIncidencia){
-	console.log(tipoIncidencia);
 	if (event.source.selected) {
 		this.tipoDeIncidenciaActual = tipoIncidencia;
 		this.getIncidenciasDelTipo(tipoIncidencia);

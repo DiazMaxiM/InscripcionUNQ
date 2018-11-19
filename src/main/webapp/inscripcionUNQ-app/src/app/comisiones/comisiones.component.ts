@@ -7,11 +7,10 @@ import { AppRutas } from '../app-rutas.model';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { AppMensajes } from '../app-mensajes.model';
-import { MatOptionSelectionChange, MatDialogConfig, MatDialog } from '@angular/material';
-import { ComisionDialogoComponent } from '../comision-dialogo/comision-dialogo.component';
+import { MatOptionSelectionChange} from '@angular/material';
 import { Comision } from '../comisiones-de-oferta/comision.model';
-import { SeleccionDePeriodoDialogoComponent } from '../seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DialogosService } from '../dialogos.service';
 
 @Component({
 	selector: 'app-comisiones',
@@ -27,13 +26,12 @@ export class ComisionesComponent implements OnInit {
 	mostrarComisiones;
 	comisionBuscada;
 	materiaBuscada;
-	comisionSeleccionada;
 	periodoActual;
 
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialog: MatDialog
+		private dialogosService: DialogosService
 	) { }
 
 	ngOnInit() {
@@ -100,38 +98,12 @@ export class ComisionesComponent implements OnInit {
 	}
 
 	abrirDialogoComision(comision?: Comision) {
-		this.comisionSeleccionada = comision;
-		const dialogRef = this.crearConfiguracionDialogoParaComision(comision);
-		dialogRef.afterClosed().subscribe(val => {
+		this.dialogosService
+		.abrirDialogoComision(comision)
+		.subscribe(res => {
 			this.getComisionesEnPeriodo(this.periodoActual);
 		});
-	}
 
-	guardarComision(comision: Comision) {
-		if (this.comisionSeleccionada != null) {
-			this.guardarComisionModificada(comision);
-		} else {
-			this.guardarNuevaComision(comision);
-		}
-	}
-
-	guardarComisionModificada(comision: Comision) {
-		comision.id = this.comisionSeleccionada.id;
-		this.restService.actualizarInformacionDeComision(comision).subscribe(rest => {
-			this.mostarComisionEnPeriodo(comision.periodo);
-		},
-			(err) => {
-				this.utilesService.mostrarMensajeDeError(err);
-			});
-	}
-
-	guardarNuevaComision(comision: Comision) {
-		this.restService.crearNuevaComision(comision).subscribe(rest => {
-			this.mostarComisionEnPeriodo(comision.periodo);
-		},
-			(err) => {
-				this.utilesService.mostrarMensajeDeError(err);
-			});
 	}
 
 	mostarComisionEnPeriodo(periodo) {
@@ -139,19 +111,6 @@ export class ComisionesComponent implements OnInit {
 		this.getComisionesEnPeriodo(periodo);
 	}
 
-	crearConfiguracionDialogoParaComision(comision?) {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = 'auto';
-		dialogConfig.height = 'auto';
-		dialogConfig.data = {
-			comision: comision
-		};
-		const dialogRef = this.dialog.open(ComisionDialogoComponent,
-			dialogConfig);
-		return dialogRef;
-	}
 
 	eliminarComision(comision: Comision) {
 		const mensaje = '¿Está seguro de que desea eliminar la comisión seleccionada?';
@@ -172,25 +131,10 @@ export class ComisionesComponent implements OnInit {
 			});
 	}
 
-	crearConfiguracionDialogoParaSeleccionDePeriodo() {
-		const dialogConfig = new MatDialogConfig();
-
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = false;
-		dialogConfig.width = "400px";
-		dialogConfig.height = "200px";
-
-		const dialogRef = this.dialog.open(
-			SeleccionDePeriodoDialogoComponent,
-			dialogConfig
-		);
-		return dialogRef;
-	}
-
 	abrirDialogoParaSeleccionDePeriodo(idComision) {
-
-		const dialogRef = this.crearConfiguracionDialogoParaSeleccionDePeriodo();
-		dialogRef.afterClosed().subscribe(idPeriodo => {
+		this.dialogosService
+		.abrirDialogoSeleccionDePeriodo()
+		.subscribe(idPeriodo => {
 			if (idPeriodo != null) {
 				this.clonarComision(idPeriodo, idComision);
 			}

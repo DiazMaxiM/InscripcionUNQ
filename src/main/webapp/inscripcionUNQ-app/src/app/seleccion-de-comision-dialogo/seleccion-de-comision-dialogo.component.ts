@@ -1,6 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DataDialogo } from './data-dialogo.model';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef} from '@angular/material';
 import { ComisionSeleccionada } from './comision-seleccionada.model';
 import { FormBuilder } from '@angular/forms';
 import { RegistroDeComisionesSeleccionadasService } from '../seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
@@ -10,7 +9,7 @@ import { RegistroDeComisionesSeleccionadasService } from '../seleccion-de-materi
 	templateUrl: './seleccion-de-comision-dialogo.component.html',
 	styleUrls: ['./seleccion-de-comision-dialogo.component.css']
 })
-export class SeleccionDeComisionDialogoComponent {
+export class SeleccionDeComisionDialogoComponent implements OnInit{
 	materia: any;
 	comisiones: any[];
 	comisionActual: any;
@@ -18,9 +17,10 @@ export class SeleccionDeComisionDialogoComponent {
 	constructor(
 		private registroComisionesService: RegistroDeComisionesSeleccionadasService,
 		public dialogRef: MatDialogRef<SeleccionDeComisionDialogoComponent>,
-		private fb: FormBuilder,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.materia = data.materia;
+		private fb: FormBuilder) {
+	}
+
+	ngOnInit() {
 		this.comisiones = this.materia.comisionesJson;
 	}
 

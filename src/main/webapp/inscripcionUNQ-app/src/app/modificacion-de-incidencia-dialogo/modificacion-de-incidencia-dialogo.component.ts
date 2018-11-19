@@ -1,9 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef} from "@angular/material";
 import { RestService } from "../rest.service";
 import { UtilesService } from "../utiles.service";
-import { DataDialogo } from "./data-dialogo.model";
 import { IncidenciaEstado } from "../incidencias/incidencia-estado.model";
 import { startWith, map } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -23,10 +22,7 @@ export class ModificacionDeIncidenciaDialogoComponent implements OnInit {
     private fb: FormBuilder,
     private utilesService: UtilesService,
     private restService: RestService,
-    private dialogRef: MatDialogRef<ModificacionDeIncidenciaDialogoComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DataDialogo
-  ) {
-    this.incidencia = this.data.incidencia;
+    private dialogRef: MatDialogRef<ModificacionDeIncidenciaDialogoComponent>) {
   }
 
   ngOnInit() {

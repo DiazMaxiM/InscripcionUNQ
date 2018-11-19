@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DataDialogo } from '../alta-usuario-dialogo/data-dialogo.model';
+import { MatDialogRef} from '@angular/material';
 import { Usuario } from '../autenticacion/usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 
@@ -20,14 +19,12 @@ export class ActalizacionPerfilesDialogoComponent implements OnInit {
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: DataDialogo) {
-		this.usuario = data.usuario;
-		this.perfilesSeleccionados = this.usuario.perfiles;
+		private dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>) {
 	}
 
 	ngOnInit() {
 		this.getPerfiles();
+		this.perfilesSeleccionados = this.usuario.perfiles;
 	}
 
 	getPerfiles() {
