@@ -11,7 +11,7 @@
 		<mat-form-field>
 			<input type="text" placeholder="Carrera" formControlName="carrera" matInput [matAutocomplete]="auto" required>
 			<mat-autocomplete #auto="matAutocomplete">
-				<mat-option *ngFor="let carrera of filtroCarreras | async" [value]="carrera.codigo">
+				<mat-option *ngFor="let carrera of carreras | filtroBusqueda: {descripcion: carreraBuscada}; let i=index;" [value]="carrera.descripcion">
 					{{carrera.descripcion}}
 				</mat-option>
 			</mat-autocomplete>
@@ -22,7 +22,7 @@
 		<mat-form-field>
 			<input type="text" placeholder="Período" formControlName="periodo" matInput [matAutocomplete]="autoPeriodo" required>
 			<mat-autocomplete #autoPeriodo="matAutocomplete">
-				<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo">
+				<mat-option *ngFor="let periodo of periodos | filtroBusqueda: {codigo: periodoBuscado}; let i=index;"[value]="periodo.codigo">
 					{{periodo.codigo}}
 				</mat-option>
 			</mat-autocomplete>

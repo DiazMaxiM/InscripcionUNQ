@@ -6,7 +6,7 @@
 	<mat-form-field>
 		<input type="text" placeholder="Seleccione un período" [formControl]="periodoControl" matInput [matAutocomplete]="autoPeriodo">
 		<mat-autocomplete #autoPeriodo="matAutocomplete">
-			<mat-option *ngFor="let periodo of filtroPeriodos | async" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado($event, periodo)">
+			<mat-option *ngFor="let periodo of periodos | filtroBusqueda: {codigo: periodoBuscado}; let i=index;" [value]="periodo.codigo" (onSelectionChange)="periodoSeleccionado($event, periodo)">
 				{{periodo.codigo}}
 			</mat-option>
 		</mat-autocomplete>

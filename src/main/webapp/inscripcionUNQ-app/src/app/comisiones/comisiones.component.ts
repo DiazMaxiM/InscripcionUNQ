@@ -22,11 +22,11 @@ export class ComisionesComponent implements OnInit {
 	periodoControl = new FormControl();
 	comisiones: Comision[];
 	periodos: Periodo[];
-	filtroPeriodos: Observable<Periodo[]>;
 	mostrarComisiones;
 	comisionBuscada;
 	materiaBuscada;
 	periodoActual;
+	periodoBuscado;
 
 	constructor(
 		private restService: RestService,
@@ -36,6 +36,10 @@ export class ComisionesComponent implements OnInit {
 
 	ngOnInit() {
 		this.getPeriodos();
+		this.periodoControl.valueChanges.subscribe(term => {
+			this.periodoBuscado = term;
+			
+		});
 	}
 
 	getPeriodos() {
@@ -54,20 +58,6 @@ export class ComisionesComponent implements OnInit {
 			this.utilesService.mostrarMensajeYRedireccionar(mensaje, AppRutas.TAREAS_USUARIO);
 		}
 		this.periodos = periodos;
-		this.crearFiltroPeriodos();
-	}
-
-	crearFiltroPeriodos() {
-		this.filtroPeriodos = this.periodoControl.valueChanges.pipe(
-			startWith(''),
-			map(val => this.filtrarPeriodo(val))
-		);
-	}
-
-	filtrarPeriodo(val: string): Periodo[] {
-		return this.periodos.filter(option => {
-			return option.codigo.toLowerCase().match(val.toLowerCase());
-		});
 	}
 
 	periodoSeleccionado(event: MatOptionSelectionChange, periodo: Periodo) {

@@ -44,7 +44,7 @@ export class DialogosService {
 		
 	abrirDialogoEncuesta(encuesta?): Observable<any> {
 			let dialogRef: MatDialogRef<EncuestaDialogoComponent>;
-			dialogRef = this.dialog.open(EncuestaDialogoComponent);
+			dialogRef = this.dialog.open(EncuestaDialogoComponent, this.configuracionDialogo());
 			dialogRef.componentInstance.encuestaSeleccionada = encuesta;
 			
 			return dialogRef.afterClosed();
