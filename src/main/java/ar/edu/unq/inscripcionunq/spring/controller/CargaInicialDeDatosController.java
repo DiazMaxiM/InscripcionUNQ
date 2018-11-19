@@ -591,12 +591,16 @@ public class CargaInicialDeDatosController {
 
 		Equivalencia equivalenciaSeg = new Equivalencia(materiaServiceImp.get(sI), materiaServiceImp.get(segInfo));
 		equivalenciaServiceImp.save(equivalenciaSeg);
-  
+		
+		try {
+			webService.importarEstudiantes(idEncuesta);
+		} catch (ConexionWebServiceException | EncuestaNoExisteException e) {
+			e.printStackTrace();
+		}
 
 		Usuario usuario = new Usuario("Rosali", "Zaracho", "zaracho.rosali@gmail.com", "36214936");
 		usuario.setPassword("123");
 		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
-		usuario.agregarPerfil(TipoPerfil.ESTUDIANTE);
 		usuarioServiceImp.save(usuario);
 
 		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");
