@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { RestService } from '../rest.service';
 import { MateriaEstudiante } from './materia-estudiante.model';
 import { UtilesService } from '../utiles.service';

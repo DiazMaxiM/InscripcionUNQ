@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup} from '@angular/forms';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';
-import { Observable } from 'rxjs';
-import { AppMensajes } from '../app-mensajes.model';
-import { startWith, map } from 'rxjs/operators';
+import { AppMensajes } from '../app-mensajes.model';;
 import { Encuesta } from './encuesta.model';
 import { Fecha } from './fecha.model';
 import * as moment from 'moment';

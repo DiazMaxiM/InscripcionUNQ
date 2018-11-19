@@ -3,8 +3,6 @@ import {  MatDialogRef } from '@angular/material';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UtilesService } from '../utiles.service';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { Carrera } from '../carreras/carrera.model';
 import { RestService } from '../rest.service';
 import { Periodo } from '../periodos/periodo.model';

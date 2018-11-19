@@ -3,7 +3,7 @@ import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Materia } from '../materias/materia.model';
-import { MatDialogRef, MAT_DIALOG_DATA, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatDialogRef} from '@angular/material';
 import { Equivalencia } from '../equivalencias/equivalencia.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppMensajes } from '../app-mensajes.model';
