@@ -48,9 +48,8 @@ public class WebService {
 	public void importarEstudiantes(Long idEncuesta) throws ConexionWebServiceException, EncuestaNoExisteException {
 		String response = null;
 		try {
-			response = Unirest.post("http://gastosfamiliares.esy.es/prueba2.json")
-					.header("Content-Type", "application/json").header("cache-control", "no-cache").asString()
-					.getBody();
+			response = Unirest.post("http://www.proydesa.org/prueba2.json").header("Content-Type", "application/json")
+					.header("cache-control", "no-cache").asString().getBody();
 		} catch (UnirestException e) {
 			throw new ConexionWebServiceException();
 		}
