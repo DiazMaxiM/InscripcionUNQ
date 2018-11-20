@@ -88,9 +88,9 @@ export class UtilesService {
 		}
 	}
 
-	activarDialogoCargando() {
-		const mensaje = 'Procesando...';
-		const dialogConfig = this.crearConfiguracionDelDialogo(mensaje, true);
+	activarDialogoCargando(mensaje?) {
+		const mensajeDefecto = mensaje == null ? 'Procesando...' : mensaje;
+		const dialogConfig = this.crearConfiguracionDelDialogo(mensajeDefecto, true);
 		const dialogRef = this.dialog.open(FeedbackUsuarioDialogoComponent,
 			dialogConfig);
 		this.dialogo = dialogRef;
