@@ -18,7 +18,6 @@ import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
-import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
@@ -579,13 +578,6 @@ public class CargaInicialDeDatosController {
 		Encuesta poll = new Encuesta("Encuesta segundo semestre 2018", LocalDateTime.of(2018, 8, 25, 00, 00),
 				LocalDateTime.of(2018, 12, 1, 00, 00), periodo1);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
-
-		Estudiante ingrid = new Estudiante("Ingrid", "Calderon", "123", "ingridgcalderon@gmail.com");
-		ingrid.agregarInscripcionACarrera(tpi);
-		ingrid.agregarMateriaAprobada(materiaServiceImp.get(intro));
-		ingrid.agregarMateriaAprobada(materiaServiceImp.get(mate1));
-
-		poll.agregarEstudiante(ingrid);
 		
 		Long idEncuesta = encuestaServiceImp.save(poll);
 
