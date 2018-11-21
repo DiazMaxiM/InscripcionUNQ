@@ -32,140 +32,140 @@ import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dia
 
 @Injectable()
 export class DialogosService {
-		
+
 	constructor(private dialog: MatDialog) { }
 
-  abrirDialogoTipoDeIncidencia(tipoIncidencia?: TipoIncidencia): Observable<any> {
-        let dialogRef: MatDialogRef<TipoIncidenciaDialogoComponent>;
-				dialogRef = this.dialog.open(TipoIncidenciaDialogoComponent, this.configuracionDialogo());
-				dialogRef.componentInstance.tipoDeIncidencia = tipoIncidencia;
-        return dialogRef.afterClosed();
-		}
-		
+	abrirDialogoTipoDeIncidencia(tipoIncidencia?: TipoIncidencia): Observable<any> {
+		let dialogRef: MatDialogRef<TipoIncidenciaDialogoComponent>;
+		dialogRef = this.dialog.open(TipoIncidenciaDialogoComponent, this.configuracionDialogo(400, 230));
+		dialogRef.componentInstance.tipoDeIncidencia = tipoIncidencia;
+		return dialogRef.afterClosed();
+	}
+
 	abrirDialogoEncuesta(encuesta?): Observable<any> {
-			let dialogRef: MatDialogRef<EncuestaDialogoComponent>;
-			dialogRef = this.dialog.open(EncuestaDialogoComponent, this.configuracionDialogo());
-			dialogRef.componentInstance.encuestaSeleccionada = encuesta;
-			
-			return dialogRef.afterClosed();
+		let dialogRef: MatDialogRef<EncuestaDialogoComponent>;
+		dialogRef = this.dialog.open(EncuestaDialogoComponent, this.configuracionDialogo(650, 450));
+		dialogRef.componentInstance.encuestaSeleccionada = encuesta;
+
+		return dialogRef.afterClosed();
 	}
 
 	abrirDialogoOfertaAcademicaDeEncuesta(encuesta?: Encuesta): Observable<any> {
 		let dialogRef: MatDialogRef<OfertasDeEncuestaDialogoComponent>;
-		dialogRef = this.dialog.open(OfertasDeEncuestaDialogoComponent, this.configuracionDialogo());
+		dialogRef = this.dialog.open(OfertasDeEncuestaDialogoComponent, this.configuracionDialogo(500, 410));
 		dialogRef.componentInstance.encuesta = encuesta;
 		dialogRef.componentInstance.ofertasSeleccionados = encuesta.ofertasAcademicas;
 		return dialogRef.afterClosed();
-}
+	}
 
-abrirDialogoReportes(encuesta?: Encuesta): Observable<any> {
-	let dialogRef: MatDialogRef<ReporteDialogoComponent>;
-	dialogRef = this.dialog.open(ReporteDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.encuesta = encuesta;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoReportes(encuesta?: Encuesta): Observable<any> {
+		let dialogRef: MatDialogRef<ReporteDialogoComponent>;
+		dialogRef = this.dialog.open(ReporteDialogoComponent, this.configuracionDialogo(400, 250));
+		dialogRef.componentInstance.encuesta = encuesta;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoCarrera(carrera?: Carrera): Observable<any> {
-	let dialogRef: MatDialogRef<CarreraDialogoComponent>;
-	dialogRef = this.dialog.open(CarreraDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.carrera = carrera;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoCarrera(carrera?: Carrera): Observable<any> {
+		let dialogRef: MatDialogRef<CarreraDialogoComponent>;
+		dialogRef = this.dialog.open(CarreraDialogoComponent, this.configuracionDialogo(400, 400));
+		dialogRef.componentInstance.carrera = carrera;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoMateria(materia?: Materia): Observable<any> {
-	let dialogRef: MatDialogRef<ModificacionDeMateriaDialogoComponent>;
-	dialogRef = this.dialog.open(ModificacionDeMateriaDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.materia = materia;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoMateria(materia?: Materia): Observable<any> {
+		let dialogRef: MatDialogRef<ModificacionDeMateriaDialogoComponent>;
+		dialogRef = this.dialog.open(ModificacionDeMateriaDialogoComponent, this.configuracionDialogo(450, 480));
+		dialogRef.componentInstance.materia = materia;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoEquivalencia(equivalencia?: Equivalencia): Observable<any> {
-	let dialogRef: MatDialogRef<EquivalenciaDialogoComponent>;
-	dialogRef = this.dialog.open(EquivalenciaDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.equivalencia = equivalencia;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoEquivalencia(equivalencia?: Equivalencia): Observable<any> {
+		let dialogRef: MatDialogRef<EquivalenciaDialogoComponent>;
+		dialogRef = this.dialog.open(EquivalenciaDialogoComponent, this.configuracionDialogo(400, 270));
+		dialogRef.componentInstance.equivalencia = equivalencia;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoOfertaAcademica(oferta?: OfertaAcademica): Observable<any> {
-	let dialogRef: MatDialogRef<OfertaAcademicaDialogoComponent>;
-	dialogRef = this.dialog.open(OfertaAcademicaDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.ofertaSeleccionada = oferta;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoOfertaAcademica(oferta?: OfertaAcademica): Observable<any> {
+		let dialogRef: MatDialogRef<OfertaAcademicaDialogoComponent>;
+		dialogRef = this.dialog.open(OfertaAcademicaDialogoComponent, this.configuracionDialogo(400, 470));
+		dialogRef.componentInstance.ofertaSeleccionada = oferta;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoSeleccionDePeriodo(): Observable<any> {
-	let dialogRef: MatDialogRef<SeleccionDePeriodoDialogoComponent>;
-	dialogRef = this.dialog.open(SeleccionDePeriodoDialogoComponent, this.configuracionDialogo());
-	return dialogRef.afterClosed();
-}
+	abrirDialogoSeleccionDePeriodo(): Observable<any> {
+		let dialogRef: MatDialogRef<SeleccionDePeriodoDialogoComponent>;
+		dialogRef = this.dialog.open(SeleccionDePeriodoDialogoComponent, this.configuracionDialogo(400, 600));
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoComisionesDeOferta(): Observable<any> {
-	let dialogRef: MatDialogRef<ComisionesDeOfertaDialogoComponent>;
-	dialogRef = this.dialog.open(ComisionesDeOfertaDialogoComponent, this.configuracionDialogo());
-	return dialogRef.afterClosed();
-}
+	abrirDialogoComisionesDeOferta(): Observable<any> {
+		let dialogRef: MatDialogRef<ComisionesDeOfertaDialogoComponent>;
+		dialogRef = this.dialog.open(ComisionesDeOfertaDialogoComponent, this.configuracionDialogo(700, 500));
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoPeriodo(periodo?: Periodo): Observable<any> {
-	let dialogRef: MatDialogRef<PeriodoDialogoComponent>;
-	dialogRef = this.dialog.open(PeriodoDialogoComponent, this.configuracionDialogo());
-	return dialogRef.afterClosed();
-}
+	abrirDialogoPeriodo(periodo?: Periodo): Observable<any> {
+		let dialogRef: MatDialogRef<PeriodoDialogoComponent>;
+		dialogRef = this.dialog.open(PeriodoDialogoComponent, this.configuracionDialogo(400, 350));
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoComision(comision?: Comision): Observable<any> {
-	let dialogRef: MatDialogRef<ComisionDialogoComponent>;
-	dialogRef = this.dialog.open(ComisionDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.comisionSeleccionada = comision;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoComision(comision?: Comision): Observable<any> {
+		let dialogRef: MatDialogRef<ComisionDialogoComponent>;
+		dialogRef = this.dialog.open(ComisionDialogoComponent, this.configuracionDialogo(600, 550));
+		dialogRef.componentInstance.comisionSeleccionada = comision;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoUsuario(usuario?: Usuario): Observable<any> {
-	let dialogRef: MatDialogRef<AltaUsuarioDialogoComponent>;
-	dialogRef = this.dialog.open(AltaUsuarioDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.usuario = usuario;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoUsuario(usuario?: Usuario): Observable<any> {
+		let dialogRef: MatDialogRef<AltaUsuarioDialogoComponent>;
+		dialogRef = this.dialog.open(AltaUsuarioDialogoComponent, this.configuracionDialogo(400, 420));
+		dialogRef.componentInstance.usuario = usuario;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoPerfil(usuario?: Usuario): Observable<any> {
-	let dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>;
-	dialogRef = this.dialog.open(ActalizacionPerfilesDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.usuario = usuario;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoPerfil(usuario?: Usuario): Observable<any> {
+		let dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>;
+		dialogRef = this.dialog.open(ActalizacionPerfilesDialogoComponent, this.configuracionDialogo(400, 600));
+		dialogRef.componentInstance.usuario = usuario;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoReporteIncidencia(): Observable<any> {
-	let dialogRef: MatDialogRef<IncidenciaDialogoComponent>;
-	dialogRef = this.dialog.open(IncidenciaDialogoComponent, this.configuracionDialogo());
-	return dialogRef.afterClosed();
-}
+	abrirDialogoReporteIncidencia(): Observable<any> {
+		let dialogRef: MatDialogRef<IncidenciaDialogoComponent>;
+		dialogRef = this.dialog.open(IncidenciaDialogoComponent, this.configuracionDialogo(400, 440));
+		return dialogRef.afterClosed();
+	}
 
 
-abrirDialogoModificacionPassword(): Observable<any> {
-	let dialogRef: MatDialogRef<EdicionUsuarioDialogoComponent>;
-	dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent, this.configuracionDialogo());
-	return dialogRef.afterClosed();
-}
+	abrirDialogoModificacionPassword(): Observable<any> {
+		let dialogRef: MatDialogRef<EdicionUsuarioDialogoComponent>;
+		dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent, this.configuracionDialogo(400, 600));
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoEdicionDeIncidencia(incidencia: IncidenciaEstado): Observable<any> {
-	let dialogRef: MatDialogRef<ModificacionDeIncidenciaDialogoComponent>;
-	dialogRef = this.dialog.open(ModificacionDeIncidenciaDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.incidencia = incidencia;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoEdicionDeIncidencia(incidencia: IncidenciaEstado): Observable<any> {
+		let dialogRef: MatDialogRef<ModificacionDeIncidenciaDialogoComponent>;
+		dialogRef = this.dialog.open(ModificacionDeIncidenciaDialogoComponent, this.configuracionDialogo(400, 430));
+		dialogRef.componentInstance.incidencia = incidencia;
+		return dialogRef.afterClosed();
+	}
 
-abrirDialogoParaSeleccionarComision(materia: Materia): Observable<any> {
-	let dialogRef: MatDialogRef< SeleccionDeComisionDialogoComponent>;
-	dialogRef = this.dialog.open(SeleccionDeComisionDialogoComponent, this.configuracionDialogo());
-	dialogRef.componentInstance.materia = materia;
-	return dialogRef.afterClosed();
-}
+	abrirDialogoParaSeleccionarComision(materia: Materia): Observable<any> {
+		let dialogRef: MatDialogRef<SeleccionDeComisionDialogoComponent>;
+		dialogRef = this.dialog.open(SeleccionDeComisionDialogoComponent, this.configuracionDialogo(400, 600));
+		dialogRef.componentInstance.materia = materia;
+		return dialogRef.afterClosed();
+	}
 
-configuracionDialogo() {
+	configuracionDialogo(ancho, alto) {
 		const dialogConfig = new MatDialogConfig();
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = false;
-		dialogConfig.width = '600px';
-		dialogConfig.height = '400px';
+		dialogConfig.width = ancho;
+		dialogConfig.height = alto;
 		return dialogConfig;
-}
+	}
 
 }
