@@ -14,7 +14,6 @@ import { AppMensajes } from './app-mensajes.model';
 	styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-	title = 'Inscripción UNQ';
 	incidencia: Incidencia;
 	hayUsuarioLogueado: boolean;
 	muestraDialogoDeIncidencia = true;
@@ -29,23 +28,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 
 	ngOnInit() {
 		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
-			this.usuario = JSON.parse(localStorage.getItem('usuario'));
 			this.hayUsuarioLogueado = res;
-			this.hayEstudianteLogueado();
 
 		});
-	}
-
-	hayEstudianteLogueado(){
-		if (this.usuario != null){
-			this.muestraDialogoDeIncidencia = this.usuario.perfiles.includes(AppMensajes.ESTUDIANTE);
-		}
 	}
 
 	ngAfterViewInit() {
 		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
 			this.hayUsuarioLogueado = res;
-			this.hayEstudianteLogueado();
 		});
 	}
 
