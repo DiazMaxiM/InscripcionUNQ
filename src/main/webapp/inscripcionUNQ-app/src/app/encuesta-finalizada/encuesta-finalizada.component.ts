@@ -22,7 +22,7 @@ export class EncuestaFinalizadaComponent {
 	}
 
 	descargarArchivo(pdf) {
-		const nombreDeArchivo = 'certificado-de-Pre-Inscripcion.pdf';
+		const nombreDeArchivo = 'Constancia-de-preinscripcion.pdf';
 		if (navigator.msSaveBlob) {
 			// IE 10+
 			navigator.msSaveBlob(pdf, nombreDeArchivo);

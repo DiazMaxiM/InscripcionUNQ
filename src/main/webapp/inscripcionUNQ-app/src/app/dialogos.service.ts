@@ -154,7 +154,7 @@ export class DialogosService {
 
 	abrirDialogoParaSeleccionarComision(materia: Materia): Observable<any> {
 		let dialogRef: MatDialogRef<SeleccionDeComisionDialogoComponent>;
-		dialogRef = this.dialog.open(SeleccionDeComisionDialogoComponent, this.configuracionDialogo(400, 600));
+		dialogRef = this.dialog.open(SeleccionDeComisionDialogoComponent, this.configuracionDialogo(350, 400));
 		dialogRef.componentInstance.materia = materia;
 		return dialogRef.afterClosed();
 	}
