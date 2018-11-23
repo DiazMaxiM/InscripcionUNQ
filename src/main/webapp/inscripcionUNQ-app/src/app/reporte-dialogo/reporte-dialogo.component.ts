@@ -48,12 +48,15 @@ export class ReporteDialogoComponent implements OnInit {
 		const idEncuesta = this.encuesta.id;
 		if (this.form.valid) {
 			const { tipoReporte } = this.form.value;
+			this.utilesService.activarDialogoCargando('Generando reporte...');
 			this.restService.getReporte(idEncuesta, tipoReporte).subscribe(data => {
 				this.descargar(data);
+				this.utilesService.desactivarDialogoCargando();
 				this.cerrar();
 			},
 				(err) => {
 					this.utilesService.mostrarMensaje('Sin datos para generar el reporte');
+					this.utilesService.desactivarDialogoCargando();
 				});
 
 		} else {

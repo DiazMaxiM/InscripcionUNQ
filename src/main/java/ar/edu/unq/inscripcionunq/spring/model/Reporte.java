@@ -3,13 +3,17 @@ package ar.edu.unq.inscripcionunq.spring.model;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
 
@@ -53,13 +57,22 @@ public class Reporte {
 		workbook.setSheetName(0, this.tipoReporte.getDescripcion());
 		CellStyle headerStyle = workbook.createCellStyle();
 		Font font = workbook.createFont();
+		font.setFontName("Arial");
 		font.setBold(true);
 		headerStyle.setFont(font);
+		HSSFCellStyle styleGreen = workbook.createCellStyle();
+		styleGreen.setFont(font);
+		styleGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		styleGreen.setFillForegroundColor(HSSFColor.GREEN.index);
+		styleGreen.setFillBackgroundColor(HSSFColor.GREEN.index);
+
+		List<Integer> columnas = new ArrayList<Integer>();
 		
 		HSSFRow headerRow = sheet.createRow(0);
 		
 		for (int i = 0; i < headers.length; ++i) {
 				String header = headers[i];
+				columnas.add(i, headers[i].length());
 				HSSFCell cell = headerRow.createCell(i);
 				cell.setCellStyle(headerStyle);
 				cell.setCellValue(header);
@@ -70,13 +83,22 @@ public class Reporte {
 				HSSFRow dataRow = sheet.createRow(i + 1);
 				String[] dat =  data.get(i);
 				for (int e = 0; e < dat.length; ++e) {
-					dataRow.createCell(e).setCellValue(dat[e]);
+					HSSFCell cell = dataRow.createCell(e);
+					if (this.tipoReporte == TipoReporte.REPORTEGENERAL && dat[e]== "X")
+					cell.setCellStyle(styleGreen);
+					cell.setCellValue(dat[e]);
+					if ( columnas.size() < e + 1) columnas.add(e, dat[e].length());
+					if ( columnas.get(e) < dat[e].length()) columnas.set(e, dat[e].length());
+
 				}
 			}
 		}
 		
 		if (mergeCells != null) sheet.addMergedRegion(mergeCells);
 		
+		for (int i = 0 ; i < columnas.size(); i++) {
+			sheet.setColumnWidth(i, columnas.get(i) * 256);
+		}
 		
 		ByteArrayOutputStream outByteStream = new ByteArrayOutputStream();
 	    
@@ -189,6 +211,7 @@ public class Reporte {
     	for (OfertaAcademica oferta : this.encuesta.getOfertasAcademicas()) {
     		for (Comision comision : oferta.getComisiones()) {
     			if(!columnasMaterias.contains(comision.getMateria())) {
+    			
     				columnasMaterias.add(comision.getMateria());
 					linea.add(comision.getMateria().getNombre());
     			}
@@ -204,16 +227,28 @@ public class Reporte {
 			linea.add(estudiante.getDni());
 			linea.add(estudiante.getEmail());
 			
+			HashMap<String, String> mc = this.materiaDeComisiones(estudiante.getRegistroComisiones());
+			
 			for (Materia columnaMateria : columnasMaterias) {
 				estadoMateria = " ";
 				for (Materia materiaAprobada : estudiante.getMateriasAprobadas()) {
-					if (materiaAprobada.equals(columnaMateria))estadoMateria = "Aprobada";
+					if (materiaAprobada.equals(columnaMateria))estadoMateria = "X";
 				}
+				if (mc.containsKey(columnaMateria.getNombre())) estadoMateria = mc.get(columnaMateria.getNombre());
+				
 				linea.add(estadoMateria);
 			}
 			DATA.add(linea.toArray(new String[linea.size()-1]));
 		}		
         CellRangeAddress cellMerge = null;
 		this.generarXls(headers, DATA, cellMerge);
+	}
+	
+	private HashMap<String, String> materiaDeComisiones(List<Comision> comisiones){
+		HashMap<String, String> mc = new HashMap<String, String>();
+		for(Comision c : comisiones) {
+			mc.put(c.getMateria().getNombre(), c.getNombre());
+		}
+		return mc;
 	}
 }

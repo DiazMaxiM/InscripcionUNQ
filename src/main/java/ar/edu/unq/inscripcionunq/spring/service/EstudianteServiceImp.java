@@ -142,7 +142,7 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 			certificado.generarPDF();
 			Email mail = new Email();
 			mail.setFile(estudiante.getDni() + ".pdf");
-			mail.sendConAdjunto(estudiante.getEmail(), "Constancia de Preinscripción UNQ",
+			mail.sendConAdjunto(estudiante.getEmail(), "Constancia de preinscripción UNQ",
 					"Estimado: te enviamos tu constancia de preinscripción.");
 			File file = new File(estudiante.getDni() + ".pdf");
 			file.delete();
