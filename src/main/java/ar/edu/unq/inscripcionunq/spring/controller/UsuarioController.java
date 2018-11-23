@@ -94,7 +94,7 @@ public class UsuarioController {
 	public ResponseEntity recuperarPassword(@RequestBody UsuarioJson usuarioJson) {
 		try {
 			usuarioServiceImp.recuperarPassword(usuarioJson);
-		} catch (EnvioMailException e) {
+		} catch (EnvioMailException | UsuarioNoExisteException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 

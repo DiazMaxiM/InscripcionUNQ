@@ -8,6 +8,8 @@ import { Usuario } from './usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 import { AppRutas } from '../app-rutas.model';
 import { UsuarioLogueadoService } from '../usuario-logueado.service';
+import { ConsoleReporter } from 'jasmine';
+import { CdkAccordion } from '@angular/cdk/accordion';
 
 @Component({
 	selector: 'app-login',
@@ -52,7 +54,17 @@ export class LoginComponent implements OnInit {
 					});
 		}
 	}
-
+	recuperarPassword() {
+			const { email, password } = this.loginVerificationForm.value;
+			const usuario = new Usuario(email);
+			this.restService.recuperarPassword(usuario)
+				.subscribe(infoUsuario => {
+					this.utilesService.mostrarMensajeYSalir("Se envio la nueva password al mail indicado");
+				},
+					(err: HttpErrorResponse) => {
+						this.utilesService.mostrarMensajeDeError(err);
+					});
+	}
 	mostrarPantallaSegunPerfil(usuario: Usuario) {
 		this.usuarioLogueado.notificarUsuarioLoguedado();
 		localStorage.setItem('usuario', JSON.stringify(usuario));

@@ -184,10 +184,13 @@ public class UsuarioServiceImp extends GenericServiceImp<Usuario> implements Usu
 	}
 
 	@Override
-	public void recuperarPassword(UsuarioJson usuarioJson) throws EnvioMailException {
+	public void recuperarPassword(UsuarioJson usuarioJson) throws EnvioMailException, UsuarioNoExisteException {
 		String password = RandomStringUtils.random(8, 0, 20, true, true, "qw32rfHIJk9iQ8Ud7h0X".toCharArray());
 
 		Usuario usuario = usuarioDao.obtenerUsuarioDesdeEmail(usuarioJson.email);
+		if (usuario == null) {
+			throw new UsuarioNoExisteException();
+		}
 		usuario.setPassword(password);
 		Email mail;
 

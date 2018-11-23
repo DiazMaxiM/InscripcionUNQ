@@ -1,41 +1,42 @@
 <form *ngIf="!seleccionaPerfil" [formGroup]="loginVerificationForm" class="row justify-content-md-center" (ngSubmit)="onSubmit()">
-	<div class="row justify-content-md-center">
-		<mat-form-field class="col-sm-12 col">
-			<input matInput placeholder="Correo electrónico" formControlName="email" type="email" id="email" required>
-			<mat-error *ngIf="loginVerificationForm.get('email').hasError('required')">
-				Campo obligatorio
-			</mat-error>
-			<mat-error *ngIf="loginVerificationForm.get('email').hasError('email')">
-				La dirección de e-mail no es válida
-			</mat-error>
-		</mat-form-field>
-		<mat-form-field class="col-sm-12 col">
-			<input matInput placeholder="Contraseña" formControlName="password" type="password" id="password" required>
-			<mat-error *ngIf="loginVerificationForm.get('password').hasError('required')">
-				Campo obligatorio
-			</mat-error>
-		</mat-form-field>
-		<div class="col-12 marginBoton">
-			<button class="btn btn-danger btn-block" type="submit" mat-fab color="primary">Ingresar</button>
-		</div>
-		<div style="display:none" *ngIf="!auth.isAuthenticated()" class="col-12">
-			<button (click)="auth.login()" class="btn  btn-danger btn-block" mat-fab color="primary">
+    <div class="row justify-content-md-center">
+        <mat-form-field class="col-sm-12 col">
+            <input matInput placeholder="Correo electrónico" formControlName="email" type="email" id="email" required>
+            <mat-error *ngIf="loginVerificationForm.get('email').hasError('required')">
+                Campo obligatorio
+            </mat-error>
+            <mat-error *ngIf="loginVerificationForm.get('email').hasError('email')">
+                La dirección de e-mail no es válida
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="col-sm-12 col">
+            <input matInput placeholder="Contraseña" formControlName="password" type="password" id="password" required>
+            <mat-error *ngIf="loginVerificationForm.get('password').hasError('required')">
+                Campo obligatorio
+            </mat-error>
+        </mat-form-field>
+        <div class="col-12 marginBoton">
+            <button class="btn btn-danger btn-block" type="submit" mat-fab color="primary">Ingresar</button>
+            <button class="btn btn-danger btn-block" type="button" (click)="recuperarPassword()" mat-fab color="primary">Recuperar Contraseña</button>
+        </div>
+        <div style="display:none" *ngIf="!auth.isAuthenticated()" class="col-12">
+            <button (click)="auth.login()" class="btn  btn-danger btn-block" mat-fab color="primary">
 				<img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
 				Ingresar con Google
 			</button>
-		</div>
-	</div>
+        </div>
+    </div>
 </form>
 
 <div *ngIf="seleccionaPerfil" align="center">
-	<h5>Seleccione el perfil que desea utilizar</h5>
-	<div class="row justify-content-md-center">
-		<mat-form-field>
-			<mat-select placeholder="Perfil" (selectionChange)="perfilSeleccionado($event.value)">
-				<mat-option *ngFor="let perfil of perfiles" [value]="perfil">
-					{{perfil}}
-				</mat-option>
-			</mat-select>
-		</mat-form-field>
-	</div>
+    <h5>Seleccione el perfil que desea utilizar</h5>
+    <div class="row justify-content-md-center">
+        <mat-form-field>
+            <mat-select placeholder="Perfil" (selectionChange)="perfilSeleccionado($event.value)">
+                <mat-option *ngFor="let perfil of perfiles" [value]="perfil">
+                    {{perfil}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>

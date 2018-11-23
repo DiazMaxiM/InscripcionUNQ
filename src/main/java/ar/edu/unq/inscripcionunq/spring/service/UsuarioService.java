@@ -39,5 +39,5 @@ public interface UsuarioService extends GenericService<Usuario> {
 	void actualizarPerfiles(String idUsuario, List<String> perfiles)
 			throws PerfilInvalidoException, FormatoNumeroIdException, UsuarioNoExisteException;
 
-	void recuperarPassword(UsuarioJson usuarioJson) throws EnvioMailException;
+	void recuperarPassword(UsuarioJson usuarioJson) throws EnvioMailException, UsuarioNoExisteException;
 }

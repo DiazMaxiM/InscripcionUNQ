@@ -56,6 +56,9 @@ export class RestService {
   ingresarUsuario(usuario: Usuario) {
     return this.httpClient.post('/api/usuarios/ingresoUsuario', usuario, { headers });
   }
+  recuperarPassword(usuario: Usuario) {
+    return this.httpClient.post('/api/usuarios/recuperarPassword', usuario, { headers });
+  }
 
   getCarreras() {
     return this.httpClient.get<Array<Carrera>>('/api/carreras');
