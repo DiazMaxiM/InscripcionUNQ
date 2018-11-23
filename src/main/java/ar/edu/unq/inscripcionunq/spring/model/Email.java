@@ -26,14 +26,14 @@ public class Email {
 	}
 
 	private void mailConfiguration() throws EmailException {
-		mail.setHostName("smtp.gmail.com");
+		mail.setHostName("smtp.unq.edu.ar");
 		// mail.setTLS(true);
 		mail.setStartTLSEnabled(true);
-		mail.setSmtpPort(587);
+		mail.setSmtpPort(465);
 		// mail.setSSL(true);
 		mail.setSSLOnConnect(true);
-		mail.setAuthentication("MorfiYa2017@gmail.com", "2017Morf");
-		mail.setFrom("MorfiYa2017@gmail.com");
+		mail.setAuthentication("cpi_epi@unq.edu.ar", "Cpi2018-");
+		mail.setFrom("cpi_epi@unq.edu.ar");
 	}
 
 	public Email(MultiPartEmail email) throws EmailException {
