@@ -54,19 +54,21 @@ export class LoginComponent implements OnInit {
 	}
 	recuperarPassword() {
 		const { email, password } = this.loginVerificationForm.value;
-		const usuario = new Usuario(email);
-		this.utilesService.activarDialogoCargando('Enviando nueva contraseña...');
-		this.restService.recuperarPassword(usuario)
-			.subscribe(infoUsuario => {
-				this.utilesService.desactivarDialogoCargando();
-				this.utilesService.mostrarMensajeYSalir("Se envió la nueva contraseña al e-mail indicado");
-			},
-				(err: HttpErrorResponse) => {
-					this.utilesService.mostrarMensajeDeError(err);
+		console.log(email)
+		if (email != ""){
+			const usuario = new Usuario(email);
+			this.utilesService.activarDialogoCargando('Enviando nueva contraseña...');
+			this.restService.recuperarPassword(usuario)
+				.subscribe(infoUsuario => {
 					this.utilesService.desactivarDialogoCargando();
-				});
+					this.utilesService.mostrarMensajeYSalir("Se envió la nueva contraseña al e-mail indicado");
+				},
+					(err: HttpErrorResponse) => {
+						this.utilesService.mostrarMensajeDeError(err);
+						this.utilesService.desactivarDialogoCargando();
+					});
+		}
 	}
-
 	mostrarPantallaSegunPerfil(usuario: Usuario) {
 		this.usuarioLogueado.notificarUsuarioLoguedado();
 		localStorage.setItem('usuario', JSON.stringify(usuario));

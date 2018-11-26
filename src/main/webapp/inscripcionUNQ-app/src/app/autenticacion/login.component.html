@@ -17,7 +17,7 @@
         </mat-form-field>
         <div class="col-12 marginBoton">
             <button class="btn btn-danger btn-block" type="submit" mat-fab color="primary">Ingresar</button>
-            <button class="btn btn-danger btn-block" type="button" (click)="recuperarPassword()" mat-fab color="primary">Recuperar Contraseña</button>
+            <button class="btn btn-danger btn-block" type="button" [disabled]="loginVerificationForm.get('email').hasError('required')" (click)="recuperarPassword()" mat-fab color="primary">Recuperar Contraseña</button>
         </div>
         <div style="display:none" *ngIf="!auth.isAuthenticated()" class="col-12">
             <button (click)="auth.login()" class="btn  btn-danger btn-block" mat-fab color="primary">
