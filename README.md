@@ -25,5 +25,8 @@ Entrega 2 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/05-Entrega-2)
 
 Entrega 3 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/06-Entrega-3)
 
+Entrega 4 [aquí](https://github.com/DiazMaxiM/InscripcionUNQ/wiki/07-Entrega-4)
+
+
 [![Build Status](https://travis-ci.org/DiazMaxiM/InscripcionUNQ.svg?branch=master)](https://travis-ci.org/DiazMaxiM/InscripcionUNQ)
 
