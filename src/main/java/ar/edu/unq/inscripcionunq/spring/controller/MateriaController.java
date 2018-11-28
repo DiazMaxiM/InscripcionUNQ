@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jcabi.aspects.Loggable;
-
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
@@ -32,13 +30,11 @@ public class MateriaController {
 	@Autowired
 	private MateriaService materiaServiceImp;
 
-	@Loggable
 	@GetMapping("/materias")
 	public ResponseEntity<List> getMaterias() {
 		return ResponseEntity.ok().body(materiaServiceImp.getMateriasJson());
 	}
 	
-	@Loggable
 	@PostMapping("/materias/modificarMateria")
 	public ResponseEntity modificarMateria(@RequestBody MateriaSistemaJson materiaJson) throws 
 	FormatoNumeroIdException, MateriaNoExisteException, ExisteMateriaConElMismoCodigoException, 
@@ -54,7 +50,6 @@ public class MateriaController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@Loggable
 	@PutMapping("/materias/nuevaMateria")
 	public ResponseEntity agregarNuevaMateria(@RequestBody MateriaSistemaJson materiaJson)throws DescripcionInvalidaException,
 	CodigoInvalidoException, EstadoInvalidoException, ExisteMateriaConElMismoCodigoException, FormatoNumeroIdException, MateriaNoExisteException {
@@ -67,7 +62,6 @@ public class MateriaController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@Loggable
 	@GetMapping("/oferta-academica/materias/{idCarrera}")
 	public ResponseEntity getMateriasParaCarrera(@PathVariable String idCarrera) throws FormatoNumeroIdException {
 		return ResponseEntity.ok().body(materiaServiceImp.getMateriasParaCarrera(idCarrera));
