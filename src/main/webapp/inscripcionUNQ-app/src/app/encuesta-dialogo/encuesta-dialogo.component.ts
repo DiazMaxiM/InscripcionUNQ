@@ -43,6 +43,7 @@ export class EncuestaDialogoComponent implements OnInit {
 			
 		});
 	}
+	
 	crearFormularioComision() {
 		this.form = this.fb.group({
 			nombre: ['', Validators.required],
@@ -144,16 +145,18 @@ export class EncuestaDialogoComponent implements OnInit {
 		this.seleccionaOfertasAcademicas = true;
 		this.nuevaEncuesta = encuesta;
 		this.getOfertasEnPeriodo(encuesta);
-
 	}
 
 	guardarNuevaEncuesta(encuesta) {
+		this.utilesService.activarDialogoCargando('Creando encuesta...');
 		this.restService.crearEncuesta(encuesta).subscribe(rest => {
 			this.utilesService.mostrarMensaje(AppMensajes.CREACION_ENCUESTA_EXITOSO);
+			this.utilesService.desactivarDialogoCargando();
 			this.cerrar();
 		},
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
+				this.utilesService.desactivarDialogoCargando();
 			});
 	}
 
