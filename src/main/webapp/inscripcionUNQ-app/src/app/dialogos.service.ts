@@ -95,7 +95,7 @@ export class DialogosService {
 
 	abrirDialogoSeleccionDePeriodo(): Observable<any> {
 		let dialogRef: MatDialogRef<SeleccionDePeriodoDialogoComponent>;
-		dialogRef = this.dialog.open(SeleccionDePeriodoDialogoComponent, this.configuracionDialogo(400, 600));
+		dialogRef = this.dialog.open(SeleccionDePeriodoDialogoComponent, this.configuracionDialogo(300, 200));
 		return dialogRef.afterClosed();
 	}
 
@@ -127,7 +127,7 @@ export class DialogosService {
 
 	abrirDialogoPerfil(usuario?: Usuario): Observable<any> {
 		let dialogRef: MatDialogRef<ActalizacionPerfilesDialogoComponent>;
-		dialogRef = this.dialog.open(ActalizacionPerfilesDialogoComponent, this.configuracionDialogo(400, 600));
+		dialogRef = this.dialog.open(ActalizacionPerfilesDialogoComponent, this.configuracionDialogo(400, 300));
 		dialogRef.componentInstance.usuario = usuario;
 		return dialogRef.afterClosed();
 	}

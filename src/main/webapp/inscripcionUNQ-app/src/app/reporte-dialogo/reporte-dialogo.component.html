@@ -12,7 +12,7 @@
 		Campo obligatorio
 	</mat-error>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="botones-cerrar-guardar" align="end">
 	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">Cancelar</button>
 	<button class="btn btn-danger mat-button" mat-fab color="primary" [disabled]="form.invalid" (click)="descargarReporte()">Descargar</button>
 </mat-dialog-actions>

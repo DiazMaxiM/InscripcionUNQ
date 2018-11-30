@@ -112,7 +112,7 @@ public class Certificado {
 			documento.add(new Paragraph("ACLARACIÓN: Este formulario busca relevar la intención de "
 					+ "inscripción para las carreras TPI y LIDS. Este relevamiento ES OBLIGATORIO, "
 					+ "pero NO ES VINCULANTE, lo cual quiere decir que NO SE GARANTIZA que cursen en "
-					+ "lo que anotan aquí."));
+					+ "lo que se anotan aquí."));
 
 			documento.close();
 			binaryPDFGenerate = byteArrayOutputStream.toByteArray();
