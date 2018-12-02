@@ -141,7 +141,7 @@ export class DialogosService {
 
 	abrirDialogoModificacionPassword(): Observable<any> {
 		let dialogRef: MatDialogRef<EdicionUsuarioDialogoComponent>;
-		dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent, this.configuracionDialogo(400, 600));
+		dialogRef = this.dialog.open(EdicionUsuarioDialogoComponent, this.configuracionDialogo(400, 300));
 		return dialogRef.afterClosed();
 	}
 
