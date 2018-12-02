@@ -21,7 +21,7 @@ public class EncuestaDaoImp extends GenericDaoImp<Encuesta> implements EncuestaD
 
 	public List<Encuesta> getTodasLasEncuestasActivasParaDni(String dni) {
 		Session session = this.sessionFactory.getCurrentSession();
-		return session.createQuery("select p from Encuesta p join p.estudiantes s where s.dni=:dni ")
+		return session.createQuery("select p from Encuesta p join p.estudiantes s where (current_date() BETWEEN p.horaComienzo and p.horaFin )and  s.dni=:dni ")
 				.setParameter("dni", dni).getResultList();
 	}
 

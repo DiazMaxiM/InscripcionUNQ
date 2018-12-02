@@ -16,7 +16,7 @@
 		<ng-template #tipContent>{{carrera.descripcion}}</ng-template>
 		<div class="carrera" [ngbTooltip]="tipContent" matTooltipPosition="after">
 			{{carrera.codigo}}
-			<mat-checkbox [checked]="verificarSeleccion(carrera)" (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
+			<mat-checkbox  color="warn" [checked]="verificarSeleccion(carrera)" (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
 			</mat-checkbox>
 		</div>
 	</ng-container>

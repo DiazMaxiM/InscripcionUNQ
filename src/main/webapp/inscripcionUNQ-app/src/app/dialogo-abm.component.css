@@ -14,3 +14,11 @@ textarea {
 .edit-icon:hover {
   cursor: pointer;
 }
+
+.botones-cerrar-guardar{
+  margin-top: 10%;
+}
+
+.no-editable{
+  color: gray;
+}

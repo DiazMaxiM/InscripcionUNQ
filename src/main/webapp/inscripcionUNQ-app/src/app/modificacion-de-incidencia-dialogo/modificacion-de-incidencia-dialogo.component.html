@@ -1,13 +1,13 @@
 <h2 mat-dialog-title>Edición de incidencia</h2>
 <mat-dialog-content [formGroup]="form">
 	<mat-form-field>
-		<input matInput  placeholder="Tipo de incidencia" formControlName="tipoIncidencia" readonly>
+		<input class="no-editable" matInput placeholder="Tipo de incidencia" formControlName="tipoIncidencia" readonly>
 	</mat-form-field>
 	<mat-form-field>
-		<input matInput  placeholder="Descripción" formControlName="descripcion" readonly>
+		<input class="no-editable" matInput placeholder="Descripción" formControlName="descripcion" readonly>
 	</mat-form-field>
 	<mat-form-field>
-		<input matInput  placeholder="Email del reportante" formControlName="emailDelReportante" readonly>
+		<input class="no-editable" matInput placeholder="Email del reportante" formControlName="emailDelReportante" readonly>
 	</mat-form-field>
 	<mat-form-field>
 		<input type="text" placeholder="Estado incidencia" formControlName="tipoEstadoIncidencia" matInput [matAutocomplete]="auto"
