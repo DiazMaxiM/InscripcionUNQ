@@ -192,7 +192,6 @@ export class EncuestaDialogoComponent implements OnInit {
 
 	actualizarEncuesta(encuesta: Encuesta) {
 		encuesta.id = this.encuestaSeleccionada.id;
-		console.log(encuesta);
 		this.restService.actualizarEncuesta(encuesta).subscribe(rest => {
 			this.utilesService.mostrarMensaje(AppMensajes.ACTUALIZACION_ENCUESTA_EXITOS0);
 			this.cerrar();

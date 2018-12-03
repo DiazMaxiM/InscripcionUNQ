@@ -177,7 +177,6 @@ export class ComisionDialogoComponent implements OnInit {
 		for (const horarioOcupado of horarios) {
 				haySuperposicion = haySuperposicion || this.haySuperposicionHoraria(horarioOcupado, horario);
 		}
-		console.log(horarios);
 		return haySuperposicion;
 	}
 
@@ -197,7 +196,6 @@ export class ComisionDialogoComponent implements OnInit {
 	 const nuevoHorario: Date = this.controlHorarioService.nuevoHorario(horario.horaComienzo);
 	 nuevoHorario.setHours(nuevoHorario.getHours() + horario.duracion);
 	 nuevoHorario.setMinutes(nuevoHorario.getMinutes() - 1);
-	 console.log(nuevoHorario);
 	 return nuevoHorario;
 	}
 

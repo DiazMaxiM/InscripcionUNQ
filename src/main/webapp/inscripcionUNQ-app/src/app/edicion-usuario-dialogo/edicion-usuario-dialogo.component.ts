@@ -64,7 +64,6 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
   }
 
   actualizarPassword(usuario: Usuario) {
-    console.log(usuario);
     this.restService.actualizarPassword(usuario).subscribe(
       (res: Response) => {
         this.utilesService.mostrarMensaje(

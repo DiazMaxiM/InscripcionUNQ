@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
 	}
 	recuperarPassword() {
 		const { email, password } = this.loginVerificationForm.value;
-		console.log(email)
 		if (email != ""){
 			const usuario = new Usuario(email);
 			this.utilesService.activarDialogoCargando('Enviando nueva contraseña...');
