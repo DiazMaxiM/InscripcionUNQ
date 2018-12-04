@@ -53,13 +53,10 @@ import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-inci
 import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
 import { AltaUsuarioDialogoComponent } from './alta-usuario-dialogo/alta-usuario-dialogo.component';
 import { UsuarioLogueadoService } from './usuario-logueado.service';
-import { AuthService } from './auth/auth.service';
-import { CallbackComponent } from './callback/callback.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';
 import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MomentUtcDateAdapter } from './momentUtcDateAdapter';
 import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';
 import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.component';
@@ -99,7 +96,6 @@ import { DialogosService } from './dialogos.service';
     ModificacionDeIncidenciaDialogoComponent,
     EdicionUsuarioDialogoComponent,
     AltaUsuarioDialogoComponent,
-		CallbackComponent,
 		EncuestasComponent,
 		EncuestaDialogoComponent,
 		ActalizacionPerfilesDialogoComponent,
@@ -121,7 +117,7 @@ import { DialogosService } from './dialogos.service';
 		MatMomentDateModule
   ],
   providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
-		UtilesService, UsuarioLogueadoService, AuthService, DialogosService,
+		UtilesService, UsuarioLogueadoService, DialogosService,
 		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
 		{provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},

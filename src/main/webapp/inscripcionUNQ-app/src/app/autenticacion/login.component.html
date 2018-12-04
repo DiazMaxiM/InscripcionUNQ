@@ -19,12 +19,6 @@
             <button class="btn btn-danger btn-block" type="submit" mat-fab color="primary">Ingresar</button>
             <button class="btn btn-danger btn-block" type="button" [disabled]="loginVerificationForm.get('email').hasError('required')" (click)="recuperarPassword()" mat-fab color="primary">Recuperar Contraseña</button>
         </div>
-        <div style="display:none" *ngIf="!auth.isAuthenticated()" class="col-12">
-            <button (click)="auth.login()" class="btn  btn-danger btn-block" mat-fab color="primary">
-				<img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-				Ingresar con Google
-			</button>
-        </div>
     </div>
 </form>
 

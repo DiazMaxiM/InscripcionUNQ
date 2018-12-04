@@ -3,7 +3,6 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UtilesService } from '../utiles.service';
-import { AuthService } from '../auth/auth.service';
 import { Usuario } from './usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 import { AppRutas } from '../app-rutas.model';
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private restService: RestService,
 		private utilesService: UtilesService,
-		public auth: AuthService,
 		private usuarioLogueado: UsuarioLogueadoService
 	) { }
 

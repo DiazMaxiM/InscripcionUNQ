@@ -41,6 +41,7 @@ export class MateriasAprobadasComponent implements OnInit {
 		this.utilesService.activarDialogoCargando();
 		this.restService.actualizarMateriasAprobadas(this.idEstudiante, this.materiasAprobadas)
 			.subscribe(res => {
+				window.scroll(0,0);
 				this.utilesService.desactivarDialogoCargandoYRedireccionar('materias-por-cursar');
 			}, (err) => {
 				this.utilesService.mostrarMensajeDeError(err);
