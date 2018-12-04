@@ -12,6 +12,7 @@ import { DialogosService } from '../dialogos.service';
 
 export class EncuestasComponent implements OnInit {
 	encuestas: any[];
+	encuestaBuscada;
 
 	constructor(
 		private restService: RestService,
@@ -23,7 +24,7 @@ export class EncuestasComponent implements OnInit {
 		this.encuestas = JSON.parse(localStorage.getItem('encuestas'));
 	}
 
-	abrirDialogoParaAltaOModificacionEncuesta(encuesta) {
+	abrirDialogoParaAltaOModificacionEncuesta(encuesta?: Encuesta) {
 		this.dialogosService
 		.abrirDialogoEncuesta(encuesta)
 		.subscribe(res => {

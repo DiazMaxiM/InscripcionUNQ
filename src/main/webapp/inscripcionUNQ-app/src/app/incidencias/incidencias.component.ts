@@ -97,7 +97,7 @@ export class IncidenciasComponent implements OnInit {
 		});
 	}
 
-	abrirDialogoTipoIncidencia(tipoIncidencia) {
+	abrirDialogoTipoIncidencia(tipoIncidencia?) {
 		this.dialogosService
 		.abrirDialogoTipoDeIncidencia(tipoIncidencia)
 		.subscribe(res => {
