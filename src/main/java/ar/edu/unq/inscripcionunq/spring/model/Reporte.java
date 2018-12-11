@@ -3,6 +3,8 @@ package ar.edu.unq.inscripcionunq.spring.model;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,8 +65,8 @@ public class Reporte {
 		HSSFCellStyle styleGreen = workbook.createCellStyle();
 		styleGreen.setFont(font);
 		styleGreen.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-		styleGreen.setFillForegroundColor(HSSFColor.GREEN.index);
-		styleGreen.setFillBackgroundColor(HSSFColor.GREEN.index);
+		styleGreen.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
+		styleGreen.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
 
 		List<Integer> columnas = new ArrayList<Integer>();
 		
@@ -220,7 +222,11 @@ public class Reporte {
 		
 		String[] headers = linea.toArray(new String[linea.size()]);
 		String estadoMateria = new String();
-    	for (Estudiante estudiante : this.encuesta.getEstudiantes()) {
+		
+		List<Estudiante> estudiantes = this.encuesta.getEstudiantes();
+		Collections.sort(estudiantes, Comparator.comparing(Estudiante::getApellido));
+		
+    	for (Estudiante estudiante : estudiantes) {
 			linea = new ArrayList<String>();
 			linea.add(estudiante.getNombre());
 			linea.add(estudiante.getApellido());
