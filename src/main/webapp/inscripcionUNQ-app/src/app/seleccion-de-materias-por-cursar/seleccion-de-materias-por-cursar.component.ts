@@ -22,6 +22,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   materiasDisponiblesActivas: MateriaEstudiante[] = [];
   comisionesSeleccionadas: ComisionSeleccionada[] = [];
   idEstudiante: string;
+  materiaBuscada;
 
   constructor(
     private restService: RestService,
