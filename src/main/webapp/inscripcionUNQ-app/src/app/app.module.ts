@@ -55,7 +55,7 @@ import { AltaUsuarioDialogoComponent } from './alta-usuario-dialogo/alta-usuario
 import { UsuarioLogueadoService } from './usuario-logueado.service';
 import { EncuestasComponent } from './encuestas/encuestas.component';
 import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';
-import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
+import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.component';
 import { MatMomentDateModule, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { OfertasDeEncuestaDialogoComponent } from './ofertas-de-encuesta-dialogo/ofertas-de-encuesta-dialogo.component';
 import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialogo/seleccion-de-periodo-dialogo.component';

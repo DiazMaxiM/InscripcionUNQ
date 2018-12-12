@@ -23,7 +23,7 @@ import { Comision } from './comisiones-de-oferta/comision.model';
 import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 import { Usuario } from './autenticacion/usuario.model';
 import { AltaUsuarioDialogoComponent } from './alta-usuario-dialogo/alta-usuario-dialogo.component';
-import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.com\u1E55onent';
+import { ActalizacionPerfilesDialogoComponent } from './actualizacion-perfiles-dialogo/actualizacion-perfiles-dialogo.component';
 import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
 import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicion-usuario-dialogo.component';
 import { IncidenciaEstado } from './incidencias/incidencia-estado.model';

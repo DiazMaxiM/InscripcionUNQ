@@ -16,6 +16,7 @@ export class OfertasDeEncuestaDialogoComponent implements OnInit {
 	ofertas: OfertaAcademica[];
 	ofertasSeleccionados: OfertaAcademica[] = [];
 	encuesta: Encuesta;
+	ofertaBuscada;
 
 	constructor(
 		private restService: RestService,
