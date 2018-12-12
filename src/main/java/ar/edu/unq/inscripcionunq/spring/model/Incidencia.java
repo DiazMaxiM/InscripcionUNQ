@@ -3,6 +3,7 @@ package ar.edu.unq.inscripcionunq.spring.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.persistence.Column;
 
 @Entity(name = "Incidencia")
 public class Incidencia extends BaseEntity {
@@ -10,6 +11,7 @@ public class Incidencia extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 	@OneToOne(fetch = FetchType.LAZY)
 	private TipoIncidencia tipoIncidencia;
+	@Column(length = 1000)
 	private String descripcion;
 	private String emailDelReportante;
 
@@ -60,7 +62,5 @@ public class Incidencia extends BaseEntity {
 
 	public void setEmailDelReportante(String emailDelReportante) {
 		this.emailDelReportante = emailDelReportante;
-	}
-	
-	
+	}	
 }
