@@ -12,8 +12,9 @@
 		Campo obligatorio
 	</mat-error>
 	<mat-form-field>
-		<textarea matInput placeholder="Descripción" formControlName="descripcion" required>
-        </textarea>
+		<textarea #descripcion maxlength="1000" matInput placeholder="Descripción" formControlName="descripcion" required>
+		</textarea>
+		<mat-hint align="end">{{descripcion.value?.length || 0}}/1000</mat-hint>
 		<mat-error *ngIf="form.get('descripcion').hasError('required')">
 			Campo obligatorio
 		</mat-error>

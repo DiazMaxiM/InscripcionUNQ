@@ -595,16 +595,13 @@ public class CargaInicialDeDatosController {
 		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
 		usuarioServiceImp.save(usuario);
 
-		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI Incorrecto");
+		TipoIncidencia tipoIncidencia = new TipoIncidencia("DNI incorrecto");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
 
-		tipoIncidencia = new TipoIncidencia("Cambio de Mail");
+		tipoIncidencia = new TipoIncidencia("Cambio de e-mail");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
 
-		tipoIncidencia = new TipoIncidencia("Correccion de nombre y apellido");
-		tipoIncidenciaServiceImp.save(tipoIncidencia);
-
-		tipoIncidencia = new TipoIncidencia("La franja horaria no corresponde con mi promedio");
+		tipoIncidencia = new TipoIncidencia("Corrección de nombre y apellido");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
 		
 		tipoIncidencia = new TipoIncidencia("Otro");
