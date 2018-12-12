@@ -19,3 +19,8 @@ h2{
 	padding-left: 0;
 	padding-right: 0;
 }
+
+.container-buscador {
+  display: flex;
+  flex-direction: column;
+}

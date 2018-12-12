@@ -21,8 +21,7 @@ import { FeedbackUsuarioDialogoComponent } from './feedback-usuario-dialogo/feed
 import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aprobadas.component';
 
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
-import { MatPaginatorI18n } from './spanish-paginator-intl';
-import { MatPaginatorIntl, MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
 import { RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 import { UtilesService } from './utiles.service';
@@ -116,7 +115,7 @@ import { DialogosService } from './dialogos.service';
 		NgbModule,
 		MatMomentDateModule
   ],
-  providers: [RestService, { provide: MatPaginatorIntl, useClass: MatPaginatorI18n }, RegistroDeComisionesSeleccionadasService,
+  providers: [RestService, RegistroDeComisionesSeleccionadasService,
 		UtilesService, UsuarioLogueadoService, DialogosService,
 		{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
 		{provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
