@@ -74,8 +74,14 @@ export class TareasUsuarioComponent{
 	}
 
   irAIncidencias(){
+    this.restService.getIncidencias().subscribe(incidencias => {
+      localStorage.setItem('incidencias',JSON.stringify(incidencias));
       this.utilesService.irA('incidencias');
-}
+    },
+    (err) => {
+      this.utilesService.mostrarMensajeDeError(err);
+    });
+  }
 
 irAEncuestas() {
     this.restService.getEncuestas().subscribe(encuestas => {

@@ -71,7 +71,7 @@ public class IncidenciaController {
 	}
 
 	@GetMapping("/incidencias/{idTipoIncidencia}")
-	public ResponseEntity<List> getIncidencias(@PathVariable String idTipoIncidencia) {
+	public ResponseEntity<List> getIncidenciasDelTipo(@PathVariable String idTipoIncidencia) {
 		return ResponseEntity.ok().body(incidenciaServiceImp.getIncidenciasJson(idTipoIncidencia));
 	}
 
@@ -91,5 +91,10 @@ public class IncidenciaController {
 		incidenciaServiceImp.actualizarIncidencia(incidenciaJson);
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/incidencias")
+	public ResponseEntity<List> getIncidencias() {
+		return ResponseEntity.ok().body(incidenciaServiceImp.getIncidenciasJson());
 	}
 }
