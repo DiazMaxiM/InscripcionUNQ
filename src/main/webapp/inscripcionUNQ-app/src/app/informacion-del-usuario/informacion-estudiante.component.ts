@@ -23,6 +23,7 @@ export class InformacionEstudianteComponent implements OnInit {
 	idEstudiante: string;
 	usuario: Usuario;
 	idEncuestaActual: string;
+	infoEstudiante: Usuario;
 
 	ngOnInit() {
 		this.usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -41,8 +42,10 @@ export class InformacionEstudianteComponent implements OnInit {
 
 	getInformacionEstudiante() {
 		this.restService.getInformacionEstudiante(this.usuario.dni, this.idEncuestaActual)
-			.subscribe(data =>
-				this.insertarInformacionEstudianteEnFormulario(data)
+			.subscribe(data => {
+				this.infoEstudiante = data;
+				this.insertarInformacionEstudianteEnFormulario(data);
+			}
 			);
 	}
 
@@ -58,8 +61,14 @@ export class InformacionEstudianteComponent implements OnInit {
 
 	onSubmit() {
 		if (this.informacionEstudianteForm.valid) {
-			const { nombres, apellidos, email } = this.informacionEstudianteForm.value;
-			const studentData = new Estudiante(this.usuario.dni, nombres, apellidos, email, this.idEstudiante);
+			this.actualizarInformacionEstudiante();
+	}
+}
+
+	actualizarInformacionEstudiante() {
+		const { nombres, apellidos, email } = this.informacionEstudianteForm.value;
+		const studentData = new Estudiante(this.usuario.dni, nombres, apellidos, email, this.idEstudiante);
+		if (this.hayDatosModificados(studentData)) {
 			this.restService.actualizarInformacionEstudiante(studentData)
 				.subscribe(res => {
 					const mensaje = 'Los datos fueron actualizados con éxito';
@@ -69,6 +78,15 @@ export class InformacionEstudianteComponent implements OnInit {
 					(err: HttpErrorResponse) => {
 						this.utilesService.mostrarMensajeDeError(err);
 					});
+		}else {
+			this.utilesService.irA('materias-aprobadas');
 		}
 	}
+
+	hayDatosModificados(infoEstudiante: Usuario) {
+		return this.infoEstudiante.nombre != infoEstudiante.nombre ||
+		this.infoEstudiante.apellido != infoEstudiante.apellido ||
+		this.infoEstudiante.email != infoEstudiante.email;
+	}
+
 }
