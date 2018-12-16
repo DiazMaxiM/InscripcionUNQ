@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { RestService } from "../rest.service";
 import { ComisionSeleccionada } from "../seleccion-de-comision-dialogo/comision-seleccionada.model";
-import { PageEvent } from "@angular/material";
 import { MateriaEstudiante } from "../materias-aprobadas/materia-estudiante.model";
 import { RegistroDeComisionesSeleccionadasService } from "./registro-de-comisiones-seleccionadas.service";
 import { UtilesService } from "../utiles.service";
@@ -15,14 +14,10 @@ import { DialogosService } from "../dialogos.service";
 })
 export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   materiasDisponibles: MateriaEstudiante[] = [];
-  pageEvent: PageEvent;
-  length = 0;
-  pageSize = 10;
-  pageIndex = 0;
   materiasDisponiblesActivas: MateriaEstudiante[] = [];
   comisionesSeleccionadas: ComisionSeleccionada[] = [];
   idEstudiante: string;
-  materiaBuscada;
+	materiaBuscada;
 
   constructor(
     private restService: RestService,
@@ -42,27 +37,16 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
       .obtenerMateriasDisponibles(this.idEstudiante)
       .subscribe(materiasDisponibles => {
         this.materiasDisponibles = materiasDisponibles;
-        this.length = this.materiasDisponibles.length;
-        this.materiasDisponiblesActivas = this.materiasDisponibles.slice(
-          0,
-          this.pageSize
-        );
+        this.materiasDisponiblesActivas = this.materiasDisponibles;
         this.marcarMateriasAnteriormenteSeleccionadas();
       });
   }
 
-  cambiarPagina(e) {
-    this.pageIndex = e.pageIndex;
-    this.pageSize = e.pageSize;
-    this.actualizarPaginacion(e.pageIndex, e.pageSize);
-  }
 
-  actualizarPaginacion(pageIndex, pageSize) {
-    const firstCut = pageIndex * pageSize;
-    const secondCut = firstCut + pageSize;
+  actualizarMateiasSeleccionadas() {
     this.materiasDisponiblesActivas = this.materiasDisponibles.slice(
-      firstCut,
-      secondCut
+      0,
+      this.materiasDisponibles.length
     );
   }
 
@@ -102,7 +86,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
     this.materiasDisponibles[
       this.materiasDisponibles.indexOf(materia)
     ] = materiaActualizada;
-    this.actualizarPaginacion(this.pageIndex, this.pageSize);
+    this.actualizarMateiasSeleccionadas();
   }
 
   materiaActualizada(
@@ -135,7 +119,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
     this.materiasDisponibles[
       this.materiasDisponibles.indexOf(materia)
     ] = materiaActualizada;
-    this.actualizarPaginacion(this.pageIndex, this.pageSize);
+    this.actualizarMateiasSeleccionadas();
   }
 
   guardarRegistro(materia, registro: ComisionSeleccionada) {

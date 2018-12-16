@@ -68,7 +68,7 @@ public class Certificado {
 			documento.add(img1);
 			Font fuente = new Font(FontFamily.HELVETICA, 14, Font.BOLD);
 
-			p = new Paragraph("CONSTANCIA DE PREINSCRIPCION", fuente);
+			p = new Paragraph("CONSTANCIA DE PREINSCRIPCI\u00d3N", fuente);
 			p.setAlignment(Element.ALIGN_CENTER);
 			DottedLineSeparator dottedline = new DottedLineSeparator();
 			dottedline.setOffset(-5);
@@ -109,10 +109,10 @@ public class Certificado {
 			documento.add(new Paragraph(" "));
 			documento.add(new Paragraph(" "));
 
-			documento.add(new Paragraph("ACLARACIÓN: Este formulario busca relevar la intención de "
-					+ "inscripción para las carreras TPI y LIDS. Este relevamiento ES OBLIGATORIO, "
+			documento.add(new Paragraph("ACLARACI\u00d3N: Este formulario busca relevar la intenci\u00f3n de "
+					+ "inscripci\u00f3n para las carreras TPI y LIDS. Este relevamiento ES OBLIGATORIO, "
 					+ "pero NO ES VINCULANTE, lo cual quiere decir que NO SE GARANTIZA que cursen en "
-					+ "lo que se anotan aquí."));
+					+ "lo que se anotan aqu\u00ed."));
 
 			documento.close();
 			binaryPDFGenerate = byteArrayOutputStream.toByteArray();
