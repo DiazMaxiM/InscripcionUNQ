@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
-import { MatDialog, MatOptionSelectionChange } from '@angular/material';
+import { MatOptionSelectionChange } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IncidenciaEstado } from './incidencia-estado.model';
 import { TipoIncidencia } from '../tipo-incidencia-dialogo/tipo-incidencia.model';
@@ -26,15 +26,28 @@ export class IncidenciasComponent implements OnInit {
 		private restService: RestService,
 		private utilesService: UtilesService,
 		private dialogosService: DialogosService,
-		private dialog: MatDialog
 	) { }
 
 	ngOnInit() {
-		this.getTiposDeIncidencias();
-		this.tipoIncidenciaControl.valueChanges.subscribe((term) => {
+		this.tipoIncidenciaControl.valueChanges.subscribe(term => {
 			this.tipoIncidenciaBuscada = term;
+		  if(this.tipoIncidenciaBuscada == ''){
+				this.getIncidencias();
+			}
 			
 		});
+		this.getTiposDeIncidencias();
+		this.incidencias = JSON.parse(localStorage.getItem('incidencias'));
+		this.hayIncidenciasReportadas = this.incidencias.length > 0;
+	}
+
+	getIncidencias() {
+		this.restService.getIncidencias().subscribe(incidencias => {
+			this.guardarIncidencias(incidencias);
+		},
+			(err: HttpErrorResponse) => {
+				this.utilesService.mostrarMensajeDeError(err);
+			});
 	}
 
 	getTiposDeIncidencias() {
@@ -47,7 +60,7 @@ export class IncidenciasComponent implements OnInit {
 	}
 
 	getIncidenciasDelTipo(tipoIncidencia: TipoIncidencia) {
-		this.restService.getIncidencias(tipoIncidencia.id).subscribe(incidencias => {
+		this.restService.getIncidenciasDeTipo(tipoIncidencia.id).subscribe(incidencias => {
 			this.guardarIncidencias(incidencias);
 
 		},
@@ -56,11 +69,13 @@ export class IncidenciasComponent implements OnInit {
 			});
 	}
 
-	guardarIncidencias(incidencias: TipoIncidencia[]){
-		if(incidencias.length == 0){
+	guardarIncidencias(incidencias: TipoIncidencia[]) {
+		if (incidencias.length == 0) {
 			this.hayIncidenciasReportadas = false;
-			this.utilesService.mostrarMensaje('No se registraron incidencias de tipo: ' + this.tipoDeIncidenciaActual.descripcion);
-		} else{
+			if(this.tipoIncidenciaBuscada != ''){
+				this.utilesService.mostrarMensaje('No se registraron incidencias de tipo: ' + this.tipoDeIncidenciaActual.descripcion);
+		}
+	 }else {
 			this.incidencias = incidencias;
 			this.hayIncidenciasReportadas = true;
 		}
@@ -99,17 +114,16 @@ export class IncidenciasComponent implements OnInit {
 
 	abrirDialogoTipoIncidencia(tipoIncidencia?) {
 		this.dialogosService
-		.abrirDialogoTipoDeIncidencia(tipoIncidencia)
-		.subscribe(res => {
-			this.getTiposDeIncidencias();
-		});
-}
-
-incidenciaSeleccionada(event: MatOptionSelectionChange, tipoIncidencia){
-	if (event.source.selected) {
-		this.tipoDeIncidenciaActual = tipoIncidencia;
-		this.getIncidenciasDelTipo(tipoIncidencia);
+			.abrirDialogoTipoDeIncidencia(tipoIncidencia)
+			.subscribe(res => {
+				this.getTiposDeIncidencias();
+			});
 	}
-}
 
+	incidenciaSeleccionada(event: MatOptionSelectionChange, tipoIncidencia) {
+		if (event.source.selected) {
+			this.tipoDeIncidenciaActual = tipoIncidencia;
+			this.getIncidenciasDelTipo(tipoIncidencia);
+		}
+	}
 }

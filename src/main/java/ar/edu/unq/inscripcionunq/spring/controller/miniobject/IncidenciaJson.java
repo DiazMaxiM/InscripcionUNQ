@@ -9,6 +9,7 @@ public class IncidenciaJson {
 	public TipoIncidenciaJson tipoIncidencia;
 	public String tipoEstadoIncidencia;
 	public String emailDelReportante;
+	public String fechaDeCreacion;
 
 	public IncidenciaJson() {
 	
@@ -20,5 +21,6 @@ public class IncidenciaJson {
 		this.descripcion = incidencia.getDescripcion();
 		this.tipoEstadoIncidencia = incidencia.getTipoEstadoIncidencia().getEstado();
 		this.emailDelReportante = incidencia.getEmailDelReportante();
+		this.fechaDeCreacion = incidencia.getFechaDeCreacion();
 	}
 }

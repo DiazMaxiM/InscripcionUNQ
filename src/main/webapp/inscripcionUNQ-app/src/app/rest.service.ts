@@ -180,7 +180,7 @@ export class RestService {
     return this.httpClient.delete('/api/usuarios/eliminarUsuario/' + idUsuario);
   }
 
-  getIncidencias(idTipoIncidencia) {
+  getIncidenciasDeTipo(idTipoIncidencia) {
     return this.httpClient.get<Array<Incidencia>>('/api/incidencias/' + idTipoIncidencia);
   }
 
@@ -253,5 +253,9 @@ export class RestService {
 	
 	actualizarTipoIncidencia(incidencia: TipoIncidencia){
     return this.httpClient.post('/api/actualizarTipoIncidencia/', incidencia, {headers});
+  }
+
+  getIncidencias() {
+    return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
   }
 }

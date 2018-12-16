@@ -3,6 +3,10 @@ package ar.edu.unq.inscripcionunq.spring.model;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 
 @Entity(name = "Incidencia")
@@ -14,6 +18,7 @@ public class Incidencia extends BaseEntity {
 	@Column(length = 1000)
 	private String descripcion;
 	private String emailDelReportante;
+	private String fechaDeCreacion;
 
 	private TipoEstadoIncidencia tipoEstadoIncidencia;
 
@@ -26,6 +31,8 @@ public class Incidencia extends BaseEntity {
 		this.descripcion = descripcion;
 		this.emailDelReportante = emailDelReportante;
 		this.tipoEstadoIncidencia = TipoEstadoIncidencia.ABIERTA;
+		LocalDateTime fechaActual = LocalDateTime.now();
+		this.fechaDeCreacion = 	fechaActual.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 	} 
 
 	public TipoIncidencia getTipoIncidencia() {
@@ -63,4 +70,8 @@ public class Incidencia extends BaseEntity {
 	public void setEmailDelReportante(String emailDelReportante) {
 		this.emailDelReportante = emailDelReportante;
 	}	
+	
+	public String getFechaDeCreacion() {
+		return fechaDeCreacion;
+	}
 }
