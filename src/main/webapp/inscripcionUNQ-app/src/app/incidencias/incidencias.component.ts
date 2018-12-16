@@ -29,6 +29,13 @@ export class IncidenciasComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		this.tipoIncidenciaControl.valueChanges.subscribe(term => {
+			this.tipoIncidenciaBuscada = term;
+		  if(this.tipoIncidenciaBuscada == ''){
+				this.getIncidencias();
+			}
+			
+		});
 		this.getTiposDeIncidencias();
 		this.incidencias = JSON.parse(localStorage.getItem('incidencias'));
 		this.hayIncidenciasReportadas = this.incidencias.length > 0;
@@ -36,7 +43,7 @@ export class IncidenciasComponent implements OnInit {
 
 	getIncidencias() {
 		this.restService.getIncidencias().subscribe(incidencias => {
-			this.incidencias = incidencias;
+			this.guardarIncidencias(incidencias);
 		},
 			(err: HttpErrorResponse) => {
 				this.utilesService.mostrarMensajeDeError(err);
@@ -65,8 +72,10 @@ export class IncidenciasComponent implements OnInit {
 	guardarIncidencias(incidencias: TipoIncidencia[]) {
 		if (incidencias.length == 0) {
 			this.hayIncidenciasReportadas = false;
-			this.utilesService.mostrarMensaje('No se registraron incidencias de tipo: ' + this.tipoDeIncidenciaActual.descripcion);
-		} else {
+			if(this.tipoIncidenciaBuscada != ''){
+				this.utilesService.mostrarMensaje('No se registraron incidencias de tipo: ' + this.tipoDeIncidenciaActual.descripcion);
+		}
+	 }else {
 			this.incidencias = incidencias;
 			this.hayIncidenciasReportadas = true;
 		}
