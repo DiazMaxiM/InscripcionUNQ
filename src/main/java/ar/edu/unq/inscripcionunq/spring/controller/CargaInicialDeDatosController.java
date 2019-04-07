@@ -21,10 +21,10 @@ import ar.edu.unq.inscripcionunq.spring.model.Equivalencia;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
+import ar.edu.unq.inscripcionunq.spring.model.TipoDia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoIncidencia;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPerfil;
 import ar.edu.unq.inscripcionunq.spring.model.TipoPeriodo;
-import ar.edu.unq.inscripcionunq.spring.model.TipoDia;
 import ar.edu.unq.inscripcionunq.spring.model.Usuario;
 import ar.edu.unq.inscripcionunq.spring.service.GenericService;
 import ar.edu.unq.inscripcionunq.spring.service.WebService;
@@ -81,7 +81,7 @@ public class CargaInicialDeDatosController {
 		matt.agregarCarrera(lds);
 		long orga = materiaServiceImp.save(matt);
 
-		matt = new Materia("01033", "Matemática I", 8, 12 );
+		matt = new Materia("01033", "Matemática I", 8, 12);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long mate1 = materiaServiceImp.save(matt);
@@ -155,7 +155,7 @@ public class CargaInicialDeDatosController {
 		matt.agregarCarrera(lds);
 		long ed = materiaServiceImp.save(matt);
 
-		matt = new Materia("01055", "Herramientas declarativas en Programación",4, 8);
+		matt = new Materia("01055", "Herramientas declarativas en Programación", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long hDP = materiaServiceImp.save(matt);
@@ -286,7 +286,7 @@ public class CargaInicialDeDatosController {
 		matt.agregarCarrera(lds);
 		long pygsl = materiaServiceImp.save(matt);
 
-		matt = new Materia("01051", "Programación con Objetos III",4, 8);
+		matt = new Materia("01051", "Programación con Objetos III", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
 		long obj3 = materiaServiceImp.save(matt);
@@ -578,20 +578,20 @@ public class CargaInicialDeDatosController {
 		Encuesta poll = new Encuesta("Encuesta segundo semestre 2018", LocalDateTime.of(2018, 8, 25, 00, 00),
 				LocalDateTime.of(2018, 12, 15, 00, 00), periodo1);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
-		
+
 		Long idEncuesta = encuestaServiceImp.save(poll);
 
 		Equivalencia equivalenciaSeg = new Equivalencia(materiaServiceImp.get(sI), materiaServiceImp.get(segInfo));
 		equivalenciaServiceImp.save(equivalenciaSeg);
-		
+
 		try {
 			webService.importarEstudiantes(idEncuesta);
 		} catch (ConexionWebServiceException | EncuestaNoExisteException e) {
 			e.printStackTrace();
 		}
 
-		Usuario usuario = new Usuario("Rosali", "Zaracho", "zaracho.rosali@gmail.com", "36214936");
-		usuario.setPassword("123");
+		Usuario usuario = new Usuario("root", "root", "cpi_epi@unq.edu.ar", "00000000");
+		usuario.setPassword("root");
 		usuario.agregarPerfil(TipoPerfil.ADMINISTRADOR);
 		usuarioServiceImp.save(usuario);
 
@@ -603,7 +603,7 @@ public class CargaInicialDeDatosController {
 
 		tipoIncidencia = new TipoIncidencia("Corrección de nombre y apellido");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
-		
+
 		tipoIncidencia = new TipoIncidencia("Otro");
 		tipoIncidenciaServiceImp.save(tipoIncidencia);
 

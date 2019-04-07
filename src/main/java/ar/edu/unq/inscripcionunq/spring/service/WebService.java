@@ -1,5 +1,9 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteWebServiceJson;
@@ -48,9 +50,12 @@ public class WebService {
 	public void importarEstudiantes(Long idEncuesta) throws ConexionWebServiceException, EncuestaNoExisteException {
 		String response = null;
 		try {
-			response = Unirest.post("http://www.proydesa.org/prueba2.json").header("Content-Type", "application/json")
-					.header("cache-control", "no-cache").asString().getBody();
-		} catch (UnirestException e) {
+			// response =
+			// Unirest.post("http://xxx.edu.ar/archivo.json").header("Content-Type",
+			// "application/json")
+			// .header("cache-control", "no-cache").asString().getBody();
+			response = new String(Files.readAllBytes(Paths.get("prueba.json")), StandardCharsets.UTF_8);
+		} catch (/* UnirestException | */ IOException e) {
 			throw new ConexionWebServiceException();
 		}
 		JsonElement mJson = new JsonParser().parse(response);
