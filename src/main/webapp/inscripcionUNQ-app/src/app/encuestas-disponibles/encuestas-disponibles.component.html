@@ -14,7 +14,7 @@
 					encuesta.horaComienzo.year}}</td>
 				<td>{{ encuesta.horaFin.dayOfMonth | number:'2.0'}}/{{ encuesta.horaFin.monthValue | number:'2.0'}}/{{
 					encuesta.horaFin.year}}</td>
-				<td><i class="material-icons edit-icon" (click)="editarEncuesta(encuesta.id)">edit</i></td>
+				<td><button class="btn btn-danger mat-button " (click)="editarEncuesta(encuesta.id)" mat-fab color="primary">Editar</button></td>
 			</tr>
 			<mat-divider></mat-divider>
 		</tbody>

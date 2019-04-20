@@ -5,28 +5,31 @@
 	</mat-form-field>
 </div>
 <div *ngIf="!agregaMaterias">
-<div class="table-responsive">
- <table class="table table-hover table-borderless">
-   <thead>
-     <tr>
-       <th>Nombre</th>
-     </tr>
-   </thead>
-   <tbody>
-     <tr *ngFor="let materia of materiasAprobadas| filtroBusqueda: {nombre: materiaBuscada}; let i=index;">
-			<td style="width: 5%; display: none">{{i +1}}</td> 
-			<td>{{materia.nombre}}</td>
-       <td><mat-checkbox [checked]='materia.aprobada' color="warn" (change)="seleccionarMateria(materia.id)"></mat-checkbox></td>
-     </tr>
-    <mat-divider></mat-divider>
-   </tbody>
- </table>
+	<div class="table-responsive">
+		<table class="table table-hover table-borderless">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let materia of materiasAprobadas| filtroBusqueda: {nombre: materiaBuscada}; let i=index;">
+					<td style="width: 5%; display: none">{{i +1}}</td> 
+					<td>{{materia.nombre}}</td>
+					<td><mat-checkbox [checked]='materia.aprobada' color="warn" (change)="seleccionarMateria(materia.id)"></mat-checkbox></td>
+				</tr>
+				<mat-divider></mat-divider>
+			</tbody>
+		</table>
+	</div>		
 </div>
 <div align="center">
 		<button class="btn btn-danger mat-button boton-agregar" (click)="mostrarAgregarMaterias()" mat-fab color="primary">Agregar materias</button>
+	</div>
+	<div class="row justify-content-between">
+		<button class="btn btn-danger mat-button " (click)="volver()" mat-fab color="primary">Volver</button>
 		<button class="btn btn-danger mat-button" (click)="actualizarMaterias()" mat-fab color="primary">Siguiente</button>
-</div>		
-</div>
+	</div>
 <div *ngIf="agregaMaterias">
 		<div class="table-responsive">
 		 <table class="table table-hover table-borderless">

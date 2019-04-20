@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
+import { Location } from '@angular/common'; 
 
 @Component({
 	selector: 'app-encuesta-finalizada',
@@ -9,10 +10,13 @@ import { UtilesService } from '../utiles.service';
 })
 export class EncuestaFinalizadaComponent {
 
+	location: Location;
+
 	constructor(
 		private restService: RestService,
-		private utilesService: UtilesService
-	) { }
+		private utilesService: UtilesService,
+		location: Location) { this.location = location; 
+		}
 
 	descargarCertificado() {
 		const idEstudiante = localStorage.getItem('idEstudiante');
@@ -47,5 +51,9 @@ export class EncuestaFinalizadaComponent {
 	salir() {
 		localStorage.clear();
 		this.utilesService.salir();
+	}
+
+	volver(){
+		this.location.back();
 	}
 }

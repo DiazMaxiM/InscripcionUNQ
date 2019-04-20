@@ -5,6 +5,7 @@ import { Estudiante } from './estudiante.model';
 import { UtilesService } from '../utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Usuario } from '../autenticacion/usuario.model';
+import { Location } from '@angular/common'; 
 
 @Component({
 	selector: 'app-informacion-estudiante',
@@ -13,11 +14,13 @@ import { Usuario } from '../autenticacion/usuario.model';
 })
 export class InformacionEstudianteComponent implements OnInit {
 
+	location: Location;
+
 	constructor(
 		private restService: RestService,
 		private formBuilder: FormBuilder,
-		private utilesService: UtilesService
-	) { }
+		private utilesService: UtilesService,
+		location: Location) { this.location = location; }
 
 	informacionEstudianteForm: FormGroup;
 	idEstudiante: string;
@@ -87,6 +90,10 @@ export class InformacionEstudianteComponent implements OnInit {
 		return this.infoEstudiante.nombre != infoEstudiante.nombre ||
 		this.infoEstudiante.apellido != infoEstudiante.apellido ||
 		this.infoEstudiante.email != infoEstudiante.email;
+	}
+
+	volver(){
+		this.location.back();
 	}
 
 }
