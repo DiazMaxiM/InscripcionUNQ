@@ -10,17 +10,18 @@ import { AppMensajes } from './app-mensajes.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Carrera } from './carreras/carrera.model';
 import { BootController } from './boot-control';
+import { Location } from '@angular/common'; 
 
 @Injectable()
 export class UtilesService {
 	dialogo;
+	location: Location;
 
 	constructor(
 		private dialog: MatDialog,
 		private router: Router,
 		private ngZone: NgZone,
-	) {
-	}
+		location: Location) { this.location = location; }
 
 	mostrarMensajeYRedireccionar(mensaje, ruta) {
 		const dialogConfig = this.crearConfiguracionDelDialogo(mensaje);
@@ -218,5 +219,9 @@ export class UtilesService {
 			'hora': horario.hour,
 			'minutos': horario.minute
 		}
+	}
+
+	volver(){
+		this.location.back();
 	}
 }

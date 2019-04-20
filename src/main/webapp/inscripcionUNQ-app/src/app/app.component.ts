@@ -6,7 +6,6 @@ import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { UsuarioLogueadoService } from './usuario-logueado.service';
 import { DialogosService } from './dialogos.service';
 import { Usuario } from './autenticacion/usuario.model';
-import { AppMensajes } from './app-mensajes.model';
 
 @Component({
 	selector: 'app-root',

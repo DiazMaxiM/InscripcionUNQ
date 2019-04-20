@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { RestService } from '../rest.service';
 import { MateriaEstudiante } from './materia-estudiante.model';
 import { UtilesService } from '../utiles.service';
-import { Location } from '@angular/common'; 
 
 @Component({
 	selector: 'app-materias-aprobadas',
@@ -17,13 +16,10 @@ export class MateriasAprobadasComponent implements OnInit {
 	materiaBuscada;
 	agregaMaterias: boolean;
 	nuevasMateriasAprobadas:  MateriaEstudiante[] = [];
-	location: Location;
 
 	constructor(
 		private restService: RestService,
-		private utilesService: UtilesService,
-		location: Location) { this.location = location; 
-	}
+		private utilesService: UtilesService) { }
 
 	ngOnInit() {
 		this.idEstudiante = localStorage.getItem('idEstudiante');
@@ -103,6 +99,6 @@ export class MateriasAprobadasComponent implements OnInit {
 	}
 
 	volver(){
-		this.location.back();
+		this.utilesService.volver();
 	}
 }

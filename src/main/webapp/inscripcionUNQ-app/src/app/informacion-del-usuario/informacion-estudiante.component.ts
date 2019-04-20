@@ -5,7 +5,6 @@ import { Estudiante } from './estudiante.model';
 import { UtilesService } from '../utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Usuario } from '../autenticacion/usuario.model';
-import { Location } from '@angular/common'; 
 
 @Component({
 	selector: 'app-informacion-estudiante',
@@ -14,13 +13,10 @@ import { Location } from '@angular/common';
 })
 export class InformacionEstudianteComponent implements OnInit {
 
-	location: Location;
-
 	constructor(
 		private restService: RestService,
 		private formBuilder: FormBuilder,
-		private utilesService: UtilesService,
-		location: Location) { this.location = location; }
+		private utilesService: UtilesService) {  }
 
 	informacionEstudianteForm: FormGroup;
 	idEstudiante: string;
@@ -93,7 +89,7 @@ export class InformacionEstudianteComponent implements OnInit {
 	}
 
 	volver(){
-		this.location.back();
+		this.utilesService.volver();
 	}
 
 }

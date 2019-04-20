@@ -6,7 +6,6 @@ import { RegistroDeComisionesSeleccionadasService } from "./registro-de-comision
 import { UtilesService } from "../utiles.service";
 import { Comision } from "../comisiones-de-oferta/comision.model";
 import { DialogosService } from "../dialogos.service";
-import { Location } from '@angular/common'; 
 
 @Component({
   selector: "app-seleccion-de-materias-por-cursar",
@@ -19,14 +18,12 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   comisionesSeleccionadas: ComisionSeleccionada[] = [];
   idEstudiante: string;
   materiaBuscada;
-  location: Location;
 
   constructor(
     private restService: RestService,
     private registroComisionesService: RegistroDeComisionesSeleccionadasService,
 		private utilesService: UtilesService,
-    private dialogosService: DialogosService,
-    location: Location) { this.location = location; }
+    private dialogosService: DialogosService) { }
 
   ngOnInit() {
     this.idEstudiante = localStorage.getItem("idEstudiante");
@@ -200,6 +197,6 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   }
 
   volver(){
-		this.location.back();
+		this.utilesService.volver();
 	}
 }
