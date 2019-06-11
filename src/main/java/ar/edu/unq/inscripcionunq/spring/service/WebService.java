@@ -86,7 +86,7 @@ public class WebService {
 				estudianteNuevo.agregarInscripcionACarrera(carreras.get(carreraWebServiceJson.codigo));
 			}
 			for (MateriaWebServiceJson materiaWebServiceJson : estudianteWebServiceJson.cursadas) {
-				if (materiaWebServiceJson.materia.codigo != null) {
+				if (materiaWebServiceJson.materia.codigo != null && !materiaWebServiceJson.materia.codigo.isEmpty()) {
 					if (!materias.containsKey(materiaWebServiceJson.materia.getCodigoCerosAIzquierda())) {
 						materias.put(materiaWebServiceJson.materia.getCodigoCerosAIzquierda(), materiaServiceImp
 								.getMateriaPorCodigo(materiaWebServiceJson.materia.getCodigoCerosAIzquierda()));
