@@ -16,8 +16,8 @@ import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
-import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
@@ -43,7 +43,7 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 
 	@Override
 	public List<MateriaSistemaJson> getMateriasJson() {
-		List<Materia> materias = this.list();
+		List<Materia> materias = materiaDaoImp.getMaterias();
 		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
 	}
 
@@ -54,8 +54,8 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			carrerasJson.add(carreraJson);
 		});
 
-		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),materia.getCreditos(),
-				carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()));
+		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),
+				materia.getCreditos(), carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()));
 
 	}
 
@@ -100,7 +100,8 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			carreraOriginal.actualizarInformacion(carrera);
 			carreras.add(carreraOriginal);
 		});
-		return new Materia(materiaJson.codigo, materiaJson.nombre, materiaJson.horas,materiaJson.creditos,carreras, estado);
+		return new Materia(materiaJson.codigo, materiaJson.nombre, materiaJson.horas, materiaJson.creditos, carreras,
+				estado);
 
 	}
 

@@ -34,21 +34,20 @@ public class ComisionDaoImp extends GenericDaoImp<Comision> implements ComisionD
 		query.setParameter("idEncuesta", idEncuesta);
 		return query.getResultList();
 	}
-	
+
 	@Override
 	public List<Comision> getComisionParaPeriodo(Long idPeriodo) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Query<Comision> query = session.createQuery("from Comision c where c.periodo.id = :idPeriodo");
+		Query<Comision> query = session
+				.createQuery("from Comision c where c.periodo.id = :idPeriodo order by c.materia.nombre asc");
 		query.setParameter("idPeriodo", idPeriodo);
 		return query.getResultList();
 	}
-	
+
 	@Override
 	public Comision obtenerComisionConNombreEnPeriodo(String nombre, Long idPeriodo) {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (Comision) session.createQuery("from Comision c where c.nombre = :nombre and c.periodo.id = :idPeriodo")
-				.setParameter("idPeriodo", idPeriodo)
-				.setParameter("nombre", nombre)
-				.uniqueResult();
+				.setParameter("idPeriodo", idPeriodo).setParameter("nombre", nombre).uniqueResult();
 	}
 }

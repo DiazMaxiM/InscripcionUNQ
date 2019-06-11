@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
+import ar.edu.unq.inscripcionunq.spring.model.TipoEstado;
 
 @Repository
 public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao {
@@ -26,7 +27,7 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 		}
 		Session sesion = this.sessionFactory.getCurrentSession();
 		Query<Materia> query = sesion.createQuery(
-				"select distinct materia from Materia as materia join materia.carreras c where c.id in (:carrerasId)");
+				"select distinct materia from Materia as materia join materia.carreras c where c.id in (:carrerasId) order by materia.nombre asc");
 		query.setParameterList("carrerasId", idCarreras);
 		return query.getResultList();
 	}
@@ -34,9 +35,8 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 	@Override
 	public Materia encontrarMateriaConElMismoCodigo(String codigo) {
 		Session session = this.sessionFactory.getCurrentSession();
-		return (Materia) session.createQuery("from Materia where codigo = :codigo")
-				.setParameter("codigo", codigo)
-			    .uniqueResult();
+		return (Materia) session.createQuery("from Materia where codigo = :codigo").setParameter("codigo", codigo)
+				.uniqueResult();
 	}
 
 	@Override
@@ -45,6 +45,16 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 		Query<Materia> query = sesion.createQuery(
 				"select distinct materia from Materia as materia join materia.carreras c where c.id = :carreraId");
 		query.setParameter("carreraId", idCarrera);
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Materia> getMaterias() {
+		Session sesion = this.sessionFactory.getCurrentSession();
+		Query<Materia> query = sesion.createQuery(
+				"select materia from Materia as materia where materia.estado = :estado order by materia.nombre asc");
+		query.setParameter("estado", TipoEstado.ENABLED);
+
 		return query.getResultList();
 	}
 }
