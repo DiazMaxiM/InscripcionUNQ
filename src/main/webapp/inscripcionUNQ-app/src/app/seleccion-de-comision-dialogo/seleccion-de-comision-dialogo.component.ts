@@ -21,7 +21,9 @@ export class SeleccionDeComisionDialogoComponent implements OnInit{
 	}
 
 	ngOnInit() {
-		this.comisiones = this.materia.comisionesJson;
+		this.comisiones =  this.materia.comisionesJson.sort(function (a, b) {
+			return a.nombre.localeCompare(b.nombre);
+		});;
 	}
 
 	enviarRegistro(comisionSeleccionada: ComisionSeleccionada) {
