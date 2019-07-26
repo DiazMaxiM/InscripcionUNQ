@@ -6,8 +6,8 @@ import java.util.List;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
-public class MateriaJson {
-	
+public class MateriaJson implements Comparable<MateriaJson> {
+
 	public Long id;
 	public String codigo;
 	public String nombre;
@@ -44,14 +44,19 @@ public class MateriaJson {
 	public MateriaJson(Materia materia) {
 		this.id = materia.getId();
 	}
-	
+
 	private void setComisionInscripto(Comision comision) {
 		this.comisionRegistrado = new ComisionJson(comision);
 	}
 
 	public MateriaJson agregarComisionJson(List<ComisionJson> comisionJson) {
 		comisionesJson.addAll(comisionJson);
-		
+
 		return this;
+	}
+
+	@Override
+	public int compareTo(MateriaJson materiaJson) {
+		return this.nombre.compareTo(materiaJson.nombre);
 	}
 }

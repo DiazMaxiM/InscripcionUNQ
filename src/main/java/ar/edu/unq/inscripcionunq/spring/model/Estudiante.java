@@ -22,7 +22,7 @@ import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "Estudiante")
 public class Estudiante extends BaseEntity {
-	
+
 	private String dni;
 	private String nombre;
 	private String apellido;
@@ -90,14 +90,13 @@ public class Estudiante extends BaseEntity {
 	}
 
 	public boolean estudianteCambio(Estudiante estudiante) {
-		return estudiante.dni != this.dni || estudiante.nombre != this.nombre 
-				|| estudiante.apellido != this.apellido
+		return estudiante.dni != this.dni || estudiante.nombre != this.nombre || estudiante.apellido != this.apellido
 				|| estudiante.email != this.email;
 	}
 
 	public void actualizarEstudiante(Estudiante estudiante)
 			throws NombreInvalidoException, ApellidoInvalidoException, EmailInvalidoException {
-            Validacion.validarEstudiante(estudiante);
+		Validacion.validarEstudiante(estudiante);
 		this.dni = estudiante.dni;
 		this.email = estudiante.email;
 		this.apellido = estudiante.apellido;
@@ -138,5 +137,10 @@ public class Estudiante extends BaseEntity {
 
 	public void eliminarTodasLasComisionesInscripto() {
 		this.registroComisiones = new ArrayList<Comision>();
+	}
+
+	public String toString() {
+		return "DNI=" + this.dni + " EMAIL=" + this.email + " APELLIDO=" + this.apellido + " NOMBRE=" + this.nombre;
+
 	}
 }

@@ -1,6 +1,7 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,19 +14,22 @@ import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ComisionJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
 import ar.edu.unq.inscripcionunq.spring.dao.EstudianteDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
-import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Certificado;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
-import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Email;
+import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
 import ar.edu.unq.inscripcionunq.spring.model.Materia;
 
 @Service
@@ -34,12 +38,15 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 
 	@Autowired
 	private MateriaDao materiaDaoImp;
-	
+
 	@Autowired
 	private ComisionDao comisionDaoImp;
-	
+
 	@Autowired
 	private EstudianteDao estudianteDaoImp;
+
+	@Autowired
+	private IncidenciaService incidenciaServiceImp;
 
 	@Override
 	public List<MateriaJson> materiasAprobadasDeUsuario(String idUsuario)
@@ -54,10 +61,12 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 		}
 		List<Carrera> carreras = estudiante.getCarrerasInscripto();
 		List<Materia> materias = materiaDaoImp.getMateriasParaCarreras(carreras);
-		return materias.stream().map(s -> new MateriaJson(s, this.carrerasACarrerasJson(s.getCarreras()),estudiante.estaAprobada(s))).collect(Collectors.toList());
+		return materias.stream()
+				.map(s -> new MateriaJson(s, this.carrerasACarrerasJson(s.getCarreras()), estudiante.estaAprobada(s)))
+				.collect(Collectors.toList());
 	}
-	
-	public List<CarreraJson> carrerasACarrerasJson(List<Carrera> carreras){
+
+	public List<CarreraJson> carrerasACarrerasJson(List<Carrera> carreras) {
 		return carreras.stream().map(c -> new CarreraJson(c)).collect(Collectors.toList());
 	}
 
@@ -79,6 +88,20 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 						materiasAprobadas.stream().map(sA -> materiaDaoImp.get(sA.id)).collect(Collectors.toList())))) {
 			List<Materia> nuevasMateriasAprobadas = materiasAprobadas.stream()
 					.map(subjectApproved -> materiaDaoImp.get(subjectApproved.id)).collect(Collectors.toList());
+
+			TipoIncidenciaJson otros = new TipoIncidenciaJson();
+			otros.id = (long) 4;
+			IncidenciaJson incidenciaJson = new IncidenciaJson();
+			incidenciaJson.tipoIncidencia = otros;
+			incidenciaJson.descripcion = "cambie materias aprobadas";
+			incidenciaJson.emailDelReportante = estudiante.getEmail();
+
+			try {
+				incidenciaServiceImp.agregarIncidencia(incidenciaJson);
+			} catch (EmailInvalidoException e) {
+
+			}
+
 			estudiante.setMateriasAprobadas(nuevasMateriasAprobadas);
 		}
 	}
@@ -113,7 +136,7 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 								.map(com -> new ComisionJson(com)).collect(Collectors.toList())
 
 				)).collect(Collectors.toList());
-
+		Collections.sort(materiaJson);
 		return materiaJson;
 	}
 
@@ -152,7 +175,7 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 			throw new FormatoNumeroIdException();
 		}
 	}
-	
+
 	public Integer estudiantesPorComision(String idComision) {
 		return estudianteDaoImp.getNroEstudiantesPorComision(new Long(idComision));
 	}
