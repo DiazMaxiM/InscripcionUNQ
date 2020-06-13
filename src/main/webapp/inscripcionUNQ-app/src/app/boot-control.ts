@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 export class BootController {
   private static instance: BootController;
   private _reboot: Subject<boolean> = new Subject();
