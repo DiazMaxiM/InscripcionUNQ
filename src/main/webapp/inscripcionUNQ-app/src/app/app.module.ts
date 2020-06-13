@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 // Material angular
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import 'hammerjs';
 
 import { LoginComponent } from './autenticacion/login.component';
 import { InformacionEstudianteComponent } from './informacion-del-usuario/informacion-estudiante.component';
@@ -21,7 +20,7 @@ import { FeedbackUsuarioDialogoComponent } from './feedback-usuario-dialogo/feed
 import { MateriasAprobadasComponent } from './materias-aprobadas/materias-aprobadas.component';
 
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
-import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material';
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS, DateAdapter } from '@angular/material/core';
 import { RegistroDeComisionesSeleccionadasService} from './seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';
 
 import { UtilesService } from './utiles.service';

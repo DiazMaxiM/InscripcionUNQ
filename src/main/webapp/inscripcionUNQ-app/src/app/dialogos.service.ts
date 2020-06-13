@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TipoIncidenciaDialogoComponent } from './tipo-incidencia-dialogo/tipo-incidencia-dialogo.component';
 import { TipoIncidencia } from './tipo-incidencia-dialogo/tipo-incidencia.model';
 import { EncuestaDialogoComponent } from './encuesta-dialogo/encuesta-dialogo.component';

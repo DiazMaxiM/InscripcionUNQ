@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ComisionSeleccionada } from './comision-seleccionada.model';
 import { FormBuilder } from '@angular/forms';
 import { RegistroDeComisionesSeleccionadasService } from '../seleccion-de-materias-por-cursar/registro-de-comisiones-seleccionadas.service';

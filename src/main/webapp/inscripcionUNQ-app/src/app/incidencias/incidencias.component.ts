@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
-import { MatOptionSelectionChange } from '@angular/material';
+import { MatOptionSelectionChange } from '@angular/material/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IncidenciaEstado } from './incidencia-estado.model';
 import { TipoIncidencia } from '../tipo-incidencia-dialogo/tipo-incidencia.model';

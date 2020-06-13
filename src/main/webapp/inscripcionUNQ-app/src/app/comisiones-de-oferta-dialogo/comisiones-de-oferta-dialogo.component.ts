@@ -4,7 +4,7 @@ import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AppRutas } from '../app-rutas.model';
 
 @Component({

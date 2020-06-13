@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UtilesService } from '../utiles.service';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
