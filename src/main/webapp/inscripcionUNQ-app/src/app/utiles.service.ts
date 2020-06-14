@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { FeedbackUsuarioDialogoComponent } from './feedback-usuario-dialogo/feedback-usuario-dialogo.component';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -4,7 +4,7 @@ import { RestService } from '../rest.service';
 import { AppMensajes } from '../app-mensajes.model';
 import { OfertaAcademica } from '../oferta-academica/oferta-academica.model';
 import { Encuesta } from '../encuesta-dialogo/encuesta.model';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-ofertas-de-encuesta-dialogo',

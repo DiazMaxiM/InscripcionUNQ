@@ -5,7 +5,7 @@ import { Periodo } from '../periodos/periodo.model';
 import { AppRutas } from '../app-rutas.model';
 import { FormControl } from '@angular/forms';
 import { AppMensajes } from '../app-mensajes.model';
-import { MatOptionSelectionChange} from '@angular/material';
+import { MatOptionSelectionChange } from '@angular/material/core';
 import { Comision } from '../comisiones-de-oferta/comision.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DialogosService } from '../dialogos.service';

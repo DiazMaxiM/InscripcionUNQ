@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
-import { MatDialogRef} from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Usuario } from '../autenticacion/usuario.model';
 import { AppMensajes } from '../app-mensajes.model';
 
