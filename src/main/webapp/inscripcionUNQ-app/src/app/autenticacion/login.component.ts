@@ -51,9 +51,10 @@ export class LoginComponent implements OnInit {
 					});
 		}
 	}
+
 	recuperarPassword() {
 		const { email, password } = this.loginVerificationForm.value;
-		if (email != ""){
+		if (email != "") {
 			const usuario = new Usuario(email);
 			this.utilesService.activarDialogoCargando('Enviando nueva contraseña...');
 			this.restService.recuperarPassword(usuario)
@@ -67,6 +68,7 @@ export class LoginComponent implements OnInit {
 					});
 		}
 	}
+
 	mostrarPantallaSegunPerfil(usuario: Usuario) {
 		this.usuarioLogueado.notificarUsuarioLoguedado();
 		localStorage.setItem('usuario', JSON.stringify(usuario));
@@ -79,7 +81,9 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
-	irASegunPerfil(perfil: String) {
+	irASegunPerfil(perfil: string) {
+		this.usuarioLogueado.notificarPerfilUsuarioLogueado(perfil);
+
 		if (AppMensajes.ESTUDIANTE == perfil) {
 			this.utilesService.irA(AppRutas.ENCUESTAS_VIGENTES);
 		} else if (AppMensajes.ADMINSTRADOR == perfil) {

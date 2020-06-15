@@ -10,10 +10,10 @@ mat-toolbar{
 }
 
 .jumbotron{
-	width: 95% !important;
+	width: 80% !important;
 	margin: auto;
-	margin-bottom: 3%;
 	background-color: white !important;
+	padding-top: 0 !important;
 }
 
 h2{

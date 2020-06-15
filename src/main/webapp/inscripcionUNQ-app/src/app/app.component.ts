@@ -1,22 +1,19 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RestService } from './rest.service';
 import { UtilesService } from './utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { UsuarioLogueadoService } from './usuario-logueado.service';
 import { DialogosService } from './dialogos.service';
-import { Usuario } from './autenticacion/usuario.model';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit {
-	incidencia: Incidencia;
-	hayUsuarioLogueado: boolean;
-	muestraDialogoDeIncidencia = true;
-	usuario: Usuario;
+export class AppComponent implements OnInit {
+	hayUsuarioLogueado: boolean = false;
+	perfilUsuarioLogueado: string;
 
 	constructor(
 		private restService: RestService,
@@ -26,15 +23,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 	) { }
 
 	ngOnInit() {
-		this.usuarioLogueado.hayUsuarioLogueado.subscribe(res => {
+		this.usuarioLogueado.getUsuarioLogueado().subscribe(res => {
 			this.hayUsuarioLogueado = res;
-
 		});
-	}
-
-	ngAfterViewInit() {
-		this.usuarioLogueado.hayUsuarioLogueado.subscribe(res => {
-			this.hayUsuarioLogueado = res;
+		this.usuarioLogueado.getPerfilUsuarioLogueado().subscribe(res => {
+			this.perfilUsuarioLogueado = res;
 		});
 	}
 
@@ -58,11 +51,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	abrirDialogoParaModificacionDePassword() {
-    this.dialogosService.abrirDialogoModificacionPassword();
+		this.dialogosService.abrirDialogoModificacionPassword();
 	}
 
 	salir() {
 		this.utilesService.salir();
 	}
-
 }

@@ -1,13 +1,25 @@
-import { Injectable} from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
-export class UsuarioLogueadoService  {
-  private usuarioLogueado = new BehaviorSubject<boolean>(false);
-  hayUsuarioLogueado = this.usuarioLogueado.asObservable();
-  constructor() { }
+export class UsuarioLogueadoService {
+   private usuarioLogueado = new BehaviorSubject<boolean>(false);
 
- notificarUsuarioLoguedado() {
-    this.usuarioLogueado.next(true);
- }
+   getUsuarioLogueado(): Observable<boolean> {
+      return this.usuarioLogueado.asObservable();
+   }
+
+   notificarUsuarioLoguedado() {
+      this.usuarioLogueado.next(true);
+   }
+
+   private perfilUsuarioLogueado: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+   getPerfilUsuarioLogueado(): Observable<string> {
+      return this.perfilUsuarioLogueado.asObservable();
+   }
+
+   notificarPerfilUsuarioLogueado(perfil: string) {
+      this.perfilUsuarioLogueado.next(perfil);
+   }
 }
