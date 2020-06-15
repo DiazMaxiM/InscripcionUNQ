@@ -15,6 +15,10 @@ export class NavegacionAdminComponent {
     private utilesService: UtilesService
   ) {}
 
+  irAInicio() {
+		this.utilesService.irA(AppRutas.TAREAS_USUARIO);
+	}
+
   irACarreras() {
     this.restService.getCarreras().subscribe(carreras => {
       localStorage.setItem('carreras',JSON.stringify(carreras));

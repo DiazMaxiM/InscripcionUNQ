@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class UsuarioLogueadoService  {
   private usuarioLogueado = new BehaviorSubject<boolean>(false);
-  hayUsuarioLogueaado = this.usuarioLogueado.asObservable();
+  hayUsuarioLogueado = this.usuarioLogueado.asObservable();
   constructor() { }
 
  notificarUsuarioLoguedado() {

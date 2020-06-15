@@ -26,14 +26,14 @@ export class AppComponent implements OnInit, AfterViewInit {
 	) { }
 
 	ngOnInit() {
-		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
+		this.usuarioLogueado.hayUsuarioLogueado.subscribe(res => {
 			this.hayUsuarioLogueado = res;
 
 		});
 	}
 
 	ngAfterViewInit() {
-		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
+		this.usuarioLogueado.hayUsuarioLogueado.subscribe(res => {
 			this.hayUsuarioLogueado = res;
 		});
 	}

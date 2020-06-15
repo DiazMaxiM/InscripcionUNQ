@@ -60,8 +60,8 @@ import { TipoIncidenciaDialogoComponent } from './tipo-incidencia-dialogo/tipo-i
 import { DialogosService } from './dialogos.service';
 import { NavegacionEstudianteComponent } from './navegacion/navegacion-estudiante/navegacion-estudiante.component';
 import { NavegacionAdminComponent } from './navegacion/navegacion-admin/navegacion-admin.component';
-import { CarrerasComponent } from './abm-admin/carreras/carreras.component';
-import { ComisionDialogoComponent } from './abm-admin/comision-dialogo/comision-dialogo.component';
+import { CarrerasComponent } from './carreras/carreras.component';
+import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 
 @NgModule({
   declarations: [

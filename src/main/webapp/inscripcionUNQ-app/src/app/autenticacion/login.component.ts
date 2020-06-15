@@ -15,7 +15,8 @@ import { UsuarioLogueadoService } from '../usuario-logueado.service';
 })
 export class LoginComponent implements OnInit {
 	perfiles: String[];
-	seleccionaPerfil;
+	seleccionaPerfil: boolean;
+	perfilSeleccionado: string;
 	loginVerificationForm: FormGroup;
 
 	constructor(
@@ -86,7 +87,8 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
-	perfilSeleccionado(perfil) {
+	irAPerfilSeleccionado(perfil) {
+		this.perfilSeleccionado = perfil;
 		this.irASegunPerfil(perfil);
 	}
 }
