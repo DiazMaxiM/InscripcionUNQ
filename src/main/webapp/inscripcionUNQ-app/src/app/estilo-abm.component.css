@@ -32,3 +32,11 @@
 ::ng-deep .mat-tab-labels{
 	justify-content: center; /* align items in Main Axis */
 }
+
+button {
+  background-color: #B3291C !important;
+}
+
+button:hover {
+  background-color: #db3525 !important;
+}

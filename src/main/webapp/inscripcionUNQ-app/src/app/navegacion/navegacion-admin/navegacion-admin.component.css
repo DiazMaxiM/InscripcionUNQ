@@ -1,0 +1,12 @@
+nav {
+	background-color: #B3291C !important;
+	margin-bottom: 2%;
+}
+
+.nav-item:hover {
+	cursor: pointer;
+}
+
+.nav-link{
+	color: white !important;
+}

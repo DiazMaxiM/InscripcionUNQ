@@ -1,41 +1,52 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RestService } from './rest.service';
 import { UtilesService } from './utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Incidencia } from './incidencia-dialogo/incidencia.model';
 import { UsuarioLogueadoService } from './usuario-logueado.service';
 import { DialogosService } from './dialogos.service';
-import { Usuario } from './autenticacion/usuario.model';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit {
-	incidencia: Incidencia;
+export class AppComponent implements OnInit, OnDestroy {
+	subUsuarioLogueado: Subscription = null;
 	hayUsuarioLogueado: boolean;
-	muestraDialogoDeIncidencia = true;
-	usuario: Usuario;
+	perfilUsuarioLogueado: string;
+	esPaginaLogin: boolean;
 
 	constructor(
 		private restService: RestService,
 		private utilesService: UtilesService,
-		private usuarioLogueado: UsuarioLogueadoService,
+		private usuarioService: UsuarioLogueadoService,
 		private dialogosService: DialogosService
 	) { }
 
 	ngOnInit() {
-		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
-			this.hayUsuarioLogueado = res;
-
+		this.subUsuarioLogueado = this.usuarioService.getEsPaginaLogin().subscribe(res => {
+			this.esPaginaLogin = res;
 		});
+		console.log("localstorage", localStorage);
+		if (localStorage.getItem('usuario') != null) {
+			let perfil = JSON.parse(localStorage.getItem('usuario')).perfiles[0];
+
+			this.perfilUsuarioLogueado = perfil;
+			this.hayUsuarioLogueado = true;
+		} else {
+			this.subUsuarioLogueado = this.usuarioService.getUsuarioLogueado().subscribe(res => {
+				this.hayUsuarioLogueado = res;
+			});
+			this.usuarioService.getPerfilUsuarioLogueado().subscribe(res => {
+				this.perfilUsuarioLogueado = res;
+			});
+		}
 	}
 
-	ngAfterViewInit() {
-		this.usuarioLogueado.hayUsuarioLogueaado.subscribe(res => {
-			this.hayUsuarioLogueado = res;
-		});
+	ngOnDestroy() {
+		if(this.subUsuarioLogueado) { this.subUsuarioLogueado.unsubscribe() };
 	}
 
 	abrirDialogoParaLaCreacionDeIncidencia() {
@@ -58,11 +69,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 	}
 
 	abrirDialogoParaModificacionDePassword() {
-    this.dialogosService.abrirDialogoModificacionPassword();
+		this.dialogosService.abrirDialogoModificacionPassword();
 	}
 
 	salir() {
 		this.utilesService.salir();
+		localStorage.clear();
 	}
-
 }
