@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
 			this.restService.ingresarUsuario(usuario)
 				.subscribe(infoUsuario => {
 					this.mostrarPantallaSegunPerfil(infoUsuario);
+					this.usuarioLogueado.notificarEsPaginaLogin(false);
 				},
 					(err: HttpErrorResponse) => {
 						this.utilesService.mostrarMensajeDeError(err);

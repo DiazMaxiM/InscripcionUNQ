@@ -14,8 +14,9 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 	subUsuarioLogueado: Subscription = null;
-	hayUsuarioLogueado: boolean = false;
+	hayUsuarioLogueado: boolean;
 	perfilUsuarioLogueado: string;
+	esPaginaLogin: boolean;
 
 	constructor(
 		private restService: RestService,
@@ -25,6 +26,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
+		this.subUsuarioLogueado = this.usuarioService.getEsPaginaLogin().subscribe(res => {
+			this.esPaginaLogin = res;
+		});
 		console.log("localstorage", localStorage);
 		if (localStorage.getItem('usuario') != null) {
 			let perfil = JSON.parse(localStorage.getItem('usuario')).perfiles[0];

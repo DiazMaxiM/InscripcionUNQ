@@ -15,13 +15,13 @@
 	</div>
 </mat-toolbar>
 <div>
-	<div *ngIf="hayUsuarioLogueado && perfilUsuarioLogueado === 'ADMINISTRADOR'; then menuAdmin"></div>
-<!--	<div *ngIf="hayUsuarioLogueado && perfilUsuarioLogueado === 'ESTUDIANTE'; then menuEstudiante"></div> -->
+	<div *ngIf="hayUsuarioLogueado && perfilUsuarioLogueado === 'ADMINISTRADOR' && !esPaginaLogin; then menuAdmin"></div>
+<!--	<div *ngIf="hayUsuarioLogueado && perfilUsuarioLogueado === 'ESTUDIANTE' && !esPaginaLogin; then menuEstudiante"></div> -->
 	<ng-template #menuAdmin>
 		<app-navegacion-admin></app-navegacion-admin>
 	</ng-template>
 <!--	<ng-template #menuEstudiante>
-		<app-navegacion-estudiante></app-navegacion->
+		<app-navegacion-estudiante></app-navegacion-estudiante>
 	</ng-template> -->
 </div>
 <div class="jumbotron">

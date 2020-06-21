@@ -19,4 +19,12 @@ export class NavegacionEstudianteComponent implements OnInit {
   irAEncuestas(){
     this.utilesService.irA(AppRutas.ENCUESTAS_VIGENTES);
   }
+
+  irACuenta(){
+
+  }
+
+  irAIncidencias(){
+    
+  }
 }
