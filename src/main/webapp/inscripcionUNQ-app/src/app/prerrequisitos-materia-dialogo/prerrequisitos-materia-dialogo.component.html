@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Prerrequisitos de {{ materia.nombre }} </h2>
+<mat-form-field class="col-md-10">
+    <input
+      type="text"
+      placeholder="Materia"
+      formControlName="materia"
+      matInput
+      [matAutocomplete]="auto"
+      required/>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaBuscada}; let i=index;"
+        [value]="materia.nombre">
+        {{ materia.nombre }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+
+<mat-dialog-actions align="end">
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+		Cerrar
+	</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+		Guardar
+	</button>
+</mat-dialog-actions>

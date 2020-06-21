@@ -60,4 +60,13 @@ export class MateriasComponent implements OnInit {
 		materia.estado = evento.checked;
 		this.actualizarMateria(materia);
 	}
+
+	abrirDialogoPrerrequisito(materia?: Materia) {
+		this.dialogosService
+		.abrirDialogoPrerrequisito(materia)
+		.subscribe(res => {
+			this.getMaterias();
+		});
+		
+	}
 }

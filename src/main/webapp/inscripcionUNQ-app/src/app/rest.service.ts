@@ -258,4 +258,8 @@ export class RestService {
   getIncidencias() {
     return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
   }
+
+  actualizarPrerrequisitosMateria(materia: Materia) {
+    return this.httpClient.post('/api/materias/actualizar-preRequisitos/', materia, { headers });
+  }
 }

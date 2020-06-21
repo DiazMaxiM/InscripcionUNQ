@@ -29,6 +29,7 @@ import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicio
 import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component';
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
+import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-dialogo/prerrequisitos-materia-dialogo.component';
 
 @Injectable()
 export class DialogosService {
@@ -155,6 +156,13 @@ export class DialogosService {
 	abrirDialogoParaSeleccionarComision(materia: Materia): Observable<any> {
 		let dialogRef: MatDialogRef<SeleccionDeComisionDialogoComponent>;
 		dialogRef = this.dialog.open(SeleccionDeComisionDialogoComponent, this.configuracionDialogo(350, 400));
+		dialogRef.componentInstance.materia = materia;
+		return dialogRef.afterClosed();
+	}
+
+	abrirDialogoPrerrequisito(materia?: Materia): Observable<any> {
+		let dialogRef: MatDialogRef<PrerrequisitosMateriaDialogoComponent>;
+		dialogRef = this.dialog.open(PrerrequisitosMateriaDialogoComponent, this.configuracionDialogo(450, 480));
 		dialogRef.componentInstance.materia = materia;
 		return dialogRef.afterClosed();
 	}

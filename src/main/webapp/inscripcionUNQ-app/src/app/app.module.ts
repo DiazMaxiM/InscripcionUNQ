@@ -60,6 +60,7 @@ import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialo
 import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.component';
 import { TipoIncidenciaDialogoComponent } from './tipo-incidencia-dialogo/tipo-incidencia-dialogo.component';
 import { DialogosService } from './dialogos.service';
+import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-dialogo/prerrequisitos-materia-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { DialogosService } from './dialogos.service';
 		OfertasDeEncuestaDialogoComponent,
 		SeleccionDePeriodoDialogoComponent,
 		ReporteDialogoComponent,
-		TipoIncidenciaDialogoComponent
+		TipoIncidenciaDialogoComponent,
+		PrerrequisitosMateriaDialogoComponent
   ],
   imports: [
     BrowserModule,
