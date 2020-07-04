@@ -1,24 +1,33 @@
 <mat-toolbar>
 	<div class="row justify-content-between">
-		<img src="https://ddhh.unq.edu.ar/wp-content/uploads/2017/04/Logo-UNQ-RGB.png" 
-		class="img-fluid logo col-lg-3 col-sm-12" alt="logo UNQ">
+		<img src="https://ddhh.unq.edu.ar/wp-content/uploads/2017/04/Logo-UNQ-RGB.png"
+			class="logo col-12 col-xl-2 col-lg-3 col-md-4 col-sm-12" alt="logo UNQ">
 		<div class="col-sm-1 d-flex justify-content-center align-items-center">
-			<i (click)="abrirDialogoParaLaCreacionDeIncidencia()" 
-			class="material-icons boton-incidencia" title="Notificar incidencia">
-			notification_important
+			<i (click)="abrirDialogoParaLaCreacionDeIncidencia()" class="material-icons boton-incidencia"
+				title="Notificar incidencia">
+				notification_important
 			</i>
-			<i [hidden]="!hayUsuarioLogueado"  [matMenuTriggerFor]="menu"
-			class="material-icons boton-incidencia" title="Editar password">
-			account_circle
+			<i [hidden]="!hayUsuarioLogueado" [matMenuTriggerFor]="menu" class="material-icons boton-incidencia"
+				title="Editar password">
+				account_circle
 			</i>
 		</div>
 	</div>
 </mat-toolbar>
+<div>
+	<div *ngIf="hayUsuarioLogueado && perfilUsuarioLogueado === 'ADMINISTRADOR' && !esPaginaLogin; then menuAdmin"></div>
+<!--	<div *ngIf="hayUsuarioLogueado && perfilUsuarioLogueado === 'ESTUDIANTE' && !esPaginaLogin; then menuEstudiante"></div> -->
+	<ng-template #menuAdmin>
+		<app-navegacion-admin></app-navegacion-admin>
+	</ng-template>
+<!--	<ng-template #menuEstudiante>
+		<app-navegacion-estudiante></app-navegacion-estudiante>
+	</ng-template> -->
+</div>
 <div class="jumbotron">
-	<h2 class="h5">Encuesta de preinscripción CPI</h2>
 	<router-outlet></router-outlet>
 </div>
 <mat-menu #menu="matMenu">
-		<button mat-menu-item (click)="abrirDialogoParaModificacionDePassword()"> Modificar contraseña</button>
-		<button mat-menu-item (click)="salir()">Salir</button>
+	<button mat-menu-item (click)="abrirDialogoParaModificacionDePassword()"> Modificar contraseña</button>
+	<button mat-menu-item (click)="salir()">Salir</button>
 </mat-menu>

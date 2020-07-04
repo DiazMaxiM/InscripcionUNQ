@@ -1,27 +1,44 @@
-<h2 mat-dialog-title>Prerrequisitos de {{ materia.nombre }} </h2>
-<mat-form-field class="col-md-10">
-    <input
-      type="text"
-      placeholder="Materia"
-      formControlName="materia"
-      matInput
-      [matAutocomplete]="auto"
-      required/>
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option
-        *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaBuscada}; let i=index;"
-        [value]="materia.nombre">
+<h2 mat-dialog-title> {{ materiaSeleccionada.nombre }} </h2>
+<div class="table-responsive">
+  <table class="table table-hover table-borderless">
+    <thead>
+      <tr>
+        <th> Prerrequisitos </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prerrequisito of prerrequisitos">
+        <td style="width: 5%; display: none">{{i +1}}</td>
+        <td> {{ prerrequisito.nombre }} </td>
+        <td>
+          <i class="material-icons edit-icon" (click)="eliminarPrerrequisito(prerrequisito)" data-toggle="tooltip"
+            data-placement="top" title="Eliminar prerrequisito">delete</i>
+        </td>
+      </tr>
+      <mat-divider></mat-divider>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <mat-form-field class="col-md-10">
+    <input [value]="materiaActual" type="text" placeholder="Materia" matInput [matAutocomplete]="auto" />
+    <button class="button-close" mat-button *ngIf="materiaActual" matSuffix mat-icon-button aria-label="Clear"
+      (click)="actualizarMateriaActual()">
+      <mat-icon class="icon-close">close</mat-icon>
+    </button>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='agregarPrerrequisito($event.option.value)'>
+      <mat-option *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaBuscada}; let i=index;"
+        [value]="materia">
         {{ materia.nombre }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-
-
+</div>
 <mat-dialog-actions align="end">
-	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
-		Cerrar
-	</button>
-	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
-		Guardar
-	</button>
+  <button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+    Cerrar
+  </button>
+  <button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+    Guardar
+  </button>
 </mat-dialog-actions>

@@ -28,7 +28,6 @@ import { HttpClientModule} from '@angular/common/http';
 import { EncuestaFinalizadaComponent } from './encuesta-finalizada/encuesta-finalizada.component';
 import { TareasUsuarioComponent } from './tareas-usuario/tareas-usuario.component';
 import { EncuestasDisponiblesComponent } from './encuestas-disponibles/encuestas-disponibles.component';
-import { CarrerasComponent } from './carreras/carreras.component';
 import { MateriasComponent } from './materias/materias.component';
 import { CarreraDialogoComponent } from './carrera-dialogo/carrera-dialogo.component';
 import { OfertaAcademicaComponent } from './oferta-academica/oferta-academica.component';
@@ -40,7 +39,6 @@ import { PeriodoComponent } from './periodos/periodo.component';
 import { PeriodoDialogoComponent } from './periodo-dialogo/periodo-dialogo.component';
 import { IncidenciaDialogoComponent } from './incidencia-dialogo/incidencia-dialogo.component';
 import { ComisionesComponent } from './comisiones/comisiones.component';
-import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ComisionesDeOfertaDialogoComponent } from './comisiones-de-oferta-dialogo/comisiones-de-oferta-dialogo.component';
 import { EquivalenciasComponent } from './equivalencias/equivalencias.component';
@@ -61,6 +59,10 @@ import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.compo
 import { TipoIncidenciaDialogoComponent } from './tipo-incidencia-dialogo/tipo-incidencia-dialogo.component';
 import { DialogosService } from './dialogos.service';
 import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-dialogo/prerrequisitos-materia-dialogo.component';
+import { NavegacionEstudianteComponent } from './navegacion/navegacion-estudiante/navegacion-estudiante.component';
+import { NavegacionAdminComponent } from './navegacion/navegacion-admin/navegacion-admin.component';
+import { CarrerasComponent } from './carreras/carreras.component';
+import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,9 @@ import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-
 		SeleccionDePeriodoDialogoComponent,
 		ReporteDialogoComponent,
 		TipoIncidenciaDialogoComponent,
-		PrerrequisitosMateriaDialogoComponent
+		PrerrequisitosMateriaDialogoComponent,
+		NavegacionEstudianteComponent,
+		NavegacionAdminComponent
   ],
   imports: [
     BrowserModule,

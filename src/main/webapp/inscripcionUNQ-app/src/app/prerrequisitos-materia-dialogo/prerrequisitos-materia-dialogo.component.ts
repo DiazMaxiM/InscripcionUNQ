@@ -1,20 +1,20 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Materia } from '../materias/materia.model';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
 
 @Component({
-  selector: 'app-prerrequisitos-materia-dialogo',
-  templateUrl: './prerrequisitos-materia-dialogo.component.html',
-  styleUrls: ['./prerrequisitos-materia-dialogo.component.css']
+	selector: 'app-prerrequisitos-materia-dialogo',
+	templateUrl: './prerrequisitos-materia-dialogo.component.html',
+	styleUrls: ['./prerrequisitos-materia-dialogo.component.css']
 })
 export class PrerrequisitosMateriaDialogoComponent implements OnInit {
-  materia: Materia;
-  materias: Materia[];
-  tienePrerrequisitos: boolean = false;
-  prerrequisitos: Materia[];
+	materiaSeleccionada: Materia;
+	materiaActual: String;
+	materias: Materia[];
+	tienePrerrequisitos: boolean = false;
+	prerrequisitos: Materia[];
 
 	constructor(
 		private utilesService: UtilesService,
@@ -23,12 +23,13 @@ export class PrerrequisitosMateriaDialogoComponent implements OnInit {
 	}
 
 	ngOnInit() {
-    //this.prerrequisitos = this.getPrerrequisitos();
-    //this.tienePrerrequisitos = this.prerrequisitos.lenght > 0;
-    this.getMaterias();
-  }
-  
-  getMaterias() {
+		this.materiaActual = '';
+		this.prerrequisitos = [];
+		//this.prerrequisitos = this.getPrerrequisitos();
+		this.getMaterias();
+	}
+
+	getMaterias() {
 		this.restService.getMaterias().subscribe(materias => {
 			this.materias = materias;
 		},
@@ -38,32 +39,36 @@ export class PrerrequisitosMateriaDialogoComponent implements OnInit {
 	}
 
 	agregarPrerrequisito(materia: Materia) {
-		this.restService.actualizarPrerrequisitosMateria(materia)
-			.subscribe(res => {
-				const mensaje = '';
-				this.utilesService.mostrarMensaje(mensaje);
-				this.cerrar();
-			},
-				(err: HttpErrorResponse) => {
-					this.utilesService.mostrarMensajeDeError(err);
-				});
+		this.materiaActual = materia.nombre;
+		this.prerrequisitos.push(materia);
 	}
 
-	actualizarMateriaSeleccionada(materia: Materia, idMateria) {
-		materia.id = idMateria;
-		this.actualizarMateria(materia);
+	eliminarPrerrequisito(prerrequisito: Materia) {
+		let index = this.prerrequisitos.findIndex(p => p === prerrequisito)
+		this.prerrequisitos.splice(index, 1);
 	}
 
-	actualizarMateria(materia) {
-		this.restService.actualizarInformacionMateria(materia)
-			.subscribe(res => {
-				const mensaje = 'Los datos de la materia fueron actualizados con éxito';
-				this.utilesService.mostrarMensaje(mensaje);
-				this.cerrar();
-			},
-				(err: HttpErrorResponse) => {
-					this.utilesService.mostrarMensajeDeError(err);
-				});
+	rollback() {
+		//TODO
+	}
+
+	actualizarMateriaActual() {
+		this.materiaActual = '';
+	}
+
+	guardar() {
+		/*
+				this.restService.actualizarPrerrequisitosMateria(this.prerrequisitos)
+					.subscribe(res => {
+						const mensaje = '';
+						this.utilesService.mostrarMensaje(mensaje);
+						this.cerrar();
+					},
+						(err: HttpErrorResponse) => {
+							this.utilesService.mostrarMensajeDeError(err);
+						});
+			
+					*/
 	}
 
 	cerrar() {

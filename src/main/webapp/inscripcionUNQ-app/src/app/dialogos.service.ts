@@ -163,7 +163,7 @@ export class DialogosService {
 	abrirDialogoPrerrequisito(materia?: Materia): Observable<any> {
 		let dialogRef: MatDialogRef<PrerrequisitosMateriaDialogoComponent>;
 		dialogRef = this.dialog.open(PrerrequisitosMateriaDialogoComponent, this.configuracionDialogo(450, 480));
-		dialogRef.componentInstance.materia = materia;
+		dialogRef.componentInstance.materiaSeleccionada = materia;
 		return dialogRef.afterClosed();
 	}
 

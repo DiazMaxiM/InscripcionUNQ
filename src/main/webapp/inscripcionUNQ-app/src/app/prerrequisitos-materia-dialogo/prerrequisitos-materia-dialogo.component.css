@@ -16,3 +16,12 @@
   ::ng-deep .mat-dialog-content {
     overflow-y: hidden !important;
   }
+
+  .button-close{
+    background-color: white;
+    border: none;
+  }
+
+  .icon-close {
+    font-size: 100%;
+  }
