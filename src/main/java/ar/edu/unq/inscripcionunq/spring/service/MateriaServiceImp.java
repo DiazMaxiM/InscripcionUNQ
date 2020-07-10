@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
@@ -53,9 +54,14 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			CarreraJson carreraJson = new CarreraJson(carrera);
 			carrerasJson.add(carreraJson);
 		});
+		List<MateriaSistemaJson> materiasJson = new ArrayList<>();
+		materia.getPreRequisitos().forEach((materiaPreRequisito) -> {
+			MateriaSistemaJson materiaJson = new MateriaSistemaJson(materiaPreRequisito, true);
+			materiasJson.add(materiaJson);
+		});
 
 		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),
-				materia.getCreditos(), carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()));
+				materia.getCreditos(), carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()), materiasJson);
 
 	}
 
@@ -131,6 +137,28 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	public List<MateriaSistemaJson> getMateriasParaCarrera(String idCarrera) {
 		Long id = new Long(idCarrera);
 		List<Materia> materias = ((MateriaDao) genericDao).getMateriasParaCarrera(id);
+
+		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void actualizarPreRequisitos(String idMateria, List<IdJson> idsJson) {
+		// TODO Falta verificar que no sea recursivo es decir que la materia A
+		// incluya B, pero B en sus hijos
+		// No tenga a A
+		Materia materia = materiaDaoImp.get(new Long(idMateria));
+		List<Materia> preRequisitos = new ArrayList<Materia>();
+		for (IdJson idJson : idsJson) {
+			preRequisitos.add(materiaDaoImp.get(new Long(idJson.id)));
+		}
+		materia.actualizarPreRequisitos(preRequisitos);
+
+	}
+
+	@Override
+	public List<MateriaSistemaJson> getPreRequisitosParaMateria(String idMateria) {
+		Long id = new Long(idMateria);
+		List<Materia> materias = ((MateriaDao) genericDao).getPreRequisitosParaMateria(id);
 
 		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
 	}
