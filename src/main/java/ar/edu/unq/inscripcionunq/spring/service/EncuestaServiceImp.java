@@ -1,6 +1,8 @@
 package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
@@ -250,5 +253,17 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		reporte.generarReporte();
 	
 		return reporte;
+	}
+
+	@Override
+	public void guardarArchivo(MultipartFile archivo) {
+		if (!archivo.isEmpty()) {
+			try {
+				String hola = "hola";
+				Files.write(Paths.get("prueba.json"), hola.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	    }
 	}
 }

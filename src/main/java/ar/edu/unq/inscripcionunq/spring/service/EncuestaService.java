@@ -3,6 +3,8 @@ package ar.edu.unq.inscripcionunq.spring.service;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
@@ -45,5 +47,7 @@ public interface EncuestaService extends GenericService<Encuesta> {
 			throws FormatoNumeroIdException, EncuestaNoExisteException, OfertaNoExisteException;
 	
 	public Reporte getReporte(String idEncuesta, String tipoEncuesta) throws FormatoNumeroIdException,IOException;
+
+	public void guardarArchivo(MultipartFile archivo);
 
 }

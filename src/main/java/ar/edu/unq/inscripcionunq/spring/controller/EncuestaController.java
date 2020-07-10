@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.DocumentException;
 
@@ -147,4 +150,12 @@ public class EncuestaController {
 		encabezados.setCacheControl("must-revalidate, post-check=0,pre-check=0");
 		return new ResponseEntity<>(xlsBytes, encabezados, HttpStatus.OK);
 	}
+	
+	@PostMapping("/guardarJson")
+	public ResponseEntity guardarArchivo(@RequestPart("file") MultipartFile archivo) {
+	    System.out.println(archivo);
+		encuestaServiceImp.guardarArchivo(archivo);
+		return ResponseEntity.ok().build();
+	}
+	
 }
