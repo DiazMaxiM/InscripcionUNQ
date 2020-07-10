@@ -262,4 +262,8 @@ export class RestService {
   actualizarPrerrequisitosMateria(materia: Materia) {
     return this.httpClient.post('/api/materias/actualizar-preRequisitos/', materia, { headers });
   }
+
+  guardarArchivo(contenido){
+    return this.httpClient.post('/api/guardarJson', contenido,{ headers } );
+  }
 }
