@@ -263,8 +263,8 @@ export class RestService {
     return this.httpClient.post('/api/materias/actualizar-preRequisitos/', materia, { headers });
   }
 
-  guardarArchivo(archivo: FormData){
-    console.log(archivo);
-    return this.httpClient.post('/api/guardarJson', archivo);
+  guardarArchivo(contenido){
+    console.log(contenido);
+    return this.httpClient.post('/api/guardarJson', contenido,{ headers } );
   }
 }

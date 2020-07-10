@@ -56,13 +56,18 @@ export class JsonEstudiantesComponent implements OnInit {
 
 	archivoSeleccionado(event){
 		this.archivo = <File> event.target.files[0];
+        let reader = new FileReader();
+        reader.onload = () => {
+            // this 'text' is the content of the file
+			var text = reader.result;
+			this.guardarArchivo(text)
+        }
+		reader.readAsText(this.archivo);
 
 	}
 
-	guardarArchivo(){
-		let formData: FormData = new FormData();
-		formData.append('file', this.archivo);
-		this.restService.guardarArchivo(formData).subscribe(perfiles => {
+	guardarArchivo(text){
+		this.restService.guardarArchivo(text).subscribe(perfiles => {
 		},
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
