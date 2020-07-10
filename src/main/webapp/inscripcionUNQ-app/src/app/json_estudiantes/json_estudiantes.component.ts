@@ -67,10 +67,11 @@ export class JsonEstudiantesComponent implements OnInit {
 	}
 
 	guardarArchivo(text){
-		this.restService.guardarArchivo(text).subscribe(perfiles => {
+		this.restService.guardarArchivo(text).subscribe(() => {
+			this.utilesService.mostrarMensaje("El archivo fue guardado con exito")
 		},
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
-			});
+		});
 	}
 }

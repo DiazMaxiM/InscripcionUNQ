@@ -264,7 +264,6 @@ export class RestService {
   }
 
   guardarArchivo(contenido){
-    console.log(contenido);
     return this.httpClient.post('/api/guardarJson', contenido,{ headers } );
   }
 }
