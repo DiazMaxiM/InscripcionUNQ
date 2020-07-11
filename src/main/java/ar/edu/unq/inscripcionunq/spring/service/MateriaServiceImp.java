@@ -55,7 +55,7 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			carrerasJson.add(carreraJson);
 		});
 		List<MateriaSistemaJson> materiasJson = new ArrayList<>();
-		materia.getPreRequisitos().forEach((materiaPreRequisito) -> {
+		materia.getPrerrequisitos().forEach((materiaPreRequisito) -> {
 			MateriaSistemaJson materiaJson = new MateriaSistemaJson(materiaPreRequisito, true);
 			materiasJson.add(materiaJson);
 		});
@@ -142,24 +142,16 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 	}
 
 	@Override
-	public void actualizarPreRequisitos(String idMateria, List<IdJson> idsJson) {
+	public void actualizarPrerrequisitos(String idMateria, List<IdJson> idsJson) {
 		// TODO Falta verificar que no sea recursivo es decir que la materia A
 		// incluya B, pero B en sus hijos
 		// No tenga a A
 		Materia materia = materiaDaoImp.get(new Long(idMateria));
-		List<Materia> preRequisitos = new ArrayList<Materia>();
+		List<Materia> prerrequisitos = new ArrayList<Materia>();
 		for (IdJson idJson : idsJson) {
-			preRequisitos.add(materiaDaoImp.get(new Long(idJson.id)));
+			prerrequisitos.add(materiaDaoImp.get(new Long(idJson.id)));
 		}
-		materia.actualizarPreRequisitos(preRequisitos);
+		materia.actualizarPrerrequisitos(prerrequisitos);
 
-	}
-
-	@Override
-	public List<MateriaSistemaJson> getPreRequisitosParaMateria(String idMateria) {
-		Long id = new Long(idMateria);
-		List<Materia> materias = ((MateriaDao) genericDao).getPreRequisitosParaMateria(id);
-
-		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
 	}
 }

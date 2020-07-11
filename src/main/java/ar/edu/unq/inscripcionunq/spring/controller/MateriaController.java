@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.controller;
 
 import java.util.List;
 
+import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +13,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.DocumentException;
+
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
 import ar.edu.unq.inscripcionunq.spring.service.MateriaService;
 
 @RestController
@@ -68,14 +75,9 @@ public class MateriaController {
 		return ResponseEntity.ok().body(materiaServiceImp.getMateriasParaCarrera(idCarrera));
 	}
 
-	@PostMapping("/materias/actualizar-preRequisitos/{idMateria}")
-	public ResponseEntity actualizarPreRequisitos(@PathVariable String idMateria, @RequestBody List<IdJson> idsJson) {
-		materiaServiceImp.actualizarPreRequisitos(idMateria, idsJson);
+	@PostMapping("/materias/actualizar-prerrequisitos/{idMateria}")
+	public ResponseEntity actualizarPrerrequisitos(@PathVariable String idMateria, @RequestBody List<IdJson> idsJson) {
+		materiaServiceImp.actualizarPrerrequisitos(idMateria, idsJson);
 		return ResponseEntity.ok().build();
-	}
-
-	@GetMapping("/materias/preRequisitos/{idMateria}")
-	public ResponseEntity getPreRequisitosParaMateria(@PathVariable String idMateria) {
-		return ResponseEntity.ok().body(materiaServiceImp.getPreRequisitosParaMateria(idMateria));
 	}
 }

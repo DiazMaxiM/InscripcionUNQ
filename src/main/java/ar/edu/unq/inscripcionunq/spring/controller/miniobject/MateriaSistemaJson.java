@@ -14,7 +14,7 @@ public class MateriaSistemaJson {
 	public boolean estado;
 	public List<CarreraJson> carreras;
 	public Integer creditos;
-	public List<MateriaSistemaJson> preRequisitos;
+	public List<MateriaSistemaJson> prerrequisitos;
 
 	public MateriaSistemaJson() {
 
@@ -27,15 +27,15 @@ public class MateriaSistemaJson {
 		this.horas = materia.getHoras();
 		this.estado = estado;
 		this.creditos = materia.getCreditos();
-		List<MateriaSistemaJson> materiasPreRequisitos = new ArrayList<MateriaSistemaJson>();
-		for (Materia materiaPreRequisito : materia.getPreRequisitos()) {
-			materiasPreRequisitos.add(new MateriaSistemaJson(materiaPreRequisito, estado));
+		List<MateriaSistemaJson> materiasPrerrequisitos = new ArrayList<MateriaSistemaJson>();
+		for (Materia materiaPrerrequisito : materia.getPrerrequisitos()) {
+			materiasPrerrequisitos.add(new MateriaSistemaJson(materiaPrerrequisito, estado));
 		}
-		this.preRequisitos = materiasPreRequisitos;
+		this.prerrequisitos = materiasPrerrequisitos;
 	}
 
 	public MateriaSistemaJson(Long id, String codigo, String nombre, Integer horas, Integer creditos,
-			List<CarreraJson> carreras, boolean estado, List<MateriaSistemaJson> preRequisitos) {
+			List<CarreraJson> carreras, boolean estado, List<MateriaSistemaJson> prerrequisitos) {
 		this.id = id;
 		this.codigo = codigo;
 		this.nombre = nombre;
@@ -43,6 +43,6 @@ public class MateriaSistemaJson {
 		this.carreras = carreras;
 		this.estado = estado;
 		this.creditos = creditos;
-		this.preRequisitos = preRequisitos;
+		this.prerrequisitos = prerrequisitos;
 	}
 }

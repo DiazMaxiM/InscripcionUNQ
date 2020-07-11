@@ -35,8 +35,6 @@ public interface MateriaService extends GenericService<Materia> {
 
 	Materia getMateriaPorCodigo(String codigo);
 
-	void actualizarPreRequisitos(String idMateria, List<IdJson> idsJson);
-
-	List<MateriaSistemaJson> getPreRequisitosParaMateria(String idMateria);
+	void actualizarPrerrequisitos(String idMateria, List<IdJson> idsJson);
 
 }

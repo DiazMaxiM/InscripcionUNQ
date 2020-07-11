@@ -15,5 +15,5 @@ public interface MateriaDao extends GenericDao<Materia> {
 
 	List<Materia> getMaterias();
 
-	List<Materia> getPreRequisitosParaMateria(Long id);
+	List<Materia> getPrerrequisitosParaMateria(Long id);
 }

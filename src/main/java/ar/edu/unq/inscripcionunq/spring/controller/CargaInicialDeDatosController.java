@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.controller;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -261,8 +262,14 @@ public class CargaInicialDeDatosController {
 		matt = new Materia("90028", "Inglés II ( P-W )", 4, 4);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
+		Materia materia = materiaServiceImp.get(ingles1);
+
+		ArrayList<Materia> prerrequisitos = new ArrayList<Materia>();
+		prerrequisitos.add(materia);
+		matt.actualizarPrerrequisitos(prerrequisitos);
 		long ingles2 = materiaServiceImp.save(matt);
 
+		
 		matt = new Materia("01052", "Introducción a la Bioinformática", 4, 8);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);

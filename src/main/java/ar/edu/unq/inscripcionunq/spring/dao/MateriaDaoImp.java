@@ -59,7 +59,7 @@ public class MateriaDaoImp extends GenericDaoImp<Materia> implements MateriaDao 
 	}
 
 	@Override
-	public List<Materia> getPreRequisitosParaMateria(Long id) {
+	public List<Materia> getPrerrequisitosParaMateria(Long id) {
 		Session sesion = this.sessionFactory.getCurrentSession();
 		Query<Materia> query = sesion.createQuery(
 				"select materia from Materia as materia where materia.estado = :estado and materia.id = :id order by materia.nombre asc");

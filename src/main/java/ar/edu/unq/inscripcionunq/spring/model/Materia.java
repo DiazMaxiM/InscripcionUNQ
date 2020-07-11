@@ -31,7 +31,7 @@ public class Materia extends BaseEntity {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	private List<Carrera> carreras = new ArrayList<>();
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-	private List<Materia> preRequisitos = new ArrayList<>();;
+	private List<Materia> prerrequisitos = new ArrayList<>();;
 
 	public Materia(String codigo, String nombre, Integer horas, Integer creditos, List<Carrera> listaDeCarreras) {
 		this.setCodigo(codigo);
@@ -129,12 +129,12 @@ public class Materia extends BaseEntity {
 		setEstado(TipoEstado.DISABLED);
 	}
 
-	public void actualizarPreRequisitos(List<Materia> preRequisitos) {
-		this.preRequisitos = preRequisitos;
+	public void actualizarPrerrequisitos(List<Materia> prerrequisitos) {
+		this.prerrequisitos = prerrequisitos;
 
 	}
 
-	public List<Materia> getPreRequisitos() {
-		return this.preRequisitos;
+	public List<Materia> getPrerrequisitos() {
+		return this.prerrequisitos;
 	}
 }
