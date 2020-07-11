@@ -259,8 +259,8 @@ export class RestService {
     return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
   }
 
-  actualizarPrerrequisitosMateria(materia: Materia) {
-    return this.httpClient.post('/api/materias/actualizar-preRequisitos/', materia, { headers });
+  actualizarPrerrequisitosMateria(idMateria: string, prerrequisitos) {
+    return this.httpClient.post('/api/materias/actualizar-prerrequisitos/' + idMateria, prerrequisitos, { headers });
   }
 
   guardarArchivo(contenido){
