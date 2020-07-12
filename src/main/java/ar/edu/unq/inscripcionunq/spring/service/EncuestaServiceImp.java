@@ -172,7 +172,7 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 				encuestaJson.fechaComienzo.horario.minutos);
 		LocalDateTime horaFin = LocalDateTime.of(encuestaJson.fechaFin.anho, encuestaJson.fechaFin.mes,
 				encuestaJson.fechaFin.dia, encuestaJson.fechaFin.horario.hora, encuestaJson.fechaFin.horario.minutos);
-		return new Encuesta(encuestaJson.nombre, horaComienzo, horaFin, periodo);
+		return new Encuesta(encuestaJson.nombre, horaComienzo, horaFin, periodo,encuestaJson.limiteMaxMaterias, encuestaJson.solicitaPrerrequisitos);
 	}
 
 	@Override

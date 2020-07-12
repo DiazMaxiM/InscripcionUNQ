@@ -583,7 +583,7 @@ public class CargaInicialDeDatosController {
 		Long idAcamicOffer2 = ofertaAcademicaServiceImp.save(acc2);
 
 		Encuesta poll = new Encuesta("Encuesta segundo semestre 2018", LocalDateTime.of(2018, 8, 25, 00, 00),
-				LocalDateTime.of(2019, 12, 15, 00, 00), periodo1);
+				LocalDateTime.of(2019, 12, 15, 00, 00), periodo1, 0, false);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
 
 		Long idEncuesta = encuestaServiceImp.save(poll);
