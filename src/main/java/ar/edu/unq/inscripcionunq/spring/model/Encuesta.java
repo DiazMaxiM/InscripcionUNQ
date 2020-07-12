@@ -34,16 +34,20 @@ public class Encuesta extends BaseEntity {
 	private TipoEstado estado = TipoEstado.ENABLED;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Periodo periodo;
+	private int limilteMaxMaterias; 
+	private boolean solicitaPrerrequisitos; 
 
 	public Encuesta() {
 	
 	}
 
-	public Encuesta(String nombre, LocalDateTime horaComienzo, LocalDateTime horaFin, Periodo periodo) {
+	public Encuesta(String nombre, LocalDateTime horaComienzo, LocalDateTime horaFin, Periodo periodo, int limiteMaxMaterias, boolean solicitaPrerrequisito) {
 		this.nombre = nombre;
 		this.horaComienzo = horaComienzo;
 		this.horaFin = horaFin;
 		this.periodo = periodo;
+		this.limilteMaxMaterias= limiteMaxMaterias;
+		this.solicitaPrerrequisitos = solicitaPrerrequisito;
 	}
 
 	public void agregarOfertaAcademica(OfertaAcademica ofertaAcademica) {
@@ -99,5 +103,17 @@ public class Encuesta extends BaseEntity {
 		this.nombre = encuesta.getNombre();
 		this.horaComienzo = encuesta.getHoraComienzo();
 		this.horaFin = encuesta.getHoraFin();	
+		this.limilteMaxMaterias = encuesta.getLimilteMaxMaterias();
+		this.solicitaPrerrequisitos = encuesta.isSolicitaPrerrequisitos();
 	}
+	
+	
+	public int getLimilteMaxMaterias() {
+		return limilteMaxMaterias;
+	}
+
+	public boolean isSolicitaPrerrequisitos() {
+		return solicitaPrerrequisitos;
+	}
+
 }

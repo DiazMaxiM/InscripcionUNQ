@@ -17,6 +17,8 @@ public class EncuestaSistemaJson {
 	public int nroEstudiantes;
 	public int nroOfertas;
 	public Number nroDeAlumnosQueCompletaronEncuesta;
+	public boolean solicitaPrerrequisitos; 
+	public int limiteMaxMaterias; 
 
     public EncuestaSistemaJson(Encuesta encuesta) {
 		this.id = encuesta.getId();
@@ -27,6 +29,8 @@ public class EncuestaSistemaJson {
 		this.ofertasAcademicas = this.armarOfertasJson(encuesta.getOfertasAcademicas());
 		this.nroEstudiantes = encuesta.getEstudiantes().size();
 		this.nroOfertas = encuesta.getOfertasAcademicas().size();
+		this.solicitaPrerrequisitos = encuesta.isSolicitaPrerrequisitos(); 
+		this.limiteMaxMaterias = encuesta.getLimilteMaxMaterias();
 	}
     
     private List<OfertaAcademicaJson> armarOfertasJson(List<OfertaAcademica> ofertas) {
