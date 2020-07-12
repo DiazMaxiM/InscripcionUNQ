@@ -54,7 +54,7 @@ public class EncuestaController {
 		List<Encuesta> encuestas = encuestaServiceImp.getTodasLasEncuestasActivasParaDni(dni);
 
 		List<EncuestaJson> miniEncuestas = encuestas.stream().map(m -> new EncuestaJson(m.getId(), m.getNombre(),
-				m.getHoraComienzo(), m.getHoraFin(), encuestaServiceImp.puedeGenerarPDF(dni, m.getId()))
+				m.getHoraComienzo(), m.getHoraFin(), encuestaServiceImp.puedeGenerarPDF(dni, m.getId()), m.getLimilteMaxMaterias())
 
 		).collect(Collectors.toList());
 		return ResponseEntity.ok().body(miniEncuestas);

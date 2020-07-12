@@ -6,6 +6,7 @@ import { RegistroDeComisionesSeleccionadasService } from "./registro-de-comision
 import { UtilesService } from "../utiles.service";
 import { Comision } from "../comisiones-de-oferta/comision.model";
 import { DialogosService } from "../dialogos.service";
+import { Encuesta } from "../encuesta-dialogo/encuesta.model";
 
 @Component({
   selector: "app-seleccion-de-materias-por-cursar",
@@ -18,6 +19,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
   comisionesSeleccionadas: ComisionSeleccionada[] = [];
   idEstudiante: string;
   materiaBuscada;
+  encuestaActual: Encuesta;
 
   constructor(
     private restService: RestService,
@@ -27,6 +29,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
   ngOnInit() {
     this.idEstudiante = localStorage.getItem("idEstudiante");
+    this.encuestaActual = JSON.parse(localStorage.getItem('encuestaActualEst'));
     this.limpiarInformacionComisionesSeleccionadas();
     this.obtenerMateriasDisponibles();
   }
@@ -51,7 +54,7 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
   materiaSeleccionada(materia, checkbox) {
     if (checkbox.checked) {
-      this.agregarComisionSeleccionada(materia);
+       this.controlarLimiteMaxMaterias(materia);
     } else {
       this.eliminarComisionSeleccionada(materia.id);
       this.deseleccionarMateria(materia);
@@ -198,5 +201,18 @@ export class SeleccionDeMateriasPorCursarComponent implements OnInit {
 
   volver(){
 		this.utilesService.volver();
-	}
+  }
+
+  controlarLimiteMaxMaterias(materia){
+    if(!this.superaLimiteMaxMaterias()){
+      this.agregarComisionSeleccionada(materia);
+    }else{
+      this.deseleccionarMateria(materia);
+      this.utilesService.mostrarMensaje("El número máximo de materias para anotarse es " + this.encuestaActual.limiteMaxMaterias)
+    }
+  }
+  
+  superaLimiteMaxMaterias(){
+    return this.comisionesSeleccionadas.length === this.encuestaActual.limiteMaxMaterias;
+  }
 }

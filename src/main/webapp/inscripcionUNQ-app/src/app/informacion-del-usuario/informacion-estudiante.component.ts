@@ -5,6 +5,7 @@ import { Estudiante } from './estudiante.model';
 import { UtilesService } from '../utiles.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Usuario } from '../autenticacion/usuario.model';
+import { Encuesta } from '../encuesta-dialogo/encuesta.model';
 
 @Component({
 	selector: 'app-informacion-estudiante',
@@ -21,12 +22,12 @@ export class InformacionEstudianteComponent implements OnInit {
 	informacionEstudianteForm: FormGroup;
 	idEstudiante: string;
 	usuario: Usuario;
-	idEncuestaActual: string;
+	encuestaActual: Encuesta;
 	infoEstudiante: Usuario;
 
 	ngOnInit() {
 		this.usuario = JSON.parse(localStorage.getItem('usuario'));
-		this.idEncuestaActual = localStorage.getItem('idEncuestaActual');
+		this.encuestaActual = JSON.parse(localStorage.getItem('encuestaActualEst'));
 		this.getInformacionEstudiante();
 		this.crearFormularioEstudiante();
 	}
@@ -40,7 +41,7 @@ export class InformacionEstudianteComponent implements OnInit {
 	}
 
 	getInformacionEstudiante() {
-		this.restService.getInformacionEstudiante(this.usuario.dni, this.idEncuestaActual)
+		this.restService.getInformacionEstudiante(this.usuario.dni, String(this.encuestaActual.id))
 			.subscribe(data => {
 				this.infoEstudiante = data;
 				this.insertarInformacionEstudianteEnFormulario(data);

@@ -8,14 +8,16 @@ public class EncuestaJson {
 	public String nombre;
 	public LocalDateTime horaComienzo;
 	public LocalDateTime horaFin;
-	public Boolean materiasRegistradas;
+	public boolean materiasRegistradas;
+	public int limiteMaxMaterias; 
 
 	public EncuestaJson(Long id, String nombre, LocalDateTime horaComienzo, LocalDateTime horaFin,
-			Boolean tieneMateriasRegistradas) {
+			boolean tieneMateriasRegistradas,int limiteMaxMaterias ) {
 		this.id = id;
 		this.nombre = nombre;
 		this.horaComienzo = horaComienzo;
 		this.horaFin = horaFin;
 		this.materiasRegistradas = tieneMateriasRegistradas;
+		this.limiteMaxMaterias = limiteMaxMaterias; 
 	}
 }
