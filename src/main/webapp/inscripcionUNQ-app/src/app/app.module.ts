@@ -63,7 +63,6 @@ import { NavegacionEstudianteComponent } from './navegacion/navegacion-estudiant
 import { NavegacionAdminComponent } from './navegacion/navegacion-admin/navegacion-admin.component';
 import { CarrerasComponent } from './carreras/carreras.component';
 import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
-import {JsonEstudiantesComponent} from './json_estudiantes/json_estudiantes.component';
 
 @NgModule({
   declarations: [
@@ -107,8 +106,7 @@ import {JsonEstudiantesComponent} from './json_estudiantes/json_estudiantes.comp
 		TipoIncidenciaDialogoComponent,
 		PrerrequisitosMateriaDialogoComponent,
 		NavegacionEstudianteComponent,
-    NavegacionAdminComponent, 
-    JsonEstudiantesComponent
+    NavegacionAdminComponent
   ],
   imports: [
     BrowserModule,
