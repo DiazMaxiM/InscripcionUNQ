@@ -97,9 +97,4 @@ irAEncuestas() {
     });
   }
 
-  irAJsonEstudiantes(){
-    this.utilesService.irA('json-estudiantes');
-
-  }
-
 }

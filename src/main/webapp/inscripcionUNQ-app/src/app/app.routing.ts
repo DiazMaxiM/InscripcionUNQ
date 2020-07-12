@@ -17,7 +17,6 @@ import { EquivalenciasComponent } from './equivalencias/equivalencias.component'
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
-import {JsonEstudiantesComponent} from './json_estudiantes/json_estudiantes.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -37,7 +36,6 @@ const APP_ROUTES: Routes = [
   { path: 'usuarios', component: UsuariosComponent },
 	{ path: 'incidencias', component: IncidenciasComponent },
   { path: 'encuestas', component: EncuestasComponent },
-  { path: 'json-estudiantes', component: JsonEstudiantesComponent},
   { path: '**', redirectTo: '' }
 ];
 
