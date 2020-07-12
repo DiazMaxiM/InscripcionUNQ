@@ -24,6 +24,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJso
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
@@ -31,6 +32,7 @@ import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoCumplePrerrequisitoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -53,10 +55,11 @@ public class EncuestaController {
 	public ResponseEntity<List<EncuestaJson>> habilitarEncuestasParaUnUsuario(@PathVariable String dni) {
 		List<Encuesta> encuestas = encuestaServiceImp.getTodasLasEncuestasActivasParaDni(dni);
 
-		List<EncuestaJson> miniEncuestas = encuestas.stream().map(m -> new EncuestaJson(m.getId(), m.getNombre(),
-				m.getHoraComienzo(), m.getHoraFin(), encuestaServiceImp.puedeGenerarPDF(dni, m.getId()), m.getLimilteMaxMaterias())
+		List<EncuestaJson> miniEncuestas = encuestas.stream()
+				.map(m -> new EncuestaJson(m.getId(), m.getNombre(), m.getHoraComienzo(), m.getHoraFin(),
+						encuestaServiceImp.puedeGenerarPDF(dni, m.getId()), m.getLimilteMaxMaterias())
 
-		).collect(Collectors.toList());
+				).collect(Collectors.toList());
 		return ResponseEntity.ok().body(miniEncuestas);
 	}
 
@@ -77,7 +80,8 @@ public class EncuestaController {
 		try {
 			encuestaServiceImp.setComisionesSeleccionadas(id, idsJson);
 		} catch (FormatoNumeroIdException | EstudianteNoExisteException | ComisionNoExisteException
-				| VariasComisionesDeUnaMateriaException e) {
+				| VariasComisionesDeUnaMateriaException | MateriaNoCumplePrerrequisitoException
+				| CantidadMateriasInscripcionSuperadaException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		try {

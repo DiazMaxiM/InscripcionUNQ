@@ -5,12 +5,14 @@ import java.util.List;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
+import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoCumplePrerrequisitoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
@@ -27,7 +29,8 @@ public interface EncuestaService extends GenericService<Encuesta> {
 			throws NoExistenUsuariosEnEncuestaException;
 
 	public void setComisionesSeleccionadas(String id, List<IdJson> idsJson) throws FormatoNumeroIdException,
-			EstudianteNoExisteException, ComisionNoExisteException, VariasComisionesDeUnaMateriaException;
+			EstudianteNoExisteException, ComisionNoExisteException, VariasComisionesDeUnaMateriaException,
+			MateriaNoCumplePrerrequisitoException, CantidadMateriasInscripcionSuperadaException;
 
 	public Boolean puedeGenerarPDF(String dni, Long id);
 

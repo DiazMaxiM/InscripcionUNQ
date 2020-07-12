@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -136,5 +137,10 @@ public class Materia extends BaseEntity {
 
 	public List<Materia> getPrerrequisitos() {
 		return this.prerrequisitos;
+	}
+
+	public Boolean cumplePreRequisitos(List<Materia> materiasAprobadas) {
+		return this.prerrequisitos.stream().filter(preRequisito -> !materiasAprobadas.contains(preRequisito))
+				.collect(Collectors.toList()).isEmpty();
 	}
 }

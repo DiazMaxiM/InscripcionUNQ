@@ -16,12 +16,14 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJso
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
+import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoCumplePrerrequisitoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
@@ -83,7 +85,8 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 
 	@Override
 	public void setComisionesSeleccionadas(String id, List<IdJson> idsJson) throws FormatoNumeroIdException,
-			EstudianteNoExisteException, ComisionNoExisteException, VariasComisionesDeUnaMateriaException {
+			EstudianteNoExisteException, ComisionNoExisteException, VariasComisionesDeUnaMateriaException,
+			MateriaNoCumplePrerrequisitoException, CantidadMateriasInscripcionSuperadaException {
 		Estudiante estudiante;
 		try {
 			estudiante = estudianteServiceImp.get(new Long(id));
@@ -102,6 +105,16 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			} catch (ObjectoNoEncontradoEnBDException e) {
 				throw new ComisionNoExisteException();
 
+			}
+			if (idsJson.size() > estudiante.getEncuesta().getLimilteMaxMaterias()) {
+				throw new CantidadMateriasInscripcionSuperadaException(idsJson.size(),
+						estudiante.getEncuesta().getLimilteMaxMaterias());
+
+			}
+			if (estudiante.getEncuesta().isSolicitaPrerrequisitos()) {
+				if (!comision.getMateria().cumplePreRequisitos(estudiante.getMateriasAprobadas())) {
+					throw new MateriaNoCumplePrerrequisitoException(comision.getMateria());
+				}
 			}
 			estudiante.agregarRegistroComisiones(comision);
 		}
@@ -172,7 +185,8 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 				encuestaJson.fechaComienzo.horario.minutos);
 		LocalDateTime horaFin = LocalDateTime.of(encuestaJson.fechaFin.anho, encuestaJson.fechaFin.mes,
 				encuestaJson.fechaFin.dia, encuestaJson.fechaFin.horario.hora, encuestaJson.fechaFin.horario.minutos);
-		return new Encuesta(encuestaJson.nombre, horaComienzo, horaFin, periodo,encuestaJson.limiteMaxMaterias, encuestaJson.solicitaPrerrequisitos);
+		return new Encuesta(encuestaJson.nombre, horaComienzo, horaFin, periodo, encuestaJson.limiteMaxMaterias,
+				encuestaJson.solicitaPrerrequisitos);
 	}
 
 	@Override
