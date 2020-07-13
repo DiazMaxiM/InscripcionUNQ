@@ -3,6 +3,7 @@ import { UtilesService } from '../utiles.service';
 import { RestService } from '../rest.service';
 import { Encuesta } from '../encuesta-dialogo/encuesta.model';
 import { DialogosService } from '../dialogos.service';
+import { Estudiante } from '../informacion-del-usuario/estudiante.model';
 
 @Component({
 	selector: 'app-encuestas',
@@ -55,5 +56,27 @@ export class EncuestasComponent implements OnInit {
 		.subscribe(res => {
 			this.getEncuestas();
 		});
+	}
+
+	abrirDialogoEstudiantesEnEncuesta(encuesta: Encuesta){
+		this.dialogosService.abrirDialogoEstudiantesEnEncuesta(encuesta)
+
+	}
+
+
+	irAEstudiantesEnEncuesta(encuesta: Encuesta) {
+		this.restService.getEstudiantesEnEncuesta(String(encuesta.id)).subscribe(
+			estudiantes => {
+				localStorage.setItem(
+					"estudiantes-en-encuesta",
+					JSON.stringify(estudiantes)
+				);
+				localStorage.setItem("encuesta-seleccionada", JSON.stringify(encuesta));
+				this.utilesService.irA("estudiantes-en-encuesta");
+			},
+			err => {
+				this.utilesService.mostrarMensajeDeError(err);
+			}
+		);
 	}
 }

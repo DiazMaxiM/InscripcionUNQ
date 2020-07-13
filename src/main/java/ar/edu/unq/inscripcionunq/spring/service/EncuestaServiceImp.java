@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
@@ -275,5 +276,17 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		myWriter.write(archivo);
 		myWriter.close();
 
+	}
+
+	@Override
+	public List<EstudianteJson> getEstudiantesDeEncuesta(String idEncuesta) throws FormatoNumeroIdException {
+		Encuesta encuesta = new Encuesta();
+		try {
+			encuesta = encuestaDaoImp.get(new Long(idEncuesta));
+		} catch (NumberFormatException e) {
+			throw new FormatoNumeroIdException();
+		}
+		List<Estudiante> estudiantes = encuesta.getEstudiantes();
+		return estudiantes.stream().map(estudiante -> new EstudianteJson(estudiante)).collect(Collectors.toList());
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
@@ -51,5 +52,7 @@ public interface EncuestaService extends GenericService<Encuesta> {
 	public Reporte getReporte(String idEncuesta, String tipoEncuesta) throws FormatoNumeroIdException, IOException;
 
 	public void guardarArchivo(String archivo) throws IOException;
+
+	public List<EstudianteJson> getEstudiantesDeEncuesta(String idEncuesta) throws FormatoNumeroIdException;
 
 }

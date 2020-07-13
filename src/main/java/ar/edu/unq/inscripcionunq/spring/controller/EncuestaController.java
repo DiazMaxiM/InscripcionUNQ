@@ -165,5 +165,19 @@ public class EncuestaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
 		}
 	}
+	
+	@GetMapping("/encuesta/estudiantes/{idEncuesta}")
+	public ResponseEntity getEstudiantesDeEncuesta(@PathVariable String idEncuesta) {
+		List<EstudianteJson> estudiantesJson;
+		try {
+			estudiantesJson = encuestaServiceImp.getEstudiantesDeEncuesta(idEncuesta);
+			return ResponseEntity.ok().body(estudiantesJson);
+		} catch (FormatoNumeroIdException e) {
+			// TODO Auto-generated catch block
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+	}
+	
+	
 
 }

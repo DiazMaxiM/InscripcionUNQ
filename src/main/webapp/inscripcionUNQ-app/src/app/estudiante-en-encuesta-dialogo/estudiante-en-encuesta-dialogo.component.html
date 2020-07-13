@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Edición de materia</h2>
+<mat-dialog-content [formGroup]="form">
+	<mat-form-field>
+		<input matInput placeholder="Código" formControlName="codigo" required>
+		<mat-error *ngIf="form.get('codigo').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field>
+		<input matInput placeholder="Nombre" formControlName="nombre" required>
+		<mat-error *ngIf="form.get('codigo').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<ng-container *ngFor="let carrera of carreras">
+		<ng-template #tipContent>{{carrera.descripcion}}</ng-template>
+		<div class="carrera" [ngbTooltip]="tipContent" matTooltipPosition="after">
+			{{carrera.codigo}}
+			<mat-checkbox  color="warn" [checked]="verificarSeleccion(carrera)" (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
+			</mat-checkbox>
+		</div>
+	</ng-container>
+	<mat-form-field>
+		<input matInput type="number"  (keypress)="soloNumero($event)" placeholder="Carga horaria" formControlName="horas" required>
+		<mat-error *ngIf="form.get('horas').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field>
+		<input matInput type="number"  (keypress)="soloNumero($event)" placeholder="Créditos" formControlName="creditos" required>
+		<mat-error *ngIf="form.get('creditos').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+</mat-dialog-content>
+<section>Estado
+	<mat-slide-toggle class="estado" [(ngModel)]="checked">
+	</mat-slide-toggle>
+</section>
+<mat-dialog-actions align="end">
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+		Cerrar
+	</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+		Guardar
+	</button>
+</mat-dialog-actions>

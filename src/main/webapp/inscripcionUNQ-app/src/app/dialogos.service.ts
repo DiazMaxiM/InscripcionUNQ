@@ -30,6 +30,7 @@ import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component';
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
 import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-dialogo/prerrequisitos-materia-dialogo.component';
+import { EstudianteEnEncuestaDialogoComponent } from './estudiante-en-encuesta-dialogo/estudiante-en-encuesta-dialogo.component';
 
 @Injectable()
 export class DialogosService {
@@ -174,6 +175,13 @@ export class DialogosService {
 		dialogConfig.width = ancho;
 		dialogConfig.height = alto;
 		return dialogConfig;
+	}
+
+	abrirDialogoEstudiantesEnEncuesta(encuesta?: Encuesta): Observable<any> {
+		let dialogRef: MatDialogRef<EstudianteEnEncuestaDialogoComponent>;
+		dialogRef = this.dialog.open(EstudianteEnEncuestaDialogoComponent, this.configuracionDialogo(450, 480));
+	//	dialogRef.componentInstance.encuesta = encuesta;
+		return dialogRef.afterClosed();
 	}
 
 }

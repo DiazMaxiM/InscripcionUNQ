@@ -1,0 +1,28 @@
+<div align="center">
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoEstudiante()">Nuevo Estudiante</button>
+</div>
+<div class="container-buscador">
+	<mat-form-field>
+		<input matInput [(ngModel)]="estudianteBuscado" placeholder="Buscar estudiante">
+	</mat-form-field>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>DNI</th>
+				<th>Apellido</th>
+				<th>Nombre</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let estudiante of estudiantes | filtroBusqueda: {nombre: estudianteBuscado, apellido: estudianteBuscado, dni: estudianteBuscado}; let i=index;">
+				<td style="width: 5%; display: none">{{i +1}}</td>
+				<td>{{ estudiante.dni }}</td>
+				<td>{{ estudiante.apellido | titlecase }}</td>
+				<td>{{ estudiante.nombre | titlecase }}</td>
+			</tr>
+			<mat-divider></mat-divider>
+		</tbody>
+	</table>
+</div>

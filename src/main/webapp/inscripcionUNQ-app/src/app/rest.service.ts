@@ -266,4 +266,8 @@ export class RestService {
   guardarArchivo(contenido){
     return this.httpClient.post('/api/guardarJson', contenido,{ headers } );
   }
+
+  getEstudiantesEnEncuesta(idEncuesta: string) {
+    return this.httpClient.get<Array<Estudiante>>('/api/encuesta/estudiantes/' + idEncuesta);
+  }
 }
