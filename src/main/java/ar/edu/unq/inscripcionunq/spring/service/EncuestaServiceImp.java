@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
@@ -45,6 +47,9 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 
 	@Autowired
 	EstudianteService estudianteServiceImp;
+
+	@Autowired
+	CarreraService carreraServiceImp;
 
 	@Autowired
 	ComisionService comisionServiceImp;
@@ -288,5 +293,20 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 		}
 		List<Estudiante> estudiantes = encuesta.getEstudiantes();
 		return estudiantes.stream().map(estudiante -> new EstudianteJson(estudiante)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void agregarNuevaEncuesta(String idEncuesta, EstudianteWebServiceJson estudianteWebServiceJson) {
+
+		Encuesta encuesta = encuestaDaoImp.get(new Long(idEncuesta));
+
+		Estudiante estudianteNuevo = new Estudiante(estudianteWebServiceJson.datos_personales.nombre,
+				estudianteWebServiceJson.datos_personales.apellido, estudianteWebServiceJson.datos_personales.dni,
+				estudianteWebServiceJson.datos_personales.email);
+		for (CarreraWebServiceJson carreraWebServiceJson : estudianteWebServiceJson.carreras) {
+			estudianteNuevo
+					.agregarInscripcionACarrera(carreraServiceImp.getCarreraPorCodigo(carreraWebServiceJson.codigo));
+		}
+		encuesta.agregarEstudiante(estudianteNuevo);
 	}
 }

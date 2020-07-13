@@ -22,6 +22,7 @@ import com.itextpdf.text.DocumentException;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
@@ -112,6 +113,14 @@ public class EncuestaController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PutMapping("/encuestas/nuevaEstudianteEncuesta/{idEncuesta}")
+	public ResponseEntity agregarNuevaEncuesta(@PathVariable String idEncuesta,
+			@RequestBody EstudianteWebServiceJson estudianteJson) {
+		encuestaServiceImp.agregarNuevaEncuesta(idEncuesta, estudianteJson);
+
+		return ResponseEntity.ok().build();
+	}
+
 	@PostMapping("/encuestas/actualizarEncuesta")
 	public ResponseEntity actualizarEncuesta(@RequestBody EncuestaSistemaJson encuestaJson) {
 		try {
@@ -165,7 +174,7 @@ public class EncuestaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
 		}
 	}
-	
+
 	@GetMapping("/encuesta/estudiantes/{idEncuesta}")
 	public ResponseEntity getEstudiantesDeEncuesta(@PathVariable String idEncuesta) {
 		List<EstudianteJson> estudiantesJson;
@@ -177,7 +186,5 @@ public class EncuestaController {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 	}
-	
-	
 
 }
