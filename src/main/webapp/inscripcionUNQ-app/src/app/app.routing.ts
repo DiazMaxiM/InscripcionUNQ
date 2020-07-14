@@ -25,7 +25,7 @@ const APP_ROUTES: Routes = [
   { path: 'verificacion-de-datos', component: InformacionEstudianteComponent },
   { path: 'materias-por-cursar', component: SeleccionDeMateriasPorCursarComponent },
   { path: 'encuesta-finalizada', component: EncuestaFinalizadaComponent },
-  { path: 'tareas-usuario', component: TareasUsuarioComponent },
+  { path: 'inicio', component: TareasUsuarioComponent },
   { path: 'carreras', component: CarrerasComponent },
   { path: 'materias', component: MateriasComponent },
   { path: 'oferta-academica', component: OfertaAcademicaComponent },

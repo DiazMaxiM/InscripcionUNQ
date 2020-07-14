@@ -1,6 +1,52 @@
 <div align="center">
-	<input type="file" (change)="archivoSeleccionado($event)">
 	<div>
-		<p>Acá van los pasos necesarios para crear una encuesta</p>
+		<h1 class="h4" align="left">¿Cómo crear una encuesta?</h1>
+		<ul align="left">
+			<li>
+				<p>Ir a la sección <b>Períodos</b> > <b>Nuevo período</b></p>
+			</li>
+			<li>
+				<p>En la sección <b>Oferta académica</b>, existen dos opciones:</p> 
+			</li>
+			<ul>
+				<li>
+					<p>Seleccionar <b>Nueva oferta</b>, completar los datos requeridos y asociar comisiones creadas previamente, o</p>
+				</li>
+				<li>
+					<p>Clonar una oferta pasada. En esta instancia se le solicitará que ingrese el nuevo período</p>
+				</li>
+			</ul>
+			<li>
+				<p>Ir a la sección <b>Encuestas</b> > <b>Nueva encuesta</b>, completar los datos solicitados y en el
+				siguiente paso seleccionar la oferta creada en el paso previo. 	</p>
+			</li>
+		</ul>
+		
+		<p align="left">Nota: en caso de que en la oferta clonada falte alguna comisión que se quiera ofertar, existen dos opciones para crearlas:</p>
+		<p align="left">En la sección <b>Comisiones</b>:</p> 
+		
+		<ul align="left">
+			<li>
+				<p>Seleccionar el período creado y crear desde cero las comisiones, o</p>
+			</li>
+			<li>
+				<p>Seleccionar un período anterior y clonar las comisiones existentes asociandólas al nuevo período</p>
+			</li>
+		</ul>
+	</div>
+	<div align="left" class="alert alert-success" role="alert">
+		<p><b>Novedades:</b></p>
+		<ul>
+			<li>
+				<p>desde la sección Encuestas se puede cargar el archivo json de alumnos</p>
+			</li>
+			<li>
+				<p>desde la sección Materias se pueden cargar los prerrequisitos de las mismas</p>
+			</li>
+			<li>
+				<p>al crear una encuesta se puede cargar el límite de materias a las cuales se puede inscribir un alumno y si se solicitan prerrequisitos o no</p>
+			</li>
+		</ul>
+
 	</div>
 </div>

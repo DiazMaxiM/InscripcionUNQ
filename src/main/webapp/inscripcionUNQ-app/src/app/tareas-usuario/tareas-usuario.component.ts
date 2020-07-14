@@ -1,6 +1,4 @@
-import { Component} from '@angular/core';
-import { RestService } from '../rest.service';
-import {UtilesService} from '../utiles.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-tareas-usuario',
@@ -10,30 +8,6 @@ import {UtilesService} from '../utiles.service';
 export class TareasUsuarioComponent{
 
   constructor(
-    private restService: RestService,
-    private utilesService: UtilesService
   ) {}
-
-  archivoSeleccionado(event){
-		const archivo = <File> event.target.files[0];
-        let reader = new FileReader();
-        reader.onload = () => {
-            // this 'text' is the content of the file
-			var text = reader.result;
-			this.guardarArchivo(text)
-        }
-		reader.readAsText(archivo);
-
-	}
-
-	guardarArchivo(text){
-		this.restService.guardarArchivo(text).subscribe(() => {
-			this.utilesService.mostrarMensaje("El archivo fue guardado con exito")
-		},
-			(err) => {
-				this.utilesService.mostrarMensajeDeError(err);
-		});
-  }
-  
 
 }
