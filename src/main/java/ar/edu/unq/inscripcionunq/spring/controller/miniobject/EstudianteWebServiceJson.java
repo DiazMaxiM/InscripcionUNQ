@@ -10,4 +10,5 @@ public class EstudianteWebServiceJson {
 	public List<MateriaWebServiceJson> cursadas;
 	public List<CarreraWebServiceJson> carreras;
 	public String promedio;
+	public String id;
 }

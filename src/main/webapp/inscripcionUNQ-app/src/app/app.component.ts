@@ -29,7 +29,6 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.subUsuarioLogueado = this.usuarioService.getEsPaginaLogin().subscribe(res => {
 			this.esPaginaLogin = res;
 		});
-		console.log("localstorage", localStorage);
 		if (localStorage.getItem('usuario') != null) {
 			let perfil = JSON.parse(localStorage.getItem('usuario')).perfiles[0];
 
