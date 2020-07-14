@@ -9,29 +9,39 @@ import java.util.stream.Collectors;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteEnEncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteWebServiceJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.OfertaAcademicaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoCumplePrerrequisitoException;
 import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ObjectoNoEncontradoEnBDException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
+import ar.edu.unq.inscripcionunq.spring.model.Carrera;
 import ar.edu.unq.inscripcionunq.spring.model.Comision;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.EnvioMailsMasivos;
@@ -40,6 +50,7 @@ import ar.edu.unq.inscripcionunq.spring.model.OfertaAcademica;
 import ar.edu.unq.inscripcionunq.spring.model.Periodo;
 import ar.edu.unq.inscripcionunq.spring.model.Reporte;
 import ar.edu.unq.inscripcionunq.spring.model.TipoReporte;
+import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Service
 @Transactional
@@ -284,7 +295,7 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 	}
 
 	@Override
-	public List<EstudianteJson> getEstudiantesDeEncuesta(String idEncuesta) throws FormatoNumeroIdException {
+	public List<EstudianteEnEncuestaJson> getEstudiantesDeEncuesta(String idEncuesta) throws FormatoNumeroIdException {
 		Encuesta encuesta = new Encuesta();
 		try {
 			encuesta = encuestaDaoImp.get(new Long(idEncuesta));
@@ -292,14 +303,19 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			throw new FormatoNumeroIdException();
 		}
 		List<Estudiante> estudiantes = encuesta.getEstudiantes();
-		return estudiantes.stream().map(estudiante -> new EstudianteJson(estudiante)).collect(Collectors.toList());
+		return estudiantes.stream().map(estudiante -> new EstudianteEnEncuestaJson(estudiante)).collect(Collectors.toList());
 	}
 
 	@Override
-	public void agregarNuevaEncuesta(String idEncuesta, EstudianteWebServiceJson estudianteWebServiceJson) {
+	public void agregarNuevoEstudianteEnEncuesta(String idEncuesta, EstudianteWebServiceJson estudianteWebServiceJson) throws NombreInvalidoException, EmailInvalidoException, ApellidoInvalidoException, FormatoNumeroIdException {
 
-		Encuesta encuesta = encuestaDaoImp.get(new Long(idEncuesta));
+		Encuesta encuesta;
 
+		try {
+			encuesta = encuestaDaoImp.get(new Long(idEncuesta));
+		} catch (NumberFormatException e) {
+			throw new FormatoNumeroIdException();
+		}
 		Estudiante estudianteNuevo = new Estudiante(estudianteWebServiceJson.datos_personales.nombre,
 				estudianteWebServiceJson.datos_personales.apellido, estudianteWebServiceJson.datos_personales.dni,
 				estudianteWebServiceJson.datos_personales.email);
@@ -307,6 +323,36 @@ public class EncuestaServiceImp extends GenericServiceImp<Encuesta> implements E
 			estudianteNuevo
 					.agregarInscripcionACarrera(carreraServiceImp.getCarreraPorCodigo(carreraWebServiceJson.codigo));
 		}
+		Validacion.validarEstudiante(estudianteNuevo);
 		encuesta.agregarEstudiante(estudianteNuevo);
+	}
+
+	@Override
+	public void actualizarEstudianteEnEncuesta(EstudianteWebServiceJson estudianteJson) throws NombreInvalidoException, ApellidoInvalidoException, EstudianteNoExisteException, EmailInvalidoException {
+		
+		Estudiante estudianteRecibido = new Estudiante(estudianteJson.datos_personales.nombre, estudianteJson.datos_personales.apellido,
+				estudianteJson.datos_personales.dni, estudianteJson.datos_personales.email);
+
+		Estudiante estudiante;
+		try {
+			estudiante = estudianteServiceImp.get(new Long(estudianteJson.id));
+		} catch (ObjectoNoEncontradoEnBDException e) {
+			throw new EstudianteNoExisteException();
+		}
+		try {
+				estudiante.actualizarEstudiante(estudianteRecibido);
+				List<Carrera> carrerasInscripto = new ArrayList<>();
+				for (CarreraWebServiceJson carreraWebServiceJson : estudianteJson.carreras) {
+					carrerasInscripto.add(carreraServiceImp.getCarreraPorCodigo(carreraWebServiceJson.codigo));
+				}
+				estudiante.setCarrerasInscripto(carrerasInscripto);
+				estudianteServiceImp.update(estudiante);
+			} catch (NombreInvalidoException n) {
+				throw new NombreInvalidoException();
+			} catch (ApellidoInvalidoException a) {
+				throw new ApellidoInvalidoException();
+			} catch (EmailInvalidoException e) {
+				throw new EmailInvalidoException();
+			}
 	}
 }

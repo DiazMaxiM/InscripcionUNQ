@@ -177,10 +177,10 @@ export class DialogosService {
 		return dialogConfig;
 	}
 
-	abrirDialogoEstudiantesEnEncuesta(encuesta?: Encuesta): Observable<any> {
+	abrirDialogoEstudiantesEnEncuesta(estudiante?): Observable<any> {
 		let dialogRef: MatDialogRef<EstudianteEnEncuestaDialogoComponent>;
 		dialogRef = this.dialog.open(EstudianteEnEncuestaDialogoComponent, this.configuracionDialogo(450, 480));
-	//	dialogRef.componentInstance.encuesta = encuesta;
+		dialogRef.componentInstance.estudianteSeleccionado = estudiante;
 		return dialogRef.afterClosed();
 	}
 

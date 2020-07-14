@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada, codPeriodo: encuestaBuscada}; let i=index;">
+			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada}; let i=index;">
 				<td style="width: 5%; display: none">{{i +1}}</td>
 				<td>{{ encuesta.nombre }}</td>
 				<td>{{ encuesta.fechaComienzo.dia | number:'2.0' }}/{{ encuesta.fechaComienzo.mes | number:'2.0' }}/{{

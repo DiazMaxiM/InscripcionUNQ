@@ -270,4 +270,13 @@ export class RestService {
   getEstudiantesEnEncuesta(idEncuesta: string) {
     return this.httpClient.get<Array<Estudiante>>('/api/encuesta/estudiantes/' + idEncuesta);
   }
+
+  agregarNuevoEstudianteEnEncuesta(estudiante,idEncuesta){
+    return this.httpClient.put('/api/encuestas/nuevoEstudianteEnEncuesta/' + idEncuesta, estudiante, {headers});
+  }
+
+  actualizarEstudianteEnEncuesta(estudiante){
+    return this.httpClient.post('/api/encuestas/actualizarEstudianteEnEncuesta', estudiante, {headers});
+
+  }
 }

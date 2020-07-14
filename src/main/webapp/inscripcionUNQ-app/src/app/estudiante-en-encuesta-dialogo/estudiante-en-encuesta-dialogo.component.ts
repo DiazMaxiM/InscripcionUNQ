@@ -3,22 +3,24 @@ import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Carrera } from '../carreras/carrera.model';
-import { Materia } from '../materias/materia.model';
 import { RestService } from '../rest.service';
 import { UtilesService } from '../utiles.service';
+import { EstudianteWebService } from '../model/estudianteWebService.model';
+import { DatosPersonalesEstudianteWebService } from '../model/datosPersonalesEstudianteWebService.model';
 
 @Component({
 	selector: 'app-estudiante-en-encuesta-dialogo',
 	templateUrl: './estudiante-en-encuesta-dialogo.component.html'
 })
 export class EstudianteEnEncuestaDialogoComponent implements OnInit {
-	materia: Materia;
-	carreras: Carrera[];
+	estudianteSeleccionado;
+	carrerasActuales: Carrera[];
 	carrerasSeleccionadas: Carrera[] = [];
 	checked = true;
 	carreraChecked = false;
 	form: FormGroup;
 	hayCarrerasSelecconadas = false;
+	encuesta;
 
 	constructor(
 		private fb: FormBuilder,
@@ -28,8 +30,9 @@ export class EstudianteEnEncuestaDialogoComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if (this.materia != null) {
-			this.carrerasSeleccionadas = this.materia.carreras;
+		this.encuesta = JSON.parse(localStorage.getItem('encuesta-seleccionada'));
+		if (this.estudianteSeleccionado != null) {
+			this.carrerasSeleccionadas = this.estudianteSeleccionado.carreras;
 		}
 		this.getCarreras();
 		this.crearFormularioMateria();
@@ -39,7 +42,7 @@ export class EstudianteEnEncuestaDialogoComponent implements OnInit {
 
 	getCarreras() {
 		this.restService.getCarreras().subscribe(carreras => {
-			this.carreras = carreras;
+			this.carrerasActuales = carreras;
 		},
 			(err: HttpErrorResponse) => {
 				this.utilesService.mostrarMensajeDeError(err);
@@ -48,10 +51,10 @@ export class EstudianteEnEncuestaDialogoComponent implements OnInit {
 
 	crearFormularioMateria() {
 		this.form = this.fb.group({
-			codigo: ['', Validators.required],
 			nombre: ['', Validators.required],
-			horas: ['', Validators.required],
-			creditos: ['', Validators.required]
+			apellido: ['', Validators.required],
+			dni: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email]]
 		});
 	}
 
@@ -78,43 +81,43 @@ export class EstudianteEnEncuestaDialogoComponent implements OnInit {
 	}
 
 	insertarInformacionDeLaMateriaEnFormulario() {
-		if (this.materia != null) {
+		if (this.estudianteSeleccionado != null) {
 			this.form.setValue({
-				'codigo': this.materia.codigo,
-				'nombre': this.materia.nombre,
-				'horas': this.materia.horas,
-				'creditos': this.materia.creditos
+				'nombre': this.estudianteSeleccionado.nombre,
+				'apellido': this.estudianteSeleccionado.apellido,
+				'dni': this.estudianteSeleccionado.dni,
+				'email': this.estudianteSeleccionado.email
 			});
-			this.checked = this.materia.estado;
 		}
 	}
 
 	guardar() {
 		if (this.form.valid) {
-			this.armarMateria();
+			this.armarEstudiante();
 		} else {
 			this.utilesService.validateAllFormFields(this.form);
 		}
 	}
 
-	armarMateria() {
+	armarEstudiante() {
 		if (this.carrerasSeleccionadas.length > 0) {
-			const { codigo, nombre, horas, creditos } = this.form.value;
-			const materia = new Materia(codigo, nombre, this.carrerasSeleccionadas, this.checked, horas, creditos);
-			if (this.materia == null) {
-				this.crearNuevaMateria(materia);
+			const { nombre, apellido, dni, email } = this.form.value;
+			const datosPersonales = new DatosPersonalesEstudianteWebService(nombre, apellido, dni, email);
+			const estudiante = new EstudianteWebService(datosPersonales,this.carrerasSeleccionadas);
+			if (this.estudianteSeleccionado== null) {
+				this.crearNuevoEstudiante(estudiante);
 			} else {
-				this.actualizarMateriaSeleccionada(materia, this.materia.id);
+				this.actualizarEstudiante(estudiante, this.estudianteSeleccionado.id);
 			}
 		} else {
 			this.utilesService.mostrarMensaje('Debe seleccionar al menos una carrera');
 		}
 	}
 
-	crearNuevaMateria(materia: Materia) {
-		this.restService.agregarNuevaMateria(materia)
+	crearNuevoEstudiante(estudiante: EstudianteWebService) {
+		this.restService.agregarNuevoEstudianteEnEncuesta(estudiante, this.encuesta.id)
 			.subscribe(res => {
-				const mensaje = 'Se creó la nueva materia con éxito';
+				const mensaje = 'Se creó el nuevo extudiante con exito';
 				this.utilesService.mostrarMensaje(mensaje);
 				this.cerrar();
 			},
@@ -123,15 +126,16 @@ export class EstudianteEnEncuestaDialogoComponent implements OnInit {
 				});
 	}
 
-	actualizarMateriaSeleccionada(materia: Materia, idMateria) {
-		materia.id = idMateria;
-		this.actualizarMateria(materia);
+	actualizarEstudiante(estudiante: EstudianteWebService, idEstudiante) {
+		estudiante.id = idEstudiante;
+		this.actualizar(estudiante);
 	}
 
-	actualizarMateria(materia) {
-		this.restService.actualizarInformacionMateria(materia)
+	actualizar(estudiante: EstudianteWebService) {
+		console.log(estudiante);
+		this.restService.actualizarEstudianteEnEncuesta(estudiante)
 			.subscribe(res => {
-				const mensaje = 'Los datos de la materia fueron actualizados con éxito';
+				const mensaje = 'Los datos del estudiante fueron actualizados con éxito';
 				this.utilesService.mostrarMensaje(mensaje);
 				this.cerrar();
 			},

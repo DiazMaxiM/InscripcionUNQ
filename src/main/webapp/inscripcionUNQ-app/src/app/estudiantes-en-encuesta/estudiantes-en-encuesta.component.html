@@ -1,5 +1,5 @@
 <div align="center">
-	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoEstudiante()">Nuevo Estudiante</button>
+	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoParaAltaOModificacionEstudiante()">Nuevo Estudiante</button>
 </div>
 <div class="container-buscador">
 	<mat-form-field>
@@ -13,6 +13,8 @@
 				<th>DNI</th>
 				<th>Apellido</th>
 				<th>Nombre</th>
+				<th>Email</th>
+				<th> Carreras </th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,7 +22,20 @@
 				<td style="width: 5%; display: none">{{i +1}}</td>
 				<td>{{ estudiante.dni }}</td>
 				<td>{{ estudiante.apellido | titlecase }}</td>
-				<td>{{ estudiante.nombre | titlecase }}</td>
+				<td>{{ estudiante.nombre| titlecase }}</td>
+				<td>{{ estudiante.email}}</td>
+				<td>
+					<ng-container *ngFor="let carrera of estudiante.carreras">
+						<ng-template #tipContent>{{carrera.descripcion}}</ng-template>
+						<div class="carrera" [ngbTooltip]="tipContent" matTooltipPosition="after">
+							{{carrera.codigo}}
+						</div>
+					</ng-container>
+				</td>
+				<td>
+					<i class="material-icons edit-icon" (click)="abrirDialogoParaAltaOModificacionEstudiante(estudiante)" data-toggle="tooltip"
+					data-placement="top" title="Editar encuesta">edit</i>
+				</td>
 			</tr>
 			<mat-divider></mat-divider>
 		</tbody>

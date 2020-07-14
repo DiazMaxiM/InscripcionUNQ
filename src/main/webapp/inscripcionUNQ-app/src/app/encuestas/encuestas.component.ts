@@ -58,13 +58,8 @@ export class EncuestasComponent implements OnInit {
 		});
 	}
 
-	abrirDialogoEstudiantesEnEncuesta(encuesta: Encuesta){
-		this.dialogosService.abrirDialogoEstudiantesEnEncuesta(encuesta)
-
-	}
-
-
 	irAEstudiantesEnEncuesta(encuesta: Encuesta) {
+		this.utilesService.activarDialogoCargando("Cargando información de los estudiantes");
 		this.restService.getEstudiantesEnEncuesta(String(encuesta.id)).subscribe(
 			estudiantes => {
 				localStorage.setItem(
@@ -72,9 +67,11 @@ export class EncuestasComponent implements OnInit {
 					JSON.stringify(estudiantes)
 				);
 				localStorage.setItem("encuesta-seleccionada", JSON.stringify(encuesta));
+				this.utilesService.desactivarDialogoCargando();
 				this.utilesService.irA("estudiantes-en-encuesta");
 			},
 			err => {
+				this.utilesService.desactivarDialogoCargando();
 				this.utilesService.mostrarMensajeDeError(err);
 			}
 		);
