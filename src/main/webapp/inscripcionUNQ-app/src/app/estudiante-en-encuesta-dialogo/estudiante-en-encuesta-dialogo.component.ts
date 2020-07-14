@@ -132,7 +132,6 @@ export class EstudianteEnEncuestaDialogoComponent implements OnInit {
 	}
 
 	actualizar(estudiante: EstudianteWebService) {
-		console.log(estudiante);
 		this.restService.actualizarEstudianteEnEncuesta(estudiante)
 			.subscribe(res => {
 				const mensaje = 'Los datos del estudiante fueron actualizados con éxito';
