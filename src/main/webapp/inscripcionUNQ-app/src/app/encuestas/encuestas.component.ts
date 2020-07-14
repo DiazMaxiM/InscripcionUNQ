@@ -76,4 +76,25 @@ export class EncuestasComponent implements OnInit {
 			}
 		);
 	}
+
+	archivoSeleccionado(event){
+		const archivo = <File> event.target.files[0];
+        let reader = new FileReader();
+        reader.onload = () => {
+            // this 'text' is the content of the file
+			var text = reader.result;
+			this.guardarArchivo(text)
+        }
+		reader.readAsText(archivo);
+
+	}
+
+	guardarArchivo(text){
+		this.restService.guardarArchivo(text).subscribe(() => {
+			this.utilesService.mostrarMensaje("El archivo fue guardado con exito")
+		},
+			(err) => {
+				this.utilesService.mostrarMensajeDeError(err);
+		});
+  }
 }
