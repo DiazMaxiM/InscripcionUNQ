@@ -31,6 +31,7 @@ export class PrerrequisitosMateriaDialogoComponent implements OnInit {
 	getMaterias() {
 		this.restService.getMaterias().subscribe(materias => {
 			this.materias = materias;
+			this.materias = this.eliminarMateria(this.materiaSeleccionada.nombre);
 		},
 			(err) => {
 				this.utilesService.mostrarMensajeDeError(err);
@@ -83,5 +84,10 @@ export class PrerrequisitosMateriaDialogoComponent implements OnInit {
 
 	actualizarMateriaActual() {
 		this.materiaActual = '';
+	}
+
+	eliminarMateria(nombreMateria){
+		console.log(nombreMateria);
+		return this.materias.filter(materia => materia.nombre != nombreMateria);
 	}
 }

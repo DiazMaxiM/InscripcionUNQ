@@ -21,13 +21,13 @@
 </div>
 <div class="row">
   <mat-form-field class="col-md-10">
-    <input [value]="materiaActual" type="text" placeholder="Materia" matInput [matAutocomplete]="auto" />
+    <input [(ngModel)]="materiaActual" type="text" placeholder="Materia" matInput [matAutocomplete]="auto" />
     <button class="button-close" mat-button *ngIf="materiaActual" matSuffix mat-icon-button aria-label="Clear"
       (click)="actualizarMateriaActual()">
       <mat-icon class="icon-close">close</mat-icon>
     </button>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)='agregarPrerrequisito($event.option.value)'>
-      <mat-option *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaBuscada}; let i=index;"
+      <mat-option *ngFor="let materia of materias | filtroBusqueda: {nombre: materiaActual}; let i=index;"
         [value]="materia">
         {{ materia.nombre }}
       </mat-option>
