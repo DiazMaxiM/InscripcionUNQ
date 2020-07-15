@@ -1,8 +1,11 @@
-<div align="center" style="margin: 15px;" class="card">
-	<div class="card-body" >
-		<h5>Agregar archivo json para la nueva encuesta</h5>
-		<input type="file" (change)="archivoSeleccionado($event)">
-
+<div class="alert alert-secondary" role="alert">
+	<div class="row justify-content-center">
+		<div class="col-3">
+			<p><b>Agregar archivo json para la nueva encuesta</b></p>
+		</div>
+		<div class="col-3">
+			<input type="file" (change)="archivoSeleccionado($event)">
+		</div>
 	</div>
 </div>
 <div align="center">
