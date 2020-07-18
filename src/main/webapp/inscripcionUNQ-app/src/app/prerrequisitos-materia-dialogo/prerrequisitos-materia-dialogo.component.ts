@@ -87,7 +87,6 @@ export class PrerrequisitosMateriaDialogoComponent implements OnInit {
 	}
 
 	eliminarMateria(nombreMateria){
-		console.log(nombreMateria);
 		return this.materias.filter(materia => materia.nombre != nombreMateria);
 	}
 }
