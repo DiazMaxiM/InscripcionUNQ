@@ -5,7 +5,7 @@ public class CantidadMateriasInscripcionSuperadaException extends ExceptionGener
 	private static final long serialVersionUID = 1L;
 
 	public CantidadMateriasInscripcionSuperadaException(int size, int limilteMaxMaterias) {
-		super(101, "La materia a inscribirse (" + size + ") supera el maximo de materias (" + limilteMaxMaterias
+		super(101, "La materia a inscribirse (" + size + ") supera el máximo de materias (" + limilteMaxMaterias
 				+ ") de materias para esta encuesta");
 	}
 }
