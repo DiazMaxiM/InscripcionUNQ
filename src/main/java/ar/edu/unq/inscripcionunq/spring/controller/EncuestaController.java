@@ -21,19 +21,26 @@ import com.itextpdf.text.DocumentException;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EncuestaSistemaJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteEnEncuestaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.EstudianteWebServiceJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.ExceptionJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
+import ar.edu.unq.inscripcionunq.spring.exception.ApellidoInvalidoException;
+import ar.edu.unq.inscripcionunq.spring.exception.CantidadMateriasInscripcionSuperadaException;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ComisionNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ConexionWebServiceException;
+import ar.edu.unq.inscripcionunq.spring.exception.EmailInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.EncuestaNoExisteException;
+import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteEncuestaConMismoNombreException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoCumplePrerrequisitoException;
+import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
+import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.OfertaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.PeriodoInvalidoException;
-import ar.edu.unq.inscripcionunq.spring.exception.EstudianteNoExisteException;
-import ar.edu.unq.inscripcionunq.spring.exception.NoExistenUsuariosEnEncuestaException;
 import ar.edu.unq.inscripcionunq.spring.exception.VariasComisionesDeUnaMateriaException;
 import ar.edu.unq.inscripcionunq.spring.model.Encuesta;
 import ar.edu.unq.inscripcionunq.spring.model.Estudiante;
@@ -42,10 +49,10 @@ import ar.edu.unq.inscripcionunq.spring.service.EstudianteService;
 
 @RestController
 public class EncuestaController {
-	
+
 	@Autowired
 	private EncuestaService encuestaServiceImp;
-	
+
 	@Autowired
 	private EstudianteService estudianteServiceImp;
 
@@ -53,10 +60,11 @@ public class EncuestaController {
 	public ResponseEntity<List<EncuestaJson>> habilitarEncuestasParaUnUsuario(@PathVariable String dni) {
 		List<Encuesta> encuestas = encuestaServiceImp.getTodasLasEncuestasActivasParaDni(dni);
 
-		List<EncuestaJson> miniEncuestas = encuestas.stream().map(m -> new EncuestaJson(m.getId(), m.getNombre(),
-				m.getHoraComienzo(), m.getHoraFin(), encuestaServiceImp.puedeGenerarPDF(dni, m.getId()))
+		List<EncuestaJson> miniEncuestas = encuestas.stream()
+				.map(m -> new EncuestaJson(m.getId(), m.getNombre(), m.getHoraComienzo(), m.getHoraFin(),
+						encuestaServiceImp.puedeGenerarPDF(dni, m.getId()), m.getLimilteMaxMaterias())
 
-		).collect(Collectors.toList());
+				).collect(Collectors.toList());
 		return ResponseEntity.ok().body(miniEncuestas);
 	}
 
@@ -77,7 +85,8 @@ public class EncuestaController {
 		try {
 			encuestaServiceImp.setComisionesSeleccionadas(id, idsJson);
 		} catch (FormatoNumeroIdException | EstudianteNoExisteException | ComisionNoExisteException
-				| VariasComisionesDeUnaMateriaException e) {
+				| VariasComisionesDeUnaMateriaException | MateriaNoCumplePrerrequisitoException
+				| CantidadMateriasInscripcionSuperadaException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 		try {
@@ -90,61 +99,110 @@ public class EncuestaController {
 		}
 		return ResponseEntity.ok().body(null);
 	}
-	
+
 	@GetMapping("/encuestas")
-	public ResponseEntity<List<EncuestaSistemaJson>> encuestas(){
+	public ResponseEntity<List<EncuestaSistemaJson>> encuestas() {
 		return ResponseEntity.ok().body(encuestaServiceImp.getEncuestaJson());
 	}
-	
+
 	@PutMapping("/encuestas/nuevaEncuesta")
 	public ResponseEntity agregarNuevaEncuesta(@RequestBody EncuestaSistemaJson encuestaJson) {
 		try {
 			encuestaServiceImp.crearNuevaEncuesta(encuestaJson);
-		} catch (FormatoNumeroIdException | PeriodoInvalidoException | ConexionWebServiceException | EncuestaNoExisteException | OfertaNoExisteException | ExisteEncuestaConMismoNombreException e) {
+		} catch (FormatoNumeroIdException | PeriodoInvalidoException | ConexionWebServiceException
+				| EncuestaNoExisteException | OfertaNoExisteException | ExisteEncuestaConMismoNombreException e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
-		
+
+		return ResponseEntity.ok().build();
+	}
+
+	@PutMapping("/encuestas/nuevoEstudianteEnEncuesta/{idEncuesta}")
+	public ResponseEntity agregarNuevoEstudianteEnEncuesta(@PathVariable String idEncuesta,
+			@RequestBody EstudianteWebServiceJson estudianteJson) {
+		try {
+			encuestaServiceImp.agregarNuevoEstudianteEnEncuesta(idEncuesta, estudianteJson);
+		} catch (NombreInvalidoException | EmailInvalidoException | ApellidoInvalidoException | EncuestaNoExisteException | FormatoNumeroIdException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+			
+		}
+
 		return ResponseEntity.ok().build();
 	}
 	
+	@PostMapping("/encuestas/actualizarEstudianteEnEncuesta")
+	public ResponseEntity actualizarEstudianteEnEncuesta(@RequestBody EstudianteWebServiceJson estudianteJson) {
+		try {
+			encuestaServiceImp.actualizarEstudianteEnEncuesta(estudianteJson);
+		} catch (NombreInvalidoException | ApellidoInvalidoException | EstudianteNoExisteException | EmailInvalidoException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+		return ResponseEntity.ok().build();
+	}
+
 	@PostMapping("/encuestas/actualizarEncuesta")
 	public ResponseEntity actualizarEncuesta(@RequestBody EncuestaSistemaJson encuestaJson) {
 		try {
 			encuestaServiceImp.actualizarEncuesta(encuestaJson);
-		} catch (FormatoNumeroIdException | PeriodoInvalidoException | EncuestaNoExisteException | ExisteEncuestaConMismoNombreException e) {
-	    	return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		} catch (FormatoNumeroIdException | PeriodoInvalidoException | EncuestaNoExisteException
+				| ExisteEncuestaConMismoNombreException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
-		
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@PostMapping("/encuestas/asociarOfertasParaEncuesta/{idEncuesta}")
-	public ResponseEntity asociarOfertasParaEncuesta(@PathVariable String idEncuesta, @RequestBody List<IdJson> idsJson) {
+	public ResponseEntity asociarOfertasParaEncuesta(@PathVariable String idEncuesta,
+			@RequestBody List<IdJson> idsJson) {
 		try {
-			encuestaServiceImp.asociarOfertasParaEncuesta(idEncuesta,idsJson);
+			encuestaServiceImp.asociarOfertasParaEncuesta(idEncuesta, idsJson);
 		} catch (FormatoNumeroIdException | EncuestaNoExisteException | OfertaNoExisteException e) {
-	    	return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
-		
+
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@GetMapping("/generarReporte/{idEncuesta}/{tipoEncuesta}")
-	public ResponseEntity generarReporte(@PathVariable String idEncuesta, @PathVariable String tipoEncuesta) throws IOException {
+	public ResponseEntity generarReporte(@PathVariable String idEncuesta, @PathVariable String tipoEncuesta)
+			throws IOException {
 		byte[] xlsBytes;
 		try {
 			xlsBytes = encuestaServiceImp.getReporte(idEncuesta, tipoEncuesta).getBinaryPDF();
-		} catch (FormatoNumeroIdException  e) {
-	    	return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		} catch (FormatoNumeroIdException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
 		}
 
 		HttpHeaders encabezados = new HttpHeaders();
 		encabezados.setContentType(MediaType.parseMediaType("application/vnd.ms-excel"));
-	
+
 		String nombreArchivo = "output.xls";
-		
+
 		encabezados.setContentDispositionFormData(nombreArchivo, nombreArchivo);
 		encabezados.setCacheControl("must-revalidate, post-check=0,pre-check=0");
 		return new ResponseEntity<>(xlsBytes, encabezados, HttpStatus.OK);
 	}
+
+	@PostMapping("/guardarJson")
+	public ResponseEntity guardarArchivo(@RequestBody String archivo) {
+		try {
+			encuestaServiceImp.guardarArchivo(archivo);
+			return ResponseEntity.ok().build();
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
+		}
+	}
+
+	@GetMapping("/encuesta/estudiantes/{idEncuesta}")
+	public ResponseEntity getEstudiantesDeEncuesta(@PathVariable String idEncuesta) {
+		List<EstudianteEnEncuestaJson> estudiantesJson;
+		try {
+			estudiantesJson = encuestaServiceImp.getEstudiantesDeEncuesta(idEncuesta);
+			return ResponseEntity.ok().body(estudiantesJson);
+		} catch (FormatoNumeroIdException e) {
+			// TODO Auto-generated catch block
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionJson(e));
+		}
+	}
+
 }

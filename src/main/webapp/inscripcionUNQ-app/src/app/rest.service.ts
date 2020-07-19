@@ -258,4 +258,25 @@ export class RestService {
   getIncidencias() {
     return this.httpClient.get<Array<Incidencia>>('/api/incidencias');
   }
+
+  actualizarPrerrequisitosMateria(idMateria: string, prerrequisitos) {
+    return this.httpClient.post('/api/materias/actualizar-prerrequisitos/' + idMateria, prerrequisitos, { headers });
+  }
+
+  guardarArchivo(contenido){
+    return this.httpClient.post('/api/guardarJson', contenido,{ headers } );
+  }
+
+  getEstudiantesEnEncuesta(idEncuesta: string) {
+    return this.httpClient.get<Array<Estudiante>>('/api/encuesta/estudiantes/' + idEncuesta);
+  }
+
+  agregarNuevoEstudianteEnEncuesta(estudiante,idEncuesta){
+    return this.httpClient.put('/api/encuestas/nuevoEstudianteEnEncuesta/' + idEncuesta, estudiante, {headers});
+  }
+
+  actualizarEstudianteEnEncuesta(estudiante){
+    return this.httpClient.post('/api/encuestas/actualizarEstudianteEnEncuesta', estudiante, {headers});
+
+  }
 }

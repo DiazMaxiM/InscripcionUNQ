@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.CarreraJson;
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.CarreraDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
@@ -53,9 +54,14 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 			CarreraJson carreraJson = new CarreraJson(carrera);
 			carrerasJson.add(carreraJson);
 		});
+		List<MateriaSistemaJson> materiasJson = new ArrayList<>();
+		materia.getPrerrequisitos().forEach((materiaPreRequisito) -> {
+			MateriaSistemaJson materiaJson = new MateriaSistemaJson(materiaPreRequisito, true);
+			materiasJson.add(materiaJson);
+		});
 
 		return new MateriaSistemaJson(materia.getId(), materia.getCodigo(), materia.getNombre(), materia.getHoras(),
-				materia.getCreditos(), carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()));
+				materia.getCreditos(), carrerasJson, TipoEstado.esEstadoHabiltado(materia.getEstado()), materiasJson);
 
 	}
 
@@ -133,5 +139,19 @@ public class MateriaServiceImp extends GenericServiceImp<Materia> implements Mat
 		List<Materia> materias = ((MateriaDao) genericDao).getMateriasParaCarrera(id);
 
 		return materias.stream().map(m -> this.crearMateriaJson(m)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void actualizarPrerrequisitos(String idMateria, List<IdJson> idsJson) {
+		// TODO Falta verificar que no sea recursivo es decir que la materia A
+		// incluya B, pero B en sus hijos
+		// No tenga a A
+		Materia materia = materiaDaoImp.get(new Long(idMateria));
+		List<Materia> prerrequisitos = new ArrayList<Materia>();
+		for (IdJson idJson : idsJson) {
+			prerrequisitos.add(materiaDaoImp.get(new Long(idJson.id)));
+		}
+		materia.actualizarPrerrequisitos(prerrequisitos);
+
 	}
 }

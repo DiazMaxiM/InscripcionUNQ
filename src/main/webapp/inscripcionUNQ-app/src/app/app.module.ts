@@ -58,10 +58,13 @@ import { SeleccionDePeriodoDialogoComponent } from './seleccion-de-periodo-dialo
 import { ReporteDialogoComponent } from './reporte-dialogo/reporte-dialogo.component';
 import { TipoIncidenciaDialogoComponent } from './tipo-incidencia-dialogo/tipo-incidencia-dialogo.component';
 import { DialogosService } from './dialogos.service';
+import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-dialogo/prerrequisitos-materia-dialogo.component';
 import { NavegacionEstudianteComponent } from './navegacion/navegacion-estudiante/navegacion-estudiante.component';
 import { NavegacionAdminComponent } from './navegacion/navegacion-admin/navegacion-admin.component';
 import { CarrerasComponent } from './carreras/carreras.component';
 import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.component';
+import { EstudiantesEnEncuestaComponent } from './estudiantes-en-encuesta/estudiantes-en-encuesta.component';
+import { EstudianteEnEncuestaDialogoComponent}  from './estudiante-en-encuesta-dialogo/estudiante-en-encuesta-dialogo.component';
 
 @NgModule({
   declarations: [
@@ -103,8 +106,11 @@ import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.co
 		SeleccionDePeriodoDialogoComponent,
 		ReporteDialogoComponent,
 		TipoIncidenciaDialogoComponent,
+		PrerrequisitosMateriaDialogoComponent,
 		NavegacionEstudianteComponent,
-		NavegacionAdminComponent
+    NavegacionAdminComponent, 
+    EstudiantesEnEncuestaComponent,
+    EstudianteEnEncuestaDialogoComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +136,8 @@ import { ComisionDialogoComponent } from './comision-dialogo/comision-dialogo.co
   IncidenciaDialogoComponent, ComisionDialogoComponent, PeriodoDialogoComponent, ComisionesDeOfertaDialogoComponent,
   EquivalenciaDialogoComponent, ModificacionDeIncidenciaDialogoComponent,
 	EdicionUsuarioDialogoComponent, AltaUsuarioDialogoComponent, EncuestaDialogoComponent, ActalizacionPerfilesDialogoComponent,
-	OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent, ReporteDialogoComponent, TipoIncidenciaDialogoComponent]
+  OfertasDeEncuestaDialogoComponent, SeleccionDePeriodoDialogoComponent, ReporteDialogoComponent, TipoIncidenciaDialogoComponent,
+   EstudianteEnEncuestaDialogoComponent ]
 })
 export class AppModule {
 	constructor(private adapter: DateAdapter<any>) {

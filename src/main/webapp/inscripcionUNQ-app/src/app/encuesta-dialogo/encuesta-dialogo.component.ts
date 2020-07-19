@@ -26,6 +26,7 @@ export class EncuestaDialogoComponent implements OnInit {
 	nuevaEncuesta: Encuesta;
 	modificaPeriodo;
 	periodoBuscado;
+	checked = false;
 
 	constructor(
 		private fb: FormBuilder,
@@ -35,7 +36,7 @@ export class EncuestaDialogoComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.crearFormularioComision();
+		this.crearFormularioEncuesta();
 		this.getPeriodos();
 		this.insertarInformacionDeLaEncuesta();
 		this.form.controls['periodo'].valueChanges.subscribe((term: FormGroup) => {
@@ -44,10 +45,11 @@ export class EncuestaDialogoComponent implements OnInit {
 		});
 	}
 	
-	crearFormularioComision() {
+	crearFormularioEncuesta() {
 		this.form = this.fb.group({
 			nombre: ['', Validators.required],
 			periodo: ['', Validators.required],
+			nroMaxMaterias: ['', Validators.required],
 			fechaDeComienzo: ['', Validators.required],
 			fechaDeFinalizacion: ['', Validators.required],
 			horarioComienzo: [{ hour: 0, minute: 0 }, Validators.required],
@@ -69,9 +71,11 @@ export class EncuestaDialogoComponent implements OnInit {
 				'fechaDeComienzo': this.crearFecha(this.encuestaSeleccionada.fechaComienzo),
 				'fechaDeFinalizacion': this.crearFecha(this.encuestaSeleccionada.fechaFin),
 				'horarioComienzo': this.utilesService.armarHorario(this.encuestaSeleccionada.fechaComienzo.horario),
-				'horarioFinalizacion': this.utilesService.armarHorario(this.encuestaSeleccionada.fechaFin.horario)
+				'horarioFinalizacion': this.utilesService.armarHorario(this.encuestaSeleccionada.fechaFin.horario),
+				'nroMaxMaterias': this.encuestaSeleccionada.limiteMaxMaterias,
 			});
 			this.modificaPeriodo = true;
+			this.checked = this.encuestaSeleccionada.solicitaPrerrequisitos;
 		}
 	}
 
@@ -103,7 +107,7 @@ export class EncuestaDialogoComponent implements OnInit {
 
 	guardarPeriodos(periodos: Periodo[]) {
 		if (periodos.length == 0) {
-			const mensaje = 'No se encontraron períodos para la comisión';
+			const mensaje = 'No se encontraron períodos para la encuesta';
 		}
 		this.periodos = periodos;
 	}
@@ -121,7 +125,7 @@ export class EncuestaDialogoComponent implements OnInit {
 	}
 
 	crearEncuesta() {
-		const { nombre, periodo, fechaDeComienzo, fechaDeFinalizacion, horarioComienzo, horarioFinalizacion } = this.form.value;
+		const { nombre, periodo, nroMaxMaterias, fechaDeComienzo, fechaDeFinalizacion, horarioComienzo, horarioFinalizacion } = this.form.value;
 		if (this.hayPeriodoValido(periodo)) {
 
 			const encuesta = new Encuesta();
@@ -129,6 +133,8 @@ export class EncuestaDialogoComponent implements OnInit {
 			encuesta.periodo = this.utilesService.obtenerPeriodo(this.periodos, periodo);
 			encuesta.fechaComienzo = this.crearFechaConHora(fechaDeComienzo._i, horarioComienzo);
 			encuesta.fechaFin = this.crearFechaConHora(fechaDeFinalizacion._i, horarioFinalizacion);
+			encuesta.solicitaPrerrequisitos = this.checked;
+			encuesta.limiteMaxMaterias = nroMaxMaterias;
 			this.guardarEncuesta(encuesta);
 		}
 	}

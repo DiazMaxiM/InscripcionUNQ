@@ -224,4 +224,17 @@ export class UtilesService {
 	volver(){
 		this.location.back();
 	}
+
+
+	ordenarEstudiantesPorDNI(estudiantes) {
+		const estudiantesOrdenados = estudiantes.sort(function (o1, o2) {
+			if (o1.dni > o2.dni) {
+				return 1;
+			} else if (o1.dni < o2.dni) {
+				return -1;
+			}
+			return 0;
+		});
+		return estudiantesOrdenados;
+	}
 }

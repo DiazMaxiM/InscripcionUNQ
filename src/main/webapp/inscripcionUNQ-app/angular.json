@@ -29,7 +29,9 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": ["node_modules/auth0-js/build/auth0.min.js"]
+            "scripts": [
+              "node_modules/auth0-js/build/auth0.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -130,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "inscripcionUNQ-app"
+  "defaultProject": "inscripcionUNQ-app",
+  "cli": {
+    "analytics": "0898e2d4-b590-45fc-9569-effcd3da096b"
+  }
 }

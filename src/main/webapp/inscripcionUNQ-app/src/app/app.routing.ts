@@ -17,6 +17,7 @@ import { EquivalenciasComponent } from './equivalencias/equivalencias.component'
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { IncidenciasComponent } from './incidencias/incidencias.component';
 import { EncuestasComponent } from './encuestas/encuestas.component';
+import { EstudiantesEnEncuestaComponent } from './estudiantes-en-encuesta/estudiantes-en-encuesta.component';
 
 const APP_ROUTES: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
@@ -25,7 +26,7 @@ const APP_ROUTES: Routes = [
   { path: 'verificacion-de-datos', component: InformacionEstudianteComponent },
   { path: 'materias-por-cursar', component: SeleccionDeMateriasPorCursarComponent },
   { path: 'encuesta-finalizada', component: EncuestaFinalizadaComponent },
-  { path: 'tareas-usuario', component: TareasUsuarioComponent },
+  { path: 'inicio', component: TareasUsuarioComponent },
   { path: 'carreras', component: CarrerasComponent },
   { path: 'materias', component: MateriasComponent },
   { path: 'oferta-academica', component: OfertaAcademicaComponent },
@@ -35,7 +36,8 @@ const APP_ROUTES: Routes = [
   { path: 'equivalencias', component: EquivalenciasComponent },
   { path: 'usuarios', component: UsuariosComponent },
 	{ path: 'incidencias', component: IncidenciasComponent },
-	{ path: 'encuestas', component: EncuestasComponent },
+  { path: 'encuestas', component: EncuestasComponent },
+  { path: 'estudiantes-en-encuesta', component: EstudiantesEnEncuestaComponent },
   { path: '**', redirectTo: '' }
 ];
 

@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Datos Estudiante</h2>
+<div [formGroup]="form">
+	<div class="form-row">
+	<mat-form-field class="col-12">
+		<input matInput placeholder="Nombre" formControlName="nombre" required>
+		<mat-error *ngIf="form.get('nombre').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field class="col-12">
+		<input matInput placeholder="Apellido" formControlName="apellido" required>
+		<mat-error *ngIf="form.get('apellido').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field class="col-12">
+		<input matInput  type="number"  (keypress)="soloNumero($event)"placeholder="DNI" formControlName="dni" required>
+		<mat-error *ngIf="form.get('dni').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+	</mat-form-field>
+	<mat-form-field class="col-12">
+		<input matInput placeholder="Email" formControlName="email" required>
+		<mat-error *ngIf="form.get('email').hasError('required')">
+			Campo obligatorio
+		</mat-error>
+		<mat-error *ngIf="form.get('email').hasError('email')">
+			La dirección ingresada no corresponde a un correo electrónico válido
+		</mat-error>
+	</mat-form-field>
+	<ng-container *ngFor="let carrera of carrerasActuales" class="col-12">
+		<ng-template #tipContent>{{carrera.descripcion}}</ng-template>
+		<div class="carrera" [ngbTooltip]="tipContent" matTooltipPosition="after">
+			{{carrera.codigo}}
+			<mat-checkbox  color="warn" [checked]="verificarSeleccion(carrera)" (change)="onChange(carrera,$event)" placeholder="carrera.nombre">
+			</mat-checkbox>
+		</div>
+	</ng-container>
+	</div>
+</div>
+<mat-dialog-actions align="end">
+	<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
+		Cerrar
+	</button>
+	<button class="btn btn-danger mat-button" mat-fab color="primary" (click)="guardar()">
+		Guardar
+	</button>
+</mat-dialog-actions>

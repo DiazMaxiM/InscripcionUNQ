@@ -50,8 +50,18 @@
 				<ngb-timepicker (keypress)="soloNumero($event)" formControlName="horarioFinalizacion" required></ngb-timepicker>
 				<mat-error *ngIf="form.get('horarioFinalizacion').hasError('required')">Campo obligatorio</mat-error>
 			</div>
+			<mat-form-field class="col-md-6">
+				<input matInput  type="number"  (keypress)="soloNumero($event)" placeholder="Número máximo de materias para anotarse" formControlName="nroMaxMaterias" required>
+				<mat-error *ngIf="form.get('nroMaxMaterias').hasError('required')">
+					Campo obligatorio
+				</mat-error>
+			</mat-form-field>
 		</div>
 	</div>
+	<section>Solicitar prerrequisitos 
+		<mat-slide-toggle class="estado" [(ngModel)]="checked">
+		</mat-slide-toggle>
+	</section>
 	<div align="end">
 		<button class="btn mat-button" mat-fab color="primary" (click)="cerrar()">
 			Cerrar

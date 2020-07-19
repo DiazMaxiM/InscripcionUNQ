@@ -2,13 +2,14 @@ package ar.edu.unq.inscripcionunq.spring.service;
 
 import java.util.List;
 
+import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IdJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaSistemaJson;
 import ar.edu.unq.inscripcionunq.spring.exception.CodigoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.DescripcionInvalidaException;
 import ar.edu.unq.inscripcionunq.spring.exception.EstadoInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.ExisteMateriaConElMismoCodigoException;
-import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.FormatoNumeroIdException;
+import ar.edu.unq.inscripcionunq.spring.exception.HorarioInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.exception.MateriaNoExisteException;
 import ar.edu.unq.inscripcionunq.spring.exception.NombreInvalidoException;
 import ar.edu.unq.inscripcionunq.spring.model.Carrera;
@@ -33,5 +34,7 @@ public interface MateriaService extends GenericService<Materia> {
 	List<MateriaSistemaJson> getMateriasParaCarrera(String idCarrera);
 
 	Materia getMateriaPorCodigo(String codigo);
+
+	void actualizarPrerrequisitos(String idMateria, List<IdJson> idsJson);
 
 }

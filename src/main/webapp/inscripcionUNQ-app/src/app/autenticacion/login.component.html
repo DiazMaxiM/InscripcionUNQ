@@ -1,7 +1,7 @@
 <h2 class="h5" align="center">Encuesta de preinscripción CPI</h2>
 <form *ngIf="!seleccionaPerfil" [formGroup]="loginVerificationForm" class="row justify-content-md-center" (ngSubmit)="onSubmit()">
     <div class="row justify-content-md-center">
-        <mat-form-field class="col-sm-12 col">
+        <mat-form-field class="col-12">
             <input matInput placeholder="Correo electrónico" formControlName="email" type="email" id="email" required>
             <mat-error *ngIf="loginVerificationForm.get('email').hasError('required')">
                 Campo obligatorio
@@ -10,7 +10,7 @@
                 La dirección de e-mail no es válida
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="col-sm-12 col">
+        <mat-form-field class="col-12">
             <input matInput placeholder="Contraseña" formControlName="password" type="password" id="password" required>
             <mat-error *ngIf="loginVerificationForm.get('password').hasError('required')">
                 Campo obligatorio

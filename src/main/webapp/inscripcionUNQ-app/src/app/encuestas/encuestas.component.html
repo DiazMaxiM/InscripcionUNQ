@@ -1,3 +1,13 @@
+<div class="alert alert-secondary" role="alert">
+	<div class="row justify-content-center">
+		<div class="col-3">
+			<p><b>Agregar archivo json para la nueva encuesta</b></p>
+		</div>
+		<div class="col-3">
+			<input type="file" (change)="archivoSeleccionado($event)">
+		</div>
+	</div>
+</div>
 <div align="center">
 	<button class="btn btn-danger" mat-fab color="primary" (click)="abrirDialogoParaAltaOModificacionEncuesta()">Nueva
 		encuesta</button>
@@ -21,7 +31,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada, codPeriodo: encuestaBuscada}; let i=index;">
+			<tr *ngFor="let encuesta of encuestas  | filtroBusqueda: {nombre: encuestaBuscada}; let i=index;">
 				<td style="width: 5%; display: none">{{i +1}}</td>
 				<td>{{ encuesta.nombre }}</td>
 				<td>{{ encuesta.fechaComienzo.dia | number:'2.0' }}/{{ encuesta.fechaComienzo.mes | number:'2.0' }}/{{
@@ -39,7 +49,12 @@
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoParaDescargarReporte(encuesta)" data-toggle="tooltip"
 					 data-placement="top" title="Descargar reporte">cloud_download</i></td>
 				<td><i class="material-icons edit-icon" (click)="abrirDialogoDeOfertasAcademicas(encuesta)" data-toggle="tooltip"
-					 data-placement="top" title="Ofertas académicas">list</i></td>
+					 data-placement="top" title="Ofertas académicas">list</i>
+				</td>
+				<td>
+					<i class="material-icons edit-icon" (click)="irAEstudiantesEnEncuesta(encuesta)" title="Estudiantes en encuesta">account_circle
+					</i>
+				</td>
 			</tr>
 			<mat-divider></mat-divider>
 		</tbody>

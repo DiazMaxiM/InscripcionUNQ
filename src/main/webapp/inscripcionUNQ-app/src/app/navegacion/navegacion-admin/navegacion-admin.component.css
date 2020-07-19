@@ -5,6 +5,7 @@ nav {
 
 .nav-item:hover {
 	cursor: pointer;
+	background-color: #db594d !important;
 }
 
 .nav-link{

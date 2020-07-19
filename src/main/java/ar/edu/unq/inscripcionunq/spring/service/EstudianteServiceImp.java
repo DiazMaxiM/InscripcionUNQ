@@ -18,6 +18,7 @@ import ar.edu.unq.inscripcionunq.spring.controller.miniobject.IncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.MateriaJson;
 import ar.edu.unq.inscripcionunq.spring.controller.miniobject.TipoIncidenciaJson;
 import ar.edu.unq.inscripcionunq.spring.dao.ComisionDao;
+import ar.edu.unq.inscripcionunq.spring.dao.EncuestaDao;
 import ar.edu.unq.inscripcionunq.spring.dao.EstudianteDao;
 import ar.edu.unq.inscripcionunq.spring.dao.MateriaDao;
 import ar.edu.unq.inscripcionunq.spring.exception.CertificadoException;
@@ -44,6 +45,9 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 
 	@Autowired
 	private EstudianteDao estudianteDaoImp;
+
+	@Autowired
+	private EncuestaDao encuestaDaoImp;
 
 	@Autowired
 	private IncidenciaService incidenciaServiceImp;
@@ -118,13 +122,24 @@ public class EstudianteServiceImp extends GenericServiceImp<Estudiante> implemen
 			throw new EstudianteNoExisteException();
 		}
 		Long idEncuesta = estudiante.getEncuesta().getId();
+
 		List<Comision> comisiones = comisionDaoImp.getTodasLasComisionesDeMateriaEnEncuesta(idEncuesta);
+
 		List<Materia> materiasAprobadas = estudiante.getMateriasAprobadas();
+
 		List<Comision> comisionesDesaprobadas = comisiones.stream()
 				.filter(comision -> !materiasAprobadas.contains(comision.getMateria())).collect(Collectors.toList());
+
 		List<Materia> materiasDesaprobadas = comisionesDesaprobadas.stream().map(c -> c.getMateria()).distinct()
 				.collect(Collectors.toList());
+
+		if (encuestaDaoImp.get(idEncuesta).isSolicitaPrerrequisitos()) {
+
+			materiasDesaprobadas = materiasDesaprobadas.stream()
+					.filter(materia -> materia.cumplePreRequisitos(materiasAprobadas)).collect(Collectors.toList());
+		}
 		List<Comision> comisionesRegistradas = estudiante.getRegistroComisiones();
+
 		List<MateriaJson> materiaJson = materiasDesaprobadas.stream()
 				.map(subject -> new MateriaJson(subject, false, comisionesRegistradas.stream()
 						.filter(c -> c.getMateria().getId().equals(subject.getId())).collect(Collectors.toList())))

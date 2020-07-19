@@ -143,4 +143,9 @@ public class Estudiante extends BaseEntity {
 		return "DNI=" + this.dni + " EMAIL=" + this.email + " APELLIDO=" + this.apellido + " NOMBRE=" + this.nombre;
 
 	}
+	
+	public void setCarrerasInscripto(List<Carrera> carrerasInscripto) {
+		this.carrerasInscripto = carrerasInscripto;
+	}
+
 }

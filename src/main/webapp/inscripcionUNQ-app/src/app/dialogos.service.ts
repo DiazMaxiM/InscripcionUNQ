@@ -29,6 +29,8 @@ import { EdicionUsuarioDialogoComponent } from './edicion-usuario-dialogo/edicio
 import { IncidenciaEstado } from './incidencias/incidencia-estado.model';
 import { ModificacionDeIncidenciaDialogoComponent } from './modificacion-de-incidencia-dialogo/modificacion-de-incidencia-dialogo.component';
 import { SeleccionDeComisionDialogoComponent } from './seleccion-de-comision-dialogo/seleccion-de-comision-dialogo.component';
+import { PrerrequisitosMateriaDialogoComponent } from './prerrequisitos-materia-dialogo/prerrequisitos-materia-dialogo.component';
+import { EstudianteEnEncuestaDialogoComponent } from './estudiante-en-encuesta-dialogo/estudiante-en-encuesta-dialogo.component';
 
 @Injectable()
 export class DialogosService {
@@ -159,6 +161,13 @@ export class DialogosService {
 		return dialogRef.afterClosed();
 	}
 
+	abrirDialogoPrerrequisito(materia?: Materia): Observable<any> {
+		let dialogRef: MatDialogRef<PrerrequisitosMateriaDialogoComponent>;
+		dialogRef = this.dialog.open(PrerrequisitosMateriaDialogoComponent, this.configuracionDialogo(450, 480));
+		dialogRef.componentInstance.materiaSeleccionada = materia;
+		return dialogRef.afterClosed();
+	}
+
 	configuracionDialogo(ancho, alto) {
 		const dialogConfig = new MatDialogConfig();
 		dialogConfig.disableClose = true;
@@ -166,6 +175,13 @@ export class DialogosService {
 		dialogConfig.width = ancho;
 		dialogConfig.height = alto;
 		return dialogConfig;
+	}
+
+	abrirDialogoEstudiantesEnEncuesta(estudiante?): Observable<any> {
+		let dialogRef: MatDialogRef<EstudianteEnEncuestaDialogoComponent>;
+		dialogRef = this.dialog.open(EstudianteEnEncuestaDialogoComponent, this.configuracionDialogo(450, 480));
+		dialogRef.componentInstance.estudianteSeleccionado = estudiante;
+		return dialogRef.afterClosed();
 	}
 
 }

@@ -31,7 +31,7 @@ export class EdicionUsuarioDialogoComponent implements OnInit {
   crearFormularioUsuario() {
     this.form = this.fb.group(
       {
-        password: [null, [Validators.required]],
+        password: [null, [Validators.required, Validators.pattern('(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}')]],
         repassword: [null, [Validators.required]]
       },
       { validator: this.checkIfMatchingPasswords("password", "repassword") }

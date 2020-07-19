@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import ar.edu.unq.inscripcionunq.spring.validacion.Validacion;
 
 @Entity(name = "Materia")
 public class Materia extends BaseEntity {
-	
+
 	@Column(unique = true)
 	private String codigo;
 	private String nombre;
@@ -28,8 +29,10 @@ public class Materia extends BaseEntity {
 	private Integer creditos;
 	@Enumerated(EnumType.STRING)
 	private TipoEstado estado = TipoEstado.ENABLED;
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
 	private List<Carrera> carreras = new ArrayList<>();
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	private List<Materia> prerrequisitos = new ArrayList<>();;
 
 	public Materia(String codigo, String nombre, Integer horas, Integer creditos, List<Carrera> listaDeCarreras) {
 		this.setCodigo(codigo);
@@ -39,13 +42,14 @@ public class Materia extends BaseEntity {
 		this.creditos = creditos;
 	}
 
-    public Materia(String codigo, String nombre, Integer horas, Integer creditos, List<Carrera> listaDeCarreras, TipoEstado estado) {
+	public Materia(String codigo, String nombre, Integer horas, Integer creditos, List<Carrera> listaDeCarreras,
+			TipoEstado estado) {
 		this.setCodigo(codigo);
 		this.setNombre(nombre);
 		this.setHoras(horas);
 		this.carreras = listaDeCarreras;
-        this.estado = estado; 
-        this.creditos = creditos;
+		this.estado = estado;
+		this.creditos = creditos;
 	}
 
 	public Materia(String codigo, String nombre, Integer hours, Integer creditos) {
@@ -103,17 +107,17 @@ public class Materia extends BaseEntity {
 		this.estado = estado;
 	}
 
-	public void actualizarMateria(Materia materia) throws CodigoInvalidoException, NombreInvalidoException, 
-	EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
+	public void actualizarMateria(Materia materia) throws CodigoInvalidoException, NombreInvalidoException,
+			EstadoInvalidoException, DescripcionInvalidaException, HorarioInvalidoException {
 		Validacion.validarMateria(materia);
 		this.codigo = materia.codigo;
 		this.nombre = materia.nombre;
 		this.horas = materia.horas;
 		this.carreras = materia.carreras;
-        this.estado = materia.estado;
-        this.creditos = materia.creditos;
+		this.estado = materia.estado;
+		this.creditos = materia.creditos;
 	}
-	
+
 	public Integer getCreditos() {
 		return creditos;
 	}
@@ -121,8 +125,22 @@ public class Materia extends BaseEntity {
 	public void setCreditos(Integer creditos) {
 		this.creditos = creditos;
 	}
-	
+
 	public void deshabilitar() {
 		setEstado(TipoEstado.DISABLED);
+	}
+
+	public void actualizarPrerrequisitos(List<Materia> prerrequisitos) {
+		this.prerrequisitos = prerrequisitos;
+
+	}
+
+	public List<Materia> getPrerrequisitos() {
+		return this.prerrequisitos;
+	}
+
+	public Boolean cumplePreRequisitos(List<Materia> materiasAprobadas) {
+		return this.prerrequisitos.stream().filter(preRequisito -> !materiasAprobadas.contains(preRequisito))
+				.collect(Collectors.toList()).isEmpty();
 	}
 }

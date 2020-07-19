@@ -2,6 +2,7 @@ package ar.edu.unq.inscripcionunq.spring.controller;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -261,6 +262,11 @@ public class CargaInicialDeDatosController {
 		matt = new Materia("90028", "Inglés II ( P-W )", 4, 4);
 		matt.agregarCarrera(tpi);
 		matt.agregarCarrera(lds);
+		Materia materia = materiaServiceImp.get(ingles1);
+
+		ArrayList<Materia> prerrequisitos = new ArrayList<Materia>();
+		prerrequisitos.add(materia);
+		matt.actualizarPrerrequisitos(prerrequisitos);
 		long ingles2 = materiaServiceImp.save(matt);
 
 		matt = new Materia("01052", "Introducción a la Bioinformática", 4, 8);
@@ -576,7 +582,7 @@ public class CargaInicialDeDatosController {
 		Long idAcamicOffer2 = ofertaAcademicaServiceImp.save(acc2);
 
 		Encuesta poll = new Encuesta("Encuesta segundo semestre 2018", LocalDateTime.of(2018, 8, 25, 00, 00),
-				LocalDateTime.of(2019, 12, 15, 00, 00), periodo1);
+				LocalDateTime.of(2019, 12, 15, 00, 00), periodo1, 3, false);
 		poll.agregarOfertaAcademica((OfertaAcademica) ofertaAcademicaServiceImp.get(idAcamicOffer1));
 
 		Long idEncuesta = encuestaServiceImp.save(poll);

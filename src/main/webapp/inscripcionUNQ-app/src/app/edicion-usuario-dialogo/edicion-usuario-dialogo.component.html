@@ -1,13 +1,17 @@
 <h2 mat-dialog-title>Modificación de contraseña</h2>
 <mat-dialog-content [formGroup]="form">
-	<mat-form-field>
-		<input matInput placeholder="Nueva contraseña" formControlName="password" type="password" required>
+	<mat-form-field id="password">
+		<input matInput maxlength="30" placeholder="Nueva contraseña" formControlName="password" type="password" required>
+		<mat-hint align="end">{{form.get('password').value?.length || 0}}/30</mat-hint>
 		<mat-error *ngIf="form.get('password').hasError('required')">
 			Campo obligatorio
 		</mat-error>
+		<mat-error *ngIf="form.get('password').invalid">
+			La contraseña debe tener más de 8 caracteres y al menos una mayúscula y un número
+		</mat-error>
 	</mat-form-field>
 	<mat-form-field>
-		<input matInput placeholder="Confirmar contraseña" formControlName="repassword" type="password" required>
+		<input matInput maxlength="30" placeholder="Confirmar contraseña" formControlName="repassword" type="password" required>
 		<mat-error *ngIf="form.get('repassword').hasError('required')">
 			Campo obligatorio
 		</mat-error>

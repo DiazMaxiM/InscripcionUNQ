@@ -22,7 +22,6 @@ h2{
 
 .logo {
 	height: 70%;
-	width: min-content;
 }
 
 .non-lateral-padding {
@@ -61,4 +60,25 @@ h2{
 
 .material-icons:hover{
 	cursor: pointer;
+}
+
+@media screen and (max-width: 991px) {
+	/* Aquí van los estilos para tablets grandes */
+	.logo {
+		height: 70%;
+	}
+}
+	 
+@media screen and (max-width: 767px) {
+	/* Aquí van los estilos para tablets medianas */
+	.logo {
+		max-width: 50%;
+	}
+}
+	 
+@media screen and (max-width: 479px) {
+	/* Aquí van los estilos para smartphones */
+	.logo {
+		max-width: 100%;
+	}
 }

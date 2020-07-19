@@ -1,0 +1,27 @@
+.mat-form-field {
+    display: block;
+  }
+  
+  textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .carrera {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: 2%;
+  }
+  
+  ::ng-deep .mat-dialog-content {
+    overflow-y: hidden !important;
+  }
+
+  .button-close{
+    background-color: white;
+    border: none;
+  }
+
+  .icon-close {
+    font-size: 100%;
+  }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilesService } from '../utiles.service';
 import { Usuario } from '../autenticacion/usuario.model';
 import { RestService } from '../rest.service';
+import { Encuesta } from '../encuesta-dialogo/encuesta.model';
 
 @Component({
 	selector: 'app-encuestas-disponibles',
@@ -34,8 +35,8 @@ export class EncuestasDisponiblesComponent implements OnInit {
 		});
 	}
 
-	editarEncuesta(idEncuestaActual) {
-		localStorage.setItem('idEncuestaActual', idEncuestaActual);
+	editarEncuesta(encuestaActual) {
+		localStorage.setItem('encuestaActualEst', JSON.stringify(encuestaActual));
 		this.utilesService.irA('verificacion-de-datos');
 	}
 }
