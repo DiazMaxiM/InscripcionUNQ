@@ -27,7 +27,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "angular2-jwt": "^0.2.3",
     "auth0-js": "^9.13.2",
-    "auth0-lock": "^11.24.2",
+    "auth0-lock": "^11.26.0",
     "bootstrap": "^4.5.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.11",
