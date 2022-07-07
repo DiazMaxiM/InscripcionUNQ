@@ -31,7 +31,7 @@
     "bootstrap": "^4.5.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.11",
-    "moment": "^2.26.0",
+    "moment": "^2.29.4",
     "ngx-moment": "^3.5.0",
     "rxjs": "^6.5.5",
     "web-animations-js": "^2.3.2",
